@@ -1,0 +1,33 @@
+{
+  "module_title": "Métodos de Pago",
+  "module_description": "Registro y gestión de pagos recibidos",
+  "methods": {
+    "pago_movil": "Pago Móvil",
+    "zelle": "Zelle",
+    "binance": "Binance (USDT)",
+    "efectivo_usd": "Efectivo (USD)",
+    "efectivo_ves": "Efectivo (Bs.)",
+    "transferencia": "Transferencia Bancaria",
+    "debito": "Punto de Venta (Débito)"
+  },
+  "statuses": {
+    "pending": "Pendiente",
+    "confirmed": "Confirmado",
+    "rejected": "Rechazado",
+    "cancelled": "Cancelado"
+  },
+  "labels": {
+    "amount": "Monto",
+    "currency": "Moneda",
+    "reference": "Referencia",
+    "payment_date": "Fecha de pago",
+    "notes": "Notas",
+    "status": "Estado",
+    "method": "Método",
+    "exchange_rate": "Tasa de cambio",
+    "amount_usd": "Equivalente USD",
+    "confirm": "Confirmar pago",
+    "reject": "Rechazar pago",
+    "record_payment": "Registrar pago"
+  }
+}

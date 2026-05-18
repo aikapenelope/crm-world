@@ -1,0 +1,33 @@
+{
+  "module_title": "Payment Methods",
+  "module_description": "Record and manage received payments",
+  "methods": {
+    "pago_movil": "Mobile Payment",
+    "zelle": "Zelle",
+    "binance": "Binance (USDT)",
+    "efectivo_usd": "Cash (USD)",
+    "efectivo_ves": "Cash (VES)",
+    "transferencia": "Bank Transfer",
+    "debito": "Debit Card (POS)"
+  },
+  "statuses": {
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "rejected": "Rejected",
+    "cancelled": "Cancelled"
+  },
+  "labels": {
+    "amount": "Amount",
+    "currency": "Currency",
+    "reference": "Reference",
+    "payment_date": "Payment date",
+    "notes": "Notes",
+    "status": "Status",
+    "method": "Method",
+    "exchange_rate": "Exchange rate",
+    "amount_usd": "USD equivalent",
+    "confirm": "Confirm payment",
+    "reject": "Reject payment",
+    "record_payment": "Record payment"
+  }
+}
