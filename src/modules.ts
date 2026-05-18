@@ -65,6 +65,7 @@ export const enabledModules: ModuleEntry[] = [
   // Aika: Regional modules (apply to all tenants)
   { id: 'venezuela_rates', from: '@app' },
   { id: 'payment_methods', from: '@app' },
+  { id: 've_fiscal', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

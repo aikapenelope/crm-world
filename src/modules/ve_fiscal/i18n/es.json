@@ -1,0 +1,40 @@
+{
+  "module_title": "Fiscal Venezuela",
+  "module_description": "Configuración tributaria venezolana",
+  "labels": {
+    "rif": "RIF",
+    "cedula": "Cédula de Identidad",
+    "fiscal_id": "Identificación Fiscal",
+    "business_name": "Razón Social",
+    "fiscal_address": "Domicilio Fiscal",
+    "is_special_taxpayer": "Contribuyente Especial",
+    "iva_rate": "Alícuota IVA",
+    "igtf_rate": "Alícuota IGTF",
+    "applies_igtf": "Aplica IGTF",
+    "is_iva_withholding_agent": "Agente de Retención IVA",
+    "iva_withholding_percentage": "% Retención IVA",
+    "is_islr_withholding_agent": "Agente de Retención ISLR"
+  },
+  "rif_types": {
+    "J": "Jurídica (empresa)",
+    "V": "Venezolano (persona natural)",
+    "E": "Extranjero",
+    "G": "Gobierno",
+    "P": "Pasaporte",
+    "C": "Comunal"
+  },
+  "tax_info": {
+    "iva_general": "IVA General: 16%",
+    "iva_reduced": "IVA Reducido (pago electrónico): 8%",
+    "iva_luxury": "IVA Lujo: 15%",
+    "iva_exempt": "Exento de IVA",
+    "igtf_description": "IGTF: 3% sobre pagos en divisas o criptomonedas",
+    "withholding_iva": "Retención IVA: 75% del monto de IVA",
+    "withholding_islr_services": "Retención ISLR servicios: 5%",
+    "withholding_islr_purchases": "Retención ISLR compras: 2%"
+  },
+  "validation": {
+    "invalid_rif": "RIF inválido. Formato: J-12345678-9",
+    "invalid_cedula": "Cédula inválida. Formato: V-12345678"
+  }
+}

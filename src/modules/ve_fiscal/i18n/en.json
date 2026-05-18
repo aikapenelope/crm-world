@@ -1,0 +1,40 @@
+{
+  "module_title": "Venezuela Fiscal",
+  "module_description": "Venezuelan tax configuration",
+  "labels": {
+    "rif": "RIF (Tax ID)",
+    "cedula": "National ID",
+    "fiscal_id": "Fiscal ID",
+    "business_name": "Legal Name",
+    "fiscal_address": "Fiscal Address",
+    "is_special_taxpayer": "Special Taxpayer",
+    "iva_rate": "VAT Rate",
+    "igtf_rate": "IGTF Rate",
+    "applies_igtf": "Applies IGTF",
+    "is_iva_withholding_agent": "VAT Withholding Agent",
+    "iva_withholding_percentage": "VAT Withholding %",
+    "is_islr_withholding_agent": "Income Tax Withholding Agent"
+  },
+  "rif_types": {
+    "J": "Legal entity (company)",
+    "V": "Venezuelan (individual)",
+    "E": "Foreign",
+    "G": "Government",
+    "P": "Passport",
+    "C": "Communal"
+  },
+  "tax_info": {
+    "iva_general": "VAT General: 16%",
+    "iva_reduced": "VAT Reduced (electronic payment): 8%",
+    "iva_luxury": "VAT Luxury: 15%",
+    "iva_exempt": "VAT Exempt",
+    "igtf_description": "IGTF: 3% on payments in foreign currency or crypto",
+    "withholding_iva": "VAT Withholding: 75% of VAT amount",
+    "withholding_islr_services": "Income Tax Withholding services: 5%",
+    "withholding_islr_purchases": "Income Tax Withholding purchases: 2%"
+  },
+  "validation": {
+    "invalid_rif": "Invalid RIF. Format: J-12345678-9",
+    "invalid_cedula": "Invalid ID. Format: V-12345678"
+  }
+}
