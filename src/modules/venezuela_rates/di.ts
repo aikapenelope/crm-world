@@ -1,24 +1,24 @@
 import type { AppContainer } from '@open-mercato/shared/lib/di/container'
 import type { EntityManager } from '@mikro-orm/core'
 import { RateFetchingService } from '@open-mercato/core/modules/currencies/services/rateFetchingService'
-import { BCVProvider } from './services/providers/bcv'
-import { BinanceP2PProvider } from './services/providers/binance'
+import { DolarApiProvider } from './services/providers/dolarapi'
 
 /**
- * Registers Venezuelan rate providers into the existing RateFetchingService.
- * This extends the core currencies module without modifying it.
+ * Registers the DolarApi Venezuela provider into the RateFetchingService.
+ * Single provider that covers BCV official + parallel (Binance P2P) rates
+ * for USD/VES, EUR/VES, and USDT/VES.
+ *
+ * API: https://ve.dolarapi.com/v1
  */
 export function register(container: AppContainer) {
-  // Override the rateFetchingService to add Venezuelan providers
   container.register({
     rateFetchingService: {
       resolve: (c) => {
         const em = c.resolve<EntityManager>('em')
         const service = new RateFetchingService(em)
 
-        // Register Venezuelan providers
-        service.registerProvider(new BCVProvider())
-        service.registerProvider(new BinanceP2PProvider())
+        // Single provider covers all Venezuelan rates
+        service.registerProvider(new DolarApiProvider())
 
         return service
       },
