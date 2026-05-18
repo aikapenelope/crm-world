@@ -1,0 +1,18 @@
+{
+  "module_title": "Tasas Venezuela",
+  "module_description": "Proveedores de tasas de cambio para Venezuela",
+  "providers": {
+    "bcv": "BCV (Banco Central de Venezuela)",
+    "binance": "Binance P2P"
+  },
+  "currencies": {
+    "usd": "Dólar Estadounidense",
+    "ves": "Bolívar",
+    "eur": "Euro",
+    "usdt": "Tether (USDT)"
+  },
+  "rate_types": {
+    "buy": "Compra",
+    "sell": "Venta"
+  }
+}

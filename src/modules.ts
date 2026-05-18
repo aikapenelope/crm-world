@@ -61,6 +61,9 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'portal', from: '@open-mercato/core' },
   { id: 'example', from: '@app' },
   { id: 'ratelimit_probe', from: '@app' },
+
+  // Aika: Regional modules (apply to all tenants)
+  { id: 'venezuela_rates', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

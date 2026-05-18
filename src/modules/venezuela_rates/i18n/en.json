@@ -1,0 +1,18 @@
+{
+  "module_title": "Venezuela Rates",
+  "module_description": "Exchange rate providers for Venezuela",
+  "providers": {
+    "bcv": "BCV (Central Bank of Venezuela)",
+    "binance": "Binance P2P"
+  },
+  "currencies": {
+    "usd": "US Dollar",
+    "ves": "Bolívar",
+    "eur": "Euro",
+    "usdt": "Tether (USDT)"
+  },
+  "rate_types": {
+    "buy": "Buy",
+    "sell": "Sell"
+  }
+}
