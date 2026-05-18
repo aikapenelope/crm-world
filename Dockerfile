@@ -24,6 +24,8 @@ RUN yarn install
 
 COPY . .
 RUN yarn generate
+# Limit Node.js heap to 4GB to avoid OOM in constrained Docker environments
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN NODE_ENV=production yarn build
 
 FROM node:24-alpine AS dev
