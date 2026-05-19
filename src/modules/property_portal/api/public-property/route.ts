@@ -24,7 +24,7 @@ export async function GET(request: Request, ctx: any) {
   }
 
   const em: EntityManager = ctx.container.resolve('em')
-  const kysely = em.getKysely()
+  const kysely = (em as any).getKysely()
 
   // Only serve active properties (public visibility)
   const property = await kysely
