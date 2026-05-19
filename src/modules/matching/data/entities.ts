@@ -1,6 +1,22 @@
 import { Entity, PrimaryKey, Property, Enum } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
-import { PropertyType, PropertyOperation } from '../../properties/data/entities'
+
+// Local enum copies to avoid cross-module imports (Turbopack restriction)
+enum PropertyType {
+  APARTAMENTO = 'apartamento',
+  CASA = 'casa',
+  TERRENO = 'terreno',
+  COMERCIAL = 'comercial',
+  OFICINA = 'oficina',
+  GALPON = 'galpon',
+  OTRO = 'otro',
+}
+
+enum PropertyOperation {
+  VENTA = 'venta',
+  ALQUILER = 'alquiler',
+  VENTA_ALQUILER = 'venta_alquiler',
+}
 
 // ---------------------------------------------------------------------------
 // Contact Preferences (what the contact is looking for)

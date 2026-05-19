@@ -7,7 +7,6 @@
  */
 import { z } from 'zod'
 import type { EntityManager } from '@mikro-orm/core'
-import { PropertyEntity } from '../../properties/data/entities'
 
 const paramsSchema = z.object({
   id: z.string().uuid(),
@@ -36,12 +35,15 @@ export async function GET(request: Request, ctx: any) {
 
   const em: EntityManager = ctx.container.resolve('em')
   const scope = ctx.scope
+  const kysely = em.getKysely()
 
-  const property = await em.findOne(PropertyEntity, {
-    id: parsed.data.id,
-    tenant_id: scope.tenantId,
-    deleted_at: null,
-  } as any)
+  const property = await kysely
+    .selectFrom('properties')
+    .selectAll()
+    .where('id', '=', parsed.data.id)
+    .where('tenant_id', '=', scope.tenantId)
+    .where('deleted_at', 'is', null)
+    .executeTakeFirst()
 
   if (!property) {
     return Response.json({ error: 'Property not found' }, { status: 404 })
@@ -62,7 +64,7 @@ export async function GET(request: Request, ctx: any) {
   const text = [
     `🏠 ${operationLabel}: ${property.title}`,
     '',
-    property.description ? property.description.slice(0, 300) : '',
+    property.description ? String(property.description).slice(0, 300) : '',
     '',
     specs ? `📐 ${specs}` : '',
     `📍 ${property.city}${property.state ? `, ${property.state}` : ''}`,

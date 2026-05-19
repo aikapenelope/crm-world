@@ -1,10 +1,13 @@
 import { z } from 'zod'
-import { PropertyType, PropertyOperation } from '../../properties/data/entities'
+
+// String enums defined locally to avoid cross-module imports
+const PROPERTY_TYPES = ['apartamento', 'casa', 'terreno', 'comercial', 'oficina', 'galpon', 'otro'] as const
+const PROPERTY_OPERATIONS = ['venta', 'alquiler', 'venta_alquiler'] as const
 
 export const createPreferenceSchema = z.object({
   contact_id: z.string().uuid(),
-  preferred_type: z.nativeEnum(PropertyType).nullable().optional(),
-  preferred_operation: z.nativeEnum(PropertyOperation).nullable().optional(),
+  preferred_type: z.enum(PROPERTY_TYPES).nullable().optional(),
+  preferred_operation: z.enum(PROPERTY_OPERATIONS).nullable().optional(),
   preferred_city: z.string().max(100).nullable().optional(),
   max_budget: z.string().regex(/^\d+(\.\d{1,2})?$/).nullable().optional(),
   budget_currency: z.string().min(3).max(10).default('USD'),
