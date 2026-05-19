@@ -32,8 +32,14 @@ const crud = makeCrudRoute({
     softDeleteField: 'deleted_at',
   },
   list: { schema: listSchema },
-  create: { schema: recordPaymentSchema },
-  update: { schema: updatePaymentRecordSchema },
+  create: {
+    schema: recordPaymentSchema,
+    mapToEntity: (input: any) => ({ ...input }),
+  },
+  update: {
+    schema: updatePaymentRecordSchema,
+    applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) },
+  },
 })
 
 export const GET = crud.GET

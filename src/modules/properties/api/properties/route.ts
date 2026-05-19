@@ -37,8 +37,14 @@ const crud = makeCrudRoute({
   },
   indexer: { entityType: 'properties.property' },
   list: { schema: listSchema },
-  create: { schema: createPropertySchema },
-  update: { schema: updatePropertySchema },
+  create: {
+    schema: createPropertySchema,
+    mapToEntity: (input: any) => ({ ...input }),
+  },
+  update: {
+    schema: updatePropertySchema,
+    applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) },
+  },
 })
 
 export const GET = crud.GET
