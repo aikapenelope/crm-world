@@ -1,0 +1,13 @@
+{
+  "module_title": "Property Sheets",
+  "labels": {
+    "generate_pdf": "Generate PDF sheet",
+    "download": "Download",
+    "send_by_email": "Send by email",
+    "property_sheet": "Property Sheet",
+    "specs": "Features",
+    "price": "Price",
+    "contact_info": "Contact information",
+    "scan_qr": "Scan to view online"
+  }
+}

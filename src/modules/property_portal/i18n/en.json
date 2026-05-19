@@ -1,0 +1,16 @@
+{
+  "module_title": "Property Portal",
+  "labels": {
+    "property_details": "Property details",
+    "specs": "Features",
+    "location": "Location",
+    "contact_agent": "Contact agent",
+    "share": "Share",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "parking": "Parking",
+    "area": "Area",
+    "not_found": "Property not found",
+    "not_available": "This property is no longer available"
+  }
+}

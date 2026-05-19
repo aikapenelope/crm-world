@@ -1,0 +1,13 @@
+{
+  "module_title": "Fichas de Propiedad",
+  "labels": {
+    "generate_pdf": "Generar ficha PDF",
+    "download": "Descargar",
+    "send_by_email": "Enviar por email",
+    "property_sheet": "Ficha de Propiedad",
+    "specs": "Características",
+    "price": "Precio",
+    "contact_info": "Información de contacto",
+    "scan_qr": "Escanea para ver en línea"
+  }
+}

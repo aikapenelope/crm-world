@@ -1,0 +1,16 @@
+{
+  "module_title": "Portal de Propiedades",
+  "labels": {
+    "property_details": "Detalles de la propiedad",
+    "specs": "Características",
+    "location": "Ubicación",
+    "contact_agent": "Contactar agente",
+    "share": "Compartir",
+    "bedrooms": "Habitaciones",
+    "bathrooms": "Baños",
+    "parking": "Estacionamientos",
+    "area": "Área",
+    "not_found": "Propiedad no encontrada",
+    "not_available": "Esta propiedad ya no está disponible"
+  }
+}

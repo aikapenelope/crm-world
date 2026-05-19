@@ -1,0 +1,14 @@
+{
+  "module_title": "Publicación",
+  "labels": {
+    "generate_text": "Generar texto",
+    "copy_text": "Copiar texto",
+    "share_whatsapp": "Compartir por WhatsApp",
+    "publish_on": "Publicar en",
+    "mercadolibre": "MercadoLibre",
+    "facebook": "Facebook Marketplace",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "text_copied": "Texto copiado al portapapeles"
+  }
+}

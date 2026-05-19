@@ -72,6 +72,9 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'properties', from: '@app' },
   { id: 'transactions', from: '@app' },
   { id: 'matching', from: '@app' },
+  { id: 'property_portal', from: '@app' },
+  { id: 'property_docs', from: '@app' },
+  { id: 'property_publishing', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
