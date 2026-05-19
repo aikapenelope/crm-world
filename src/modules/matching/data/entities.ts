@@ -44,13 +44,13 @@ export class ContactPreferenceEntity {
   @Enum({ items: () => PropertyOperation, type: 'string', length: 20, nullable: true })
   preferred_operation?: PropertyOperation | null
 
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   preferred_city?: string | null
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   max_budget?: string | null
 
-  @Property({ length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: "'USD'" })
   budget_currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 10, scale: 2, nullable: true })

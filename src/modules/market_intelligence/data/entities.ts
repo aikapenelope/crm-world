@@ -17,16 +17,16 @@ export class MarketValuationEntity {
   organization_id!: string
 
   // Query parameters
-  @Property({ length: 30 })
+  @Property({ type: 'text', length: 30 })
   property_type!: string
 
-  @Property({ length: 20 })
+  @Property({ type: 'text', length: 20 })
   operation!: string
 
-  @Property({ length: 100 })
+  @Property({ type: 'text', length: 100 })
   city!: string
 
-  @Property({ length: 200, nullable: true })
+  @Property({ type: 'text', length: 200, nullable: true })
   zone?: string | null
 
   @Property({ type: 'decimal', precision: 10, scale: 2, nullable: true })
@@ -64,7 +64,7 @@ export class MarketValuationEntity {
   avg_price_per_m2?: string | null
 
   // Position of reference price in the market
-  @Property({ length: 20, nullable: true })
+  @Property({ type: 'text', length: 20, nullable: true })
   price_position?: string | null // 'below_market' | 'at_market' | 'above_market'
 
   @Property({ type: 'smallint', nullable: true })

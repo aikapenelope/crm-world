@@ -53,7 +53,7 @@ export class PropertyTransactionEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   sale_price!: string
 
-  @Property({ length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: "'USD'" })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
@@ -69,11 +69,11 @@ export class PropertyTransactionEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   commission_amount?: string | null
 
-  @Property({ length: 10, nullable: true })
+  @Property({ type: 'text', length: 10, nullable: true })
   commission_currency?: string | null
 
   // Payment tracking
-  @Property({ length: 50, nullable: true })
+  @Property({ type: 'text', length: 50, nullable: true })
   payment_method_code?: string | null
 
   @Property({ type: 'uuid', nullable: true })

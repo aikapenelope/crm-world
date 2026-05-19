@@ -18,50 +18,50 @@ export class MarketListingEntity {
   id: string = v4()
 
   // MercadoLibre item ID (for deduplication)
-  @Property({ length: 30, unique: true })
+  @Property({ type: 'text', length: 30, unique: true })
   ml_id!: string
 
   // Listing data
-  @Property({ length: 500 })
+  @Property({ type: 'text', length: 500 })
   title!: string
 
   @Property({ type: 'text', nullable: true })
   description?: string | null
 
-  @Property({ length: 500, nullable: true })
+  @Property({ type: 'text', length: 500, nullable: true })
   permalink?: string | null
 
-  @Property({ length: 500, nullable: true })
+  @Property({ type: 'text', length: 500, nullable: true })
   thumbnail?: string | null
 
   // Classification
-  @Property({ length: 30 })
+  @Property({ type: 'text', length: 30 })
   property_type!: string // apartamento, casa, terreno, comercial, oficina
 
-  @Property({ length: 20 })
+  @Property({ type: 'text', length: 20 })
   operation!: string // venta, alquiler
 
-  @Property({ length: 30, nullable: true })
+  @Property({ type: 'text', length: 30, nullable: true })
   category_id?: string | null
 
   // Pricing
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   price?: string | null
 
-  @Property({ length: 10, nullable: true })
+  @Property({ type: 'text', length: 10, nullable: true })
   price_currency?: string | null
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   price_usd?: string | null
 
   // Location
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   city?: string | null
 
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   state?: string | null
 
-  @Property({ length: 200, nullable: true })
+  @Property({ type: 'text', length: 200, nullable: true })
   neighborhood?: string | null
 
   @Property({ type: 'decimal', precision: 10, scale: 7, nullable: true })
@@ -84,14 +84,14 @@ export class MarketListingEntity {
   parking?: number | null
 
   // Seller info
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   seller_nickname?: string | null
 
-  @Property({ length: 30, nullable: true })
+  @Property({ type: 'text', length: 30, nullable: true })
   seller_id?: string | null
 
   // Sync metadata
-  @Property({ length: 20, default: "'active'" })
+  @Property({ type: 'text', length: 20, default: "'active'" })
   sync_status: string = 'active' // active, delisted, error
 
   @Property({ type: 'timestamptz', nullable: true })

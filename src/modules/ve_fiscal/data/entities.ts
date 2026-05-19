@@ -17,10 +17,10 @@ export class VeFiscalConfigEntity {
   organization_id!: string
 
   // Fiscal identity
-  @Property({ length: 15 })
+  @Property({ type: 'text', length: 15 })
   rif!: string
 
-  @Property({ length: 255 })
+  @Property({ type: 'text', length: 255 })
   business_name!: string
 
   @Property({ type: 'text' })
@@ -76,13 +76,13 @@ export class VeFiscalIdentityEntity {
   customer_entity_id!: string
 
   // RIF or Cédula
-  @Property({ length: 15 })
+  @Property({ type: 'text', length: 15 })
   fiscal_id!: string
 
-  @Property({ length: 10 })
+  @Property({ type: 'text', length: 10 })
   fiscal_id_type!: string // 'rif' | 'cedula'
 
-  @Property({ length: 255, nullable: true })
+  @Property({ type: 'text', length: 255, nullable: true })
   fiscal_name?: string | null
 
   @Property({ type: 'text', nullable: true })

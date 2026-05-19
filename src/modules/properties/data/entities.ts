@@ -45,7 +45,7 @@ export class PropertyEntity {
   @Property({ type: 'text' })
   organization_id!: string
 
-  @Property({ length: 255 })
+  @Property({ type: 'text', length: 255 })
   title!: string
 
   @Property({ type: 'text', nullable: true })
@@ -63,7 +63,7 @@ export class PropertyEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   price!: string
 
-  @Property({ length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: "'USD'" })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 10, scale: 2, nullable: true })
@@ -78,19 +78,19 @@ export class PropertyEntity {
   @Property({ type: 'smallint', nullable: true })
   parking?: number | null
 
-  @Property({ length: 500, nullable: true })
+  @Property({ type: 'text', length: 500, nullable: true })
   address_line?: string | null
 
-  @Property({ length: 100 })
+  @Property({ type: 'text', length: 100 })
   city!: string
 
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   state?: string | null
 
-  @Property({ length: 20, nullable: true })
+  @Property({ type: 'text', length: 20, nullable: true })
   zip?: string | null
 
-  @Property({ length: 5, default: "'VE'" })
+  @Property({ type: 'text', length: 5, default: "'VE'" })
   country: string = 'VE'
 
   @Property({ type: 'decimal', precision: 10, scale: 7, nullable: true })
@@ -164,13 +164,13 @@ export class PropertyLinkEntity {
   @Property({ type: 'uuid' })
   property_id!: string
 
-  @Property({ length: 30 })
+  @Property({ type: 'text', length: 30 })
   platform!: string
 
-  @Property({ length: 500 })
+  @Property({ type: 'text', length: 500 })
   url!: string
 
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   label?: string | null
 
   @Property({ type: 'timestamptz' })
