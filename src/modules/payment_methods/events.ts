@@ -1,7 +1,7 @@
 import { createModuleEvents } from '@open-mercato/shared/modules/events'
 
 export const eventsConfig = createModuleEvents({
-  module: 'payment_methods',
+  moduleId: 'payment_methods',
   events: [
     {
       id: 'payment_methods.payment.recorded',
