@@ -1,5 +1,31 @@
 # Changelog — Aika Platform (CRM World)
 
+## 2026-05-19 — Real Estate UI + Cleanup
+
+### UI Funcional (PR #1 merged)
+- **Properties list**: DataTable con filtros (tipo, operación, estado), búsqueda, paginación, row actions
+- **Properties create**: CrudForm con campos agrupados (info, precio, specs, ubicación)
+- **Properties edit**: CrudForm pre-populated con datos existentes
+- **Transactions list**: DataTable con filtros tipo/status, comisión, fecha cierre
+- **Matching list**: DataTable con score badges, criterios matched
+
+### Fixes
+- Eliminados todos los imports cross-module (Turbopack restriction)
+- Módulos usan Kysely queries (`em.getKysely()`) para leer tablas de otros módulos
+- matching/data usa enums locales en vez de importar de properties
+
+### Cleanup Coolify
+- Eliminada app duplicada que generaba builds fallidos (17 failed)
+- Eliminado proyecto vacío "My first project"
+- Solo queda "Mercato SaaS" con la app correcta configurada
+
+### Documentación
+- `docs/PROPI_FEATURES_MAP.md` — mapeo completo de features Propi vs implementación
+- `docs/ROADMAP.md` — plan de lo que sigue por PRs
+- `docs/CONTEXT.md` — contexto completo para continuación
+
+---
+
 ## 2026-05-18 — Fundación e Infraestructura
 
 ### Infraestructura (mercatinfra)
