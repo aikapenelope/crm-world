@@ -10,10 +10,10 @@ export class VeFiscalConfigEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4()
 
-  @Property()
+  @Property({ type: 'text' })
   tenant_id!: string
 
-  @Property()
+  @Property({ type: 'text' })
   organization_id!: string
 
   // Fiscal identity
@@ -66,10 +66,10 @@ export class VeFiscalIdentityEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4()
 
-  @Property()
+  @Property({ type: 'text' })
   tenant_id!: string
 
-  @Property()
+  @Property({ type: 'text' })
   organization_id!: string
 
   @Property({ type: 'uuid' })
