@@ -60,5 +60,23 @@
     "mark_sold": "Marcar como vendida",
     "mark_rented": "Marcar como alquilada",
     "deactivate": "Desactivar"
+  },
+  "notifications": {
+    "lead": {
+      "inactive": {
+        "title": "Lead inactivo",
+        "body": "Un contacto lleva más de 7 días sin actividad."
+      }
+    },
+    "property": {
+      "no_activity": {
+        "title": "Propiedad sin actividad",
+        "body": "Una propiedad activa lleva más de 30 días sin interacción."
+      },
+      "reserved": {
+        "title": "Propiedad reservada",
+        "body": "Una propiedad ha sido marcada como reservada."
+      }
+    }
   }
 }
