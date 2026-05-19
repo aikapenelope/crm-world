@@ -134,8 +134,8 @@ export default function PropertyDetailPage() {
           <GeneralTab
             property={property}
             propertyId={propertyId}
-            organizationId={organizationId}
-            tenantId={tenantId}
+            organizationId={organizationId ?? ''}
+            tenantId={tenantId ?? ''}
             router={router}
           />
         )}
