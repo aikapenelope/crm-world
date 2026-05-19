@@ -1,0 +1,64 @@
+{
+  "module_title": "Propiedades",
+  "module_description": "Gestión de propiedades inmobiliarias",
+  "property_types": {
+    "apartamento": "Apartamento",
+    "casa": "Casa",
+    "terreno": "Terreno",
+    "comercial": "Local Comercial",
+    "oficina": "Oficina",
+    "galpon": "Galpón",
+    "otro": "Otro"
+  },
+  "operations": {
+    "venta": "Venta",
+    "alquiler": "Alquiler",
+    "venta_alquiler": "Venta / Alquiler"
+  },
+  "statuses": {
+    "draft": "Borrador",
+    "active": "Activa",
+    "reserved": "Reservada",
+    "sold": "Vendida",
+    "rented": "Alquilada",
+    "inactive": "Inactiva"
+  },
+  "labels": {
+    "title": "Título",
+    "description": "Descripción",
+    "property_type": "Tipo",
+    "operation": "Operación",
+    "status": "Estado",
+    "price": "Precio",
+    "currency": "Moneda",
+    "area_m2": "Área (m²)",
+    "bedrooms": "Habitaciones",
+    "bathrooms": "Baños",
+    "parking": "Estacionamientos",
+    "address_line": "Dirección",
+    "city": "Ciudad",
+    "state": "Estado",
+    "country": "País",
+    "commission_rate": "Comisión (%)",
+    "contact_id": "Propietario",
+    "assigned_to": "Agente asignado",
+    "notes": "Notas internas",
+    "images": "Imágenes",
+    "links": "Links externos",
+    "cover_image": "Imagen principal"
+  },
+  "platforms": {
+    "mercadolibre": "MercadoLibre",
+    "facebook": "Facebook Marketplace",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "otro": "Otro"
+  },
+  "actions": {
+    "activate": "Publicar",
+    "reserve": "Reservar",
+    "mark_sold": "Marcar como vendida",
+    "mark_rented": "Marcar como alquilada",
+    "deactivate": "Desactivar"
+  }
+}

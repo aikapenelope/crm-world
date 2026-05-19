@@ -67,6 +67,9 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'payment_methods', from: '@app' },
   { id: 've_fiscal', from: '@app' },
   { id: 've_tenant_defaults', from: '@app' },
+
+  // Aika: Real Estate vertical
+  { id: 'properties', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

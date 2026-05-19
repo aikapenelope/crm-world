@@ -1,0 +1,64 @@
+{
+  "module_title": "Properties",
+  "module_description": "Real estate property management",
+  "property_types": {
+    "apartamento": "Apartment",
+    "casa": "House",
+    "terreno": "Land",
+    "comercial": "Commercial",
+    "oficina": "Office",
+    "galpon": "Warehouse",
+    "otro": "Other"
+  },
+  "operations": {
+    "venta": "Sale",
+    "alquiler": "Lease",
+    "venta_alquiler": "Sale / Lease"
+  },
+  "statuses": {
+    "draft": "Draft",
+    "active": "Active",
+    "reserved": "Reserved",
+    "sold": "Sold",
+    "rented": "Rented",
+    "inactive": "Inactive"
+  },
+  "labels": {
+    "title": "Title",
+    "description": "Description",
+    "property_type": "Type",
+    "operation": "Operation",
+    "status": "Status",
+    "price": "Price",
+    "currency": "Currency",
+    "area_m2": "Area (m²)",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "parking": "Parking",
+    "address_line": "Address",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "commission_rate": "Commission (%)",
+    "contact_id": "Owner",
+    "assigned_to": "Assigned agent",
+    "notes": "Internal notes",
+    "images": "Images",
+    "links": "External links",
+    "cover_image": "Cover image"
+  },
+  "platforms": {
+    "mercadolibre": "MercadoLibre",
+    "facebook": "Facebook Marketplace",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "otro": "Other"
+  },
+  "actions": {
+    "activate": "Publish",
+    "reserve": "Reserve",
+    "mark_sold": "Mark as sold",
+    "mark_rented": "Mark as rented",
+    "deactivate": "Deactivate"
+  }
+}
