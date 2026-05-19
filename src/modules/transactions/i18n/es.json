@@ -1,0 +1,39 @@
+{
+  "module_title": "Transacciones",
+  "module_description": "Cierre de operaciones y comisiones",
+  "transaction_types": {
+    "sale": "Venta",
+    "lease": "Alquiler"
+  },
+  "statuses": {
+    "pending": "Pendiente",
+    "completed": "Completada",
+    "cancelled": "Cancelada"
+  },
+  "labels": {
+    "property": "Propiedad",
+    "contact": "Comprador / Inquilino",
+    "transaction_type": "Tipo",
+    "status": "Estado",
+    "closing_date": "Fecha de cierre",
+    "sale_price": "Precio de venta",
+    "currency": "Moneda",
+    "sale_price_ves": "Precio en Bs.",
+    "exchange_rate": "Tasa de cambio",
+    "commission_rate": "Comisión (%)",
+    "commission_amount": "Monto comisión",
+    "payment_method": "Método de pago",
+    "monthly_rent": "Canon mensual",
+    "lease_start": "Inicio contrato",
+    "lease_end": "Fin contrato",
+    "lease_months": "Duración (meses)",
+    "listing_agent": "Agente captador",
+    "buyer_agent": "Agente comprador",
+    "notes": "Notas"
+  },
+  "actions": {
+    "complete": "Completar cierre",
+    "cancel": "Cancelar transacción",
+    "calculate_commission": "Calcular comisión"
+  }
+}

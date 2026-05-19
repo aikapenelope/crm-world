@@ -70,6 +70,7 @@ export const enabledModules: ModuleEntry[] = [
 
   // Aika: Real Estate vertical
   { id: 'properties', from: '@app' },
+  { id: 'transactions', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

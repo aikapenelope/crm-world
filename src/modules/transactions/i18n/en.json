@@ -1,0 +1,39 @@
+{
+  "module_title": "Transactions",
+  "module_description": "Property closings and commissions",
+  "transaction_types": {
+    "sale": "Sale",
+    "lease": "Lease"
+  },
+  "statuses": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "labels": {
+    "property": "Property",
+    "contact": "Buyer / Tenant",
+    "transaction_type": "Type",
+    "status": "Status",
+    "closing_date": "Closing date",
+    "sale_price": "Sale price",
+    "currency": "Currency",
+    "sale_price_ves": "Price in VES",
+    "exchange_rate": "Exchange rate",
+    "commission_rate": "Commission (%)",
+    "commission_amount": "Commission amount",
+    "payment_method": "Payment method",
+    "monthly_rent": "Monthly rent",
+    "lease_start": "Lease start",
+    "lease_end": "Lease end",
+    "lease_months": "Duration (months)",
+    "listing_agent": "Listing agent",
+    "buyer_agent": "Buyer agent",
+    "notes": "Notes"
+  },
+  "actions": {
+    "complete": "Complete closing",
+    "cancel": "Cancel transaction",
+    "calculate_commission": "Calculate commission"
+  }
+}
