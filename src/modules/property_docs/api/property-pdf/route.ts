@@ -1,18 +1,10 @@
 /**
  * Property PDF generation endpoint.
- * Generates a 1-page property sheet with:
- * - Cover image
- * - Title + description
- * - Specs grid (type, area, rooms, parking)
- * - Price
- * - Agent branding (tenant logo + name)
- * - QR code linking to public page
- *
- * Requires auth — only agents can generate PDFs for their properties.
+ * Returns structured data for PDF rendering.
+ * Uses Kysely queries to avoid cross-module entity imports.
  */
 import { z } from 'zod'
 import type { EntityManager } from '@mikro-orm/core'
-import { PropertyEntity, PropertyImageEntity } from '../../properties/data/entities'
 
 const paramsSchema = z.object({
   id: z.string().uuid(),
@@ -33,24 +25,30 @@ export async function GET(request: Request, ctx: any) {
 
   const em: EntityManager = ctx.container.resolve('em')
   const scope = ctx.scope
+  const kysely = em.getKysely()
 
-  const property = await em.findOne(PropertyEntity, {
-    id: parsed.data.id,
-    tenant_id: scope.tenantId,
-    deleted_at: null,
-  } as any)
+  // Fetch property
+  const property = await kysely
+    .selectFrom('properties')
+    .selectAll()
+    .where('id', '=', parsed.data.id)
+    .where('tenant_id', '=', scope.tenantId)
+    .where('deleted_at', 'is', null)
+    .executeTakeFirst()
 
   if (!property) {
     return Response.json({ error: 'Property not found' }, { status: 404 })
   }
 
   // Get cover image
-  const coverImage = await em.findOne(
-    PropertyImageEntity,
-    { property_id: property.id, tenant_id: scope.tenantId, is_cover: true } as any,
-  )
+  const coverImage = await kysely
+    .selectFrom('property_images')
+    .selectAll()
+    .where('property_id', '=', property.id)
+    .where('tenant_id', '=', scope.tenantId)
+    .where('is_cover', '=', true)
+    .executeTakeFirst()
 
-  // Build PDF data payload (actual PDF rendering will use a template engine)
   const pdfData = {
     property: {
       title: property.title,
@@ -72,9 +70,6 @@ export async function GET(request: Request, ctx: any) {
     generated_at: new Date().toISOString(),
   }
 
-  // For now, return JSON payload that a PDF renderer will consume
-  // PDF generation (using @react-email or puppeteer) will be added
-  // when the rendering infrastructure is configured
   return Response.json(pdfData)
 }
 

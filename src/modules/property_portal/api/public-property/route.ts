@@ -1,11 +1,10 @@
 /**
  * Public API endpoint for property details.
  * No authentication required — serves only active properties.
- * Used by the public page /p/[id] and for sharing via WhatsApp/social.
+ * Uses Kysely queries to avoid cross-module entity imports.
  */
 import { z } from 'zod'
 import type { EntityManager } from '@mikro-orm/core'
-import { PropertyEntity, PropertyStatus, PropertyImageEntity, PropertyLinkEntity } from '../../properties/data/entities'
 
 const paramsSchema = z.object({
   id: z.string().uuid(),
@@ -25,30 +24,37 @@ export async function GET(request: Request, ctx: any) {
   }
 
   const em: EntityManager = ctx.container.resolve('em')
+  const kysely = em.getKysely()
 
   // Only serve active properties (public visibility)
-  const property = await em.findOne(PropertyEntity, {
-    id: parsed.data.id,
-    status: PropertyStatus.ACTIVE,
-    deleted_at: null,
-  } as any)
+  const property = await kysely
+    .selectFrom('properties')
+    .selectAll()
+    .where('id', '=', parsed.data.id)
+    .where('status', '=', 'active')
+    .where('deleted_at', 'is', null)
+    .executeTakeFirst()
 
   if (!property) {
     return Response.json({ error: 'Property not found' }, { status: 404 })
   }
 
   // Fetch images
-  const images = await em.find(
-    PropertyImageEntity,
-    { property_id: property.id, tenant_id: property.tenant_id } as any,
-    { orderBy: { sort_order: 'asc' } as any },
-  )
+  const images = await kysely
+    .selectFrom('property_images')
+    .selectAll()
+    .where('property_id', '=', property.id)
+    .where('tenant_id', '=', property.tenant_id)
+    .orderBy('sort_order', 'asc')
+    .execute()
 
   // Fetch links
-  const links = await em.find(
-    PropertyLinkEntity,
-    { property_id: property.id, tenant_id: property.tenant_id } as any,
-  )
+  const links = await kysely
+    .selectFrom('property_links')
+    .selectAll()
+    .where('property_id', '=', property.id)
+    .where('tenant_id', '=', property.tenant_id)
+    .execute()
 
   return Response.json({
     id: property.id,
