@@ -1,12 +1,120 @@
-const MatchingPage = () => {
-  return (
-    <div className="container">
-      <h1 className="text-2xl font-semibold mb-4">Matching</h1>
-      <p className="text-muted-foreground">
-        Cruza contactos con propiedades según sus preferencias de búsqueda.
-      </p>
-    </div>
-  )
+'use client'
+
+import * as React from 'react'
+import { Page, PageBody } from '@open-mercato/ui/backend/Page'
+import { DataTable } from '@open-mercato/ui/backend/DataTable'
+import type { ColumnDef } from '@tanstack/react-table'
+import { Badge } from '@open-mercato/ui/primitives/badge'
+import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { flash } from '@open-mercato/ui/backend/FlashMessages'
+import { useOrganizationScopeVersion } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
+
+type MatchRow = {
+  id: string
+  contact_id: string
+  property_id: string
+  score: number
+  criteria_matched: Record<string, boolean> | null
+  is_dismissed: boolean
+  created_at: string
 }
 
-export default MatchingPage
+type ResponsePayload = {
+  items: MatchRow[]
+  total: number
+  page: number
+  totalPages: number
+}
+
+export default function MatchingPage() {
+  const [rows, setRows] = React.useState<MatchRow[]>([])
+  const [page, setPage] = React.useState(1)
+  const [total, setTotal] = React.useState(0)
+  const [totalPages, setTotalPages] = React.useState(1)
+  const [isLoading, setIsLoading] = React.useState(true)
+  const scopeVersion = useOrganizationScopeVersion()
+
+  React.useEffect(() => {
+    let cancelled = false
+    async function load() {
+      setIsLoading(true)
+      const params = new URLSearchParams()
+      params.set('page', String(page))
+      params.set('pageSize', '50')
+      params.set('is_dismissed', 'false')
+
+      const fallback: ResponsePayload = { items: [], total: 0, page, totalPages: 1 }
+      const call = await apiCall<ResponsePayload>(
+        `/api/matches?${params.toString()}`,
+        undefined,
+        { fallback },
+      )
+
+      if (call.ok && !cancelled) {
+        const payload = call.result ?? fallback
+        setRows(Array.isArray(payload.items) ? payload.items : [])
+        setTotal(payload.total || 0)
+        setTotalPages(payload.totalPages || 1)
+      }
+      if (!cancelled) setIsLoading(false)
+    }
+    load()
+    return () => { cancelled = true }
+  }, [page, scopeVersion])
+
+  const columns = React.useMemo<ColumnDef<MatchRow>[]>(
+    () => [
+      {
+        accessorKey: 'score',
+        header: 'Score',
+        cell: ({ row }) => (
+          <Badge variant={row.original.score >= 70 ? 'default' : row.original.score >= 40 ? 'secondary' : 'outline'}>
+            {row.original.score}%
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'contact_id',
+        header: 'Contacto',
+        cell: ({ row }) => row.original.contact_id.slice(0, 8) + '...',
+      },
+      {
+        accessorKey: 'property_id',
+        header: 'Propiedad',
+        cell: ({ row }) => row.original.property_id.slice(0, 8) + '...',
+      },
+      {
+        accessorKey: 'criteria_matched',
+        header: 'Criterios',
+        cell: ({ row }) => {
+          const criteria = row.original.criteria_matched
+          if (!criteria) return '—'
+          const matched = Object.entries(criteria).filter(([, v]) => v).length
+          const total = Object.keys(criteria).length
+          return `${matched}/${total}`
+        },
+      },
+      {
+        accessorKey: 'created_at',
+        header: 'Fecha',
+        cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString('es-VE'),
+      },
+    ],
+    [],
+  )
+
+  return (
+    <Page>
+      <PageBody>
+        <DataTable
+          title="Matching — Contactos × Propiedades"
+          columns={columns}
+          data={rows}
+          searchPlaceholder="Buscar..."
+          pagination={{ page, pageSize: 50, total, totalPages, onPageChange: setPage }}
+          isLoading={isLoading}
+        />
+      </PageBody>
+    </Page>
+  )
+}
