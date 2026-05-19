@@ -34,7 +34,7 @@ export default function PropertyDetailPage() {
     if (propertyId) load()
   }, [propertyId])
 
-  if (isLoading) return <LoadingMessage />
+  if (isLoading) return <LoadingMessage label="Cargando propiedad..." />
   if (!property) return <Page><PageBody><p>Propiedad no encontrada</p></PageBody></Page>
 
   const groups: CrudFormGroup[] = [
