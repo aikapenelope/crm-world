@@ -66,6 +66,7 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'venezuela_rates', from: '@app' },
   { id: 'payment_methods', from: '@app' },
   { id: 've_fiscal', from: '@app' },
+  { id: 've_tenant_defaults', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
