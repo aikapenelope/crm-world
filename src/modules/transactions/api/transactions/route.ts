@@ -34,8 +34,14 @@ const crud = makeCrudRoute({
   },
   indexer: { entityType: 'transactions.property_transaction' },
   list: { schema: listSchema },
-  create: { schema: createTransactionSchema },
-  update: { schema: updateTransactionSchema },
+  create: {
+    schema: createTransactionSchema,
+    mapToEntity: (input: any) => ({ ...input }),
+  },
+  update: {
+    schema: updateTransactionSchema,
+    applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) },
+  },
 })
 
 export const GET = crud.GET

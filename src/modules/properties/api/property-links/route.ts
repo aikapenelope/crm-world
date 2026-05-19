@@ -25,7 +25,10 @@ const crud = makeCrudRoute({
     tenantField: 'tenant_id',
   },
   list: { schema: listSchema },
-  create: { schema: addPropertyLinkSchema },
+  create: {
+    schema: addPropertyLinkSchema,
+    mapToEntity: (input: any) => ({ ...input }),
+  },
 })
 
 export const GET = crud.GET
