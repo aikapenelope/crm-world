@@ -1,6 +1,10 @@
 /**
  * When a transaction is completed, update the property status
  * to 'sold' or 'rented' depending on the transaction type.
+ *
+ * Uses raw EM query to avoid cross-module import issues.
+ * This follows the Open Mercato pattern: modules communicate via
+ * events and DI, not direct entity imports across boundaries.
  */
 export const metadata = {
   event: 'transactions.transaction.completed',
@@ -12,27 +16,23 @@ export default async function handler(payload: any, ctx: any) {
   const em = ctx.resolve('em')
   if (!em) return
 
-  const { PropertyEntity, PropertyStatus } = await import(
-    '../../../properties/data/entities'
-  )
+  const propertyId = payload.property_id
+  const tenantId = payload.tenantId
+  if (!propertyId || !tenantId) return
 
-  const property = await em.findOne(PropertyEntity, {
-    id: payload.property_id,
-    tenant_id: payload.tenantId,
-    deleted_at: null,
-  })
+  const newStatus = payload.transaction_type === 'sale' ? 'sold' : 'rented'
 
-  if (!property) return
-
-  const newStatus = payload.transaction_type === 'sale'
-    ? PropertyStatus.SOLD
-    : PropertyStatus.RENTED
-
-  property.status = newStatus
-  property.updated_at = new Date()
-  await em.flush()
+  // Use Kysely (MikroORM v7) to update without importing the entity class
+  const knex = em.getKysely()
+  await knex
+    .updateTable('properties')
+    .set({ status: newStatus, updated_at: new Date() })
+    .where('id', '=', propertyId)
+    .where('tenant_id', '=', tenantId)
+    .where('deleted_at', 'is', null)
+    .execute()
 
   console.log(
-    `[transactions] Property ${property.id} status updated to ${newStatus}`,
+    `[transactions] Property ${propertyId} status updated to ${newStatus}`,
   )
 }

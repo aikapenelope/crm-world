@@ -6,7 +6,6 @@
 import { z } from 'zod'
 import type { EntityManager } from '@mikro-orm/core'
 import { valuationRequestSchema } from '../../data/validators'
-import { MarketListingEntity } from '../../../mercadolibre_sync/data/entities'
 import { MarketValuationEntity } from '../../data/entities'
 
 export const metadata = {
@@ -25,21 +24,25 @@ export async function POST(request: Request, ctx: any) {
   const em: EntityManager = ctx.container.resolve('em')
   const scope = ctx.scope
 
-  // Query market listings matching the criteria
-  const where: any = {
-    property_type: input.property_type,
-    operation: input.operation,
-    sync_status: 'active',
-    price_usd: { $ne: null, $gt: '0' },
+  // Query market listings matching the criteria using Kysely
+  // (avoids cross-module entity import)
+  const kysely = em.getKysely()
+  let query = kysely
+    .selectFrom('market_listings')
+    .selectAll()
+    .where('property_type', '=', input.property_type)
+    .where('operation', '=', input.operation)
+    .where('sync_status', '=', 'active')
+    .where('price_usd', 'is not', null)
+    .where('price_usd', '>', '0')
+    .orderBy('price_usd', 'asc')
+    .limit(500)
+
+  if (input.city) {
+    query = query.where('city', 'ilike', `%${input.city}%`)
   }
 
-  // City filter (case-insensitive partial match)
-  where.city = { $ilike: `%${input.city}%` }
-
-  const listings = await em.find(MarketListingEntity, where, {
-    orderBy: { price_usd: 'asc' } as any,
-    limit: 500,
-  })
+  const listings = await query.execute()
 
   if (listings.length === 0) {
     return Response.json({
