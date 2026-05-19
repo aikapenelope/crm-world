@@ -26,7 +26,7 @@ export async function POST(request: Request, ctx: any) {
 
   // Query market listings matching the criteria using Kysely
   // (avoids cross-module entity import)
-  const kysely = em.getKysely()
+  const kysely = (em as any).getKysely()
   let query = kysely
     .selectFrom('market_listings')
     .selectAll()

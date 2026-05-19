@@ -23,7 +23,7 @@ export default async function handler(payload: any, ctx: any) {
   const newStatus = payload.transaction_type === 'sale' ? 'sold' : 'rented'
 
   // Use Kysely (MikroORM v7) to update without importing the entity class
-  const knex = em.getKysely()
+  const knex = (em as any).getKysely()
   await knex
     .updateTable('properties')
     .set({ status: newStatus, updated_at: new Date() })

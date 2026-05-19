@@ -25,7 +25,7 @@ export async function GET(request: Request, ctx: any) {
 
   const em: EntityManager = ctx.container.resolve('em')
   const scope = ctx.scope
-  const kysely = em.getKysely()
+  const kysely = (em as any).getKysely()
 
   // Fetch property
   const property = await kysely
