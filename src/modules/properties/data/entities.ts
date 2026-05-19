@@ -39,10 +39,10 @@ export class PropertyEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4()
 
-  @Property()
+  @Property({ type: 'text' })
   tenant_id!: string
 
-  @Property()
+  @Property({ type: 'text' })
   organization_id!: string
 
   @Property({ length: 255 })
@@ -130,7 +130,7 @@ export class PropertyImageEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4()
 
-  @Property()
+  @Property({ type: 'text' })
   tenant_id!: string
 
   @Property({ type: 'uuid' })
@@ -158,7 +158,7 @@ export class PropertyLinkEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4()
 
-  @Property()
+  @Property({ type: 'text' })
   tenant_id!: string
 
   @Property({ type: 'uuid' })
