@@ -285,3 +285,7 @@ Si el deploy falla con `Error response from daemon: No such container`, simpleme
 | 2026-05-19 | OOM durante build | CX33 sin RAM suficiente | Upgrade a CX43 |
 | 2026-05-19 | Deploy no se triggerea | Source era "Public GitHub" | Cambio a GitHub App en UI |
 | 2026-05-19 | Deploy falla: "No such container" | Bug de Coolify 4.0.0 | Reintentar deploy |
+| 2026-05-19 | Build falla: `organizationId` null | `useOrganizationScopeDetail()` retorna `string \| null` | PR #18 (fallback `?? ''`) |
+| 2026-05-19 | Env vars duplicadas (36) | Set de dev mezclado con prod | Limpieza via API |
+| 2026-05-19 | Sprint 1 completado | Transactions form, search, dictionary, tabs | PR #18 (consolidated) |
+| 2026-05-19 | Sprint 2+3+4 completado | Dashboard, portal, PDF, scoring, import, settings | PR #19 (consolidated) |

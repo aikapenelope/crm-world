@@ -8,6 +8,8 @@
 - [x] HTTPS (Let's Encrypt)
 - [x] Security (fail2ban, UFW, swap, backups)
 - [x] Auto-deploy on push to main
+- [x] Upgrade to CX43 (16 GB RAM) — resolved OOM during builds
+- [x] GitHub App webhook for auto-deploy (mercato22)
 
 ### Phase 1 — Base Venezuela (all tenants)
 - [x] `venezuela_rates` — DolarApi (BCV + paralelo)
@@ -36,37 +38,43 @@
 - [x] Fix cross-module imports (Turbopack restriction)
 - [x] Cleanup Coolify (removed duplicate app)
 
+### Phase 6 — Complete Real Estate for First Client
+
+#### Sprint 1 (PR #18 — merged)
+- [x] Transactions create form (CrudForm — register closing)
+- [x] `search.ts` for properties module (Meilisearch indexing)
+- [x] Document type dictionary seed (12 tipos: contrato, escritura, avalúo, etc.)
+- [x] Property detail tabs (General, Images, Links, Matching)
+- [x] Fix all TypeScript/MikroORM type errors for production build
+- [x] docs/PATTERNS.md — chainlock de errores y reglas
+- [x] docs/OPEN_MERCATO_REFERENCE.md — fuentes de verdad
+
+#### Sprint 2 (PR #19 — pending merge)
+- [x] Dashboard widget: Propiedades por estado
+- [x] Dashboard widget: Pipeline inmobiliario (valor total)
+- [x] Dashboard widget: Cierres recientes
+- [x] Notification types: lead inactivo, propiedad sin actividad, reservada, cierre completado
+- [x] Matching scoring engine (tipo 30%, ciudad 25%, presupuesto 25%, operación 20%)
+
+#### Sprint 3 (PR #19 — pending merge)
+- [x] Agent portal page (/agente/[id] — public properties list)
+- [x] PDF property sheet renderer (HTML-based, printable)
+- [x] Property sheet API endpoint
+- [x] Monthly report API (transactions, pipeline, inventory by month)
+
+#### Sprint 4 (PR #19 — pending merge)
+- [x] CSV import adapter for contacts (flexible column mapping ES/EN)
+- [x] Social accounts + branding settings page (CrudForm)
+
 ---
 
-## Next — Phase 6: Complete Real Estate for First Client
+## Pending (not yet built)
 
-### PR 1: Transactions + Search (High Priority)
-- [ ] Transactions create form (CrudForm — register closing)
-- [ ] `search.ts` for properties module (Meilisearch indexing)
-- [ ] Document type dictionary seed (contrato, escritura, avalúo, plano, factura)
-- [ ] Property detail tabs (images, links, documents, matching results)
-
-### PR 2: Dashboard + Notifications (High Priority)
-- [ ] RE dashboard widgets (properties by status, pipeline summary, recent closings)
-- [ ] RE notification types (lead inactivo 7+ días, propiedad sin actividad)
-- [ ] Matching scoring engine implementation (weighted criteria)
-
-### PR 3: Portal + PDF (Medium Priority)
-- [ ] Agent portal page (/agente/[id] — public properties list)
-- [ ] PDF renderer for property sheet (cover image, specs, branding, QR)
-- [ ] Monthly report PDF (transactions, pipeline, inventory)
-- [ ] Email sending integration (when Resend is configured)
-
-### PR 4: Import + Polish (Medium Priority)
-- [ ] CSV import adapter for contacts
+### Items deferred from Phase 6
 - [ ] vCard import adapter for contacts
 - [ ] Appointment link to property (custom field in planner)
-- [ ] Social account settings page (just stores URLs)
-- [ ] Branding settings (logo upload per tenant)
-
----
-
-## Future Phases
+- [ ] Email sending integration (Resend — needs API key + DNS)
+- [ ] Logo upload per tenant (needs file storage config)
 
 ### Phase 7: Second Vertical (TBD)
 - [ ] Choose vertical based on first client demand
@@ -81,7 +89,8 @@
 ---
 
 ## Technical Debt
-- [ ] Upgrade to CX43 when Hetzner has stock (faster builds)
+- [x] ~~Upgrade to CX43 when Hetzner has stock~~ (done 2026-05-19)
 - [ ] Docker layer caching in Coolify (reduce build time)
 - [ ] Remove `example` module from production
 - [ ] Add integration tests for RE modules
+- [ ] Upgrade Coolify to latest (fix intermittent "No such container" bug)
