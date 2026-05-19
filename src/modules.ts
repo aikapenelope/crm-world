@@ -75,6 +75,8 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'property_portal', from: '@app' },
   { id: 'property_docs', from: '@app' },
   { id: 'property_publishing', from: '@app' },
+  { id: 'mercadolibre_sync', from: '@app' },
+  { id: 'market_intelligence', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

@@ -1,0 +1,13 @@
+{
+  "module_title": "MercadoLibre Sync",
+  "labels": {
+    "market_listings": "Market listings",
+    "last_sync": "Last sync",
+    "total_listings": "Total listings",
+    "sync_now": "Sync now",
+    "syncing": "Syncing...",
+    "categories": "Categories",
+    "status_active": "Active",
+    "status_delisted": "Delisted"
+  }
+}

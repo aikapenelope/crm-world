@@ -1,0 +1,23 @@
+{
+  "module_title": "Market Intelligence",
+  "labels": {
+    "valuation": "Valuation",
+    "comparables": "Comparables",
+    "kpis": "KPIs",
+    "sample_size": "Sample size",
+    "avg_price": "Average price",
+    "median_price": "Median price",
+    "min_price": "Min price",
+    "max_price": "Max price",
+    "p25_price": "25th percentile",
+    "p75_price": "75th percentile",
+    "price_per_m2": "Price per m²",
+    "price_position": "Market position",
+    "below_market": "Below market",
+    "at_market": "At market",
+    "above_market": "Above market",
+    "percentile_rank": "Percentile",
+    "run_valuation": "Run valuation",
+    "no_data": "No market data available for these criteria"
+  }
+}
