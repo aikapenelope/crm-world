@@ -1,0 +1,30 @@
+{
+  "module_title": "Matching",
+  "module_description": "Contact-property matching engine",
+  "labels": {
+    "contact": "Contact",
+    "property": "Property",
+    "score": "Score",
+    "criteria_matched": "Criteria",
+    "preferred_type": "Preferred type",
+    "preferred_operation": "Preferred operation",
+    "preferred_city": "Preferred city",
+    "max_budget": "Max budget",
+    "min_area": "Min area (m²)",
+    "min_bedrooms": "Min bedrooms",
+    "min_bathrooms": "Min bathrooms",
+    "min_parking": "Min parking",
+    "is_active": "Active",
+    "run_matching": "Run matching",
+    "dismiss": "Dismiss",
+    "notify": "Notify contact"
+  },
+  "scoring": {
+    "type_match": "Type matches",
+    "operation_match": "Operation matches",
+    "city_match": "City matches",
+    "budget_match": "Within budget",
+    "area_match": "Area sufficient",
+    "bedrooms_match": "Bedrooms sufficient"
+  }
+}

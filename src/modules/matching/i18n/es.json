@@ -1,0 +1,30 @@
+{
+  "module_title": "Matching",
+  "module_description": "Cruce de contactos con propiedades",
+  "labels": {
+    "contact": "Contacto",
+    "property": "Propiedad",
+    "score": "Score",
+    "criteria_matched": "Criterios",
+    "preferred_type": "Tipo preferido",
+    "preferred_operation": "Operación preferida",
+    "preferred_city": "Ciudad preferida",
+    "max_budget": "Presupuesto máximo",
+    "min_area": "Área mínima (m²)",
+    "min_bedrooms": "Habitaciones mínimas",
+    "min_bathrooms": "Baños mínimos",
+    "min_parking": "Estacionamientos mínimos",
+    "is_active": "Activo",
+    "run_matching": "Ejecutar matching",
+    "dismiss": "Descartar",
+    "notify": "Notificar contacto"
+  },
+  "scoring": {
+    "type_match": "Tipo coincide",
+    "operation_match": "Operación coincide",
+    "city_match": "Ciudad coincide",
+    "budget_match": "Dentro del presupuesto",
+    "area_match": "Área suficiente",
+    "bedrooms_match": "Habitaciones suficientes"
+  }
+}
