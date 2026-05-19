@@ -1,7 +1,7 @@
 import { createModuleEvents } from '@open-mercato/shared/modules/events'
 
 export const eventsConfig = createModuleEvents({
-  module: 'properties',
+  moduleId: 'properties',
   events: [
     { id: 'properties.property.created', label: 'Propiedad creada', entity: 'property' },
     { id: 'properties.property.updated', label: 'Propiedad actualizada', entity: 'property' },
