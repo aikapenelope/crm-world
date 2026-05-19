@@ -96,6 +96,21 @@ const VE_INDUSTRIES = [
   { label: 'Manufactura', code: 'manufactura', order: 10 },
 ]
 
+const VE_DOCUMENT_TYPES = [
+  { label: 'Contrato', code: 'contrato', order: 1 },
+  { label: 'Escritura', code: 'escritura', order: 2 },
+  { label: 'Avalúo', code: 'avaluo', order: 3 },
+  { label: 'Plano', code: 'plano', order: 4 },
+  { label: 'Factura', code: 'factura', order: 5 },
+  { label: 'Acta', code: 'acta', order: 6 },
+  { label: 'Poder notariado', code: 'poder', order: 7 },
+  { label: 'Cédula de identidad', code: 'cedula', order: 8 },
+  { label: 'RIF', code: 'rif', order: 9 },
+  { label: 'Solvencia municipal', code: 'solvencia_municipal', order: 10 },
+  { label: 'Certificación de gravamen', code: 'certificacion_gravamen', order: 11 },
+  { label: 'Otro', code: 'otro', order: 12 },
+]
+
 async function seedVenezuelaDictionaries(em: EntityManager, scope: SeedScope): Promise<void> {
   // Dictionaries are seeded via the customers module's dictionary system
   // We use the same entity pattern as the core
@@ -116,6 +131,7 @@ async function seedVenezuelaDictionaries(em: EntityManager, scope: SeedScope): P
       ...VE_ADDRESS_TYPES.map((e) => ({ ...e, kind: 'address-types' })),
       ...VE_SOURCES.map((e) => ({ ...e, kind: 'sources' })),
       ...VE_INDUSTRIES.map((e) => ({ ...e, kind: 'industries' })),
+      ...VE_DOCUMENT_TYPES.map((e) => ({ ...e, kind: 'document-types' })),
     ]
 
     for (const entry of entries) {

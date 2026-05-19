@@ -16,25 +16,25 @@ export class PaymentMethodEntity {
   @Property({ type: 'text' })
   organization_id!: string
 
-  @Property({ length: 50, unique: false })
+  @Property({ type: 'text', length: 50, unique: false })
   code!: string
 
-  @Property({ length: 100 })
+  @Property({ type: 'text', length: 100 })
   name!: string
 
-  @Property({ length: 10 })
+  @Property({ type: 'text', length: 10 })
   currency!: string
 
   @Property({ type: 'boolean', default: false })
   requiresReference: boolean = false
 
-  @Property({ length: 100, nullable: true })
+  @Property({ type: 'text', length: 100, nullable: true })
   referenceLabel?: string | null
 
   @Property({ type: 'text', nullable: true })
   instructions?: string | null
 
-  @Property({ length: 50, nullable: true })
+  @Property({ type: 'text', length: 50, nullable: true })
   icon?: string | null
 
   @Property({ type: 'boolean', default: true })
@@ -68,13 +68,13 @@ export class PaymentRecordEntity {
   @Property({ type: 'text' })
   organization_id!: string
 
-  @Property({ length: 50 })
+  @Property({ type: 'text', length: 50 })
   payment_method_code!: string
 
   @Property({ type: 'decimal', precision: 18, scale: 4 })
   amount!: string
 
-  @Property({ length: 10 })
+  @Property({ type: 'text', length: 10 })
   currency!: string
 
   @Property({ type: 'decimal', precision: 18, scale: 4, nullable: true })
@@ -83,19 +83,19 @@ export class PaymentRecordEntity {
   @Property({ type: 'decimal', precision: 18, scale: 8, nullable: true })
   exchange_rate?: string | null
 
-  @Property({ length: 255, nullable: true })
+  @Property({ type: 'text', length: 255, nullable: true })
   reference?: string | null
 
   @Property({ type: 'text', nullable: true })
   notes?: string | null
 
-  @Property({ length: 50, nullable: true })
+  @Property({ type: 'text', length: 50, nullable: true })
   reference_type?: string | null
 
   @Property({ type: 'uuid', nullable: true })
   reference_id?: string | null
 
-  @Property({ length: 20, default: "'pending'" })
+  @Property({ type: 'text', length: 20, default: "'pending'" })
   status: string = 'pending'
 
   @Property({ type: 'uuid', nullable: true })
