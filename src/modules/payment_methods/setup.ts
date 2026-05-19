@@ -93,7 +93,7 @@ async function seedPaymentMethods(
   const existing = await em.find(PaymentMethodEntity, {
     tenant_id: scope.tenantId,
     organization_id: scope.organizationId,
-  })
+  } as any)
   const existingCodes = new Set(existing.map((m) => m.code))
 
   let touched = false
@@ -104,7 +104,7 @@ async function seedPaymentMethods(
       tenant_id: scope.tenantId,
       organization_id: scope.organizationId,
       ...method,
-    })
+    } as any)
     em.persist(entry)
     touched = true
   }

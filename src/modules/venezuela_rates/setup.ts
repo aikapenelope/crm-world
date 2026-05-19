@@ -71,7 +71,7 @@ async function seedVenezuelaCurrencies(
   const existing = await em.find(Currency, {
     tenantId: scope.tenantId,
     organizationId: scope.organizationId,
-  })
+  } as any)
   const existingCodes = new Set(existing.map((c: any) => c.code))
 
   let touched = false
@@ -84,7 +84,7 @@ async function seedVenezuelaCurrencies(
       ...curr,
       createdAt: new Date(),
       updatedAt: new Date(),
-    })
+    } as any)
     em.persist(entry)
     touched = true
   }
