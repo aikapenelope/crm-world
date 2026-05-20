@@ -84,6 +84,11 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'dist_commissions', from: '@app' },
   { id: 'dist_portal', from: '@app' },
 
+  // Aika: Automotive vertical (talleres mecánicos)
+  { id: 'auto_vehicles', from: '@app' },
+  { id: 'auto_service_orders', from: '@app' },
+  { id: 'auto_inspections', from: '@app' },
+
   // Aika: Real Estate vertical
   { id: 'properties', from: '@app' },
   { id: 'transactions', from: '@app' },
