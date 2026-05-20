@@ -234,3 +234,64 @@ export class CondoCommonAreaEntity {
   @Property({ type: 'timestamptz', onUpdate: () => new Date() })
   updated_at: Date = new Date()
 }
+
+// =============================================================================
+// CondoReservationEntity — Reserva de áreas comunes
+// =============================================================================
+
+export enum ReservationStatus {
+  CONFIRMED = 'confirmed',
+  CANCELLED = 'cancelled',
+  COMPLETED = 'completed',
+}
+
+@Entity({ tableName: 'condo_reservations' })
+export class CondoReservationEntity {
+  @PrimaryKey({ type: 'uuid' })
+  id: string = v4()
+
+  @Property({ type: 'text' })
+  tenant_id!: string
+
+  @Property({ type: 'text' })
+  organization_id!: string
+
+  @Property({ type: 'uuid' })
+  area_id!: string
+
+  @Property({ type: 'uuid' })
+  unit_id!: string
+
+  @Property({ type: 'text', length: 255 })
+  reserved_by_name!: string
+
+  @Property({ type: 'text', length: 20 })
+  unit_number!: string
+
+  @Property({ type: 'date' })
+  reservation_date!: Date
+
+  @Property({ type: 'text', length: 5 })
+  start_time!: string
+
+  @Property({ type: 'text', length: 5 })
+  end_time!: string
+
+  @Property({ type: 'text', nullable: true })
+  purpose?: string | null
+
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  fee_amount: string = '0.00'
+
+  @Enum({ items: () => ReservationStatus, type: 'string', length: 15 })
+  status!: ReservationStatus
+
+  @Property({ type: 'text', nullable: true })
+  notes?: string | null
+
+  @Property({ type: 'timestamptz' })
+  created_at: Date = new Date()
+
+  @Property({ type: 'timestamptz', onUpdate: () => new Date() })
+  updated_at: Date = new Date()
+}
