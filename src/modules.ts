@@ -81,6 +81,7 @@ export const enabledModules: ModuleEntry[] = [
   // Aika: Education vertical
   { id: 'students', from: '@app' },
   { id: 'enrollment', from: '@app' },
+  { id: 'tuition', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
