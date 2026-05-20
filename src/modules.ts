@@ -77,6 +77,8 @@ export const enabledModules: ModuleEntry[] = [
   // Aika: Distribution vertical
   { id: 'dist_credit', from: '@app' },
   { id: 'dist_price_lists', from: '@app' },
+  { id: 'dist_inventory', from: '@app' },
+  { id: 'dist_routes', from: '@app' },
 
   // Aika: Real Estate vertical
   { id: 'properties', from: '@app' },
