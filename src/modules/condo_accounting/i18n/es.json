@@ -1,0 +1,19 @@
+{
+  "condo_accounting.nav.title": "Contabilidad",
+  "condo_accounting.entries.title": "Movimientos",
+  "condo_accounting.entries.create.title": "Registrar Movimiento",
+  "condo_accounting.reserve_fund.title": "Fondo de Reserva",
+  "condo_accounting.budgets.title": "Presupuestos",
+  "condo_accounting.report.title": "Reporte para Asamblea",
+  "condo_accounting.type.income": "Ingreso",
+  "condo_accounting.type.expense": "Gasto",
+  "condo_accounting.category.condo_fee": "Cuota de Condominio",
+  "condo_accounting.category.extraordinary": "Extraordinario",
+  "condo_accounting.category.reserve_fund": "Fondo de Reserva",
+  "condo_accounting.category.maintenance": "Mantenimiento",
+  "condo_accounting.category.utilities": "Servicios Públicos",
+  "condo_accounting.category.payroll": "Nómina",
+  "condo_accounting.category.insurance": "Seguros",
+  "condo_accounting.category.legal": "Legal",
+  "condo_accounting.flash.entry_created": "Movimiento registrado exitosamente"
+}

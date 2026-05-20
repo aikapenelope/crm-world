@@ -109,6 +109,16 @@
 - [x] `retail_returns` — Devoluciones: políticas por categoría, notas de crédito
 - [x] `retail_ecommerce` — E-commerce: storefront público, pedidos, delivery, publicación social
 
+## Phase 12 — Property Management / Condominios Vertical (complete)
+
+- [x] `condo_properties` — Edificios, unidades con alícuota (5 decimales, suma=100%), áreas comunes reservables
+- [x] `condo_fees` — Cuotas ordinarias/extraordinarias, generación masiva de recibos por alícuota, multi-moneda USD/VES con tasa BCV
+- [x] `condo_collections` — Morosidad, aging, cobro masivo por WhatsApp (wa.me links), acuerdos de pago en cuotas
+- [x] `condo_maintenance` — Solicitudes con workflow (open→assigned→in_progress→completed), órdenes de trabajo, proveedores con rating
+- [x] `condo_accounting` — Ingresos/gastos por categoría, fondo de reserva automático (Art. 14 LPH), presupuesto anual
+- [x] `condo_comms` — Circulares con tracking lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea
+- [x] `condo_portal` — Portal del propietario: estado de cuenta, reportar pagos, solicitudes, circulares, votaciones, documentos
+
 ---
 
 ## Future Verticals (por definir)

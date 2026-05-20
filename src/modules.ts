@@ -123,6 +123,15 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'retail_ecommerce', from: '@app' },
   { id: 'retail_purchasing', from: '@app' },
   { id: 'retail_pricing', from: '@app' },
+
+  // Aika: Property Management / Condominios vertical
+  { id: 'condo_properties', from: '@app' },
+  { id: 'condo_fees', from: '@app' },
+  { id: 'condo_collections', from: '@app' },
+  { id: 'condo_maintenance', from: '@app' },
+  { id: 'condo_accounting', from: '@app' },
+  { id: 'condo_comms', from: '@app' },
+  { id: 'condo_portal', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
