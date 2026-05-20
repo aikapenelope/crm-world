@@ -219,6 +219,87 @@ async function configureAddressFormat(em: EntityManager, scope: SeedScope): Prom
 }
 
 // ---------------------------------------------------------------------------
+// Strip non-RE features from tenant roles (Real Estate CRM only)
+// ---------------------------------------------------------------------------
+const ALLOWED_FEATURE_PREFIXES = [
+  'dashboards',
+  'analytics',
+  'auth',
+  'directory',
+  'customers',
+  'perspectives',
+  'entities',
+  'configs',
+  'query_index',
+  'audit_logs',
+  'attachments',
+  'dictionaries',
+  'planner',
+  'notifications',
+  'progress',
+  'search',
+  'vector',
+  'currencies',
+  'messages',
+  'ai_assistant',
+  'translations',
+  'scheduler',
+  'workflows',
+  // Venezuela regional
+  'payment_methods',
+  've_fiscal',
+  // Real Estate vertical
+  'properties',
+  'transactions',
+  'matching',
+  'market_intelligence',
+  'mercadolibre_sync',
+]
+
+function isAllowedFeature(feature: string): boolean {
+  return ALLOWED_FEATURE_PREFIXES.some((prefix) =>
+    feature === prefix || feature.startsWith(`${prefix}.`),
+  )
+}
+
+async function stripNonRealEstateFeatures(em: EntityManager, tenantId: string): Promise<void> {
+  try {
+    const kysely = (em as any).getKysely()
+
+    // Get all role_acls for this tenant (non-superadmin)
+    const acls = await kysely
+      .selectFrom('role_acls')
+      .select(['id', 'features_json'])
+      .where('tenant_id', '=', tenantId)
+      .where('is_super_admin', '=', false)
+      .execute()
+
+    for (const acl of acls) {
+      const features = acl.features_json as string[]
+      const filtered = features.filter(isAllowedFeature)
+
+      if (filtered.length !== features.length) {
+        await kysely
+          .updateTable('role_acls')
+          .set({ features_json: JSON.stringify(filtered), updated_at: new Date() })
+          .where('id', '=', acl.id)
+          .execute()
+      }
+    }
+
+    const removed = acls.reduce((sum: number, acl: any) => {
+      const original = (acl.features_json as string[]).length
+      const kept = (acl.features_json as string[]).filter(isAllowedFeature).length
+      return sum + (original - kept)
+    }, 0)
+
+    console.log(`[ve_tenant_defaults] Stripped ${removed} non-RE features from tenant roles`)
+  } catch (err: any) {
+    console.warn(`[ve_tenant_defaults] Could not strip features: ${err.message}`)
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Module Setup
 // ---------------------------------------------------------------------------
 export const setup: ModuleSetupConfig = {
@@ -232,6 +313,9 @@ export const setup: ModuleSetupConfig = {
     const scope = { tenantId, organizationId }
     await seedVenezuelaTaxRates(em as EntityManager, scope)
     await seedVenezuelaDictionaries(em as EntityManager, scope)
+    // After all modules seed their default features, strip the ones
+    // that don't belong to the Real Estate CRM vertical
+    await stripNonRealEstateFeatures(em as EntityManager, tenantId)
   },
 }
 
