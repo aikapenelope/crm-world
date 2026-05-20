@@ -1,4 +1,3 @@
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
 import { earnPointsSchema, redeemPointsSchema, listAccountsSchema } from '../../data/validators'
 
 const routeMetadata = {
@@ -8,8 +7,9 @@ const routeMetadata = {
 
 export const metadata = routeMetadata
 
-export async function GET(request: Request) {
-  const { em, scope } = (request as any).context as RequestContext
+export async function GET(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
   const kysely = (em as any).getKysely()
   const url = new URL(request.url)
   const params = listAccountsSchema.parse(Object.fromEntries(url.searchParams))
@@ -35,8 +35,9 @@ export async function GET(request: Request) {
   return Response.json({ items })
 }
 
-export async function POST(request: Request) {
-  const { em, scope } = (request as any).context as RequestContext
+export async function POST(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
   const kysely = (em as any).getKysely()
   const body = await request.json()
 

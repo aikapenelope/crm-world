@@ -1,4 +1,3 @@
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
 import { listAlertsSchema, acknowledgeAlertSchema } from '../../data/validators'
 
 const routeMetadata = {
@@ -8,8 +7,9 @@ const routeMetadata = {
 
 export const metadata = routeMetadata
 
-export async function GET(request: Request) {
-  const { em, scope } = (request as any).context as RequestContext
+export async function GET(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
   const kysely = (em as any).getKysely()
   const url = new URL(request.url)
   const params = listAlertsSchema.parse(Object.fromEntries(url.searchParams))
@@ -32,8 +32,10 @@ export async function GET(request: Request) {
   return Response.json({ items })
 }
 
-export async function POST(request: Request) {
-  const { em, scope, user } = (request as any).context as RequestContext
+export async function POST(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
+  const user = ctx.user
   const kysely = (em as any).getKysely()
   const body = await request.json()
   const input = acknowledgeAlertSchema.parse(body)
@@ -42,7 +44,7 @@ export async function POST(request: Request) {
     .updateTable('retail_price_alerts')
     .set({
       status: 'acknowledged',
-      acknowledged_by: (user as any)?.id ?? null,
+      acknowledged_by: user?.id ?? null,
       acknowledged_at: new Date(),
     } as any)
     .where('id', '=', input.alert_id)

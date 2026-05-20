@@ -6,7 +6,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
-import { Share2, Instagram, MessageCircle } from 'lucide-react'
+import { Share2 } from 'lucide-react'
 
 export default function PublishPage() {
   const [productId, setProductId] = React.useState('')
@@ -79,10 +79,10 @@ export default function PublishPage() {
             <label className="block text-sm font-medium mb-2">Plataforma</label>
             <div className="flex gap-2">
               {[
-                { id: 'instagram', label: 'Instagram', icon: Instagram },
-                { id: 'whatsapp', label: 'WhatsApp', icon: MessageCircle },
-                { id: 'tiktok', label: 'TikTok', icon: Share2 },
-                { id: 'facebook', label: 'Facebook', icon: Share2 },
+                { id: 'instagram', label: 'Instagram' },
+                { id: 'whatsapp', label: 'WhatsApp' },
+                { id: 'tiktok', label: 'TikTok' },
+                { id: 'facebook', label: 'Facebook' },
               ].map(({ id, label }) => (
                 <button
                   key={id}

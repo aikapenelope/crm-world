@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { RetailBranchEntity } from '../../data/entities'
 import { createBranchSchema, updateBranchSchema, listBranchSchema } from '../../data/validators'

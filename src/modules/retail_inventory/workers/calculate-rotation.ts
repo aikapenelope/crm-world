@@ -15,10 +15,9 @@
  * 2. Upsert en retail_stock_rotation
  */
 
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
-
-export async function calculateRotation(context: RequestContext) {
-  const { em, scope } = context
+export async function calculateRotation(context: any) {
+  const em = context.container.resolve('em')
+  const scope = context.scope
   const kysely = (em as any).getKysely()
 
   const now = new Date()
