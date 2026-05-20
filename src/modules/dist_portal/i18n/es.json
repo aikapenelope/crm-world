@@ -1,0 +1,8 @@
+{
+  "dist_portal.dashboard.title": "Mi Cuenta",
+  "dist_portal.orders.title": "Mis Pedidos",
+  "dist_portal.account.title": "Estado de Cuenta",
+  "dist_portal.balance": "Saldo Pendiente",
+  "dist_portal.credit_limit": "Límite de Crédito",
+  "dist_portal.available_credit": "Crédito Disponible"
+}
