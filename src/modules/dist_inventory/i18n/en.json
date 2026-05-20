@@ -1,0 +1,12 @@
+{
+  "dist_inventory.nav.title": "Inventory",
+  "dist_inventory.movement.title": "Register Movement",
+  "dist_inventory.alerts.title": "Stock Alerts",
+  "dist_inventory.type.purchase_in": "Purchase In",
+  "dist_inventory.type.sale_out": "Sale Out",
+  "dist_inventory.type.return_in": "Return In",
+  "dist_inventory.type.adjustment": "Adjustment",
+  "dist_inventory.type.transfer": "Transfer",
+  "dist_inventory.type.count": "Physical Count",
+  "dist_inventory.flash.movement_created": "Movement registered successfully"
+}

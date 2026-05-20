@@ -1,0 +1,12 @@
+{
+  "dist_inventory.nav.title": "Inventario",
+  "dist_inventory.movement.title": "Registrar Movimiento",
+  "dist_inventory.alerts.title": "Alertas de Stock",
+  "dist_inventory.type.purchase_in": "Entrada por compra",
+  "dist_inventory.type.sale_out": "Salida por venta",
+  "dist_inventory.type.return_in": "Devolución",
+  "dist_inventory.type.adjustment": "Ajuste",
+  "dist_inventory.type.transfer": "Transferencia",
+  "dist_inventory.type.count": "Conteo físico",
+  "dist_inventory.flash.movement_created": "Movimiento registrado exitosamente"
+}
