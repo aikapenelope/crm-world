@@ -70,6 +70,8 @@ Construido sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0
 | `retail_loyalty` | Programa de puntos configurable. Niveles VIP con descuentos automáticos. Campañas de marketing por WhatsApp. Expiración automática |
 | `retail_returns` | Devoluciones con políticas por categoría. Inspección de condición. Notas de crédito con saldo. Reingreso condicional al inventario |
 | `retail_ecommerce` | Storefront público (/tienda/[slug]). Carrito + checkout. Pedidos con tracking de estado. Pagos VE. Publicador social (IG/WA/TikTok/FB) |
+| `retail_purchasing` | Gestión de compras: proveedores, órdenes automáticas por reorden, recepción de mercancía, cuentas por pagar, notas débito/crédito |
+| `retail_pricing` | Pricing y márgenes: reglas por categoría/canal, actualización masiva por dólar, precios regulados, alertas bajo costo/margen |
 
 ---
 
@@ -116,7 +118,7 @@ Aplican a todas las verticales. Cualquier tenant que facture los usa.
                   (cada cliente ve solo su vertical)
 ```
 
-**Total: 49 módulos custom + 40 módulos Open Mercato core = plataforma completa**
+**Total: 51 módulos custom + 40 módulos Open Mercato core = plataforma completa**
 
 ---
 
@@ -189,6 +191,8 @@ git push origin main        # Deploy automático via Coolify
 | Integración con impresora fiscal | Baja | Conexión con impresoras fiscales VE (Bixolon, The Factory) |
 | App móvil vendedor | Media | PWA para vendedores en piso (consultar stock, registrar venta) |
 | Sincronización offline | Media | Cola de operaciones cuando no hay internet (común en VE) |
+| Comparación de precios entre proveedores | Baja | Tabla comparativa automática al crear orden de compra |
+| Auto-generación de OC por reorden | Media | Worker que detecta stock bajo y genera OC draft al proveedor preferido |
 
 ### Plataforma — Mejoras generales
 

@@ -121,6 +121,8 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'retail_loyalty', from: '@app' },
   { id: 'retail_returns', from: '@app' },
   { id: 'retail_ecommerce', from: '@app' },
+  { id: 'retail_purchasing', from: '@app' },
+  { id: 'retail_pricing', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
