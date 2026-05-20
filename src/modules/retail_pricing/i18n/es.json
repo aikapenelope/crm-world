@@ -1,0 +1,23 @@
+{
+  "retail_pricing.nav.title": "Pricing",
+  "retail_pricing.nav.group": "Retail",
+  "retail_pricing.nav.rules": "Reglas de Margen",
+  "retail_pricing.nav.alerts": "Alertas",
+  "retail_pricing.rule.create": "Nueva Regla",
+  "retail_pricing.rule.min_margin": "Margen Mínimo (%)",
+  "retail_pricing.rule.target_margin": "Margen Objetivo (%)",
+  "retail_pricing.rule.max_regulated": "Precio Máximo Regulado",
+  "retail_pricing.channel.store": "Tienda",
+  "retail_pricing.channel.online": "Online",
+  "retail_pricing.channel.wholesale": "Mayorista",
+  "retail_pricing.bulk.title": "Actualización Masiva",
+  "retail_pricing.bulk.exchange_rate": "Por Tasa de Cambio",
+  "retail_pricing.bulk.percentage": "Por Porcentaje",
+  "retail_pricing.alert.below_cost": "Precio Bajo Costo",
+  "retail_pricing.alert.below_margin": "Margen Insuficiente",
+  "retail_pricing.alert.above_regulated": "Sobre Precio Regulado",
+  "retail_pricing.alert.exchange_rate_drift": "Desfase por Tasa",
+  "retail_pricing.flash.rule_created": "Regla de margen creada",
+  "retail_pricing.flash.bulk_updated": "Precios actualizados masivamente",
+  "retail_pricing.flash.alert_acknowledged": "Alerta reconocida"
+}
