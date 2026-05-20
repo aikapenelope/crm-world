@@ -61,7 +61,7 @@ Construido sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0
 | `auto_reports` | Dashboard: órdenes, ingresos, productividad por técnico |
 | `auto_portal` | Portal del cliente: estado de su vehículo, historial |
 
-### Retail / Comercio — Tiendas Multi-Sucursal
+### Retail / Comercio — Tiendas Multi-Sucursal *(Phase 11)*
 
 | Módulo | Qué hace |
 |--------|----------|
