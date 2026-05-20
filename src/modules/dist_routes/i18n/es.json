@@ -1,0 +1,12 @@
+{
+  "dist_routes.nav.title": "Rutas",
+  "dist_routes.create.title": "Nueva Ruta",
+  "dist_routes.today.title": "Mi Día",
+  "dist_routes.visit.planned": "Planificada",
+  "dist_routes.visit.visited": "Visitado",
+  "dist_routes.visit.skipped": "Omitido",
+  "dist_routes.visit.order_taken": "Pedido tomado",
+  "dist_routes.visit.no_order": "Sin pedido",
+  "dist_routes.flash.created": "Ruta creada exitosamente",
+  "dist_routes.flash.visit_registered": "Visita registrada"
+}
