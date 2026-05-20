@@ -1,0 +1,10 @@
+{
+  "dist_price_lists.nav.title": "Price Lists",
+  "dist_price_lists.create.title": "New Price List",
+  "dist_price_lists.type.standard": "Standard",
+  "dist_price_lists.type.promotional": "Promotional",
+  "dist_price_lists.type.volume": "Volume",
+  "dist_price_lists.flash.created": "Price list created successfully",
+  "dist_price_lists.flash.updated": "Price list updated",
+  "dist_price_lists.flash.item_added": "Price added to list"
+}

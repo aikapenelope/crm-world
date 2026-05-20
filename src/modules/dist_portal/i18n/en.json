@@ -1,0 +1,8 @@
+{
+  "dist_portal.dashboard.title": "My Account",
+  "dist_portal.orders.title": "My Orders",
+  "dist_portal.account.title": "Account Statement",
+  "dist_portal.balance": "Outstanding Balance",
+  "dist_portal.credit_limit": "Credit Limit",
+  "dist_portal.available_credit": "Available Credit"
+}

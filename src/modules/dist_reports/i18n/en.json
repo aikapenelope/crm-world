@@ -1,0 +1,7 @@
+{
+  "dist_reports.nav.title": "Reports",
+  "dist_reports.section.receivable": "Accounts Receivable",
+  "dist_reports.section.inventory": "Inventory",
+  "dist_reports.section.deliveries": "Deliveries",
+  "dist_reports.section.routes": "Routes"
+}

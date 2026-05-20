@@ -1,0 +1,12 @@
+{
+  "dist_credit.nav.title": "Accounts Receivable",
+  "dist_credit.create.title": "Assign Credit",
+  "dist_credit.aging.title": "Aging Report",
+  "dist_credit.cobro.title": "WhatsApp Collection",
+  "dist_credit.status.active": "Active",
+  "dist_credit.status.suspended": "Suspended",
+  "dist_credit.status.blocked": "Blocked",
+  "dist_credit.flash.created": "Credit assigned successfully",
+  "dist_credit.flash.updated": "Credit updated",
+  "dist_credit.flash.transaction_created": "Transaction registered"
+}

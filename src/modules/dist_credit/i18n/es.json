@@ -1,0 +1,12 @@
+{
+  "dist_credit.nav.title": "Cuentas por Cobrar",
+  "dist_credit.create.title": "Asignar Crédito",
+  "dist_credit.aging.title": "Antigüedad de Saldos",
+  "dist_credit.cobro.title": "Cobro WhatsApp",
+  "dist_credit.status.active": "Activo",
+  "dist_credit.status.suspended": "Suspendido",
+  "dist_credit.status.blocked": "Bloqueado",
+  "dist_credit.flash.created": "Crédito asignado exitosamente",
+  "dist_credit.flash.updated": "Crédito actualizado",
+  "dist_credit.flash.transaction_created": "Transacción registrada"
+}

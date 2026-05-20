@@ -1,0 +1,11 @@
+{
+  "dist_commissions.nav.title": "Commissions",
+  "dist_commissions.type.sale": "Sale",
+  "dist_commissions.type.collection": "Collection",
+  "dist_commissions.type.goal_bonus": "Goal Bonus",
+  "dist_commissions.status.pending": "Pending",
+  "dist_commissions.status.approved": "Approved",
+  "dist_commissions.status.paid": "Paid",
+  "dist_commissions.flash.created": "Commission registered",
+  "dist_commissions.flash.approved": "Commission approved"
+}
