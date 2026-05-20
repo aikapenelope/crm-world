@@ -7,10 +7,10 @@
 //   See `.ai/specs/2026-05-04-modules-ts-unified-overrides.md` and
 //   `apps/docs/docs/framework/ai-assistant/overrides.mdx`.
 //
-// NOTA: Este build es para el CRM de Real Estate. Solo se incluyen los
-// módulos necesarios para esa vertical. Módulos de otras verticales
-// (catalog, sales, checkout, shipping, etc.) están excluidos para
-// reducir el tiempo de build (~15 min → ~8 min).
+// NOTA: Todos los módulos de todas las verticales están compilados aquí.
+// La visibilidad por tenant se controla via feature toggles y role features.
+// Al crear un tenant, el Super Admin selecciona qué módulos tiene acceso.
+// No se elimina nada de aquí — si se elimina, se pierde para TODOS los tenants.
 import { parseBooleanWithDefault } from '@open-mercato/shared/lib/boolean'
 import type { ModuleOverrides } from '@open-mercato/shared/modules/overrides'
 
@@ -21,7 +21,7 @@ export type ModuleEntry = {
 }
 
 export const enabledModules: ModuleEntry[] = [
-  // ─── Platform Core (required) ───────────────────────────────────────────────
+  // ─── Platform Core ──────────────────────────────────────────────────────────
   { id: 'auth', from: '@open-mercato/core' },
   { id: 'directory', from: '@open-mercato/core' },
   { id: 'configs', from: '@open-mercato/core' },
@@ -35,14 +35,23 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'progress', from: '@open-mercato/core' },
   { id: 'staff', from: '@open-mercato/core' },
   { id: 'resources', from: '@open-mercato/core' },
-
-  // ─── CRM & Contacts (used by Real Estate) ──────────────────────────────────
-  { id: 'customers', from: '@open-mercato/core' },
   { id: 'perspectives', from: '@open-mercato/core' },
   { id: 'dashboards', from: '@open-mercato/core' },
+  { id: 'api_docs', from: '@open-mercato/core' },
+
+  // ─── CRM & Contacts ────────────────────────────────────────────────────────
+  { id: 'customers', from: '@open-mercato/core' },
   { id: 'planner', from: '@open-mercato/core' },
   { id: 'attachments', from: '@open-mercato/core' },
   { id: 'currencies', from: '@open-mercato/core' },
+
+  // ─── Commerce & Sales (Retail, Manufacturing, etc.) ─────────────────────────
+  { id: 'catalog', from: '@open-mercato/core' },
+  { id: 'sales', from: '@open-mercato/core' },
+  { id: 'payment_gateways', from: '@open-mercato/core' },
+  { id: 'checkout', from: '@open-mercato/checkout' },
+  { id: 'gateway_stripe', from: '@open-mercato/gateway-stripe' },
+  { id: 'shipping_carriers', from: '@open-mercato/core' },
 
   // ─── Communication & Automation ─────────────────────────────────────────────
   { id: 'notifications', from: '@open-mercato/core' },
@@ -65,9 +74,11 @@ export const enabledModules: ModuleEntry[] = [
   // ─── Integration & Sync ─────────────────────────────────────────────────────
   { id: 'integrations', from: '@open-mercato/core' },
   { id: 'data_sync', from: '@open-mercato/core' },
+  { id: 'sync_akeneo', from: '@open-mercato/sync-akeneo' },
 
-  // ─── Docs ───────────────────────────────────────────────────────────────────
-  { id: 'api_docs', from: '@open-mercato/core' },
+  // ─── Content & Onboarding ───────────────────────────────────────────────────
+  { id: 'content', from: '@open-mercato/content' },
+  { id: 'onboarding', from: '@open-mercato/onboarding' },
 
   // ─── Aika: Regional modules (apply to all VE tenants) ──────────────────────
   { id: 'venezuela_rates', from: '@app' },
