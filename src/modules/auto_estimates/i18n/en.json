@@ -1,0 +1,10 @@
+{
+  "auto_estimates.nav.title": "Estimates",
+  "auto_estimates.create.title": "New Estimate",
+  "auto_estimates.status.draft": "Draft",
+  "auto_estimates.status.sent": "Sent",
+  "auto_estimates.status.approved": "Approved",
+  "auto_estimates.status.rejected": "Rejected",
+  "auto_estimates.flash.created": "Estimate created",
+  "auto_estimates.flash.sent": "Estimate sent to customer"
+}

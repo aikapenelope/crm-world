@@ -1,0 +1,10 @@
+{
+  "auto_estimates.nav.title": "Presupuestos",
+  "auto_estimates.create.title": "Nuevo Presupuesto",
+  "auto_estimates.status.draft": "Borrador",
+  "auto_estimates.status.sent": "Enviado",
+  "auto_estimates.status.approved": "Aprobado",
+  "auto_estimates.status.rejected": "Rechazado",
+  "auto_estimates.flash.created": "Presupuesto creado",
+  "auto_estimates.flash.sent": "Presupuesto enviado al cliente"
+}
