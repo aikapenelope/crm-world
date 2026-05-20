@@ -4,14 +4,14 @@ Plataforma SaaS multi-vertical construida sobre [Open Mercato](https://github.co
 
 ## Verticales
 
-| Vertical | Descripción |
-|----------|-------------|
-| **Retail & E-Commerce** | Lealtad, sincronización de inventario, gestión omnicanal |
-| **Manufacturing** | Órdenes de producción, control de calidad, BOM |
-| **Logistics & Distribution** | Flotas, rutas, almacén |
-| **Real Estate** | Propiedades, contratos de arrendamiento, portal de inquilinos |
-| **Education** | Inscripciones, cursos, portal de estudiantes |
-| **Agriculture & Food** | Trazabilidad, cosecha, cumplimiento regulatorio |
+| Vertical | Estado | Módulos |
+|----------|--------|---------|
+| **Real Estate** | Completa (8 módulos) | Propiedades, transacciones, matching, portal, docs, publishing, ML sync, market intel |
+| **Education / Colegios** | Completa (10 módulos) | Estudiantes, inscripciones, mensualidades, notas, asistencia, calendario, comunicaciones, constancias, portal representante, migración |
+| **Retail & E-Commerce** | Próxima | Lealtad, inventario, POS, omnicanal |
+| **Services / Agencias** | Planificada | Proyectos, timesheets, propuestas |
+| **Healthcare / Clínicas** | Planificada | Pacientes, citas, historias médicas |
+| **Beauty / Salones** | Planificada | Reservas, staff, membresías |
 
 ## Arquitectura
 

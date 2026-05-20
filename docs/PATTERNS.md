@@ -250,11 +250,31 @@ Nunca duplicar variables. Un solo set de producción.
 ## 9. Deploy en Coolify — errores intermitentes
 
 ### Problema conocido
-Coolify 4.0.0 tiene un bug donde el build container se destruye prematuramente ("No such container"). No es error de código.
+Coolify muestra "No such container" cuando el build FALLA por cualquier razón (TypeScript error, OOM, etc.). El container se destruye al fallar, y Coolify reporta el error de container en vez del error real.
 
-### Solución: Reintentar el deploy
+### Solución: Revisar los logs del build
 
-Si el deploy falla con `Error response from daemon: No such container`, simplemente hacer redeploy. No hay fix de código necesario.
+El error "No such container" NO es la causa — es el EFECTO. La causa real está en los logs del build (paso #15 `yarn build`). Revisar con:
+```bash
+curl -H "Authorization: Bearer TOKEN" \
+  "https://deploy.novaincs.com/api/v1/deployments/applications/APP_UUID?take=1"
+```
+Buscar en los logs: `Type error:`, `exit code: 1`, `Failed to type check`.
+
+### Causa más común: API routes con firma incorrecta
+
+```typescript
+// ❌ INCORRECTO — causa type error en build
+export async function GET(request: Request) {
+  const scope = await resolveOrganizationScopeForRequest(request)
+}
+
+// ✅ CORRECTO — Open Mercato pasa ctx como segundo argumento
+export async function GET(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope // { tenantId, organizationId }
+}
+```
 
 ---
 
@@ -264,6 +284,7 @@ Si el deploy falla con `Error response from daemon: No such container`, simpleme
 - [ ] `em.getKysely()` usa cast `(em as any).getKysely()`
 - [ ] `makeCrudRoute` tiene `mapToEntity` y `applyToEntity`
 - [ ] `createModuleEvents` usa `moduleId:` (no `module:`)
+- [ ] API routes custom usan `(request: Request, ctx: any)` — NO solo `(request: Request)`
 - [ ] `em.create()` y `em.find()` en seeds usan `as any`
 - [ ] Dependencias directas declaradas en package.json
 - [ ] Componentes UI verificados contra la interfaz actual
