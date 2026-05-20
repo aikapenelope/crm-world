@@ -317,3 +317,30 @@ Esperar 10-15 segundos después del deploy y reintentar. Si persiste, verificar 
 | 2026-05-19 | Deploy falla: "No such container" | Bug de Coolify 4.0.0 | Reintentar deploy |
 | 2026-05-20 | Builds no-deterministas | yarn.lock vacío (12 líneas) desde commit inicial | PR #31 (regenerar lockfile) |
 | 2026-05-20 | 504 Gateway Timeout post-deploy | Cold start de Next.js (normal) | Esperar 10-15s y reintentar |
+| 2026-05-20 | **Build falla: "Export register doesn't exist"** | **di.ts sin export function register** | **PR #33 — agregar export** |
+
+---
+
+## 13. di.ts — DEBE exportar `register`
+
+### Problema encontrado
+El generador de Open Mercato (`.mercato/generated/di.generated.ts`) importa `register` de cada módulo. Si `di.ts` no exporta esa función, Turbopack falla con:
+```
+Export register doesn't exist in target module
+```
+
+### Regla: SIEMPRE exportar `register` en di.ts
+
+```typescript
+// ✅ CORRECTO — mínimo requerido
+import type { AppContainer } from '@open-mercato/shared/lib/di/container'
+
+export function register(_: AppContainer) {
+  // Services registered here when needed
+}
+
+// ❌ INCORRECTO — causa build failure
+// DI registrations for my_module
+```
+
+Incluso si el módulo no registra servicios, la función `register` vacía DEBE existir.
