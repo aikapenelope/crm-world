@@ -68,6 +68,12 @@ export const enabledModules: ModuleEntry[] = [
   { id: 've_fiscal', from: '@app' },
   { id: 've_tenant_defaults', from: '@app' },
 
+  // Aika: Fiscal modules (transversal — apply to all verticals)
+  { id: 've_tax_books', from: '@app' },
+  { id: 've_withholdings', from: '@app' },
+  { id: 've_tax_reports', from: '@app' },
+  { id: 'bank_reconciliation', from: '@app' },
+
   // Aika: Real Estate vertical
   { id: 'properties', from: '@app' },
   { id: 'transactions', from: '@app' },

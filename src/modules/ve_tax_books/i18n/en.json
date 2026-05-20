@@ -1,0 +1,18 @@
+{
+  "ve_tax_books.nav.title": "Tax Books",
+  "ve_tax_books.create.title": "Register Entry",
+  "ve_tax_books.list.empty": "No tax book entries registered",
+  "ve_tax_books.book_type.sales": "Sales",
+  "ve_tax_books.book_type.purchases": "Purchases",
+  "ve_tax_books.document_type.factura": "Invoice",
+  "ve_tax_books.document_type.nota_credito": "Credit Note",
+  "ve_tax_books.document_type.nota_debito": "Debit Note",
+  "ve_tax_books.document_type.comprobante_retencion": "Withholding Voucher",
+  "ve_tax_books.summary.debito_fiscal": "Tax Debit (Sales)",
+  "ve_tax_books.summary.credito_fiscal": "Tax Credit (Purchases)",
+  "ve_tax_books.summary.iva_a_pagar": "VAT Payable / Receivable",
+  "ve_tax_books.summary.igtf_total": "IGTF for Period",
+  "ve_tax_books.flash.created": "Tax entry registered successfully",
+  "ve_tax_books.flash.updated": "Tax entry updated",
+  "ve_tax_books.flash.deleted": "Tax entry deleted"
+}

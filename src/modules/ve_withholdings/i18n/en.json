@@ -1,0 +1,12 @@
+{
+  "ve_withholdings.nav.title": "Withholdings",
+  "ve_withholdings.create.title": "Register Withholding",
+  "ve_withholdings.type.iva": "VAT",
+  "ve_withholdings.type.islr": "Income Tax",
+  "ve_withholdings.status.pending": "Pending",
+  "ve_withholdings.status.applied": "Applied",
+  "ve_withholdings.status.declared": "Declared",
+  "ve_withholdings.flash.created": "Withholding registered successfully",
+  "ve_withholdings.flash.updated": "Withholding updated",
+  "ve_withholdings.flash.declared": "Withholding marked as declared"
+}

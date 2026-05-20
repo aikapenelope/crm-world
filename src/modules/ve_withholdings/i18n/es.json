@@ -1,0 +1,12 @@
+{
+  "ve_withholdings.nav.title": "Retenciones",
+  "ve_withholdings.create.title": "Registrar Retención",
+  "ve_withholdings.type.iva": "IVA",
+  "ve_withholdings.type.islr": "ISLR",
+  "ve_withholdings.status.pending": "Pendiente",
+  "ve_withholdings.status.applied": "Aplicada",
+  "ve_withholdings.status.declared": "Declarada",
+  "ve_withholdings.flash.created": "Retención registrada exitosamente",
+  "ve_withholdings.flash.updated": "Retención actualizada",
+  "ve_withholdings.flash.declared": "Retención marcada como declarada"
+}

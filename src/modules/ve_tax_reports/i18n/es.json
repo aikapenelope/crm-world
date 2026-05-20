@@ -1,0 +1,11 @@
+{
+  "ve_tax_reports.nav.title": "Reportes Fiscales",
+  "ve_tax_reports.summary.title": "Resumen IVA",
+  "ve_tax_reports.summary.debito_fiscal": "Débito Fiscal (Ventas)",
+  "ve_tax_reports.summary.credito_fiscal": "Crédito Fiscal (Compras)",
+  "ve_tax_reports.summary.iva_a_pagar": "IVA a Pagar / A Favor",
+  "ve_tax_reports.summary.igtf": "IGTF del Período",
+  "ve_tax_reports.export.sales": "Libro de Ventas (CSV)",
+  "ve_tax_reports.export.purchases": "Libro de Compras (CSV)",
+  "ve_tax_reports.export.withholdings": "Retenciones (CSV)"
+}

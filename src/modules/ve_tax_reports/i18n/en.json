@@ -1,0 +1,11 @@
+{
+  "ve_tax_reports.nav.title": "Tax Reports",
+  "ve_tax_reports.summary.title": "VAT Summary",
+  "ve_tax_reports.summary.debito_fiscal": "Tax Debit (Sales)",
+  "ve_tax_reports.summary.credito_fiscal": "Tax Credit (Purchases)",
+  "ve_tax_reports.summary.iva_a_pagar": "VAT Payable / Receivable",
+  "ve_tax_reports.summary.igtf": "IGTF for Period",
+  "ve_tax_reports.export.sales": "Sales Book (CSV)",
+  "ve_tax_reports.export.purchases": "Purchases Book (CSV)",
+  "ve_tax_reports.export.withholdings": "Withholdings (CSV)"
+}
