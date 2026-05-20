@@ -1,0 +1,14 @@
+{
+  "const_schedule.nav.title": "Schedule",
+  "const_schedule.milestones.title": "Milestones",
+  "const_schedule.status.not_started": "Not Started",
+  "const_schedule.status.in_progress": "In Progress",
+  "const_schedule.status.completed": "Completed",
+  "const_schedule.status.on_hold": "On Hold",
+  "const_schedule.milestone.upcoming": "Upcoming",
+  "const_schedule.milestone.at_risk": "At Risk",
+  "const_schedule.milestone.achieved": "Achieved",
+  "const_schedule.milestone.delayed": "Delayed",
+  "const_schedule.flash.task_created": "Task created successfully",
+  "const_schedule.flash.milestone_created": "Milestone created successfully"
+}

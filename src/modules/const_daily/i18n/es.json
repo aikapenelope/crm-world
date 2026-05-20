@@ -1,0 +1,14 @@
+{
+  "const_daily.nav.title": "Reporte Diario",
+  "const_daily.create.title": "Nuevo RDO",
+  "const_daily.weather.sunny": "Soleado",
+  "const_daily.weather.cloudy": "Nublado",
+  "const_daily.weather.rainy": "Lluvioso",
+  "const_daily.weather.windy": "Ventoso",
+  "const_daily.weather.foggy": "Neblina",
+  "const_daily.status.draft": "Borrador",
+  "const_daily.status.submitted": "Enviado",
+  "const_daily.status.approved": "Aprobado",
+  "const_daily.flash.created": "Reporte diario creado exitosamente",
+  "const_daily.flash.approved": "Reporte aprobado exitosamente"
+}

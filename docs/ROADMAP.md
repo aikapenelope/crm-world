@@ -119,21 +119,35 @@
 - [x] `condo_comms` — Circulares con tracking lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea
 - [x] `condo_portal` — Portal del propietario: estado de cuenta, reportar pagos, solicitudes, circulares, votaciones, documentos
 
+## Phase 13 — Construction / Constructora Vertical (complete)
+
+- [x] `const_projects` — Proyectos con contratos, avance global, dashboard KPIs, AI director assistant
+- [x] `const_budget` — APU (Análisis de Precios Unitarios), árbol de partidas (capítulos → subcapítulos → partidas), recursos (material, MO, equipo)
+- [x] `const_schedule` — Cronograma Gantt, tareas con dependencias, hitos, ruta crítica, % avance
+- [x] `const_progress` — Valuaciones de obra (cobros parciales por avance), retenciones, anticipo, flujo de aprobación
+- [x] `const_rfis` — RFIs y submittals con prioridad, vencimiento, respuesta inline, worker de escalación
+- [x] `const_daily` — Reporte Diario de Obra (RDO): personal, clima, actividades, incidentes de seguridad
+- [x] `const_subcon` — Subcontratistas, contratos con retenciones, pagos aprobados
+- [x] `const_materials` — Órdenes de compra, recepción, inventario en obra, desvíos vs presupuesto
+- [x] **AI Agent** — Asistente del Director de Obra (6 tools: overview, budget vs actual, overdue RFIs, pending valuations, material alerts, schedule status)
+- [x] **Workers** — detect-overdue-rfis (escala a urgente), notifications (incidentes, aprobaciones)
+
 ---
 
 ## Future Verticals (por definir)
 
-| # | Vertical | Mercado VE | Módulos core que usa | Custom necesario |
-|---|---|---|---|---|
-| 1 | ~~**Retail / Comercio**~~ | ~~Tiendas, ferreterías, farmacias~~ | ~~catalog, sales, checkout~~ | ~~COMPLETADO~~ |
-| 2 | **Services / Agencias** | Marketing, diseño, consultoría | customers, planner, sales | projects, timesheets, proposals |
-| 3 | **Healthcare / Clínicas** | Consultorios, laboratorios | customers, planner, attachments | patients, appointments, medical_records |
-| 4 | **Beauty / Salones** | Peluquerías, spas, barberías | customers, planner, sales | bookings, staff_schedule, memberships |
-| 5 | **Legal / Abogados** | Bufetes | customers, planner, attachments | cases, billing_hours, court_dates |
-| 6 | **Automotive** | Concesionarios, talleres | customers, catalog, sales | vehicles, service_orders, appointments |
-| 7 | **Restaurant / Food** | Restaurantes, delivery | catalog, sales, checkout | menu, kitchen_orders, tables |
-| 8 | **Construction** | Constructoras | customers, sales, planner | projects, budgets, materials |
-| 9 | **Fitness / Gym** | Gimnasios | customers, portal, sales | memberships, classes, attendance |
+| # | Vertical | Mercado VE | Módulos core que usa | Custom necesario | Estado |
+|---|---|---|---|---|---|
+| 1 | ~~Retail / Comercio~~ | Tiendas, ferreterías, farmacias | catalog, sales, checkout | 7 módulos | COMPLETADO (Phase 11) |
+| 2 | ~~Automotive / Talleres~~ | Talleres mecánicos | customers, catalog, sales | 7 módulos | COMPLETADO (Phase 10) |
+| 3 | ~~Condominios~~ | Administradoras de edificios | customers, planner, portal | 7 módulos + AI | COMPLETADO (Phase 12) |
+| 4 | ~~Construcción~~ | Constructoras y obras civiles | customers, sales, planner | 8 módulos + AI | COMPLETADO (Phase 13) |
+| 5 | **Healthcare / Clínicas** | Consultorios, laboratorios, odontología | customers, planner, attachments | patients, appointments, records | Siguiente |
+| 6 | **Restaurant / Food** | Restaurantes, areperas, delivery | catalog, sales, checkout | menu, kitchen_orders, tables | Candidato |
+| 7 | **Fitness / Gym** | Gimnasios, crossfit, yoga | customers, planner, portal | memberships, classes, metrics | Candidato |
+| 8 | **Beauty / Salones** | Peluquerías, spas, barberías | customers, planner, sales | bookings, staff_schedule | Candidato |
+| 9 | **Services / Agencias** | Marketing, diseño, legal | customers, planner, sales | projects, timesheets, proposals | Candidato |
+| 10 | **Transporte / Logística** | Encomiendas, mudanzas, courier | customers, sales | shipments, tracking, fleet | Futuro |
 
 ---
 

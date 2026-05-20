@@ -132,6 +132,16 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'condo_accounting', from: '@app' },
   { id: 'condo_comms', from: '@app' },
   { id: 'condo_portal', from: '@app' },
+
+  // Aika: Construction / Constructora vertical
+  { id: 'const_projects', from: '@app' },
+  { id: 'const_budget', from: '@app' },
+  { id: 'const_schedule', from: '@app' },
+  { id: 'const_progress', from: '@app' },
+  { id: 'const_rfis', from: '@app' },
+  { id: 'const_daily', from: '@app' },
+  { id: 'const_subcon', from: '@app' },
+  { id: 'const_materials', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

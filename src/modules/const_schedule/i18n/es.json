@@ -1,0 +1,14 @@
+{
+  "const_schedule.nav.title": "Cronograma",
+  "const_schedule.milestones.title": "Hitos",
+  "const_schedule.status.not_started": "No Iniciada",
+  "const_schedule.status.in_progress": "En Progreso",
+  "const_schedule.status.completed": "Completada",
+  "const_schedule.status.on_hold": "Pausada",
+  "const_schedule.milestone.upcoming": "Próximo",
+  "const_schedule.milestone.at_risk": "En Riesgo",
+  "const_schedule.milestone.achieved": "Alcanzado",
+  "const_schedule.milestone.delayed": "Retrasado",
+  "const_schedule.flash.task_created": "Tarea creada exitosamente",
+  "const_schedule.flash.milestone_created": "Hito creado exitosamente"
+}

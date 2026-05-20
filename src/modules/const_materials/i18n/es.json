@@ -1,0 +1,13 @@
+{
+  "const_materials.nav.title": "Materiales",
+  "const_materials.orders.title": "Órdenes de Compra",
+  "const_materials.orders.create.title": "Nueva Orden de Compra",
+  "const_materials.status.draft": "Borrador",
+  "const_materials.status.sent": "Enviada",
+  "const_materials.status.confirmed": "Confirmada",
+  "const_materials.status.partial_received": "Recepción Parcial",
+  "const_materials.status.received": "Recibida",
+  "const_materials.status.cancelled": "Cancelada",
+  "const_materials.flash.order_created": "Orden de compra creada exitosamente",
+  "const_materials.flash.received": "Recepción registrada exitosamente"
+}

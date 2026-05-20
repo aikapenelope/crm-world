@@ -1,0 +1,13 @@
+{
+  "const_progress.nav.title": "Valuations",
+  "const_progress.create.title": "New Valuation",
+  "const_progress.status.draft": "Draft",
+  "const_progress.status.submitted": "Submitted",
+  "const_progress.status.approved": "Approved",
+  "const_progress.status.invoiced": "Invoiced",
+  "const_progress.status.paid": "Paid",
+  "const_progress.status.rejected": "Rejected",
+  "const_progress.flash.submitted": "Valuation submitted for approval",
+  "const_progress.flash.approved": "Valuation approved successfully",
+  "const_progress.flash.created": "Valuation created successfully"
+}

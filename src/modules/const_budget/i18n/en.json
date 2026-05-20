@@ -1,0 +1,16 @@
+{
+  "const_budget.nav.title": "Budget",
+  "const_budget.create.title": "New Budget Item",
+  "const_budget.category.civil": "Civil",
+  "const_budget.category.electrical": "Electrical",
+  "const_budget.category.mechanical": "Mechanical",
+  "const_budget.category.architectural": "Architectural",
+  "const_budget.category.special": "Special",
+  "const_budget.category.general": "General",
+  "const_budget.resource.material": "Material",
+  "const_budget.resource.labor": "Labor",
+  "const_budget.resource.equipment": "Equipment",
+  "const_budget.resource.subcontract": "Subcontract",
+  "const_budget.resource.overhead": "Overhead",
+  "const_budget.flash.created": "Budget item created successfully"
+}
