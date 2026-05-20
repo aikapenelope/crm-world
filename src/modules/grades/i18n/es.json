@@ -1,0 +1,20 @@
+{
+  "grades.nav.title": "Notas",
+  "grades.nav.subjects": "Materias",
+  "grades.nav.periods": "Lapsos",
+  "grades.nav.entry": "Carga de notas",
+  "grades.nav.report_cards": "Boletines",
+  "grades.fields.subject": "Materia",
+  "grades.fields.period": "Lapso",
+  "grades.fields.score": "Nota (0-20)",
+  "grades.fields.qualitative": "Calificación (A-E)",
+  "grades.fields.observations": "Observaciones",
+  "grades.fields.average": "Promedio",
+  "grades.fields.teacher": "Profesor",
+  "grades.period.first": "Primer Lapso",
+  "grades.period.second": "Segundo Lapso",
+  "grades.period.third": "Tercer Lapso",
+  "grades.report.status.draft": "Borrador",
+  "grades.report.status.published": "Publicado",
+  "grades.report.status.delivered": "Entregado"
+}

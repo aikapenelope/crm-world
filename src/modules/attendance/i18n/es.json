@@ -1,0 +1,17 @@
+{
+  "attendance.nav.title": "Asistencia",
+  "attendance.nav.daily": "Registro diario",
+  "attendance.nav.reports": "Reportes",
+  "attendance.fields.date": "Fecha",
+  "attendance.fields.status": "Estado",
+  "attendance.fields.excuse_reason": "Justificación",
+  "attendance.status.present": "Presente",
+  "attendance.status.absent": "Ausente",
+  "attendance.status.late": "Tardanza",
+  "attendance.status.excused": "Justificado",
+  "attendance.status.half_day": "Medio día",
+  "attendance.summary.days_present": "Días presente",
+  "attendance.summary.days_absent": "Días ausente",
+  "attendance.summary.days_late": "Tardanzas",
+  "attendance.summary.percentage": "% Asistencia"
+}
