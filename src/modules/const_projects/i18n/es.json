@@ -1,0 +1,22 @@
+{
+  "const_projects.nav.title": "Construcción",
+  "const_projects.create.title": "Nuevo Proyecto",
+  "const_projects.status.prospect": "Prospecto",
+  "const_projects.status.bidding": "En Licitación",
+  "const_projects.status.awarded": "Adjudicado",
+  "const_projects.status.in_progress": "En Ejecución",
+  "const_projects.status.on_hold": "Pausado",
+  "const_projects.status.completed": "Completado",
+  "const_projects.status.cancelled": "Cancelado",
+  "const_projects.type.residential": "Residencial",
+  "const_projects.type.commercial": "Comercial",
+  "const_projects.type.infrastructure": "Infraestructura",
+  "const_projects.type.industrial": "Industrial",
+  "const_projects.type.renovation": "Remodelación",
+  "const_projects.contract.fixed_price": "Suma Global",
+  "const_projects.contract.unit_price": "Precios Unitarios",
+  "const_projects.contract.cost_plus": "Costo + Honorarios",
+  "const_projects.contract.design_build": "Diseño + Construcción",
+  "const_projects.flash.created": "Proyecto creado exitosamente",
+  "const_projects.flash.updated": "Proyecto actualizado exitosamente"
+}

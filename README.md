@@ -85,11 +85,31 @@ Construido sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0
 | `condo_comms` | Circulares con tracking de lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea con quórum |
 | `condo_portal` | Portal del propietario: estado de cuenta, reportar pagos, solicitudes mantenimiento, circulares, votaciones, documentos |
 
+### Construction / Constructora — Empresas Constructoras *(Phase 13)*
+
+| Módulo | Qué hace |
+|--------|----------|
+| `const_projects` | Proyectos con tipo de contrato, monto, avance global, KPIs en tiempo real |
+| `const_budget` | APU (Análisis de Precios Unitarios): árbol de partidas con capítulos, insumos (material/MO/equipo), cómputos métricos |
+| `const_schedule` | Cronograma Gantt: tareas con dependencias, ruta crítica, % avance, hitos vinculados a pagos |
+| `const_progress` | Valuaciones de obra (cobros parciales por avance): retenciones, amortización de anticipo, flujo aprobación |
+| `const_rfis` | RFIs (consultas técnicas formales) y submittals con prioridad, vencimiento, respuesta inline, escalación automática |
+| `const_daily` | Reporte Diario de Obra (RDO): personal por oficio, clima, actividades por área, incidentes de seguridad |
+| `const_subcon` | Subcontratistas con especialidad, contratos con retenciones, pagos aprobados, rating 1-5 |
+| `const_materials` | Órdenes de compra, recepción de materiales, inventario en obra, alertas de desvío vs presupuesto |
+
+**Features avanzados (AI + Automatización):**
+
+| Feature | Qué hace |
+|---------|----------|
+| AI Agent | Asistente del Director de Obra: estado proyectos, presupuesto vs real, RFIs vencidos, valuaciones pendientes, alertas materiales |
+| Worker | detect-overdue-rfis: escala RFIs sin respuesta a prioridad urgente automáticamente |
+| Notifications | 6 tipos: valuaciones aprobadas, RFIs vencidos, incidentes de seguridad, submittals |
+| Multi-moneda | USD (cobros) con equivalente VES a tasa BCV para valuaciones |
+
 ---
 
 ## Módulos Fiscales Venezuela (transversales)
-
-Aplican a todas las verticales. Cualquier tenant que facture los usa.
 
 | Módulo | Qué hace |
 |--------|----------|
@@ -130,7 +150,7 @@ Aplican a todas las verticales. Cualquier tenant que facture los usa.
                   (cada cliente ve solo su vertical)
 ```
 
-**Total: 58 módulos custom + 40 módulos Open Mercato core = plataforma completa**
+**Total: 66 módulos custom + AI agents + workers + 40 módulos Open Mercato core = plataforma completa**
 
 ---
 

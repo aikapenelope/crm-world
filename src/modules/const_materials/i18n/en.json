@@ -1,0 +1,13 @@
+{
+  "const_materials.nav.title": "Materials",
+  "const_materials.orders.title": "Purchase Orders",
+  "const_materials.orders.create.title": "New Purchase Order",
+  "const_materials.status.draft": "Draft",
+  "const_materials.status.sent": "Sent",
+  "const_materials.status.confirmed": "Confirmed",
+  "const_materials.status.partial_received": "Partial Receipt",
+  "const_materials.status.received": "Received",
+  "const_materials.status.cancelled": "Cancelled",
+  "const_materials.flash.order_created": "Purchase order created successfully",
+  "const_materials.flash.received": "Receipt registered successfully"
+}

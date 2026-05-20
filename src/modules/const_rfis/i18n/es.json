@@ -1,0 +1,16 @@
+{
+  "const_rfis.nav.title": "RFIs",
+  "const_rfis.submittals.title": "Submittals",
+  "const_rfis.status.open": "Abierta",
+  "const_rfis.status.pending_response": "Pendiente",
+  "const_rfis.status.answered": "Respondida",
+  "const_rfis.status.closed": "Cerrada",
+  "const_rfis.priority.low": "Baja",
+  "const_rfis.priority.normal": "Normal",
+  "const_rfis.priority.high": "Alta",
+  "const_rfis.priority.urgent": "Urgente",
+  "const_rfis.submittal.approved": "Aprobado",
+  "const_rfis.submittal.rejected": "Rechazado",
+  "const_rfis.flash.rfi_created": "RFI creado exitosamente",
+  "const_rfis.flash.rfi_answered": "RFI respondido exitosamente"
+}

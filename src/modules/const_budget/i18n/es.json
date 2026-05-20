@@ -1,0 +1,16 @@
+{
+  "const_budget.nav.title": "Presupuesto",
+  "const_budget.create.title": "Nueva Partida",
+  "const_budget.category.civil": "Civil",
+  "const_budget.category.electrical": "Eléctrico",
+  "const_budget.category.mechanical": "Mecánico",
+  "const_budget.category.architectural": "Arquitectónico",
+  "const_budget.category.special": "Especial",
+  "const_budget.category.general": "General",
+  "const_budget.resource.material": "Material",
+  "const_budget.resource.labor": "Mano de Obra",
+  "const_budget.resource.equipment": "Equipo",
+  "const_budget.resource.subcontract": "Subcontrato",
+  "const_budget.resource.overhead": "Indirectos",
+  "const_budget.flash.created": "Partida creada exitosamente"
+}

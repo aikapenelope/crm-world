@@ -1,0 +1,13 @@
+{
+  "const_subcon.nav.title": "Subcontratistas",
+  "const_subcon.contracts.title": "Contratos de Subcontrato",
+  "const_subcon.specialty.excavation": "Excavación",
+  "const_subcon.specialty.concrete": "Concreto",
+  "const_subcon.specialty.steel": "Acero",
+  "const_subcon.specialty.electrical": "Eléctrico",
+  "const_subcon.status.draft": "Borrador",
+  "const_subcon.status.active": "Activo",
+  "const_subcon.status.completed": "Completado",
+  "const_subcon.flash.created": "Subcontratista creado exitosamente",
+  "const_subcon.flash.contract_created": "Contrato creado exitosamente"
+}
