@@ -127,7 +127,7 @@ export default function PropertiesPage() {
       })
       if (!confirmed) return
 
-      const call = await apiCall('/api/properties', {
+      const call = await apiCall('/api/properties/properties', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: row.id }),

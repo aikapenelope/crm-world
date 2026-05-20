@@ -42,7 +42,7 @@ const RecentClosingsWidget: React.FC<DashboardWidgetComponentProps<RecentClosing
         if (!value.showPending) params.set('status', 'completed')
 
         const result = await readApiResultOrThrow<{ items: TransactionRow[] }>(
-          `/api/transactions?${params.toString()}`,
+          `/api/transactions/transactions?${params.toString()}`,
           undefined,
           { errorMessage: 'Error cargando transacciones', allowNullResult: true },
         )

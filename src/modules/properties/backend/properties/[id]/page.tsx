@@ -74,7 +74,7 @@ export default function PropertyDetailPage() {
     async function load() {
       setIsLoading(true)
       const call = await apiCall<{ items: any[] }>(
-        `/api/properties?id=${propertyId}`,
+        `/api/properties/properties?id=${propertyId}`,
         undefined,
         { fallback: { items: [] } },
       )
@@ -280,7 +280,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
           notes: values.notes ? String(values.notes).trim() : null,
         }
 
-        await updateCrud('properties', payload)
+        await updateCrud('properties/properties', payload)
         flash('Propiedad actualizada', 'success')
         router.push('/backend/properties')
       }}
@@ -300,7 +300,7 @@ function ImagesTab({ propertyId }: { propertyId: string }) {
     async function load() {
       setIsLoading(true)
       const call = await apiCall<{ items: PropertyImage[] }>(
-        `/api/property-images?property_id=${propertyId}`,
+        `/api/properties/property-images?property_id=${propertyId}`,
         undefined,
         { fallback: { items: [] } },
       )
@@ -357,7 +357,7 @@ function LinksTab({ propertyId }: { propertyId: string }) {
     async function load() {
       setIsLoading(true)
       const call = await apiCall<{ items: PropertyLink[] }>(
-        `/api/property-links?property_id=${propertyId}`,
+        `/api/properties/property-links?property_id=${propertyId}`,
         undefined,
         { fallback: { items: [] } },
       )
@@ -427,7 +427,7 @@ function MatchingTab({ propertyId }: { propertyId: string }) {
     async function load() {
       setIsLoading(true)
       const call = await apiCall<{ items: MatchResult[] }>(
-        `/api/matches?property_id=${propertyId}`,
+        `/api/matching/matches?property_id=${propertyId}`,
         undefined,
         { fallback: { items: [] } },
       )

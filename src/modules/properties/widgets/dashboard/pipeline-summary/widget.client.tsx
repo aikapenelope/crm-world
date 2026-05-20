@@ -39,7 +39,7 @@ const PipelineSummaryWidget: React.FC<DashboardWidgetComponentProps<PipelineSumm
       setLoading(true)
       try {
         const result = await readApiResultOrThrow<{ items: PropertyRow[] }>(
-          '/api/properties?pageSize=500',
+          '/api/properties/properties?pageSize=500',
           undefined,
           { errorMessage: 'Error cargando pipeline', allowNullResult: true },
         )
