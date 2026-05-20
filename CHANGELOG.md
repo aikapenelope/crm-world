@@ -1,5 +1,85 @@
 # Changelog — Aika Platform (CRM World)
 
+## 2026-05-20 — Education Vertical Complete
+
+### Vertical Education / Colegios (9 módulos)
+
+#### `students` — Registro de estudiantes (Sprint 1)
+- Entidades: StudentEntity (15 grados VE: maternal → 5to año), StudentRepresentativeEntity
+- 5 estados: active, graduated, withdrawn, suspended, transferred
+- Datos médicos, alergias, contacto emergencia, tipo de sangre
+- Junction con customers.person para representantes (parentesco, principal, autorizado retiro)
+- DataTable con filtros (grado, sección, estado), CrudForm (4 grupos), detalle con tabs
+- Búsqueda Meilisearch (nombre, cédula, grado, sección)
+- 8 eventos tipados, seedDefaults (diccionarios: grados, secciones, parentescos)
+
+#### `enrollment` — Inscripciones (Sprint 2)
+- Entidades: EnrollmentPeriodEntity, EnrollmentApplicationEntity, EnrollmentDocumentEntity
+- Tipos de solicitud: nuevo ingreso, renovación, traslado
+- Workflow: pending → documents_pending → approved/rejected/cancelled
+- Checklist de documentos VE: partida nacimiento, notas anteriores, foto carnet, cédula representante, RIF, constancia residencia, carta buena conducta, certificado salud
+- 9 eventos tipados (período, solicitud, documento lifecycle)
+
+#### `tuition` — Mensualidades (Sprint 3-4)
+- Entidades: TuitionPlanEntity, TuitionChargeEntity, TuitionPaymentEntity, TuitionDiscountEntity
+- Planes por grado con monto mensual, día de vencimiento, recargo por mora, días de gracia
+- Cargos: mensualidad, inscripción, material, uniforme, transporte, evento
+- Pagos: multi-moneda (USD/VES/USDT/EUR), tasa de cambio, método de pago, referencia
+- Descuentos: hermanos, beca, empleado, pronto pago
+- Control de morosos (status overdue automático)
+- Notificaciones: cargo vencido, pago recibido
+- 7 eventos tipados, 7 features ACL
+
+#### `grades` — Notas y boletines (Sprint 5)
+- Entidades: SubjectEntity, GradePeriodEntity (3 lapsos/año), StudentGradeEntity, ReportCardEntity
+- Notas numéricas (0-20) para primaria/bachillerato
+- Notas cualitativas (A-E) para preescolar
+- Boletines con promedio, observaciones, profesor, PDF adjunto
+- Status de boletín: draft → published → delivered
+- 4 eventos tipados, 5 features ACL
+
+#### `attendance` — Asistencia (Sprint 6)
+- Entidades: AttendanceRecordEntity (diario), AttendanceSummaryEntity (mensual materializado)
+- 5 estados: present, absent, late, excused, half_day
+- Bulk record schema (toda la sección de un día)
+- Resumen mensual: días presente/ausente/tarde/justificado + porcentaje
+- 4 eventos tipados, 3 features ACL
+
+#### `school_calendar` — Calendario escolar (Sprint 7)
+- Entidad: SchoolEventEntity (7 tipos: holiday, exam_period, meeting, event, etc.)
+- seedDefaults: 11 feriados nacionales venezolanos pre-configurados
+- Soporte para eventos por grado específico
+- 3 eventos tipados, 2 features ACL
+
+#### `school_comms` — Comunicaciones (Sprint 7)
+- Entidades: SchoolAnnouncementEntity, AnnouncementReadEntity
+- Tipos: circular, aviso, recordatorio, emergencia
+- Audiencia: todos, por grado, por sección
+- Tracking de lectura por representante
+- 3 eventos tipados, 3 features ACL
+
+#### `school_docs` — Constancias (Sprint 8)
+- Entidades: DocumentTemplateEntity, GeneratedDocumentEntity
+- 5 tipos: constancia estudio, inscripción, notas, buena conducta, carta recomendación
+- Templates con placeholders para generación PDF
+- Status: pending → generated → delivered
+- 3 features ACL
+
+#### `parent_portal` — Portal del representante (Sprint 8)
+- Portal público usando customer_accounts auth
+- defaultCustomerRoleFeatures (portal_admin, buyer, viewer)
+- Páginas: dashboard, pagos, notas, asistencia
+- 4 features ACL
+
+### Documentación y Configuración
+- `docs/IMPLEMENTATION_GUIDE.md` — Guía paso a paso para onboarding de tenants RE
+- `docs/ROADMAP.md` — Actualizado con Phase 6 completa + Education vertical
+- `README.md` — Sección "Flujo de Deploy Multi-Vertical"
+- `docs/DEVELOPMENT.md` — Corregidas discrepancias (moduleId, mapToEntity, type explícito)
+- `properties/setup.ts` — seedDefaults: pipeline RE (7 etapas) + tags (9 categorías)
+
+---
+
 ## 2026-05-19 — Real Estate UI + Cleanup
 
 ### UI Funcional (PR #1 merged)
@@ -8,6 +88,17 @@
 - **Properties edit**: CrudForm pre-populated con datos existentes
 - **Transactions list**: DataTable con filtros tipo/status, comisión, fecha cierre
 - **Matching list**: DataTable con score badges, criterios matched
+
+### Phase 6 — Complete Real Estate for First Client
+- Transactions create form (CrudForm con lease fields, agentes, métodos de pago)
+- Properties search.ts (Meilisearch indexing completo con presenter)
+- Property detail tabs (General, Imágenes, Links, Matching)
+- Dashboard widgets (properties by status, pipeline summary, recent closings)
+- Notification types (lead inactivo, propiedad sin actividad, reservada, cierre completado)
+- Matching scoring engine (weighted: type 30%, city 25%, budget 25%, operation 20%)
+- Agent portal page (/agente/[id] — grid público de propiedades)
+- CSV import adapter (mapeo flexible columnas ES/EN)
+- Agent portal API
 
 ### Fixes
 - Eliminados todos los imports cross-module (Turbopack restriction)
@@ -18,11 +109,6 @@
 - Eliminada app duplicada que generaba builds fallidos (17 failed)
 - Eliminado proyecto vacío "My first project"
 - Solo queda "Mercato SaaS" con la app correcta configurada
-
-### Documentación
-- `docs/PROPI_FEATURES_MAP.md` — mapeo completo de features Propi vs implementación
-- `docs/ROADMAP.md` — plan de lo que sigue por PRs
-- `docs/CONTEXT.md` — contexto completo para continuación
 
 ---
 
@@ -79,51 +165,78 @@
 - Seed de diccionarios CRM (tipos de dirección, fuentes, industrias VE)
 - Subscriber IGTF: auto-aplica 3% en pagos en divisas via event bus
 
-### Vertical Real Estate — Sprint 1
+### Vertical Real Estate (8 módulos)
 
 #### `properties` — Propiedades inmobiliarias
-- Entidades: properties, property_images, property_links
 - Tipos: apartamento, casa, terreno, comercial, oficina, galpón, otro
 - Operaciones: venta, alquiler, venta/alquiler
 - Status lifecycle: draft → active → reserved → sold/rented/inactive
-- Campos: precio, moneda, área, habitaciones, baños, parking, GPS, dirección
-- Imágenes (max 10, via attachments core) con orden y cover flag
-- Links externos (max 5): MercadoLibre, Facebook, Instagram, TikTok
-- API CRUD con filtros (tipo, operación, status, ciudad, rango de precio)
-- Eventos por cambio de status para workflows
-- RBAC: view/create/edit (employee), delete/assign (admin)
-- i18n español + inglés
+- Imágenes (max 10), links externos, GPS, comisión configurable
 
-### Documentación
+#### `transactions` — Cierres y comisiones
+- Tipos: venta, alquiler (con campos de lease: canon, inicio, fin, meses)
+- Auto-cálculo de comisión, auto-update status de propiedad
+- Subscriber que cambia propiedad a sold/rented al completar
 
-- `README.md` — Overview del proyecto + roadmap
-- `docs/DEVELOPMENT.md` — Guía completa de desarrollo de módulos
-- `docs/FOUNDATION.md` — Documento fundacional (regionalización, decisiones)
-- `docs/REAL_ESTATE_PLAN.md` — Plan completo de la vertical RE
-- `.ai/specs/2026-05-18-venezuela-tenant-defaults.md` — Spec de auto-config
-- `.ai/specs/2026-05-18-properties-module.md` — Spec de propiedades
+#### `matching` — Motor de cruce contacto ↔ propiedad
+- Preferencias por contacto (tipo, ciudad, operación, presupuesto)
+- Scoring engine con pesos configurables
+- Score por propiedad y por contacto
+
+#### `property_portal` — Página pública /p/[id]
+- Carousel de fotos, specs, precio, botón WhatsApp
+- Solo propiedades activas, sin auth
+
+#### `property_docs` — Ficha PDF (data layer)
+- API de datos para generación de PDF
+
+#### `property_publishing` — Publicación asistida
+- Texto pre-formateado + links directos (ML, FB, IG, TikTok, WhatsApp)
+
+#### `mercadolibre_sync` — Sync de mercado
+- Worker diario, tabla compartida (sin tenant_id)
+- Solo lectura — no publica
+
+#### `market_intelligence` — Tasación
+- KPIs por zona, rango P25-P75, comparables
+- Consume datos de mercadolibre_sync
 
 ---
 
-## Qué sigue (próximos sprints)
+## Resumen de módulos por vertical
 
-### Sprint 2 — Real Estate Core (en progreso)
-- [ ] `transactions` — Cierre de operación + comisiones
-- [ ] `matching` — Motor de cruce contacto ↔ propiedad
+### Base Venezuela (todos los tenants)
+| Módulo | Propósito |
+|---|---|
+| `venezuela_rates` | Tasas de cambio (BCV + paralelo) |
+| `payment_methods` | 7 métodos de pago locales |
+| `ve_fiscal` | RIF/CI, IVA, IGTF, retenciones |
+| `ve_tenant_defaults` | Auto-config al crear tenant |
 
-### Sprint 3 — Real Estate Valor
-- [ ] `property_portal` — Página pública /p/[id]
-- [ ] `property_docs` — Ficha PDF con branding
-- [ ] `property_publishing` — Texto + links a portales
+### Real Estate (8 módulos)
+| Módulo | Propósito |
+|---|---|
+| `properties` | CRUD propiedades + imágenes + links |
+| `transactions` | Cierres + comisiones |
+| `matching` | Cruce contacto ↔ propiedad |
+| `property_portal` | Página pública /p/[id] |
+| `property_docs` | Ficha PDF |
+| `property_publishing` | Texto + links a portales |
+| `mercadolibre_sync` | Sync diario ML |
+| `market_intelligence` | Tasación + comparables |
 
-### Sprint 4 — Inteligencia de Mercado
-- [ ] `market_intelligence` — Tasación + KPIs por zona
-- [ ] `mercadolibre_sync` — Sync de listings (módulo compartido)
-
-### Pendiente (configuración)
-- [ ] Configurar Resend API key para emails (mail.aikalabs.cc)
-- [ ] Configurar DNS para email sending
-- [ ] Primer tenant real de prueba
+### Education (9 módulos)
+| Módulo | Propósito |
+|---|---|
+| `students` | Registro estudiantes + representantes |
+| `enrollment` | Inscripciones + documentos |
+| `tuition` | Mensualidades + pagos + morosos |
+| `grades` | Notas + boletines |
+| `attendance` | Asistencia diaria + resumen |
+| `school_calendar` | Calendario escolar + feriados VE |
+| `school_comms` | Circulares + avisos |
+| `school_docs` | Constancias + plantillas |
+| `parent_portal` | Portal del representante |
 
 ---
 
@@ -131,21 +244,25 @@
 
 ### Patrones utilizados
 
-Todos los módulos siguen los patrones documentados de Open Mercato:
+Todos los módulos siguen los patrones documentados de Open Mercato v0.6.1:
 
-| Patrón | Dónde se documenta |
+| Patrón | Implementación |
 |---|---|
-| `ModuleSetupConfig` (onTenantCreated, seedDefaults) | `packages/core/AGENTS.md` → Module Setup |
-| `makeCrudRoute` con CRUD factory | `packages/core/AGENTS.md` → API Routes |
-| `RateProvider` interface para tasas | `packages/core/src/modules/currencies/services/providers/base.ts` |
-| Event bus subscribers | `packages/events/AGENTS.md` |
-| DI override via `di.ts` | `packages/core/AGENTS.md` → Extensibility Contract |
-| Spec-driven development | `.ai/specs/AGENTS.md` |
-| i18n con archivos JSON por locale | `packages/shared/AGENTS.md` |
+| `@Property({ type: '...' })` | Siempre con type explícito (Turbopack) |
+| `makeCrudRoute` | Con `mapToEntity` + `applyToEntity` + `indexer` |
+| `createModuleEvents` | Con `moduleId:` + `category` |
+| `ModuleSetupConfig` | `onTenantCreated` + `seedDefaults` + `defaultRoleFeatures` |
+| Cross-module queries | `(em as any).getKysely()` — nunca imports directos |
+| Seeds | `em.create(Entity, {...} as any)` |
+| i18n | `es.json` + `en.json` por módulo |
+| Search | `SearchModuleConfig` con `fieldPolicy` |
+| Notifications | `NotificationTypeDefinition[]` |
+| Dashboard widgets | `DashboardWidgetModule` con config + client component |
 
-### Sin hotfixes ni workarounds
+### Principios de arquitectura
 
-- Ningún módulo modifica el core de Open Mercato
-- Todo se integra via interfaces documentadas (DI, events, setup hooks)
-- Las actualizaciones de Open Mercato (`yarn up '@open-mercato/*'`) no rompen nada
-- Cada módulo es independiente y se puede desactivar sin afectar otros
+- Open Mercato core NO se modifica — todo es aditivo
+- Módulos son independientes y se pueden activar/desactivar por tenant
+- Comunicación entre módulos via eventos y Kysely (no imports directos)
+- Cada tenant tiene su propio pipeline, tags, configuración (aislado por tenant_id)
+- La visibilidad se controla por feature toggles + role features
