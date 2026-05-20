@@ -74,6 +74,10 @@ export const enabledModules: ModuleEntry[] = [
   { id: 've_tax_reports', from: '@app' },
   { id: 'bank_reconciliation', from: '@app' },
 
+  // Aika: Distribution vertical
+  { id: 'dist_credit', from: '@app' },
+  { id: 'dist_price_lists', from: '@app' },
+
   // Aika: Real Estate vertical
   { id: 'properties', from: '@app' },
   { id: 'transactions', from: '@app' },
