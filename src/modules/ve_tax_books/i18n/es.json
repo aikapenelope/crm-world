@@ -1,0 +1,18 @@
+{
+  "ve_tax_books.nav.title": "Libros Fiscales",
+  "ve_tax_books.create.title": "Registrar Entrada",
+  "ve_tax_books.list.empty": "No hay entradas fiscales registradas",
+  "ve_tax_books.book_type.sales": "Ventas",
+  "ve_tax_books.book_type.purchases": "Compras",
+  "ve_tax_books.document_type.factura": "Factura",
+  "ve_tax_books.document_type.nota_credito": "Nota de Crédito",
+  "ve_tax_books.document_type.nota_debito": "Nota de Débito",
+  "ve_tax_books.document_type.comprobante_retencion": "Comprobante de Retención",
+  "ve_tax_books.summary.debito_fiscal": "Débito Fiscal (Ventas)",
+  "ve_tax_books.summary.credito_fiscal": "Crédito Fiscal (Compras)",
+  "ve_tax_books.summary.iva_a_pagar": "IVA a Pagar / A Favor",
+  "ve_tax_books.summary.igtf_total": "IGTF del Período",
+  "ve_tax_books.flash.created": "Entrada fiscal registrada exitosamente",
+  "ve_tax_books.flash.updated": "Entrada fiscal actualizada",
+  "ve_tax_books.flash.deleted": "Entrada fiscal eliminada"
+}

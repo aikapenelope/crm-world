@@ -1,0 +1,10 @@
+{
+  "bank_reconciliation.nav.title": "Conciliación Bancaria",
+  "bank_reconciliation.upload.title": "Cargar Extracto",
+  "bank_reconciliation.status.pending": "Pendiente",
+  "bank_reconciliation.status.matched": "Conciliado",
+  "bank_reconciliation.status.unmatched": "Sin cruce",
+  "bank_reconciliation.status.ignored": "Ignorado",
+  "bank_reconciliation.flash.uploaded": "Extracto cargado exitosamente",
+  "bank_reconciliation.flash.reconciled": "Movimiento conciliado"
+}

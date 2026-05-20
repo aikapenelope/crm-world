@@ -1,0 +1,10 @@
+{
+  "bank_reconciliation.nav.title": "Bank Reconciliation",
+  "bank_reconciliation.upload.title": "Upload Statement",
+  "bank_reconciliation.status.pending": "Pending",
+  "bank_reconciliation.status.matched": "Matched",
+  "bank_reconciliation.status.unmatched": "Unmatched",
+  "bank_reconciliation.status.ignored": "Ignored",
+  "bank_reconciliation.flash.uploaded": "Statement uploaded successfully",
+  "bank_reconciliation.flash.reconciled": "Transaction reconciled"
+}
