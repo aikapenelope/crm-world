@@ -115,17 +115,17 @@ export class MiModuloItemEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4();
 
-  @Property()
+  @Property({ type: 'text' })          // ⚠️ SIEMPRE declarar type explícito
   tenant_id!: string;
 
-  @Property()
+  @Property({ type: 'text' })
   organization_id!: string;
 
-  @Property()
+  @Property({ type: 'text', length: 255 })
   name!: string;
 
-  @Property({ nullable: true })
-  description?: string;
+  @Property({ type: 'text', nullable: true })
+  description?: string | null;
 
   @Property({ type: 'boolean', default: true })
   is_active: boolean = true;
@@ -137,7 +137,7 @@ export class MiModuloItemEntity {
   updated_at: Date = new Date();
 
   @Property({ type: 'timestamptz', nullable: true })
-  deleted_at?: Date;
+  deleted_at?: Date | null;
 }
 ```
 
@@ -198,9 +198,16 @@ const crud = makeCrudRoute({
     tenantField: 'tenant_id',
     softDeleteField: 'deleted_at',
   },
+  indexer: { entityType: 'mi_modulo.item' },
   list: { schema: listSchema },
-  create: { schema: createItemSchema },
-  update: { schema: updateItemSchema },
+  create: {
+    schema: createItemSchema,
+    mapToEntity: (input: any) => ({ ...input }),  // ⚠️ OBLIGATORIO en v0.6.1
+  },
+  update: {
+    schema: updateItemSchema,
+    applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) },  // ⚠️ OBLIGATORIO en v0.6.1
+  },
 });
 
 export const GET = crud.GET;
@@ -316,11 +323,11 @@ Nunca borrar registros físicamente. Usar `deleted_at` y filtrar con `softDelete
 import { createModuleEvents } from '@open-mercato/shared/modules/events';
 
 export const eventsConfig = createModuleEvents({
-  module: 'mi_modulo',
+  moduleId: 'mi_modulo',  // ⚠️ DEBE ser moduleId, NO module
   events: [
-    { id: 'mi_modulo.item.created', label: 'Item created', entity: 'item' },
-    { id: 'mi_modulo.item.updated', label: 'Item updated', entity: 'item' },
-    { id: 'mi_modulo.item.deleted', label: 'Item deleted', entity: 'item' },
+    { id: 'mi_modulo.item.created', label: 'Item created', entity: 'item', category: 'crud' },
+    { id: 'mi_modulo.item.updated', label: 'Item updated', entity: 'item', category: 'crud' },
+    { id: 'mi_modulo.item.deleted', label: 'Item deleted', entity: 'item', category: 'crud' },
   ],
 } as const);
 ```

@@ -35,6 +35,30 @@ Plataforma SaaS multi-vertical construida sobre [Open Mercato](https://github.co
 
 Cada tenant (cliente) ve solo los módulos de su vertical. La base es compartida.
 
+## Flujo de Deploy Multi-Vertical
+
+El sistema se configura completamente en Super Admin con todos los módulos disponibles. Sin embargo, cuando se hace el deploy para cada tipo de CRM (Real Estate, Retail, Education, etc.), **NO se mezcla todo ni se expone todo al usuario final**. Solo aparecen los módulos y funcionalidades correspondientes a ese CRM específico.
+
+Esto se logra mediante:
+
+1. **Feature toggles por tenant** — cada tenant tiene habilitadas solo las features de su vertical
+2. **`requireFeatures` en pages y APIs** — las páginas y endpoints se ocultan si el tenant no tiene la feature
+3. **`defaultRoleFeatures` en `setup.ts`** — los roles se configuran con permisos específicos de la vertical
+4. **`src/modules.ts`** — define qué módulos están compilados en el build (todos), pero la visibilidad runtime la controlan los feature toggles
+
+**Ejemplo**: Un tenant de Real Estate ve Properties, Transactions, Matching, Contacts, Pipeline, Calendar y Tasks. NO ve Catalog, Sales Orders, Shipping Carriers, ni módulos de otras verticales.
+
+**Flujo operativo**:
+```
+Super Admin configura TODO (módulos, verticales, features)
+    ↓
+Deploy del build completo (todos los módulos compilados)
+    ↓
+Crear tenant → asignar vertical → feature toggles activan solo lo relevante
+    ↓
+Usuario final ve SOLO su CRM específico
+```
+
 ## Stack
 
 | Componente | Tecnología |
