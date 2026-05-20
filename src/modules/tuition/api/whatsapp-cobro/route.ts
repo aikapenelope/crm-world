@@ -25,7 +25,7 @@ export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['tuition.view_debtors'] },
 }
 
-export async function GET(request: Request) {
+export async function GET(request: Request, ctx: any) {
   try {
     const url = new URL(request.url)
     const params = querySchema.parse({
@@ -34,15 +34,10 @@ export async function GET(request: Request) {
       grade_level: url.searchParams.get('grade_level') ?? undefined,
     })
 
-    const { resolveOrganizationScopeForRequest } = await import(
-      '@open-mercato/core/modules/directory/utils/organizationScope'
-    )
-    const scope = await resolveOrganizationScopeForRequest(request)
+    const scope = ctx.scope as { tenantId: string; organizationId: string }
     if (!scope) return NextResponse.json({ error: 'No scope' }, { status: 401 })
 
-    const { createRequestContainer } = await import('@open-mercato/shared/lib/di/container')
-    const container = await createRequestContainer()
-    const em = container.resolve('em') as EntityManager
+    const em = ctx.container.resolve('em') as EntityManager
     const kysely = (em as any).getKysely()
 
     // Get organization name for message

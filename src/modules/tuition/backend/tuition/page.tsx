@@ -119,14 +119,26 @@ export default function TuitionListPage() {
       <PageBody>
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Mensualidades</h1>
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={() => router.push('/backend/tuition/plans')}>
+          <div className="flex flex-wrap gap-2">
+            <Button type="button" variant="outline" size="sm" onClick={() => router.push('/backend/tuition/generate')}>
+              Generar Mes
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => router.push('/backend/tuition/plans')}>
               Planes
             </Button>
-            <Button variant="outline" onClick={() => router.push('/backend/tuition/debtors')}>
+            <Button type="button" variant="outline" size="sm" onClick={() => router.push('/backend/tuition/debtors')}>
               Morosos
             </Button>
-            <Button onClick={() => router.push('/backend/tuition/payments')}>
+            <Button type="button" variant="outline" size="sm" onClick={() => router.push('/backend/tuition/siblings')}>
+              Familias
+            </Button>
+            <Button type="button" variant="outline" size="sm" className="border-[#25D366] text-[#25D366]" onClick={() => router.push('/backend/tuition/cobro')}>
+              WhatsApp
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={() => router.push('/backend/tuition/collection-day')}>
+              Día de Cobro
+            </Button>
+            <Button type="button" onClick={() => router.push('/backend/tuition/payments')}>
               Registrar Pago
             </Button>
           </div>

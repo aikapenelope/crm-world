@@ -29,20 +29,15 @@ export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['tuition.record_payment'] },
 }
 
-export async function GET(request: Request) {
+export async function GET(request: Request, ctx: any) {
   try {
     const url = new URL(request.url)
     const params = querySchema.parse({ payment_id: url.searchParams.get('payment_id') })
 
-    const { resolveOrganizationScopeForRequest } = await import(
-      '@open-mercato/core/modules/directory/utils/organizationScope'
-    )
-    const scope = await resolveOrganizationScopeForRequest(request)
+    const scope = ctx.scope as { tenantId: string; organizationId: string }
     if (!scope) return NextResponse.json({ error: 'No scope' }, { status: 401 })
 
-    const { createRequestContainer } = await import('@open-mercato/shared/lib/di/container')
-    const container = await createRequestContainer()
-    const em = container.resolve('em') as EntityManager
+    const em = ctx.container.resolve('em') as EntityManager
     const kysely = (em as any).getKysely()
 
     const receiptData = await buildReceiptData(kysely, scope, params.payment_id)
@@ -62,20 +57,15 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: Request, ctx: any) {
   try {
     const body = await request.json()
     const { payment_id } = z.object({ payment_id: z.string().uuid() }).parse(body)
 
-    const { resolveOrganizationScopeForRequest } = await import(
-      '@open-mercato/core/modules/directory/utils/organizationScope'
-    )
-    const scope = await resolveOrganizationScopeForRequest(request)
+    const scope = ctx.scope as { tenantId: string; organizationId: string }
     if (!scope) return NextResponse.json({ error: 'No scope' }, { status: 401 })
 
-    const { createRequestContainer } = await import('@open-mercato/shared/lib/di/container')
-    const container = await createRequestContainer()
-    const em = container.resolve('em') as EntityManager
+    const em = ctx.container.resolve('em') as EntityManager
     const kysely = (em as any).getKysely()
 
     const receiptData = await buildReceiptData(kysely, scope, payment_id)

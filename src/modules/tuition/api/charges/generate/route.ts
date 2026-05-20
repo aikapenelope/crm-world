@@ -9,10 +9,6 @@ import type { EntityManager } from '@mikro-orm/postgresql'
  * Applies active discounts (sibling, scholarship, etc.) automatically.
  *
  * Body: { period_month: "2026-10", plan_id?: string }
- * - period_month: required, format YYYY-MM
- * - plan_id: optional, if omitted generates for ALL active plans
- *
- * Returns: { generated: number, skipped: number, errors: string[] }
  */
 
 const generateSchema = z.object({
@@ -24,32 +20,21 @@ export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['tuition.generate_charges'] },
 }
 
-export async function POST(request: Request) {
+export async function POST(request: Request, ctx: any) {
   try {
     const body = await request.json()
     const input = generateSchema.parse(body)
 
-    // Resolve scope from request context
-    const { resolveOrganizationScopeForRequest } = await import(
-      '@open-mercato/core/modules/directory/utils/organizationScope'
-    )
-    const scope = await resolveOrganizationScopeForRequest(request)
-    if (!scope) {
-      return NextResponse.json({ error: 'No organization scope' }, { status: 401 })
-    }
-
-    const { tenantId, organizationId } = scope
-    const { createRequestContainer } = await import('@open-mercato/shared/lib/di/container')
-    const container = await createRequestContainer()
-    const em = container.resolve('em') as EntityManager
+    const em: EntityManager = ctx.container.resolve('em')
+    const scope = ctx.scope as { tenantId: string; organizationId: string }
     const kysely = (em as any).getKysely()
 
     // 1. Get active plans
     let plansQuery = kysely
       .selectFrom('tuition_plans')
       .selectAll()
-      .where('tenant_id', '=', tenantId)
-      .where('organization_id', '=', organizationId)
+      .where('tenant_id', '=', scope.tenantId)
+      .where('organization_id', '=', scope.organizationId)
       .where('is_active', '=', true)
       .where('deleted_at', 'is', null)
 
@@ -60,15 +45,15 @@ export async function POST(request: Request) {
     const plans = await plansQuery.execute()
 
     if (plans.length === 0) {
-      return NextResponse.json({ generated: 0, skipped: 0, errors: ['No hay planes activos'] })
+      return NextResponse.json({ generated: 0, skipped: 0, errors: ['No hay planes activos'], summary: 'No hay planes activos' })
     }
 
     // 2. Get all active students
     const students = await kysely
       .selectFrom('students')
       .select(['id', 'grade_level', 'enrollment_status'])
-      .where('tenant_id', '=', tenantId)
-      .where('organization_id', '=', organizationId)
+      .where('tenant_id', '=', scope.tenantId)
+      .where('organization_id', '=', scope.organizationId)
       .where('enrollment_status', '=', 'active')
       .where('deleted_at', 'is', null)
       .execute()
@@ -76,9 +61,9 @@ export async function POST(request: Request) {
     // 3. Get existing charges for this month (to avoid duplicates)
     const existingCharges = await kysely
       .selectFrom('tuition_charges')
-      .select(['student_id', 'period_month', 'concept'])
-      .where('tenant_id', '=', tenantId)
-      .where('organization_id', '=', organizationId)
+      .select(['student_id'])
+      .where('tenant_id', '=', scope.tenantId)
+      .where('organization_id', '=', scope.organizationId)
       .where('period_month', '=', input.period_month)
       .where('concept', '=', 'mensualidad')
       .where('deleted_at', 'is', null)
@@ -90,8 +75,8 @@ export async function POST(request: Request) {
     const discounts = await kysely
       .selectFrom('tuition_discounts')
       .selectAll()
-      .where('tenant_id', '=', tenantId)
-      .where('organization_id', '=', organizationId)
+      .where('tenant_id', '=', scope.tenantId)
+      .where('organization_id', '=', scope.organizationId)
       .where('is_active', '=', true)
       .where('deleted_at', 'is', null)
       .execute()
@@ -108,74 +93,48 @@ export async function POST(request: Request) {
 
     let generated = 0
     let skipped = 0
-    const errors: string[] = []
     const now = new Date()
-
-    // Parse month for due_date calculation
     const [yearStr, monthStr] = input.period_month.split('-')
     const year = parseInt(yearStr)
     const month = parseInt(monthStr)
 
     for (const student of students) {
-      // Skip if already charged
-      if (alreadyCharged.has(student.id)) {
-        skipped++
-        continue
-      }
+      if (alreadyCharged.has(student.id)) { skipped++; continue }
 
-      // Find matching plan (by grade_level or null = all grades)
-      const plan = plans.find(
-        (p: any) => !p.grade_level || p.grade_level === student.grade_level,
-      )
-
-      if (!plan) {
-        skipped++
-        continue
-      }
+      const plan = plans.find((p: any) => !p.grade_level || p.grade_level === student.grade_level)
+      if (!plan) { skipped++; continue }
 
       // Calculate amount with discounts
       let amount = parseFloat(plan.monthly_amount)
       const studentDiscounts = discountsByStudent.get(student.id) ?? []
-
       for (const discount of studentDiscounts) {
-        // Check validity dates
         if (discount.valid_from && new Date(discount.valid_from) > now) continue
         if (discount.valid_until && new Date(discount.valid_until) < now) continue
-
-        if (discount.percentage) {
-          amount -= amount * (parseFloat(discount.percentage) / 100)
-        } else if (discount.fixed_amount) {
-          amount -= parseFloat(discount.fixed_amount)
-        }
+        if (discount.percentage) amount -= amount * (parseFloat(discount.percentage) / 100)
+        else if (discount.fixed_amount) amount -= parseFloat(discount.fixed_amount)
       }
-
-      // Ensure amount doesn't go negative
       amount = Math.max(0, Math.round(amount * 100) / 100)
 
-      // Calculate due_date
       const dueDay = Math.min(plan.due_day, 28)
       const dueDate = new Date(year, month - 1, dueDay)
 
-      // Create charge
-      em.persist(
-        em.create(TuitionChargeEntity, {
-          tenant_id: tenantId,
-          organization_id: organizationId,
-          student_id: student.id,
-          plan_id: plan.id,
-          period_month: input.period_month,
-          concept: 'mensualidad',
-          description: `Mensualidad ${input.period_month}`,
-          amount: String(amount),
-          currency: plan.currency ?? 'USD',
-          status: 'pending',
-          due_date: dueDate,
-          late_fee_applied: '0.00',
-          amount_paid: '0.00',
-          created_at: now,
-          updated_at: now,
-        } as any),
-      )
+      em.persist(em.create(TuitionChargeEntity, {
+        tenant_id: scope.tenantId,
+        organization_id: scope.organizationId,
+        student_id: student.id,
+        plan_id: plan.id,
+        period_month: input.period_month,
+        concept: 'mensualidad',
+        description: `Mensualidad ${input.period_month}`,
+        amount: String(amount),
+        currency: plan.currency ?? 'USD',
+        status: 'pending',
+        due_date: dueDate,
+        late_fee_applied: '0.00',
+        amount_paid: '0.00',
+        created_at: now,
+        updated_at: now,
+      } as any))
       generated++
     }
 
@@ -184,14 +143,13 @@ export async function POST(request: Request) {
     return NextResponse.json({
       generated,
       skipped,
-      errors,
-      summary: `Generados ${generated} cargos para ${input.period_month}. ${skipped} omitidos (ya existían o sin plan).`,
+      errors: [],
+      summary: `Generados ${generated} cargos para ${input.period_month}. ${skipped} omitidos.`,
     })
   } catch (err: any) {
     if (err.name === 'ZodError') {
       return NextResponse.json({ error: 'Datos inválidos', details: err.errors }, { status: 400 })
     }
-    console.error('[tuition] Bulk charge generation error:', err)
     return NextResponse.json({ error: err.message }, { status: 500 })
   }
 }
