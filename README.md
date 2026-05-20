@@ -1,62 +1,49 @@
-# CRM World
+# CRM World — Aika Platform
 
-Plataforma SaaS multi-vertical construida sobre [Open Mercato](https://github.com/open-mercato/open-mercato). Un solo sistema que sirve a múltiples industrias con módulos especializados por rubro, compartiendo una base común de CRM, ventas, catálogo, y automatización.
+Plataforma SaaS multi-vertical construida sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0.6.1. Un solo sistema que sirve a múltiples industrias en Venezuela con módulos especializados por rubro.
 
-## Verticales
+## Verticales Implementadas
 
-| Vertical | Descripción |
-|----------|-------------|
-| **Retail & E-Commerce** | Lealtad, sincronización de inventario, gestión omnicanal |
-| **Manufacturing** | Órdenes de producción, control de calidad, BOM |
-| **Logistics & Distribution** | Flotas, rutas, almacén |
-| **Real Estate** | Propiedades, contratos de arrendamiento, portal de inquilinos |
-| **Education** | Inscripciones, cursos, portal de estudiantes |
-| **Agriculture & Food** | Trazabilidad, cosecha, cumplimiento regulatorio |
+| Vertical | Módulos | Estado |
+|----------|---------|--------|
+| **Real Estate** | 8 módulos (propiedades, transacciones, matching, portal, docs, publishing, ML sync, market intel) | Completa |
+| **Education / Colegios** | 10 módulos (students, enrollment, tuition, grades, attendance, calendar, comms, docs, portal, migration) | Completa |
+| **Distribuidoras** | 8 módulos (crédito/CxC, listas de precios, inventario, rutas, despacho, reportes, comisiones, portal) | Completa |
+| **Talleres Mecánicos** | 7 módulos (vehículos, órdenes de servicio, inspección digital DVI, repuestos, presupuestos, reportes, portal) | Completa |
+
+## Módulos Transversales (aplican a todas las verticales)
+
+| Módulo | Propósito |
+|--------|-----------|
+| `venezuela_rates` | Tasas de cambio BCV + paralelo (DolarApi) |
+| `payment_methods` | 7 métodos de pago VE (Pago Móvil, Zelle, Binance, etc.) |
+| `ve_fiscal` | RIF/CI, IVA 16%, IGTF 3%, retenciones |
+| `ve_tenant_defaults` | Auto-configuración al crear tenant |
+| `ve_tax_books` | Libros de compra/venta IVA |
+| `ve_withholdings` | Retenciones IVA/ISLR |
+| `ve_tax_reports` | Reportes fiscales + export CSV |
+| `bank_reconciliation` | Conciliación bancaria (upload CSV multi-banco) |
 
 ## Arquitectura
 
 ```
-┌─────────────────────────────────────────────────┐
-│           OPEN MERCATO (core MIT)                │
-│  Auth · CRM · Catálogo · Ventas · Workflows     │
-│  Search · AI · Portal · Notificaciones          │
-└────────────────────┬────────────────────────────┘
-                     │
-      ┌──────────────┼──────────────────┐
-      │              │                  │
- ┌────▼────┐   ┌────▼────┐      ┌─────▼─────┐
- │ Módulos │   │ Módulos │      │  Módulos  │
- │ Retail  │   │ Educac. │      │  Manufac. │
- └────┬────┘   └────┬────┘      └─────┬─────┘
-      │              │                  │
- Tenants de     Tenants de        Tenants de
- retail         educación         manufactura
-```
-
-Cada tenant (cliente) ve solo los módulos de su vertical. La base es compartida.
-
-## Flujo de Deploy Multi-Vertical
-
-El sistema se configura completamente en Super Admin con todos los módulos disponibles. Sin embargo, cuando se hace el deploy para cada tipo de CRM (Real Estate, Retail, Education, etc.), **NO se mezcla todo ni se expone todo al usuario final**. Solo aparecen los módulos y funcionalidades correspondientes a ese CRM específico.
-
-Esto se logra mediante:
-
-1. **Feature toggles por tenant** — cada tenant tiene habilitadas solo las features de su vertical
-2. **`requireFeatures` en pages y APIs** — las páginas y endpoints se ocultan si el tenant no tiene la feature
-3. **`defaultRoleFeatures` en `setup.ts`** — los roles se configuran con permisos específicos de la vertical
-4. **`src/modules.ts`** — define qué módulos están compilados en el build (todos), pero la visibilidad runtime la controlan los feature toggles
-
-**Ejemplo**: Un tenant de Real Estate ve Properties, Transactions, Matching, Contacts, Pipeline, Calendar y Tasks. NO ve Catalog, Sales Orders, Shipping Carriers, ni módulos de otras verticales.
-
-**Flujo operativo**:
-```
-Super Admin configura TODO (módulos, verticales, features)
-    ↓
-Deploy del build completo (todos los módulos compilados)
-    ↓
-Crear tenant → asignar vertical → feature toggles activan solo lo relevante
-    ↓
-Usuario final ve SOLO su CRM específico
+┌─────────────────────────────────────────────────────┐
+│            OPEN MERCATO v0.6.1 (core MIT)           │
+│  Auth · CRM · Catálogo · Ventas · Workflows · AI   │
+│  Search · Portal · Notificaciones · Currencies      │
+└────────────────────────┬────────────────────────────┘
+                         │
+    ┌────────────────────┼────────────────────┐
+    │                    │                    │
+┌───▼────┐  ┌───────────▼──────────┐  ┌─────▼──────┐
+│ Fiscal │  │ Verticales Custom    │  │  Infra     │
+│  VE    │  │ RE · Edu · Dist · Auto│  │  Pulumi   │
+└───┬────┘  └───────────┬──────────┘  └─────┬──────┘
+    │                    │                    │
+    └────────────────────┼────────────────────┘
+                         │
+              Feature Toggles por Tenant
+              (cada cliente ve solo su vertical)
 ```
 
 ## Stack
@@ -67,7 +54,7 @@ Usuario final ve SOLO su CRM específico
 | Base de datos | PostgreSQL 17 + pgvector |
 | Cache/Colas | Redis 7 |
 | Búsqueda | Meilisearch 1.11 |
-| Infraestructura | Hetzner Cloud (Pulumi IaC) |
+| Infraestructura | Hetzner Cloud (Helsinki) via Pulumi |
 | Deploy | Coolify 4.0 (git-push → auto-deploy) |
 | TLS | Let's Encrypt automático |
 
@@ -79,55 +66,29 @@ Usuario final ve SOLO su CRM específico
 | Panel de deploy | https://deploy.novaincs.com |
 | Infra (Pulumi) | [mercatinfra](https://github.com/aikapenelope/mercatinfra) |
 
-## Roadmap
-
-### Fase 0 — Base (completada)
-- [x] Servidor Hetzner provisionado con Pulumi
-- [x] Coolify instalado y configurado
-- [x] Open Mercato desplegado y corriendo
-- [x] HTTPS con Let's Encrypt
-- [x] Seguridad: fail2ban, UFW, encriptación, rate limiting
-- [x] Backups automáticos diarios
-- [x] Documentación de desarrollo
-
-### Fase 1 — Regionalización y Base Compartida
-- [ ] Configuración regional (moneda, idioma, timezone, formatos)
-- [ ] Branding por tenant (logo, colores, nombre)
-- [ ] Templates de email en español
-- [ ] Módulo de documentos/compliance compartido
-- [ ] Reportes base configurables
-
-### Fase 2 — Primera Vertical
-- [ ] Definir vertical inicial según primer cliente
-- [ ] Diseñar entidades y flujos del rubro
-- [ ] Desarrollar módulos (3-5 por vertical)
-- [ ] Configurar feature toggles
-- [ ] Probar con tenant de demo
-- [ ] Primer cliente real
-
-### Fase 3 — Segunda Vertical
-- [ ] Repetir Fase 2 para el siguiente rubro
-- [ ] Reutilizar módulos compartidos donde aplique
-
-### Fase 4 — Escala
-- [ ] Verticales restantes según demanda
-- [ ] Portal de clientes personalizado por vertical
-- [ ] Integraciones específicas (pasarelas de pago locales, carriers)
-- [ ] Onboarding self-service por vertical
-
 ## Desarrollo
-
-Ver [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) para la guía completa de desarrollo de módulos.
-
-### Comandos rápidos
 
 ```bash
 yarn dev              # Desarrollo local
 yarn generate         # Regenerar módulos
 yarn db:generate      # Crear migración
 yarn db:migrate       # Aplicar migración
+yarn typecheck        # Verificar tipos
 git push origin main  # Deploy automático
 ```
+
+Ver [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) para la guía completa.
+
+## Documentación
+
+| Documento | Contenido |
+|---|---|
+| [ROADMAP.md](docs/ROADMAP.md) | Estado de todas las fases |
+| [PATTERNS.md](docs/PATTERNS.md) | Chainlock — errores y soluciones |
+| [COOKBOOK.md](docs/COOKBOOK.md) | Patrones de código |
+| [DISTRIBUTION_VERTICAL_PLAN.md](docs/DISTRIBUTION_VERTICAL_PLAN.md) | Plan distribuidoras |
+| [AUTOMOTIVE_VERTICAL_PLAN.md](docs/AUTOMOTIVE_VERTICAL_PLAN.md) | Plan talleres mecánicos |
+| [FOUNDATION.md](docs/FOUNDATION.md) | Decisiones regionales VE |
 
 ## Licencia
 
