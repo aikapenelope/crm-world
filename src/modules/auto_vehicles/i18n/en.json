@@ -1,0 +1,14 @@
+{
+  "auto_vehicles.nav.title": "Vehicles",
+  "auto_vehicles.create.title": "Register Vehicle",
+  "auto_vehicles.engine.gasoline": "Gasoline",
+  "auto_vehicles.engine.diesel": "Diesel",
+  "auto_vehicles.engine.hybrid": "Hybrid",
+  "auto_vehicles.engine.electric": "Electric",
+  "auto_vehicles.engine.gas": "Gas (CNG)",
+  "auto_vehicles.transmission.manual": "Manual",
+  "auto_vehicles.transmission.automatic": "Automatic",
+  "auto_vehicles.flash.created": "Vehicle registered successfully",
+  "auto_vehicles.flash.updated": "Vehicle updated",
+  "auto_vehicles.flash.photo_uploaded": "Photo uploaded successfully"
+}
