@@ -89,7 +89,7 @@ export async function POST(request: Request, ctx: any) {
     }
 
     // 5. Generate charges
-    const { TuitionChargeEntity } = await import('../../data/entities')
+    const { TuitionChargeEntity } = await import('../../../data/entities')
 
     let generated = 0
     let skipped = 0
