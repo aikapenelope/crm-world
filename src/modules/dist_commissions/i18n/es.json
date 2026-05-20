@@ -1,0 +1,11 @@
+{
+  "dist_commissions.nav.title": "Comisiones",
+  "dist_commissions.type.sale": "Venta",
+  "dist_commissions.type.collection": "Cobranza",
+  "dist_commissions.type.goal_bonus": "Bonus Meta",
+  "dist_commissions.status.pending": "Pendiente",
+  "dist_commissions.status.approved": "Aprobada",
+  "dist_commissions.status.paid": "Pagada",
+  "dist_commissions.flash.created": "Comisión registrada",
+  "dist_commissions.flash.approved": "Comisión aprobada"
+}
