@@ -1,0 +1,14 @@
+{
+  "auto_parts.nav.title": "Parts",
+  "auto_parts.create.title": "Add Part",
+  "auto_parts.category.brakes": "Brakes",
+  "auto_parts.category.engine": "Engine",
+  "auto_parts.category.electrical": "Electrical",
+  "auto_parts.category.suspension": "Suspension",
+  "auto_parts.category.filters": "Filters",
+  "auto_parts.category.fluids": "Fluids",
+  "auto_parts.category.body": "Body",
+  "auto_parts.category.other": "Other",
+  "auto_parts.flash.created": "Part added",
+  "auto_parts.flash.updated": "Part updated"
+}

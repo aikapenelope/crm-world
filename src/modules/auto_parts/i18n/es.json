@@ -1,0 +1,14 @@
+{
+  "auto_parts.nav.title": "Repuestos",
+  "auto_parts.create.title": "Agregar Repuesto",
+  "auto_parts.category.brakes": "Frenos",
+  "auto_parts.category.engine": "Motor",
+  "auto_parts.category.electrical": "Eléctrico",
+  "auto_parts.category.suspension": "Suspensión",
+  "auto_parts.category.filters": "Filtros",
+  "auto_parts.category.fluids": "Fluidos",
+  "auto_parts.category.body": "Carrocería",
+  "auto_parts.category.other": "Otro",
+  "auto_parts.flash.created": "Repuesto agregado",
+  "auto_parts.flash.updated": "Repuesto actualizado"
+}
