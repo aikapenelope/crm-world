@@ -10,10 +10,9 @@
  * 3. Crea transacción tipo 'expire'
  */
 
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
-
-export async function expirePoints(context: RequestContext) {
-  const { em, scope } = context
+export async function expirePoints(context: any) {
+  const em = context.container.resolve('em')
+  const scope = context.scope
   const kysely = (em as any).getKysely()
   const now = new Date()
 

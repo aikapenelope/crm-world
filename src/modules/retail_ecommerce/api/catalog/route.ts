@@ -1,5 +1,3 @@
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
-
 const routeMetadata = {
   GET: { requireAuth: false },
 }
@@ -10,8 +8,9 @@ export const metadata = routeMetadata
  * Public catalog endpoint — returns available products for the storefront.
  * Reads from catalog_products (Open Mercato core) and dist_inventory_items.
  */
-export async function GET(request: Request) {
-  const { em, scope } = (request as any).context as RequestContext
+export async function GET(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
   const kysely = (em as any).getKysely()
   const url = new URL(request.url)
   const page = Number(url.searchParams.get('page') ?? '1')

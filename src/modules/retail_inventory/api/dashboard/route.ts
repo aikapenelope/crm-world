@@ -1,13 +1,12 @@
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
-
 const routeMetadata = {
   GET: { requireAuth: true, requireFeatures: ['retail_inventory.view'] },
 }
 
 export const metadata = routeMetadata
 
-export async function GET(request: Request) {
-  const { em, scope } = (request as any).context as RequestContext
+export async function GET(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
   const kysely = (em as any).getKysely()
 
   // Inventory summary across all branches

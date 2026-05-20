@@ -1,4 +1,3 @@
-import type { RequestContext } from '@open-mercato/shared/lib/api/context'
 import { bulkUpdateSchema } from '../../data/validators'
 
 const routeMetadata = {
@@ -17,8 +16,10 @@ export const metadata = routeMetadata
  *
  * Genera alertas si algún precio queda por debajo del costo o margen mínimo.
  */
-export async function POST(request: Request) {
-  const { em, scope, user } = (request as any).context as RequestContext
+export async function POST(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+  const scope = ctx.scope
+  const user = ctx.user
   const kysely = (em as any).getKysely()
   const body = await request.json()
   const input = bulkUpdateSchema.parse(body)
