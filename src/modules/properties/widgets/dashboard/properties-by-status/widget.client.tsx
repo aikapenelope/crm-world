@@ -46,7 +46,7 @@ const PropertiesByStatusWidget: React.FC<DashboardWidgetComponentProps<Propertie
       setLoading(true)
       try {
         const result = await readApiResultOrThrow<{ items: PropertyRow[] }>(
-          '/api/properties?pageSize=500',
+          '/api/properties/properties?pageSize=500',
           undefined,
           { errorMessage: 'Error cargando propiedades', allowNullResult: true },
         )

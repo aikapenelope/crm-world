@@ -61,7 +61,7 @@ export default function TransactionsPage() {
 
         const fallback: ResponsePayload = { items: [], total: 0, page, totalPages: 1 }
         const call = await apiCall<ResponsePayload>(
-          `/api/transactions?${params.toString()}`,
+          `/api/transactions/transactions?${params.toString()}`,
           undefined,
           { fallback },
         )
@@ -88,7 +88,7 @@ export default function TransactionsPage() {
     async (row: TransactionRow) => {
       const confirmed = await confirmDialog({ title: '¿Eliminar esta transacción?', variant: 'destructive' })
       if (!confirmed) return
-      const call = await apiCall('/api/transactions', {
+      const call = await apiCall('/api/transactions/transactions', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: row.id }),

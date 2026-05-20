@@ -125,7 +125,7 @@ export default function CreatePropertyPage() {
               country: String(values.country || 'VE'),
             }
 
-            await createCrud('properties', payload)
+            await createCrud('properties/properties', payload)
             flash('Propiedad creada exitosamente', 'success')
             router.push('/backend/properties')
           }}

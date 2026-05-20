@@ -150,7 +150,7 @@ export default function CreateTransactionPage() {
               payload.lease_months = values.lease_months ? Number(values.lease_months) : null
             }
 
-            await createCrud('transactions', payload)
+            await createCrud('transactions/transactions', payload)
             flash('Transacción registrada exitosamente', 'success')
             router.push('/backend/transactions')
           }}
