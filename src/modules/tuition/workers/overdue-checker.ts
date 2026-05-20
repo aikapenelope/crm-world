@@ -50,7 +50,7 @@ export default async function handler(_payload: any, ctx: any) {
       .where('deleted_at', 'is', null)
       .execute()
 
-    const planMap = new Map(plans.map((p: any) => [p.id, p]))
+    const planMap = new Map<string, any>(plans.map((p: any) => [p.id, p]))
     const defaultGraceDays = 10
     const defaultLateFee = 5
 

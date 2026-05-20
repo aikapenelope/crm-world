@@ -79,7 +79,7 @@ export async function GET(request: Request, ctx: any) {
       .where('id', 'in', studentIds)
       .execute()
 
-    const studentMap = new Map(students.map((s: any) => [s.id, s]))
+    const studentMap = new Map<string, any>(students.map((s: any) => [s.id, s]))
 
     // Get primary representatives with phone numbers
     const reps = await kysely
@@ -103,14 +103,14 @@ export async function GET(request: Request, ctx: any) {
         .execute()
     }
 
-    const contactMap = new Map(contacts.map((c: any) => [c.id, c]))
-    const repByStudent = new Map(reps.map((r: any) => [r.student_id, r]))
+    const contactMap = new Map<string, any>(contacts.map((c: any) => [c.id, c]))
+    const repByStudent = new Map<string, any>(reps.map((r: any) => [r.student_id, r]))
 
     // Build response items with wa.me links
     const items = charges.map((charge: any) => {
-      const student = studentMap.get(charge.student_id)
-      const rep = repByStudent.get(charge.student_id)
-      const contact = rep ? contactMap.get(rep.contact_id) : null
+      const student = studentMap.get(charge.student_id) as any
+      const rep = repByStudent.get(charge.student_id) as any
+      const contact = rep ? contactMap.get(rep.contact_id) as any : null
 
       const studentName = student
         ? `${student.first_name} ${student.last_name}`
