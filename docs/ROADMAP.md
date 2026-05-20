@@ -101,11 +101,21 @@
 
 ---
 
+## Phase 11 — Retail/Comercio Vertical (complete)
+
+- [x] `retail_branches` — Multi-sucursal: tiendas, bodegas, personal, transferencias
+- [x] `retail_inventory` — Inventario tiempo real: conteo cíclico, rotación, dead stock
+- [x] `retail_loyalty` — Fidelización: puntos, niveles VIP, campañas WhatsApp
+- [x] `retail_returns` — Devoluciones: políticas por categoría, notas de crédito
+- [x] `retail_ecommerce` — E-commerce: storefront público, pedidos, delivery, publicación social
+
+---
+
 ## Future Verticals (por definir)
 
 | # | Vertical | Mercado VE | Módulos core que usa | Custom necesario |
 |---|---|---|---|---|
-| 1 | **Retail / Comercio** | Tiendas, ferreterías, farmacias | catalog, sales, checkout | pos_interface, loyalty, stock_alerts |
+| 1 | ~~**Retail / Comercio**~~ | ~~Tiendas, ferreterías, farmacias~~ | ~~catalog, sales, checkout~~ | ~~COMPLETADO~~ |
 | 2 | **Services / Agencias** | Marketing, diseño, consultoría | customers, planner, sales | projects, timesheets, proposals |
 | 3 | **Healthcare / Clínicas** | Consultorios, laboratorios | customers, planner, attachments | patients, appointments, medical_records |
 | 4 | **Beauty / Salones** | Peluquerías, spas, barberías | customers, planner, sales | bookings, staff_schedule, memberships |

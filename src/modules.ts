@@ -114,6 +114,13 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'school_docs', from: '@app' },
   { id: 'parent_portal', from: '@app' },
   { id: 'school_migration', from: '@app' },
+
+  // Aika: Retail/Comercio vertical
+  { id: 'retail_branches', from: '@app' },
+  { id: 'retail_inventory', from: '@app' },
+  { id: 'retail_loyalty', from: '@app' },
+  { id: 'retail_returns', from: '@app' },
+  { id: 'retail_ecommerce', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
