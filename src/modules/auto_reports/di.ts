@@ -1,1 +1,5 @@
-// DI registrations for auto_reports module
+import type { AppContainer } from '@open-mercato/shared/lib/di/container'
+
+export function register(_: AppContainer) {
+  // Services registered here when needed
+}
