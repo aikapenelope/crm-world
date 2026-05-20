@@ -88,6 +88,7 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'school_comms', from: '@app' },
   { id: 'school_docs', from: '@app' },
   { id: 'parent_portal', from: '@app' },
+  { id: 'school_migration', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

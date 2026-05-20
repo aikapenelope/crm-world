@@ -1,0 +1,17 @@
+{
+  "school_migration.nav.title": "Migración",
+  "school_migration.import.students": "Importar estudiantes",
+  "school_migration.import.payments": "Importar pagos",
+  "school_migration.import.grades": "Importar notas",
+  "school_migration.import.preview": "Vista previa",
+  "school_migration.import.confirm": "Confirmar importación",
+  "school_migration.import.success": "Importación completada",
+  "school_migration.import.errors": "Errores encontrados",
+  "school_migration.import.duplicates": "Duplicados omitidos",
+  "school_migration.systems.edudatos": "EduDatos / EduRed",
+  "school_migration.systems.gema": "Visual Gema",
+  "school_migration.systems.q10": "Q10",
+  "school_migration.systems.schooltrack": "SchoolTrack",
+  "school_migration.systems.excel": "Excel / Google Sheets",
+  "school_migration.systems.other": "Otro sistema"
+}
