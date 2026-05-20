@@ -1,2 +1,5 @@
-// DI registrations for ve_withholdings module
-// Currently empty — extend as needed for services
+import type { AppContainer } from '@open-mercato/shared/lib/di/container'
+
+export function register(_: AppContainer) {
+  // Services registered here when needed
+}
