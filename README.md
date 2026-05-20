@@ -73,17 +73,27 @@ Construido sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0
 | `retail_purchasing` | Gestión de compras: proveedores, órdenes automáticas por reorden, recepción de mercancía, cuentas por pagar, notas débito/crédito |
 | `retail_pricing` | Pricing y márgenes: reglas por categoría/canal, actualización masiva por dólar, precios regulados, alertas bajo costo/margen |
 
-### Property Management / Condominios — Administradoras *(nuevo)*
+### Property Management / Condominios — Administradoras *(Phase 12)*
 
 | Módulo | Qué hace |
 |--------|----------|
-| `condo_properties` | Edificios, unidades con alícuota (5 decimales, suma=100%), propietarios/inquilinos, áreas comunes reservables |
+| `condo_properties` | Edificios, unidades con alícuota (5 decimales, suma=100%), áreas comunes reservables con detección de conflictos de horario |
 | `condo_fees` | Cuotas ordinarias/extraordinarias, generación masiva de recibos por alícuota, multi-moneda USD/VES con tasa BCV automática |
 | `condo_collections` | Morosidad (40-60% no paga a tiempo), aging por meses, cobro masivo por WhatsApp, acuerdos de pago en cuotas |
 | `condo_maintenance` | Solicitudes con workflow (open→assigned→in_progress→completed), órdenes de trabajo, proveedores con rating 1-5 |
 | `condo_accounting` | Ingresos/gastos por categoría, fondo de reserva automático (Art. 14 LPH, mín. 10%), presupuesto anual para asamblea |
 | `condo_comms` | Circulares con tracking de lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea con quórum |
 | `condo_portal` | Portal del propietario: estado de cuenta, reportar pagos, solicitudes mantenimiento, circulares, votaciones, documentos |
+
+**Features avanzados (AI + Automatización):**
+
+| Feature | Qué hace |
+|---------|----------|
+| AI Agent | Asistente del administrador: "¿Quiénes deben?", "Resumen financiero", "Deuda del 4-A". 7 tools, prompt estructurado, per-tenant configurable |
+| Workers | Mora automática (diario), aporte a fondo de reserva (on payment), cobro WhatsApp (semanal), cierre de votaciones (horario) |
+| Notifications | 12 tipos: pagos, vencimientos, emergencias de mantenimiento, circulares, votaciones, asambleas |
+| Event-driven | Pago de recibo → aporte automático al fondo de reserva (Art. 14 LPH) |
+| Reservas | Áreas comunes con calendario, detección de conflictos, depósito configurable |
 
 ---
 
@@ -130,7 +140,7 @@ Aplican a todas las verticales. Cualquier tenant que facture los usa.
                   (cada cliente ve solo su vertical)
 ```
 
-**Total: 58 módulos custom + 40 módulos Open Mercato core = plataforma completa**
+**Total: 58 módulos custom + AI agents + workers + 40 módulos Open Mercato core = plataforma completa**
 
 ---
 
@@ -219,13 +229,14 @@ git push origin main        # Deploy automático via Coolify
 
 ### Verticales futuras
 
-| # | Vertical | Mercado VE | Complejidad |
-|---|----------|-----------|-------------|
-| 1 | **Services / Agencias** | Marketing, diseño, consultoría | Media (3 módulos) |
-| 2 | **Healthcare / Clínicas** | Consultorios, laboratorios | Alta (5 módulos) |
-| 3 | **Beauty / Salones** | Peluquerías, spas, barberías | Media (3 módulos) |
-| 4 | **Restaurant / Food** | Restaurantes, delivery | Alta (4 módulos) |
-| 5 | **Fitness / Gym** | Gimnasios, crossfit | Baja (3 módulos) |
+| # | Vertical | Mercado VE | Complejidad | Reutiliza |
+|---|----------|-----------|-------------|-----------|
+| 1 | **Healthcare / Clínicas** | Consultorios, laboratorios, odontología | Alta (5 módulos) | planner (citas), customers (pacientes), portal (resultados) |
+| 2 | **Restaurant / Food** | Restaurantes, areperas, delivery | Alta (5 módulos) | catalog (menú), sales (pedidos), checkout |
+| 3 | **Fitness / Gym** | Gimnasios, crossfit, yoga | Media (4 módulos) | planner (clases), portal (membresía), customers |
+| 4 | **Beauty / Salones** | Peluquerías, spas, barberías | Media (4 módulos) | planner (citas), customers, sales |
+| 5 | **Services / Agencias** | Marketing, diseño, legal | Media (4 módulos) | customers, planner, sales |
+| 6 | **Transporte / Logística** | Encomiendas, mudanzas, courier | Media (4 módulos) | customers, sales |
 
 ---
 
@@ -239,6 +250,7 @@ git push origin main        # Deploy automático via Coolify
 | [RETAIL_VERTICAL_PLAN.md](docs/RETAIL_VERTICAL_PLAN.md) | Arquitectura completa de retail |
 | [DISTRIBUTION_VERTICAL_PLAN.md](docs/DISTRIBUTION_VERTICAL_PLAN.md) | Plan de distribuidoras |
 | [AUTOMOTIVE_VERTICAL_PLAN.md](docs/AUTOMOTIVE_VERTICAL_PLAN.md) | Plan de talleres mecánicos |
+| [CONDO_VERTICAL_PLAN.md](docs/CONDO_VERTICAL_PLAN.md) | Plan completo de condominios (entidades, APIs, UI, integraciones) |
 | [FOUNDATION.md](docs/FOUNDATION.md) | Decisiones regionales VE (monedas, impuestos, pagos) |
 | [OPEN_MERCATO_REFERENCE.md](docs/OPEN_MERCATO_REFERENCE.md) | Fuentes de verdad del framework |
 

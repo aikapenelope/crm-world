@@ -111,29 +111,33 @@
 
 ## Phase 12 — Property Management / Condominios Vertical (complete)
 
-- [x] `condo_properties` — Edificios, unidades con alícuota (5 decimales, suma=100%), áreas comunes reservables
-- [x] `condo_fees` — Cuotas ordinarias/extraordinarias, generación masiva de recibos por alícuota, multi-moneda USD/VES con tasa BCV
-- [x] `condo_collections` — Morosidad, aging, cobro masivo por WhatsApp (wa.me links), acuerdos de pago en cuotas
-- [x] `condo_maintenance` — Solicitudes con workflow (open→assigned→in_progress→completed), órdenes de trabajo, proveedores con rating
-- [x] `condo_accounting` — Ingresos/gastos por categoría, fondo de reserva automático (Art. 14 LPH), presupuesto anual
-- [x] `condo_comms` — Circulares con tracking lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea
+- [x] `condo_properties` — Edificios, unidades con alícuota (5 decimales, suma=100%), áreas comunes reservables, reservas con detección de conflictos
+- [x] `condo_fees` — Cuotas ordinarias/extraordinarias, generación masiva de recibos por alícuota, multi-moneda USD/VES con tasa BCV, worker de mora automática
+- [x] `condo_collections` — Morosidad, aging, cobro masivo por WhatsApp (wa.me links), acuerdos de pago en cuotas, worker de recordatorio semanal
+- [x] `condo_maintenance` — Solicitudes con workflow (open→assigned→in_progress→completed), órdenes de trabajo, proveedores con rating, notificaciones de emergencia
+- [x] `condo_accounting` — Ingresos/gastos por categoría, fondo de reserva automático (Art. 14 LPH), presupuesto anual, aporte automático vía event subscriber
+- [x] `condo_comms` — Circulares con tracking lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea, cierre automático de votaciones
 - [x] `condo_portal` — Portal del propietario: estado de cuenta, reportar pagos, solicitudes, circulares, votaciones, documentos
+- [x] **AI Agent** — Asistente del administrador con 7 tools (morosos, finanzas, mantenimiento, unidades), prompt estructurado, RBAC-gated, per-tenant overridable
+- [x] **Workers** — detect-overdue (mora diaria), reserve-fund-contribution (aporte automático), whatsapp-reminder (cobro semanal), close-expired-votes (cierre horario)
+- [x] **Notifications** — 12 tipos: pagos, vencimientos, mantenimiento, circulares, votaciones, asambleas
+- [x] **Reservas** — Áreas comunes con detección de conflictos de horario, UI de calendario inline
 
 ---
 
 ## Future Verticals (por definir)
 
-| # | Vertical | Mercado VE | Módulos core que usa | Custom necesario |
-|---|---|---|---|---|
-| 1 | ~~**Retail / Comercio**~~ | ~~Tiendas, ferreterías, farmacias~~ | ~~catalog, sales, checkout~~ | ~~COMPLETADO~~ |
-| 2 | **Services / Agencias** | Marketing, diseño, consultoría | customers, planner, sales | projects, timesheets, proposals |
-| 3 | **Healthcare / Clínicas** | Consultorios, laboratorios | customers, planner, attachments | patients, appointments, medical_records |
-| 4 | **Beauty / Salones** | Peluquerías, spas, barberías | customers, planner, sales | bookings, staff_schedule, memberships |
-| 5 | **Legal / Abogados** | Bufetes | customers, planner, attachments | cases, billing_hours, court_dates |
-| 6 | **Automotive** | Concesionarios, talleres | customers, catalog, sales | vehicles, service_orders, appointments |
-| 7 | **Restaurant / Food** | Restaurantes, delivery | catalog, sales, checkout | menu, kitchen_orders, tables |
-| 8 | **Construction** | Constructoras | customers, sales, planner | projects, budgets, materials |
-| 9 | **Fitness / Gym** | Gimnasios | customers, portal, sales | memberships, classes, attendance |
+| # | Vertical | Mercado VE | Módulos core que usa | Custom necesario | Estado |
+|---|---|---|---|---|---|
+| 1 | ~~Retail / Comercio~~ | Tiendas, ferreterías, farmacias | catalog, sales, checkout | 7 módulos | COMPLETADO (Phase 11) |
+| 2 | ~~Automotive / Talleres~~ | Talleres mecánicos | customers, catalog, sales | 7 módulos | COMPLETADO (Phase 10) |
+| 3 | ~~Condominios~~ | Administradoras de edificios | customers, planner, portal | 7 módulos + AI | COMPLETADO (Phase 12) |
+| 4 | **Healthcare / Clínicas** | Consultorios, laboratorios, odontología | customers, planner, attachments | patients, appointments, medical_records, prescriptions, lab_results | Siguiente |
+| 5 | **Restaurant / Food** | Restaurantes, areperas, delivery | catalog, sales, checkout | menu, kitchen_orders, tables, delivery_zones, reservations | Candidato |
+| 6 | **Fitness / Gym** | Gimnasios, crossfit, yoga | customers, planner, portal | memberships, classes, body_metrics, trainer_schedule | Candidato |
+| 7 | **Beauty / Salones** | Peluquerías, spas, barberías | customers, planner, sales | bookings, staff_schedule, services_catalog, loyalty_visits | Candidato |
+| 8 | **Services / Agencias** | Marketing, diseño, consultoría, legal | customers, planner, sales | projects, timesheets, proposals, deliverables | Candidato |
+| 9 | **Transporte / Logística** | Encomiendas, mudanzas, courier | customers, sales | shipments, tracking, fleet, routes_logistics | Futuro |
 
 ---
 
