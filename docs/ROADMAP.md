@@ -36,47 +36,46 @@
 - [x] Fix cross-module imports (Turbopack restriction)
 - [x] Cleanup Coolify (removed duplicate app)
 
+### Phase 6 — Complete Real Estate for First Client
+- [x] Transactions create form (CrudForm — register closing with lease fields)
+- [x] `search.ts` for properties module (Meilisearch indexing + presenter)
+- [x] Document type dictionary seed (contrato, escritura, avalúo, plano, factura)
+- [x] Property detail tabs (General, Imágenes, Links, Matching)
+- [x] RE dashboard widgets (properties by status, pipeline summary, recent closings)
+- [x] RE notification types (lead inactivo, propiedad sin actividad, reservada, cierre)
+- [x] Matching scoring engine (weighted: type 30%, city 25%, budget 25%, operation 20%)
+- [x] Agent portal page (/agente/[id] — public properties grid)
+- [x] CSV import adapter for contacts (flexible column mapping ES/EN)
+- [x] Agent portal API (properties by assigned agent)
+- [x] `properties/setup.ts` — seedDefaults: RE pipeline (7 stages) + tags (9 categories)
+
 ---
 
-## Next — Phase 6: Complete Real Estate for First Client
+## Next — Phase 7: Production Polish & Second Vertical
 
-### PR 1: Transactions + Search (High Priority)
-- [ ] Transactions create form (CrudForm — register closing)
-- [ ] `search.ts` for properties module (Meilisearch indexing)
-- [ ] Document type dictionary seed (contrato, escritura, avalúo, plano, factura)
-- [ ] Property detail tabs (images, links, documents, matching results)
-
-### PR 2: Dashboard + Notifications (High Priority)
-- [ ] RE dashboard widgets (properties by status, pipeline summary, recent closings)
-- [ ] RE notification types (lead inactivo 7+ días, propiedad sin actividad)
-- [ ] Matching scoring engine implementation (weighted criteria)
-
-### PR 3: Portal + PDF (Medium Priority)
-- [ ] Agent portal page (/agente/[id] — public properties list)
+### PR 1: Remaining Polish (Medium Priority)
 - [ ] PDF renderer for property sheet (cover image, specs, branding, QR)
 - [ ] Monthly report PDF (transactions, pipeline, inventory)
-- [ ] Email sending integration (when Resend is configured)
-
-### PR 4: Import + Polish (Medium Priority)
-- [ ] CSV import adapter for contacts
+- [ ] Email sending integration (Resend — needs API key + DNS)
 - [ ] vCard import adapter for contacts
-- [ ] Appointment link to property (custom field in planner)
 - [ ] Social account settings page (just stores URLs)
 - [ ] Branding settings (logo upload per tenant)
+
+### PR 2: Second Vertical
+- [ ] Choose vertical based on first client demand
+- [ ] Create vertical module structure (same pattern as RE)
+- [ ] Vertical-specific seedDefaults in new module's setup.ts
 
 ---
 
 ## Future Phases
-
-### Phase 7: Second Vertical (TBD)
-- [ ] Choose vertical based on first client demand
-- [ ] Retail, Education, Manufacturing, Logistics, or Agriculture
 
 ### Phase 8: Platform Features
 - [ ] Wildcard domain for tenant subdomains
 - [ ] Resend email integration (mail.aikalabs.cc)
 - [ ] WhatsApp Business API integration
 - [ ] MercadoLibre OAuth (publish from platform)
+- [ ] Self-service tenant onboarding (optional)
 
 ---
 
