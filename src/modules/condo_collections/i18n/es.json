@@ -1,0 +1,17 @@
+{
+  "condo_collections.nav.title": "Cobranza",
+  "condo_collections.debtors.title": "Morosos",
+  "condo_collections.agreements.title": "Acuerdos de Pago",
+  "condo_collections.whatsapp.title": "Cobro por WhatsApp",
+  "condo_collections.status.active": "Activo",
+  "condo_collections.status.agreement": "Con Acuerdo",
+  "condo_collections.status.legal": "Legal",
+  "condo_collections.status.resolved": "Resuelto",
+  "condo_collections.action.whatsapp": "WhatsApp",
+  "condo_collections.action.call": "Llamada",
+  "condo_collections.action.visit": "Visita",
+  "condo_collections.action.letter": "Carta",
+  "condo_collections.action.legal_notice": "Notificación Legal",
+  "condo_collections.flash.action_logged": "Gestión registrada exitosamente",
+  "condo_collections.flash.agreement_created": "Acuerdo de pago creado"
+}

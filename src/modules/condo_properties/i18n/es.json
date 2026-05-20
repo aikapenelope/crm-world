@@ -1,0 +1,23 @@
+{
+  "condo_properties.nav.title": "Condominios",
+  "condo_properties.create.title": "Nuevo Edificio",
+  "condo_properties.units.title": "Unidades",
+  "condo_properties.units.create.title": "Nueva Unidad",
+  "condo_properties.building_type.residential": "Residencial",
+  "condo_properties.building_type.commercial": "Comercial",
+  "condo_properties.building_type.mixed": "Mixto",
+  "condo_properties.unit_type.apartment": "Apartamento",
+  "condo_properties.unit_type.penthouse": "Penthouse",
+  "condo_properties.unit_type.local": "Local",
+  "condo_properties.unit_type.office": "Oficina",
+  "condo_properties.unit_type.parking": "Estacionamiento",
+  "condo_properties.unit_type.storage": "Depósito",
+  "condo_properties.status.occupied": "Ocupado",
+  "condo_properties.status.vacant": "Vacante",
+  "condo_properties.status.for_sale": "En Venta",
+  "condo_properties.status.for_rent": "En Alquiler",
+  "condo_properties.flash.building_created": "Edificio creado exitosamente",
+  "condo_properties.flash.unit_created": "Unidad creada exitosamente",
+  "condo_properties.flash.area_created": "Área común creada exitosamente",
+  "condo_properties.aliquot_warning": "Las alícuotas no suman 100%"
+}

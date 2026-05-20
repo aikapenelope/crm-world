@@ -1,0 +1,13 @@
+{
+  "condo_portal.dashboard.title": "My Condo",
+  "condo_portal.receipts.title": "My Receipts",
+  "condo_portal.maintenance.title": "My Requests",
+  "condo_portal.maintenance.create.title": "New Request",
+  "condo_portal.circulars.title": "Circulars",
+  "condo_portal.votes.title": "Votes",
+  "condo_portal.documents.title": "Documents",
+  "condo_portal.account.title": "My Account",
+  "condo_portal.flash.payment_reported": "Payment reported successfully",
+  "condo_portal.flash.request_created": "Request created successfully",
+  "condo_portal.flash.vote_cast": "Vote cast successfully"
+}

@@ -1,0 +1,19 @@
+{
+  "condo_accounting.nav.title": "Accounting",
+  "condo_accounting.entries.title": "Entries",
+  "condo_accounting.entries.create.title": "Register Entry",
+  "condo_accounting.reserve_fund.title": "Reserve Fund",
+  "condo_accounting.budgets.title": "Budgets",
+  "condo_accounting.report.title": "Assembly Report",
+  "condo_accounting.type.income": "Income",
+  "condo_accounting.type.expense": "Expense",
+  "condo_accounting.category.condo_fee": "Condo Fee",
+  "condo_accounting.category.extraordinary": "Extraordinary",
+  "condo_accounting.category.reserve_fund": "Reserve Fund",
+  "condo_accounting.category.maintenance": "Maintenance",
+  "condo_accounting.category.utilities": "Utilities",
+  "condo_accounting.category.payroll": "Payroll",
+  "condo_accounting.category.insurance": "Insurance",
+  "condo_accounting.category.legal": "Legal",
+  "condo_accounting.flash.entry_created": "Entry registered successfully"
+}

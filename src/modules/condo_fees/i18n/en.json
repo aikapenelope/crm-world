@@ -1,0 +1,20 @@
+{
+  "condo_fees.nav.title": "Fees",
+  "condo_fees.configs.title": "Fee Configurations",
+  "condo_fees.configs.create.title": "New Fee",
+  "condo_fees.receipts.title": "Receipts",
+  "condo_fees.type.ordinary": "Ordinary",
+  "condo_fees.type.extraordinary": "Extraordinary",
+  "condo_fees.type.special": "Special",
+  "condo_fees.status.draft": "Draft",
+  "condo_fees.status.approved": "Approved",
+  "condo_fees.status.generated": "Generated",
+  "condo_fees.status.closed": "Closed",
+  "condo_fees.receipt.pending": "Pending",
+  "condo_fees.receipt.partial": "Partial",
+  "condo_fees.receipt.paid": "Paid",
+  "condo_fees.receipt.overdue": "Overdue",
+  "condo_fees.flash.config_created": "Fee created successfully",
+  "condo_fees.flash.receipts_generated": "Receipts generated successfully",
+  "condo_fees.flash.payment_registered": "Payment registered successfully"
+}

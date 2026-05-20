@@ -1,0 +1,19 @@
+{
+  "condo_comms.nav.title": "Communications",
+  "condo_comms.circulars.title": "Circulars",
+  "condo_comms.circulars.create.title": "New Circular",
+  "condo_comms.votes.title": "Votes",
+  "condo_comms.votes.create.title": "New Vote",
+  "condo_comms.assemblies.title": "Assemblies",
+  "condo_comms.assemblies.create.title": "New Assembly",
+  "condo_comms.category.general": "General",
+  "condo_comms.category.maintenance": "Maintenance",
+  "condo_comms.category.security": "Security",
+  "condo_comms.category.assembly": "Assembly",
+  "condo_comms.category.payment": "Payment",
+  "condo_comms.category.emergency": "Emergency",
+  "condo_comms.vote_type.yes_no": "Yes/No",
+  "condo_comms.vote_type.multiple_choice": "Multiple Choice",
+  "condo_comms.flash.circular_published": "Circular published successfully",
+  "condo_comms.flash.vote_cast": "Vote cast successfully"
+}

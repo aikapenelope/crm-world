@@ -1,0 +1,23 @@
+{
+  "condo_properties.nav.title": "Condominiums",
+  "condo_properties.create.title": "New Building",
+  "condo_properties.units.title": "Units",
+  "condo_properties.units.create.title": "New Unit",
+  "condo_properties.building_type.residential": "Residential",
+  "condo_properties.building_type.commercial": "Commercial",
+  "condo_properties.building_type.mixed": "Mixed",
+  "condo_properties.unit_type.apartment": "Apartment",
+  "condo_properties.unit_type.penthouse": "Penthouse",
+  "condo_properties.unit_type.local": "Commercial Unit",
+  "condo_properties.unit_type.office": "Office",
+  "condo_properties.unit_type.parking": "Parking",
+  "condo_properties.unit_type.storage": "Storage",
+  "condo_properties.status.occupied": "Occupied",
+  "condo_properties.status.vacant": "Vacant",
+  "condo_properties.status.for_sale": "For Sale",
+  "condo_properties.status.for_rent": "For Rent",
+  "condo_properties.flash.building_created": "Building created successfully",
+  "condo_properties.flash.unit_created": "Unit created successfully",
+  "condo_properties.flash.area_created": "Common area created successfully",
+  "condo_properties.aliquot_warning": "Aliquots do not sum to 100%"
+}

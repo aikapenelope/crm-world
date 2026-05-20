@@ -1,0 +1,17 @@
+{
+  "condo_collections.nav.title": "Collections",
+  "condo_collections.debtors.title": "Debtors",
+  "condo_collections.agreements.title": "Payment Agreements",
+  "condo_collections.whatsapp.title": "WhatsApp Collection",
+  "condo_collections.status.active": "Active",
+  "condo_collections.status.agreement": "Agreement",
+  "condo_collections.status.legal": "Legal",
+  "condo_collections.status.resolved": "Resolved",
+  "condo_collections.action.whatsapp": "WhatsApp",
+  "condo_collections.action.call": "Call",
+  "condo_collections.action.visit": "Visit",
+  "condo_collections.action.letter": "Letter",
+  "condo_collections.action.legal_notice": "Legal Notice",
+  "condo_collections.flash.action_logged": "Collection action logged successfully",
+  "condo_collections.flash.agreement_created": "Payment agreement created"
+}

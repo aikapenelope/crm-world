@@ -1,0 +1,20 @@
+{
+  "condo_fees.nav.title": "Cuotas",
+  "condo_fees.configs.title": "Configuraciones de Cuota",
+  "condo_fees.configs.create.title": "Nueva Cuota",
+  "condo_fees.receipts.title": "Recibos",
+  "condo_fees.type.ordinary": "Ordinaria",
+  "condo_fees.type.extraordinary": "Extraordinaria",
+  "condo_fees.type.special": "Especial",
+  "condo_fees.status.draft": "Borrador",
+  "condo_fees.status.approved": "Aprobada",
+  "condo_fees.status.generated": "Generada",
+  "condo_fees.status.closed": "Cerrada",
+  "condo_fees.receipt.pending": "Pendiente",
+  "condo_fees.receipt.partial": "Parcial",
+  "condo_fees.receipt.paid": "Pagado",
+  "condo_fees.receipt.overdue": "Vencido",
+  "condo_fees.flash.config_created": "Cuota creada exitosamente",
+  "condo_fees.flash.receipts_generated": "Recibos generados exitosamente",
+  "condo_fees.flash.payment_registered": "Pago registrado exitosamente"
+}

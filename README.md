@@ -61,7 +61,7 @@ Construido sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0
 | `auto_reports` | Dashboard: órdenes, ingresos, productividad por técnico |
 | `auto_portal` | Portal del cliente: estado de su vehículo, historial |
 
-### Retail / Comercio — Tiendas Multi-Sucursal *(nuevo)*
+### Retail / Comercio — Tiendas Multi-Sucursal
 
 | Módulo | Qué hace |
 |--------|----------|
@@ -72,6 +72,18 @@ Construido sobre [Open Mercato](https://github.com/open-mercato/open-mercato) v0
 | `retail_ecommerce` | Storefront público (/tienda/[slug]). Carrito + checkout. Pedidos con tracking de estado. Pagos VE. Publicador social (IG/WA/TikTok/FB) |
 | `retail_purchasing` | Gestión de compras: proveedores, órdenes automáticas por reorden, recepción de mercancía, cuentas por pagar, notas débito/crédito |
 | `retail_pricing` | Pricing y márgenes: reglas por categoría/canal, actualización masiva por dólar, precios regulados, alertas bajo costo/margen |
+
+### Property Management / Condominios — Administradoras *(nuevo)*
+
+| Módulo | Qué hace |
+|--------|----------|
+| `condo_properties` | Edificios, unidades con alícuota (5 decimales, suma=100%), propietarios/inquilinos, áreas comunes reservables |
+| `condo_fees` | Cuotas ordinarias/extraordinarias, generación masiva de recibos por alícuota, multi-moneda USD/VES con tasa BCV automática |
+| `condo_collections` | Morosidad (40-60% no paga a tiempo), aging por meses, cobro masivo por WhatsApp, acuerdos de pago en cuotas |
+| `condo_maintenance` | Solicitudes con workflow (open→assigned→in_progress→completed), órdenes de trabajo, proveedores con rating 1-5 |
+| `condo_accounting` | Ingresos/gastos por categoría, fondo de reserva automático (Art. 14 LPH, mín. 10%), presupuesto anual para asamblea |
+| `condo_comms` | Circulares con tracking de lectura, votaciones ponderadas por alícuota (Art. 23 LPH), actas de asamblea con quórum |
+| `condo_portal` | Portal del propietario: estado de cuenta, reportar pagos, solicitudes mantenimiento, circulares, votaciones, documentos |
 
 ---
 
@@ -106,10 +118,10 @@ Aplican a todas las verticales. Cualquier tenant que facture los usa.
          ┌──────────────────────┼──────────────────────┐
          │                      │                      │
     ┌────▼─────┐    ┌──────────▼──────────┐    ┌─────▼──────┐
-    │  Fiscal  │    │   5 Verticales      │    │   Infra    │
+    │  Fiscal  │    │   6 Verticales      │    │   Infra    │
     │    VE    │    │                      │    │   Pulumi   │
     │ 8 módulos│    │  RE · Edu · Dist    │    │   Hetzner  │
-    └────┬─────┘    │  Auto · Retail      │    └─────┬──────┘
+    └────┬─────┘    │  Auto·Retail·Condo  │    └─────┬──────┘
          │          └──────────┬──────────┘          │
          │                     │                      │
          └─────────────────────┼──────────────────────┘
@@ -118,7 +130,7 @@ Aplican a todas las verticales. Cualquier tenant que facture los usa.
                   (cada cliente ve solo su vertical)
 ```
 
-**Total: 51 módulos custom + 40 módulos Open Mercato core = plataforma completa**
+**Total: 58 módulos custom + 40 módulos Open Mercato core = plataforma completa**
 
 ---
 
