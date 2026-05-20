@@ -1,0 +1,15 @@
+{
+  "dist_delivery.nav.title": "Despachos",
+  "dist_delivery.create.title": "Nuevo Despacho",
+  "dist_delivery.status.preparing": "Preparando",
+  "dist_delivery.status.dispatched": "Despachado",
+  "dist_delivery.status.in_transit": "En Tránsito",
+  "dist_delivery.status.completed": "Completado",
+  "dist_delivery.status.partial": "Parcial",
+  "dist_delivery.item.pending": "Pendiente",
+  "dist_delivery.item.delivered": "Entregado",
+  "dist_delivery.item.returned": "Devuelto",
+  "dist_delivery.item.rejected": "Rechazado",
+  "dist_delivery.flash.created": "Despacho creado exitosamente",
+  "dist_delivery.flash.confirmed": "Entrega confirmada"
+}
