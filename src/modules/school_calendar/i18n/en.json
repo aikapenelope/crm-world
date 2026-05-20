@@ -1,0 +1,14 @@
+{
+  "school_calendar.nav.title": "Calendar",
+  "school_calendar.fields.title": "Title",
+  "school_calendar.fields.event_type": "Type",
+  "school_calendar.fields.start_date": "Start",
+  "school_calendar.fields.end_date": "End",
+  "school_calendar.type.class_day": "Class Day",
+  "school_calendar.type.holiday": "Holiday",
+  "school_calendar.type.exam_period": "Exam Period",
+  "school_calendar.type.meeting": "Meeting",
+  "school_calendar.type.event": "Event",
+  "school_calendar.type.administrative": "Administrative",
+  "school_calendar.type.graduation": "Graduation"
+}

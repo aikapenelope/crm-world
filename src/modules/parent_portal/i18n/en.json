@@ -1,0 +1,14 @@
+{
+  "parent_portal.nav.title": "Parent Portal",
+  "parent_portal.nav.dashboard": "Overview",
+  "parent_portal.nav.payments": "Payments",
+  "parent_portal.nav.grades": "Grades",
+  "parent_portal.nav.attendance": "Attendance",
+  "parent_portal.dashboard.welcome": "Welcome to the portal",
+  "parent_portal.dashboard.children": "My Children",
+  "parent_portal.payments.title": "Account Statement",
+  "parent_portal.payments.pending": "Pending",
+  "parent_portal.payments.paid": "Paid",
+  "parent_portal.grades.title": "Report Cards",
+  "parent_portal.attendance.title": "Attendance"
+}

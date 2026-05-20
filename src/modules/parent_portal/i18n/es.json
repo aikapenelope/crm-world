@@ -1,0 +1,14 @@
+{
+  "parent_portal.nav.title": "Portal del Representante",
+  "parent_portal.nav.dashboard": "Resumen",
+  "parent_portal.nav.payments": "Pagos",
+  "parent_portal.nav.grades": "Notas",
+  "parent_portal.nav.attendance": "Asistencia",
+  "parent_portal.dashboard.welcome": "Bienvenido al portal",
+  "parent_portal.dashboard.children": "Mis representados",
+  "parent_portal.payments.title": "Estado de cuenta",
+  "parent_portal.payments.pending": "Pendiente",
+  "parent_portal.payments.paid": "Pagado",
+  "parent_portal.grades.title": "Boletines",
+  "parent_portal.attendance.title": "Asistencia"
+}

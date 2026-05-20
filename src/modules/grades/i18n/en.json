@@ -1,0 +1,20 @@
+{
+  "grades.nav.title": "Grades",
+  "grades.nav.subjects": "Subjects",
+  "grades.nav.periods": "Periods",
+  "grades.nav.entry": "Grade Entry",
+  "grades.nav.report_cards": "Report Cards",
+  "grades.fields.subject": "Subject",
+  "grades.fields.period": "Period",
+  "grades.fields.score": "Score (0-20)",
+  "grades.fields.qualitative": "Grade (A-E)",
+  "grades.fields.observations": "Observations",
+  "grades.fields.average": "Average",
+  "grades.fields.teacher": "Teacher",
+  "grades.period.first": "First Term",
+  "grades.period.second": "Second Term",
+  "grades.period.third": "Third Term",
+  "grades.report.status.draft": "Draft",
+  "grades.report.status.published": "Published",
+  "grades.report.status.delivered": "Delivered"
+}
