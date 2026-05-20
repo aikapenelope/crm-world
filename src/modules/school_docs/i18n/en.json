@@ -1,0 +1,14 @@
+{
+  "school_docs.nav.title": "Certificates",
+  "school_docs.fields.template_type": "Type",
+  "school_docs.fields.title": "Title",
+  "school_docs.fields.status": "Status",
+  "school_docs.type.constancia_estudio": "Study Certificate",
+  "school_docs.type.constancia_inscripcion": "Enrollment Certificate",
+  "school_docs.type.constancia_notas": "Grades Certificate",
+  "school_docs.type.constancia_conducta": "Good Conduct Certificate",
+  "school_docs.type.carta_recomendacion": "Recommendation Letter",
+  "school_docs.status.pending": "Pending",
+  "school_docs.status.generated": "Generated",
+  "school_docs.status.delivered": "Delivered"
+}

@@ -1,0 +1,14 @@
+{
+  "school_comms.nav.title": "Comunicaciones",
+  "school_comms.fields.title": "Título",
+  "school_comms.fields.body": "Contenido",
+  "school_comms.fields.type": "Tipo",
+  "school_comms.fields.audience": "Audiencia",
+  "school_comms.type.circular": "Circular",
+  "school_comms.type.notice": "Aviso",
+  "school_comms.type.reminder": "Recordatorio",
+  "school_comms.type.emergency": "Emergencia",
+  "school_comms.audience.all": "Todos",
+  "school_comms.audience.grade_specific": "Por grado",
+  "school_comms.audience.section_specific": "Por sección"
+}

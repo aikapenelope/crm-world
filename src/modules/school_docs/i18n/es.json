@@ -1,0 +1,14 @@
+{
+  "school_docs.nav.title": "Constancias",
+  "school_docs.fields.template_type": "Tipo",
+  "school_docs.fields.title": "Título",
+  "school_docs.fields.status": "Estado",
+  "school_docs.type.constancia_estudio": "Constancia de estudio",
+  "school_docs.type.constancia_inscripcion": "Constancia de inscripción",
+  "school_docs.type.constancia_notas": "Constancia de notas",
+  "school_docs.type.constancia_conducta": "Constancia de buena conducta",
+  "school_docs.type.carta_recomendacion": "Carta de recomendación",
+  "school_docs.status.pending": "Pendiente",
+  "school_docs.status.generated": "Generada",
+  "school_docs.status.delivered": "Entregada"
+}
