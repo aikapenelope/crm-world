@@ -1,0 +1,20 @@
+{
+  "auto_service_orders.nav.title": "Service Orders",
+  "auto_service_orders.create.title": "New Order",
+  "auto_service_orders.board.title": "Board",
+  "auto_service_orders.status.received": "Received",
+  "auto_service_orders.status.diagnosis": "Diagnosis",
+  "auto_service_orders.status.estimate_sent": "Estimate Sent",
+  "auto_service_orders.status.approved": "Approved",
+  "auto_service_orders.status.in_repair": "In Repair",
+  "auto_service_orders.status.quality_check": "Quality Check",
+  "auto_service_orders.status.ready": "Ready",
+  "auto_service_orders.status.delivered": "Delivered",
+  "auto_service_orders.status.cancelled": "Cancelled",
+  "auto_service_orders.priority.low": "Low",
+  "auto_service_orders.priority.normal": "Normal",
+  "auto_service_orders.priority.high": "High",
+  "auto_service_orders.priority.urgent": "Urgent",
+  "auto_service_orders.flash.created": "Service order created",
+  "auto_service_orders.flash.status_changed": "Status updated"
+}
