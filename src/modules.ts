@@ -77,6 +77,10 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'property_publishing', from: '@app' },
   { id: 'mercadolibre_sync', from: '@app' },
   { id: 'market_intelligence', from: '@app' },
+
+  // Aika: Education vertical
+  { id: 'students', from: '@app' },
+  { id: 'enrollment', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
