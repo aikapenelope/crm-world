@@ -79,6 +79,10 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'dist_price_lists', from: '@app' },
   { id: 'dist_inventory', from: '@app' },
   { id: 'dist_routes', from: '@app' },
+  { id: 'dist_delivery', from: '@app' },
+  { id: 'dist_reports', from: '@app' },
+  { id: 'dist_commissions', from: '@app' },
+  { id: 'dist_portal', from: '@app' },
 
   // Aika: Real Estate vertical
   { id: 'properties', from: '@app' },
