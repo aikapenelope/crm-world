@@ -10,59 +10,43 @@ export async function GET(request: Request, ctx: any) {
   const kysely = (em as any).getKysely()
 
   // Inventory summary across all branches
-  const inventorySummary = await kysely
+  const inventoryItems = await kysely
     .selectFrom('dist_inventory_items')
+    .select(['id', 'quantity_available', 'reorder_point', 'warehouse_code'])
     .where('tenant_id', '=', scope.tenantId)
     .where('organization_id', '=', scope.organizationId)
-    .select([
-      kysely.fn.count('id').as('total_products'),
-      kysely.fn.sum('quantity_available').as('total_units'),
-    ])
-    .executeTakeFirst()
+    .execute()
 
-  // Low stock alerts
-  const lowStockCount = await kysely
-    .selectFrom('dist_inventory_items')
-    .where('tenant_id', '=', scope.tenantId)
-    .where('organization_id', '=', scope.organizationId)
-    .where('reorder_point', '>', 0)
-    .where('quantity_available', '<=', kysely.ref('reorder_point'))
-    .select(kysely.fn.count('id').as('count'))
-    .executeTakeFirst()
+  const totalProducts = (inventoryItems as any[]).length
+  const totalUnits = (inventoryItems as any[]).reduce((sum: number, i: any) => sum + (i.quantity_available ?? 0), 0)
+  const lowStockAlerts = (inventoryItems as any[]).filter((i: any) => i.reorder_point > 0 && i.quantity_available <= i.reorder_point).length
+  const branchCodes = new Set((inventoryItems as any[]).map((i: any) => i.warehouse_code))
 
   // Dead stock count
-  const deadStockCount = await kysely
+  const deadStockItems = await kysely
     .selectFrom('retail_stock_rotation')
+    .select(['id'])
     .where('tenant_id', '=', scope.tenantId)
     .where('organization_id', '=', scope.organizationId)
     .where('is_dead_stock', '=', true)
-    .select(kysely.fn.count('id').as('count'))
-    .executeTakeFirst()
+    .execute()
 
   // Pending counts
-  const pendingCounts = await kysely
+  const pendingCountItems = await kysely
     .selectFrom('retail_stock_counts')
+    .select(['id'])
     .where('tenant_id', '=', scope.tenantId)
     .where('organization_id', '=', scope.organizationId)
     .where('status', 'in', ['planned', 'in_progress'])
-    .select(kysely.fn.count('id').as('count'))
-    .executeTakeFirst()
-
-  // Branches with inventory
-  const branchCount = await kysely
-    .selectFrom('dist_inventory_items')
-    .where('tenant_id', '=', scope.tenantId)
-    .where('organization_id', '=', scope.organizationId)
-    .select(kysely.fn.countDistinct('warehouse_code').as('count'))
-    .executeTakeFirst()
+    .execute()
 
   return Response.json({
-    total_products: Number(inventorySummary?.total_products ?? 0),
-    total_units: Number(inventorySummary?.total_units ?? 0),
-    low_stock_alerts: Number(lowStockCount?.count ?? 0),
-    dead_stock_count: Number(deadStockCount?.count ?? 0),
-    pending_counts: Number(pendingCounts?.count ?? 0),
-    branch_count: Number(branchCount?.count ?? 0),
+    total_products: totalProducts,
+    total_units: totalUnits,
+    low_stock_alerts: lowStockAlerts,
+    dead_stock_count: (deadStockItems as any[]).length,
+    pending_counts: (pendingCountItems as any[]).length,
+    branch_count: branchCodes.size,
   })
 }
 
