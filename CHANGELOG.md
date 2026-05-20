@@ -1,5 +1,71 @@
 # Changelog — Aika Platform (CRM World)
 
+## 2026-05-20 — Fiscal + Distribution + Automotive Verticals
+
+### Módulos Fiscales Transversales (4 módulos)
+
+- `ve_tax_books` — Libros de compra/venta IVA (registro manual, resumen mensual, export CSV)
+- `ve_withholdings` — Retenciones IVA 75% e ISLR (cálculo, comprobantes, declaración quincenal)
+- `ve_tax_reports` — Dashboard fiscal (débito/crédito fiscal, IGTF, export para el contador)
+- `bank_reconciliation` — Conciliación bancaria (upload CSV: Banesco, Mercantil, Provincial, BNC, BDV)
+
+### Vertical Distribuidoras (8 módulos)
+
+- `dist_credit` — Cuentas por cobrar, límites de crédito, aging report (0-30/31-60/61-90/90+), cobro WhatsApp, worker morosos
+- `dist_price_lists` — Listas de precios múltiples (mayorista, detallista, volumen), asignación a clientes
+- `dist_inventory` — Stock por producto/bodega, movimientos, alertas de reposición
+- `dist_routes` — Rutas por zona/día, paradas de clientes, registro de visitas, página "Mi Día"
+- `dist_delivery` — Órdenes de despacho, items por entrega, confirmación, devoluciones
+- `dist_reports` — Dashboard KPI (cuentas por cobrar, inventario, entregas, efectividad rutas)
+- `dist_commissions` — Comisiones vendedores (venta/cobranza/meta), aprobación, liquidación
+- `dist_portal` — Portal self-service del cliente (estado de cuenta, crédito disponible)
+
+### Vertical Talleres Mecánicos (7 módulos)
+
+- `auto_vehicles` — Registro de vehículos (placa, marca, modelo, año, km, fotos desde cámara)
+- `auto_service_orders` — Órdenes de servicio con workflow 8 pasos + board Kanban + timeline visual
+- `auto_inspections` — Inspección digital DVI (fotos por sistema, hallazgos, condición, urgencia)
+- `auto_parts` — Inventario de repuestos (categorías, costo/venta, stock, alertas)
+- `auto_estimates` — Presupuestos con aprobación interactiva (página pública, cliente aprueba/rechaza items)
+- `auto_reports` — Dashboard KPI del taller (vehículos, ingresos, repuestos)
+- `auto_portal` — Portal del cliente (status del vehículo en tiempo real)
+
+### UX Moderna (Talleres)
+
+- Upload de fotos desde cámara del teléfono (`capture="environment"`)
+- Galería con lightbox (click para zoom)
+- Página pública de inspección (link compartible sin auth, mobile-first)
+- Presupuesto interactivo público (tap para aprobar/rechazar items, total en tiempo real)
+- Timeline visual de progreso de la orden (barra animada con 8 pasos)
+- Envío por wa.me con resumen de hallazgos + link público
+- Board Kanban de órdenes por status
+
+### Regionalización VE (Talleres)
+
+- 15 marcas populares con modelos (Toyota, Chevrolet, Ford, Hyundai, Kia, etc.)
+- 20 servicios comunes pre-cargados (cambio aceite, frenos, A/C, correa tiempo, etc.)
+- Validación de placa venezolana (formato clásico ABC123 + nuevo AB123CD)
+- Búsqueda rápida por placa (retorna vehículo + cliente + última orden)
+- Recibo de pago como imagen HTML (compartible por WhatsApp)
+- Worker de recordatorio de mantenimiento (6 meses / 10,000 km)
+- 5 tipos de notificación (vehículo listo, presupuesto enviado, inspección, mantenimiento)
+
+### Fixes
+
+- `di.ts` debe exportar `register()` — causa raíz de los build failures en Coolify
+- `yarn.lock` regenerado completo (16,074 líneas)
+- Documentado en PATTERNS.md como regla #13
+
+### Documentación
+
+- `docs/DISTRIBUTION_VERTICAL_PLAN.md` — Plan completo distribuidoras
+- `docs/AUTOMOTIVE_VERTICAL_PLAN.md` — Plan completo talleres
+- `docs/ROADMAP.md` — Actualizado con todas las fases completadas
+- `docs/PATTERNS.md` — Chainlock actualizado (reglas #11, #12, #13)
+- `README.md` — Reescrito con estado actual
+
+---
+
 ## 2026-05-20 — Education Vertical Complete
 
 ### Vertical Education / Colegios (9 módulos)
