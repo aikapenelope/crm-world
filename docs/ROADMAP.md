@@ -49,29 +49,51 @@
 - [x] Agent portal API (properties by assigned agent)
 - [x] `properties/setup.ts` — seedDefaults: RE pipeline (7 stages) + tags (9 categories)
 
+### Phase 7 — Fiscal Modules (transversal)
+- [x] `ve_tax_books` — Libros de compra/venta IVA (registro manual para declaración)
+- [x] `ve_withholdings` — Retenciones IVA (75%) e ISLR (cálculo + comprobantes)
+- [x] `ve_tax_reports` — Reportes fiscales con export CSV para el contador
+- [x] `bank_reconciliation` — Conciliación bancaria (upload CSV multi-banco)
+
+### Phase 8 — Education Vertical (complete)
+- [x] `students` — Registro + representantes (15 grados VE)
+- [x] `enrollment` — Inscripciones + documentos + workflow
+- [x] `tuition` — Mensualidades + pagos + morosos + WhatsApp cobro
+- [x] `grades` — Notas + boletines (numérico + cualitativo)
+- [x] `attendance` — Asistencia diaria + resumen mensual
+- [x] `school_calendar` — Calendario escolar + feriados VE
+- [x] `school_comms` — Circulares + avisos + tracking lectura
+- [x] `school_docs` — Constancias + plantillas
+- [x] `parent_portal` — Portal del representante
+- [x] `school_migration` — Importación CSV de datos
+
+### Phase 9 — Distribution Vertical (complete)
+- [x] `dist_credit` — Cuentas por cobrar, límites, aging, cobro WhatsApp, worker morosos
+- [x] `dist_price_lists` — Listas de precios múltiples + asignación a clientes
+- [x] `dist_inventory` — Stock, movimientos, alertas reposición
+- [x] `dist_routes` — Rutas por zona/día, paradas, visitas, "Mi Día"
+- [x] `dist_delivery` — Órdenes de despacho, entregas, devoluciones
+- [x] `dist_reports` — Dashboard KPI (cuentas, inventario, entregas, rutas)
+- [x] `dist_commissions` — Comisiones vendedores (venta/cobranza/meta)
+- [x] `dist_portal` — Portal self-service del cliente
+
 ---
 
-## Next — Phase 7: Production Polish & Second Vertical
+## Next — Phase 10: Production Polish
 
-### PR 1: Remaining Polish (Medium Priority)
+### Infrastructure
+- [ ] Fix yarn.lock (regenerar lockfile completo — PR #31)
+- [ ] Wildcard domain for tenant subdomains
+- [ ] Docker layer caching in Coolify (reduce build time)
+- [ ] Upgrade to CX43 when Hetzner has stock
+
+### Real Estate Polish
 - [ ] PDF renderer for property sheet (cover image, specs, branding, QR)
 - [ ] Monthly report PDF (transactions, pipeline, inventory)
 - [ ] Email sending integration (Resend — needs API key + DNS)
-- [ ] vCard import adapter for contacts
-- [ ] Social account settings page (just stores URLs)
 - [ ] Branding settings (logo upload per tenant)
 
-### PR 2: Second Vertical
-- [ ] Choose vertical based on first client demand
-- [ ] Create vertical module structure (same pattern as RE)
-- [ ] Vertical-specific seedDefaults in new module's setup.ts
-
----
-
-## Future Phases
-
-### Phase 8: Platform Features
-- [ ] Wildcard domain for tenant subdomains
+### Platform Features
 - [ ] Resend email integration (mail.aikalabs.cc)
 - [ ] WhatsApp Business API integration
 - [ ] MercadoLibre OAuth (publish from platform)
@@ -79,8 +101,24 @@
 
 ---
 
+## Future Verticals (por definir)
+
+| # | Vertical | Mercado VE | Módulos core que usa | Custom necesario |
+|---|---|---|---|---|
+| 1 | **Retail / Comercio** | Tiendas, ferreterías, farmacias | catalog, sales, checkout | pos_interface, loyalty, stock_alerts |
+| 2 | **Services / Agencias** | Marketing, diseño, consultoría | customers, planner, sales | projects, timesheets, proposals |
+| 3 | **Healthcare / Clínicas** | Consultorios, laboratorios | customers, planner, attachments | patients, appointments, medical_records |
+| 4 | **Beauty / Salones** | Peluquerías, spas, barberías | customers, planner, sales | bookings, staff_schedule, memberships |
+| 5 | **Legal / Abogados** | Bufetes | customers, planner, attachments | cases, billing_hours, court_dates |
+| 6 | **Automotive** | Concesionarios, talleres | customers, catalog, sales | vehicles, service_orders, appointments |
+| 7 | **Restaurant / Food** | Restaurantes, delivery | catalog, sales, checkout | menu, kitchen_orders, tables |
+| 8 | **Construction** | Constructoras | customers, sales, planner | projects, budgets, materials |
+| 9 | **Fitness / Gym** | Gimnasios | customers, portal, sales | memberships, classes, attendance |
+
+---
+
 ## Technical Debt
-- [ ] Upgrade to CX43 when Hetzner has stock (faster builds)
-- [ ] Docker layer caching in Coolify (reduce build time)
 - [ ] Remove `example` module from production
-- [ ] Add integration tests for RE modules
+- [ ] Add integration tests for RE + Education + Distribution modules
+- [ ] CI pipeline (typecheck before merge to main)
+- [ ] Regenerate yarn.lock on every dependency change

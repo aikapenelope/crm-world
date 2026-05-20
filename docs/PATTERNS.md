@@ -271,6 +271,36 @@ Si el deploy falla con `Error response from daemon: No such container`, simpleme
 
 ---
 
+## 11. yarn.lock — DEBE estar completo
+
+### Problema encontrado
+El `yarn.lock` se commiteó vacío (12 líneas, solo workspace root) en el commit inicial. Esto causaba builds no-deterministas y fallos intermitentes en Coolify porque yarn resolvía 97 dependencias desde cero cada vez.
+
+### Regla: SIEMPRE commitear yarn.lock completo
+
+```bash
+# Para regenerar el lockfile (requiere Node >= 24):
+docker run --rm -v $(pwd):/app -w /app node:24-alpine sh -c '
+  corepack enable && corepack prepare yarn@4.12.0 --activate && yarn install
+'
+git add yarn.lock
+git commit -m "chore: regenerate yarn.lock"
+```
+
+**Nunca** commitear un `yarn.lock` vacío o parcial. Si agregas una dependencia a `package.json`, ejecuta `yarn install` y commitea el lockfile actualizado.
+
+---
+
+## 12. Traefik 504 Gateway Timeout
+
+### Problema conocido
+Después de un deploy, la primera request puede dar 504 porque Next.js necesita compilar la página (cold start). Esto es normal en el primer acceso.
+
+### Solución
+Esperar 10-15 segundos después del deploy y reintentar. Si persiste, verificar que el container está corriendo: `docker logs app-dnts5dsaufpulbz33dp7vwmp-*`.
+
+---
+
 ## Historial de incidentes
 
 | Fecha | Problema | Causa | Fix |
@@ -285,3 +315,5 @@ Si el deploy falla con `Error response from daemon: No such container`, simpleme
 | 2026-05-19 | OOM durante build | CX33 sin RAM suficiente | Upgrade a CX43 |
 | 2026-05-19 | Deploy no se triggerea | Source era "Public GitHub" | Cambio a GitHub App en UI |
 | 2026-05-19 | Deploy falla: "No such container" | Bug de Coolify 4.0.0 | Reintentar deploy |
+| 2026-05-20 | Builds no-deterministas | yarn.lock vacío (12 líneas) desde commit inicial | PR #31 (regenerar lockfile) |
+| 2026-05-20 | 504 Gateway Timeout post-deploy | Cold start de Next.js (normal) | Esperar 10-15s y reintentar |
