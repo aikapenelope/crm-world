@@ -1,8 +1,20 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
+import { seedModuleWorkflow } from '@app/lib/workflows/seed-workflow'
+
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {
     admin: ['const_rfis.*'],
     employee: ['const_rfis.view', 'const_rfis.manage'],
   },
+
+  seedDefaults: async (ctx) => {
+    const scope = { tenantId: ctx.tenantId, organizationId: ctx.organizationId }
+    await seedModuleWorkflow(
+      ctx.em as any,
+      scope,
+      new URL('../examples/change-order-approval.json', import.meta.url),
+    )
+  },
 }
+
 export default setup
