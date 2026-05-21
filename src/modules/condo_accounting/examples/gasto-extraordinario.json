@@ -1,0 +1,194 @@
+{
+  "workflowId": "gasto_extraordinario_v1",
+  "workflowName": "Aprobación de Gasto Extraordinario",
+  "description": "Flujo de aprobación para gastos extraordinarios de condominio. El administrador propone el gasto, la junta de propietarios vota, y si se aprueba se registra formalmente en contabilidad.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Condominios",
+    "tags": ["condominio", "gasto", "aprobacion", "junta"],
+    "icon": "building",
+    "entityType": "CondoAccountingEntry"
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "Solicitud de gasto extraordinario recibida"
+      },
+      {
+        "stepId": "revision_junta",
+        "stepName": "Revisión por Junta de Propietarios",
+        "stepType": "USER_TASK",
+        "description": "La junta de propietarios revisa y vota el gasto propuesto",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Decisión",
+                "enum": ["approve", "reject"],
+                "description": "Aprobar o rechazar el gasto extraordinario"
+              },
+              "aliquot_threshold_met": {
+                "type": "boolean",
+                "title": "¿Se alcanzó el quórum de alícuotas?",
+                "description": "Confirmar que participó el porcentaje requerido de alícuotas (Art. 14 LPH)"
+              },
+              "comments": {
+                "type": "string",
+                "title": "Acta/Comentarios",
+                "description": "Acta de la reunión o justificación de la decisión"
+              }
+            }
+          },
+          "assignedToRoles": ["admin", "board_member"],
+          "slaDuration": "P7D"
+        }
+      },
+      {
+        "stepId": "approved",
+        "stepName": "Gasto Aprobado",
+        "stepType": "AUTOMATED",
+        "description": "Gasto aprobado por la junta — se registra en contabilidad y se notifica"
+      },
+      {
+        "stepId": "rejected",
+        "stepName": "Gasto Rechazado",
+        "stepType": "AUTOMATED",
+        "description": "Gasto rechazado por la junta — se notifica al administrador"
+      },
+      {
+        "stepId": "end",
+        "stepName": "Finalizado",
+        "stepType": "END",
+        "description": "Flujo completado"
+      }
+    ],
+    "transitions": [
+      {
+        "transitionId": "start_to_revision",
+        "transitionName": "Enviar a revisión de junta",
+        "fromStepId": "start",
+        "toStepId": "revision_junta",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": [
+          {
+            "activityId": "emit_pending",
+            "activityName": "Marcar gasto como pendiente de aprobación",
+            "activityType": "EMIT_EVENT",
+            "config": {
+              "eventType": "condo_accounting.entry.approval_requested",
+              "payload": {
+                "entryId": "{{context.entityId}}",
+                "requestedAt": "{{now}}"
+              }
+            },
+            "async": false
+          }
+        ]
+      },
+      {
+        "transitionId": "revision_to_approved",
+        "transitionName": "Junta aprueba el gasto",
+        "fromStepId": "revision_junta",
+        "toStepId": "approved",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          {
+            "field": "outputData.decision",
+            "operator": "eq",
+            "value": "approve"
+          }
+        ],
+        "activities": [
+          {
+            "activityId": "update_status_approved",
+            "activityName": "Actualizar estado del gasto a aprobado",
+            "activityType": "CALL_API",
+            "config": {
+              "method": "PATCH",
+              "url": "/api/condo-accounting/entries/approve",
+              "body": {
+                "id": "{{context.entityId}}",
+                "approval_status": "approved",
+                "approved_at": "{{now}}",
+                "approval_notes": "{{outputData.comments}}"
+              }
+            },
+            "async": false,
+            "continueOnFailure": true
+          },
+          {
+            "activityId": "emit_approved",
+            "activityName": "Emitir evento gasto aprobado",
+            "activityType": "EMIT_EVENT",
+            "config": {
+              "eventType": "condo_accounting.entry.approved",
+              "payload": {
+                "entryId": "{{context.entityId}}",
+                "approvedAt": "{{now}}"
+              }
+            },
+            "async": false
+          }
+        ]
+      },
+      {
+        "transitionId": "revision_to_rejected",
+        "transitionName": "Junta rechaza el gasto",
+        "fromStepId": "revision_junta",
+        "toStepId": "rejected",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          {
+            "field": "outputData.decision",
+            "operator": "eq",
+            "value": "reject"
+          }
+        ],
+        "activities": [
+          {
+            "activityId": "emit_rejected",
+            "activityName": "Emitir evento gasto rechazado",
+            "activityType": "EMIT_EVENT",
+            "config": {
+              "eventType": "condo_accounting.entry.rejected",
+              "payload": {
+                "entryId": "{{context.entityId}}",
+                "rejectedAt": "{{now}}"
+              }
+            },
+            "async": false
+          }
+        ]
+      },
+      {
+        "transitionId": "approved_to_end",
+        "transitionName": "Completar flujo",
+        "fromStepId": "approved",
+        "toStepId": "end",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "rejected_to_end",
+        "transitionName": "Finalizar flujo rechazado",
+        "fromStepId": "rejected",
+        "toStepId": "end",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      }
+    ],
+    "triggers": []
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "workflowId": "inscripcion_escolar_v1",
+  "workflowName": "Proceso de Inscripción Escolar",
+  "description": "Flujo de revisión y aprobación de solicitudes de inscripción escolar. La secretaría verifica los documentos; luego la coordinación aprueba la inscripción y activa al alumno en el sistema.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Educación",
+    "tags": ["educacion", "inscripcion", "alumno", "documentos"],
+    "icon": "graduation-cap",
+    "entityType": "EnrollmentApplication"
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Solicitud Recibida",
+        "stepType": "START",
+        "description": "Solicitud de inscripción registrada en el sistema"
+      },
+      {
+        "stepId": "verificacion_docs",
+        "stepName": "Verificación de Documentos",
+        "stepType": "USER_TASK",
+        "description": "La secretaría o personal de admisiones verifica que los documentos entregados estén completos y en regla",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Estado de documentos",
+                "enum": ["complete", "incomplete", "rejected"],
+                "description": "¿Los documentos están completos y son válidos?"
+              },
+              "missing_documents": {
+                "type": "array",
+                "items": { "type": "string" },
+                "title": "Documentos faltantes",
+                "description": "Lista de documentos pendientes (si aplica)"
+              },
+              "notes": {
+                "type": "string",
+                "title": "Observaciones"
+              }
+            }
+          },
+          "assignedToRoles": ["secretary", "admissions", "admin"],
+          "slaDuration": "P2D"
+        }
+      },
+      {
+        "stepId": "aprobacion_coordinacion",
+        "stepName": "Aprobación Coordinación Académica",
+        "stepType": "USER_TASK",
+        "description": "La coordinación académica revisa la solicitud y decide si el alumno es aceptado en el grado/sección solicitado",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Decisión de admisión",
+                "enum": ["approve", "reject", "waitlist"],
+                "description": "Aprobar inscripción, rechazar, o poner en lista de espera"
+              },
+              "assigned_grade": {
+                "type": "string",
+                "title": "Grado asignado",
+                "description": "Puede diferir del grado solicitado según evaluación"
+              },
+              "assigned_section": {
+                "type": "string",
+                "title": "Sección asignada"
+              },
+              "academic_notes": {
+                "type": "string",
+                "title": "Notas académicas"
+              }
+            }
+          },
+          "assignedToRoles": ["coordinator", "principal", "admin"],
+          "slaDuration": "P3D"
+        }
+      },
+      {
+        "stepId": "inscripcion_activa",
+        "stepName": "Inscripción Activada",
+        "stepType": "AUTOMATED",
+        "description": "Inscripción aprobada — el alumno queda activo en el sistema con su grado y sección asignados"
+      },
+      {
+        "stepId": "docs_incompletos",
+        "stepName": "Documentos Incompletos",
+        "stepType": "AUTOMATED",
+        "description": "Documentos incompletos — se notifica al representante para completar la documentación"
+      },
+      {
+        "stepId": "inscripcion_rechazada",
+        "stepName": "Inscripción Rechazada",
+        "stepType": "AUTOMATED",
+        "description": "Inscripción rechazada — se notifica al representante con el motivo"
+      },
+      {
+        "stepId": "end",
+        "stepName": "Finalizado",
+        "stepType": "END",
+        "description": "Flujo completado"
+      }
+    ],
+    "transitions": [
+      {
+        "transitionId": "start_to_docs",
+        "transitionName": "Iniciar verificación de documentos",
+        "fromStepId": "start",
+        "toStepId": "verificacion_docs",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "docs_completos_to_coordinacion",
+        "transitionName": "Documentos completos → coordinación",
+        "fromStepId": "verificacion_docs",
+        "toStepId": "aprobacion_coordinacion",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "complete" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "docs_incompletos_path",
+        "transitionName": "Documentos incompletos — notificar representante",
+        "fromStepId": "verificacion_docs",
+        "toStepId": "docs_incompletos",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "incomplete" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "docs_rechazados_path",
+        "transitionName": "Documentos rechazados",
+        "fromStepId": "verificacion_docs",
+        "toStepId": "inscripcion_rechazada",
+        "trigger": "manual",
+        "priority": 80,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "rejected" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "coordinacion_aprueba",
+        "transitionName": "Coordinación aprueba → activar inscripción",
+        "fromStepId": "aprobacion_coordinacion",
+        "toStepId": "inscripcion_activa",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "approve" }
+        ],
+        "activities": [
+          {
+            "activityId": "activate_enrollment",
+            "activityName": "Activar inscripción en el sistema",
+            "activityType": "CALL_API",
+            "config": {
+              "method": "PATCH",
+              "url": "/api/enrollment/applications/approve",
+              "body": {
+                "id": "{{context.entityId}}",
+                "status": "approved",
+                "assigned_grade": "{{outputData.assigned_grade}}",
+                "assigned_section": "{{outputData.assigned_section}}"
+              }
+            },
+            "async": false,
+            "continueOnFailure": true
+          }
+        ]
+      },
+      {
+        "transitionId": "coordinacion_rechaza",
+        "transitionName": "Coordinación rechaza la inscripción",
+        "fromStepId": "aprobacion_coordinacion",
+        "toStepId": "inscripcion_rechazada",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "reject" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "activa_to_end",
+        "fromStepId": "inscripcion_activa",
+        "toStepId": "end",
+        "transitionName": "Completar",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "rechazada_to_end",
+        "fromStepId": "inscripcion_rechazada",
+        "toStepId": "end",
+        "transitionName": "Cerrar",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "docs_incompletos_to_end",
+        "fromStepId": "docs_incompletos",
+        "toStepId": "end",
+        "transitionName": "Pausar pendiente de docs",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      }
+    ],
+    "triggers": [
+      {
+        "triggerId": "enrollment_application_trigger",
+        "name": "Auto-start en solicitud de inscripción",
+        "description": "Inicia automáticamente cuando se crea una nueva solicitud de inscripción",
+        "eventPattern": "enrollment.application.created",
+        "enabled": true,
+        "priority": 100,
+        "filterConditions": [],
+        "contextMapping": {
+          "entityId": "payload.id",
+          "entityType": "EnrollmentApplication",
+          "period_id": "payload.period_id",
+          "student_name": "payload.student_name"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "workflowId": "limite_credito_approval_v1",
+  "workflowName": "Aprobación de Límite de Crédito",
+  "description": "Flujo de aprobación para solicitudes de aumento o asignación de límite de crédito en el módulo de distribución. El vendedor o administrador solicita el límite; el gerente comercial lo aprueba o rechaza.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Distribución",
+    "tags": ["distribucion", "credito", "limite", "aprobacion"],
+    "icon": "credit-card",
+    "entityType": "DistCreditAccount"
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "Solicitud de límite de crédito recibida"
+      },
+      {
+        "stepId": "revision_gerente",
+        "stepName": "Revisión Gerente Comercial",
+        "stepType": "USER_TASK",
+        "description": "El gerente comercial evalúa el historial del cliente y decide el límite de crédito",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Decisión",
+                "enum": ["approve", "approve_partial", "reject"],
+                "description": "Aprobar el monto completo, aprobar un monto parcial, o rechazar"
+              },
+              "approved_limit_usd": {
+                "type": "number",
+                "title": "Límite aprobado (USD)",
+                "description": "Monto de crédito aprobado (si es parcial, puede diferir del solicitado)"
+              },
+              "payment_terms_days": {
+                "type": "integer",
+                "title": "Plazo de pago (días)",
+                "description": "Días de crédito aprobados (ej: 30, 60, 90)"
+              },
+              "requires_guarantee": {
+                "type": "boolean",
+                "title": "¿Requiere garantía?",
+                "description": "Si el cliente debe presentar aval o garantía para acceder al crédito"
+              },
+              "rejection_reason": {
+                "type": "string",
+                "title": "Motivo de rechazo",
+                "description": "Razón del rechazo (si aplica)"
+              }
+            }
+          },
+          "assignedToRoles": ["sales_manager", "admin"],
+          "slaDuration": "P2D"
+        }
+      },
+      {
+        "stepId": "credito_aprobado",
+        "stepName": "Límite Aprobado",
+        "stepType": "AUTOMATED",
+        "description": "Límite de crédito aprobado — se actualiza en la cuenta del cliente"
+      },
+      {
+        "stepId": "credito_rechazado",
+        "stepName": "Límite Rechazado",
+        "stepType": "AUTOMATED",
+        "description": "Solicitud rechazada — se notifica al vendedor"
+      },
+      {
+        "stepId": "end",
+        "stepName": "Finalizado",
+        "stepType": "END",
+        "description": "Flujo completado"
+      }
+    ],
+    "transitions": [
+      {
+        "transitionId": "start_to_gerente",
+        "transitionName": "Enviar a revisión del gerente",
+        "fromStepId": "start",
+        "toStepId": "revision_gerente",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "gerente_aprueba",
+        "transitionName": "Gerente aprueba el límite",
+        "fromStepId": "revision_gerente",
+        "toStepId": "credito_aprobado",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          {
+            "field": "outputData.decision",
+            "operator": "in",
+            "value": ["approve", "approve_partial"]
+          }
+        ],
+        "activities": [
+          {
+            "activityId": "update_credit_limit",
+            "activityName": "Actualizar límite de crédito en la cuenta",
+            "activityType": "CALL_API",
+            "config": {
+              "method": "PATCH",
+              "url": "/api/dist-credit/accounts/set-limit",
+              "body": {
+                "id": "{{context.entityId}}",
+                "credit_limit_usd": "{{outputData.approved_limit_usd}}",
+                "payment_terms_days": "{{outputData.payment_terms_days}}",
+                "approval_status": "approved",
+                "approved_at": "{{now}}"
+              }
+            },
+            "async": false,
+            "continueOnFailure": true
+          },
+          {
+            "activityId": "emit_credit_approved",
+            "activityName": "Emitir evento crédito aprobado",
+            "activityType": "EMIT_EVENT",
+            "config": {
+              "eventType": "dist_credit.account.credit_approved",
+              "payload": {
+                "accountId": "{{context.entityId}}",
+                "approvedLimitUsd": "{{outputData.approved_limit_usd}}"
+              }
+            },
+            "async": false
+          }
+        ]
+      },
+      {
+        "transitionId": "gerente_rechaza",
+        "transitionName": "Gerente rechaza el límite",
+        "fromStepId": "revision_gerente",
+        "toStepId": "credito_rechazado",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "reject" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "aprobado_to_end",
+        "fromStepId": "credito_aprobado",
+        "toStepId": "end",
+        "transitionName": "Completar",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "rechazado_to_end",
+        "fromStepId": "credito_rechazado",
+        "toStepId": "end",
+        "transitionName": "Cerrar rechazado",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      }
+    ],
+    "triggers": []
+  }
+}

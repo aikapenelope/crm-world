@@ -1,0 +1,191 @@
+{
+  "workflowId": "devolucion_fuera_politica_v1",
+  "workflowName": "Devolución Fuera de Política",
+  "description": "Flujo de autorización para devoluciones que no cumplen la política estándar (plazo vencido, sin ticket, producto abierto, etc.). El gerente de tienda evalúa y decide si autoriza la devolución excepcional.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Retail",
+    "tags": ["retail", "devolucion", "politica", "autorizacion"],
+    "icon": "rotate-ccw",
+    "entityType": "RetailReturn"
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Devolución Recibida",
+        "stepType": "START",
+        "description": "Solicitud de devolución fuera de política registrada"
+      },
+      {
+        "stepId": "autorizacion_gerente",
+        "stepName": "Autorización Gerente de Tienda",
+        "stepType": "USER_TASK",
+        "description": "El gerente de tienda evalúa la solicitud excepcional y decide si autoriza la devolución",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Decisión",
+                "enum": ["approve", "approve_exchange", "reject"],
+                "description": "Autorizar devolución con reembolso, autorizar solo cambio, o rechazar"
+              },
+              "exception_reason": {
+                "type": "string",
+                "title": "Razón de la excepción",
+                "description": "Justificación para la autorización fuera de política"
+              },
+              "refund_method": {
+                "type": "string",
+                "title": "Método de reembolso",
+                "enum": ["cash", "credit_note", "exchange", "store_credit"],
+                "description": "Forma en que se procesará el reembolso si es aprobado"
+              },
+              "partial_refund_amount": {
+                "type": "number",
+                "title": "Monto de reembolso parcial (USD)",
+                "description": "Si se aprueba un reembolso parcial, indicar el monto"
+              }
+            }
+          },
+          "assignedToRoles": ["store_manager", "admin"],
+          "slaDuration": "PT4H"
+        }
+      },
+      {
+        "stepId": "generar_nota_credito",
+        "stepName": "Generar Nota de Crédito",
+        "stepType": "AUTOMATED",
+        "description": "Devolución autorizada — se procesa el reembolso y genera la nota de crédito correspondiente"
+      },
+      {
+        "stepId": "devolucion_rechazada",
+        "stepName": "Devolución Rechazada",
+        "stepType": "AUTOMATED",
+        "description": "Gerente rechaza la devolución excepcional — se notifica al cajero y al cliente"
+      },
+      {
+        "stepId": "end",
+        "stepName": "Finalizado",
+        "stepType": "END",
+        "description": "Flujo completado"
+      }
+    ],
+    "transitions": [
+      {
+        "transitionId": "start_to_gerente",
+        "transitionName": "Escalar al gerente",
+        "fromStepId": "start",
+        "toStepId": "autorizacion_gerente",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "gerente_aprueba",
+        "transitionName": "Gerente autoriza la devolución",
+        "fromStepId": "autorizacion_gerente",
+        "toStepId": "generar_nota_credito",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          {
+            "field": "outputData.decision",
+            "operator": "in",
+            "value": ["approve", "approve_exchange"]
+          }
+        ],
+        "activities": [
+          {
+            "activityId": "update_return_approved",
+            "activityName": "Actualizar estado de la devolución a aprobada",
+            "activityType": "CALL_API",
+            "config": {
+              "method": "PATCH",
+              "url": "/api/retail-returns/returns/approve",
+              "body": {
+                "id": "{{context.entityId}}",
+                "status": "approved",
+                "refund_method": "{{outputData.refund_method}}",
+                "approved_at": "{{now}}",
+                "exception_reason": "{{outputData.exception_reason}}"
+              }
+            },
+            "async": false,
+            "continueOnFailure": true
+          },
+          {
+            "activityId": "emit_return_approved",
+            "activityName": "Emitir evento devolución aprobada",
+            "activityType": "EMIT_EVENT",
+            "config": {
+              "eventType": "retail_returns.return.approved",
+              "payload": {
+                "returnId": "{{context.entityId}}",
+                "refundMethod": "{{outputData.refund_method}}"
+              }
+            },
+            "async": false
+          }
+        ]
+      },
+      {
+        "transitionId": "gerente_rechaza",
+        "transitionName": "Gerente rechaza la devolución",
+        "fromStepId": "autorizacion_gerente",
+        "toStepId": "devolucion_rechazada",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "reject" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "nota_credito_to_end",
+        "fromStepId": "generar_nota_credito",
+        "toStepId": "end",
+        "transitionName": "Completar",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "rechazada_to_end",
+        "fromStepId": "devolucion_rechazada",
+        "toStepId": "end",
+        "transitionName": "Cerrar rechazada",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      }
+    ],
+    "triggers": [
+      {
+        "triggerId": "return_out_of_policy_trigger",
+        "name": "Auto-start en devolución fuera de política",
+        "description": "Inicia automáticamente cuando se crea una devolución marcada como fuera de política",
+        "eventPattern": "retail_returns.return.created",
+        "enabled": true,
+        "priority": 100,
+        "filterConditions": [
+          {
+            "field": "payload.out_of_policy",
+            "operator": "eq",
+            "value": true
+          }
+        ],
+        "contextMapping": {
+          "entityId": "payload.id",
+          "entityType": "RetailReturn",
+          "return_number": "payload.return_number",
+          "branch_id": "payload.branch_id"
+        }
+      }
+    ]
+  }
+}

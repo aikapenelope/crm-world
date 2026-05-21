@@ -1,0 +1,238 @@
+{
+  "workflowId": "change_order_approval_v1",
+  "workflowName": "Aprobación de Change Order (Construcción)",
+  "description": "Flujo de aprobación para RFIs de tipo change_order. El director de obra revisa el impacto técnico y económico; si aprueba, el cliente da la autorización final antes de ajustar el presupuesto.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Construcción",
+    "tags": ["construccion", "change-order", "rfi", "presupuesto"],
+    "icon": "hard-hat",
+    "entityType": "ConstRfi"
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "RFI de tipo change_order recibido"
+      },
+      {
+        "stepId": "revision_director",
+        "stepName": "Revisión Director de Obra",
+        "stepType": "USER_TASK",
+        "description": "El director de obra evalúa el impacto técnico, de costo y de cronograma del change order",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Decisión técnica",
+                "enum": ["approve", "reject", "needs_revision"],
+                "description": "¿Es técnicamente viable y justificado el change order?"
+              },
+              "cost_impact": {
+                "type": "number",
+                "title": "Impacto en costo (USD)",
+                "description": "Cambio neto en el presupuesto del contrato"
+              },
+              "schedule_impact_days": {
+                "type": "integer",
+                "title": "Impacto en cronograma (días)",
+                "description": "Extensión de plazo requerida (positivo = atraso)"
+              },
+              "technical_notes": {
+                "type": "string",
+                "title": "Notas técnicas",
+                "description": "Justificación técnica y condiciones de la aprobación"
+              }
+            }
+          },
+          "assignedToRoles": ["project_director", "admin"],
+          "slaDuration": "P3D"
+        }
+      },
+      {
+        "stepId": "aprobacion_cliente",
+        "stepName": "Autorización del Cliente",
+        "stepType": "USER_TASK",
+        "description": "El cliente revisa el impacto económico y da autorización formal para proceder",
+        "userTaskConfig": {
+          "formSchema": {
+            "type": "object",
+            "required": ["decision"],
+            "properties": {
+              "decision": {
+                "type": "string",
+                "title": "Decisión del cliente",
+                "enum": ["approve", "reject"],
+                "description": "¿El cliente autoriza el cambio?"
+              },
+              "client_reference": {
+                "type": "string",
+                "title": "Número de autorización del cliente",
+                "description": "Referencia interna del cliente para el change order"
+              },
+              "comments": {
+                "type": "string",
+                "title": "Comentarios"
+              }
+            }
+          },
+          "assignedToRoles": ["client_representative", "admin"],
+          "slaDuration": "P5D"
+        }
+      },
+      {
+        "stepId": "ajuste_presupuesto",
+        "stepName": "Ajuste de Presupuesto",
+        "stepType": "AUTOMATED",
+        "description": "Change order autorizado — se actualiza el monto del contrato y se notifica al equipo"
+      },
+      {
+        "stepId": "rechazado",
+        "stepName": "Change Order Rechazado",
+        "stepType": "AUTOMATED",
+        "description": "Change order rechazado en alguna etapa — se notifica y cierra el RFI"
+      },
+      {
+        "stepId": "end",
+        "stepName": "Finalizado",
+        "stepType": "END",
+        "description": "Flujo completado"
+      }
+    ],
+    "transitions": [
+      {
+        "transitionId": "start_to_director",
+        "transitionName": "Enviar a revisión técnica",
+        "fromStepId": "start",
+        "toStepId": "revision_director",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": [
+          {
+            "activityId": "emit_change_order_received",
+            "activityName": "Emitir evento change order iniciado",
+            "activityType": "EMIT_EVENT",
+            "config": {
+              "eventType": "const_rfis.rfi.change_order_review_started",
+              "payload": { "rfiId": "{{context.entityId}}" }
+            },
+            "async": false
+          }
+        ]
+      },
+      {
+        "transitionId": "director_to_cliente",
+        "transitionName": "Director aprueba → enviar al cliente",
+        "fromStepId": "revision_director",
+        "toStepId": "aprobacion_cliente",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "approve" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "director_rechaza",
+        "transitionName": "Director rechaza el change order",
+        "fromStepId": "revision_director",
+        "toStepId": "rechazado",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "reject" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "cliente_aprueba",
+        "transitionName": "Cliente aprueba el change order",
+        "fromStepId": "aprobacion_cliente",
+        "toStepId": "ajuste_presupuesto",
+        "trigger": "manual",
+        "priority": 100,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "approve" }
+        ],
+        "activities": [
+          {
+            "activityId": "update_rfi_approved",
+            "activityName": "Marcar RFI como aprobado",
+            "activityType": "CALL_API",
+            "config": {
+              "method": "PATCH",
+              "url": "/api/const-rfis/rfis/approve-change-order",
+              "body": {
+                "id": "{{context.entityId}}",
+                "status": "approved",
+                "cost_impact": "{{context.cost_impact}}",
+                "client_reference": "{{outputData.client_reference}}"
+              }
+            },
+            "async": false,
+            "continueOnFailure": true
+          }
+        ]
+      },
+      {
+        "transitionId": "cliente_rechaza",
+        "transitionName": "Cliente rechaza el change order",
+        "fromStepId": "aprobacion_cliente",
+        "toStepId": "rechazado",
+        "trigger": "manual",
+        "priority": 90,
+        "preConditions": [
+          { "field": "outputData.decision", "operator": "eq", "value": "reject" }
+        ],
+        "activities": []
+      },
+      {
+        "transitionId": "ajuste_to_end",
+        "fromStepId": "ajuste_presupuesto",
+        "toStepId": "end",
+        "transitionName": "Completar",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      },
+      {
+        "transitionId": "rechazado_to_end",
+        "fromStepId": "rechazado",
+        "toStepId": "end",
+        "transitionName": "Cerrar rechazado",
+        "trigger": "auto",
+        "priority": 100,
+        "activities": []
+      }
+    ],
+    "triggers": [
+      {
+        "triggerId": "rfi_change_order_trigger",
+        "name": "Auto-start en RFI de tipo change_order",
+        "description": "Inicia automáticamente cuando se crea un RFI con rfi_type = 'change_order'",
+        "eventPattern": "const_rfis.rfi.created",
+        "enabled": true,
+        "priority": 100,
+        "filterConditions": [
+          {
+            "field": "payload.rfi_type",
+            "operator": "eq",
+            "value": "change_order"
+          }
+        ],
+        "contextMapping": {
+          "entityId": "payload.id",
+          "entityType": "ConstRfi",
+          "project_id": "payload.project_id",
+          "rfi_number": "payload.rfi_number"
+        }
+      }
+    ]
+  }
+}
