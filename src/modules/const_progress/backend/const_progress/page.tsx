@@ -9,7 +9,8 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Plus, CheckCircle, Send, ArrowLeft } from 'lucide-react'
+import { Plus, CheckCircle, Send, ArrowLeft, CalendarPlus } from 'lucide-react'
+import { calendarLinks } from '@app/lib/calendar-links'
 
 type ValuationRow = {
   id: string
@@ -201,6 +202,27 @@ export default function ConstProgressPage() {
               <CheckCircle className="mr-1 size-3" />
               Aprobar
             </Button>
+          )
+        }
+        if (row.original.status === 'approved') {
+          const meetDate = new Date(row.original.period_to || row.original.period_from)
+          meetDate.setDate(meetDate.getDate() + 3)
+          meetDate.setHours(10, 0, 0, 0)
+          const meetEnd = new Date(meetDate)
+          meetEnd.setHours(11, 0, 0, 0)
+          const links = calendarLinks({
+            title: `Pago Valuación ${row.original.valuation_number}`,
+            start: meetDate,
+            end: meetEnd,
+            description: `Neto a pagar: $${row.original.net_payable} USD\nPeríodo: ${row.original.period_from} → ${row.original.period_to}`,
+          })
+          return (
+            <a href={links.google} target="_blank" rel="noopener noreferrer" title="Agendar pago">
+              <Button type="button" variant="ghost" size="sm" className="h-7 px-2 text-xs text-muted-foreground">
+                <CalendarPlus className="mr-1 size-3" />
+                Agendar
+              </Button>
+            </a>
           )
         }
         return null
