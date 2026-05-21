@@ -10,10 +10,12 @@
  * 2. Check if any invoice transaction is past due_date
  * 3. If overdue > 60 days: block the account
  * 4. If overdue > 30 days: suspend the account
- * 5. Emit events for notifications
+ * 5. Emit dist_credit.account.overdue (clientBroadcast: true) per account
  *
  * The worker is idempotent — running it multiple times won't double-process.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../events'
 
 export const metadata = {
   queue: 'dist_credit.overdue-check',
@@ -24,7 +26,6 @@ export const metadata = {
 export default async function handler(_payload: any, ctx: any) {
   const em = ctx.resolve('em')
   const kysely = (em as any).getKysely()
-  const eventBus = ctx.resolve('eventBus')
 
   const now = new Date()
   const today = now.toISOString().split('T')[0]
@@ -88,16 +89,12 @@ export default async function handler(_payload: any, ctx: any) {
 
         totalUpdated++
 
-        if (eventBus) {
-          eventBus.emit('dist_credit.account.overdue', {
-            customerId: limit.customer_id,
-            tenantId: limit.tenant_id,
-            organizationId: limit.organization_id,
-            balance: limit.current_balance,
-            daysOverdue,
-            newStatus,
-          })
-        }
+        await emitLifecycle(
+          eventsConfig,
+          'dist_credit.account.overdue',
+          { tenantId: limit.tenant_id as string, organizationId: limit.organization_id as string },
+          { customer_id: limit.customer_id, balance: limit.current_balance, days_overdue: daysOverdue, new_status: newStatus },
+        )
       }
     }
   }

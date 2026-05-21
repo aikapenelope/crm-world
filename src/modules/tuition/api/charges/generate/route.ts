@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import type { EntityManager } from '@mikro-orm/postgresql'
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../../../events'
 
 /**
  * POST /api/tuition/charges/generate
@@ -139,6 +141,16 @@ export async function POST(request: Request, ctx: any) {
     }
 
     await em.flush()
+
+    // Emit after flush so the dashboard refreshes in real-time
+    if (generated > 0) {
+      await emitLifecycle(
+        eventsConfig,
+        'tuition.charges.generated',
+        scope,
+        { period_month: input.period_month, generated, plan_id: input.plan_id ?? null },
+      )
+    }
 
     return NextResponse.json({
       generated,
