@@ -20,6 +20,7 @@ export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
   orm: { entity: ConstDailyActivityEntity, idField: 'id', orgField: null as any, tenantField: null as any },
+  indexer: { entityType: 'const_daily.activity' },
   list: { schema: listSchema },
   create: { schema: createActivitySchema, mapToEntity: (input: any) => ({ ...input }) },
 })

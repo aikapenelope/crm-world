@@ -16,6 +16,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_inventory.rotation' },
   list: { schema: listRotationSchema },
 })
 

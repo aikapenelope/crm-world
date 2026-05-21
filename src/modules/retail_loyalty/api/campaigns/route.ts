@@ -18,6 +18,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_loyalty.campaign' },
   list: { schema: listCampaignsSchema },
   create: {
     schema: createCampaignSchema,

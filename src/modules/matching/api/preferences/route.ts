@@ -28,6 +28,7 @@ const crud = makeCrudRoute({
     tenantField: 'tenant_id',
     softDeleteField: 'deleted_at',
   },
+  indexer: { entityType: 'matching.preference' },
   list: { schema: listSchema },
   create: {
     schema: createPreferenceSchema,

@@ -19,6 +19,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_returns.policy' },
   list: { schema: listPolicySchema },
   create: {
     schema: createPolicySchema,

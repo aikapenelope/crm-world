@@ -18,6 +18,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_ecommerce.order' },
   list: { schema: listOnlineOrdersSchema },
   create: {
     schema: createOnlineOrderSchema,

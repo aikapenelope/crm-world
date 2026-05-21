@@ -28,6 +28,7 @@ const crud = makeCrudRoute({
     tenantField: 'tenant_id',
     softDeleteField: 'deleted_at',
   },
+  indexer: { entityType: 'payment_methods.payment_method' },
   list: { schema: listSchema },
   create: {
     schema: createPaymentMethodSchema,

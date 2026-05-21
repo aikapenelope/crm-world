@@ -24,6 +24,7 @@ const crud = makeCrudRoute({
     idField: 'id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'properties.property_link' },
   list: { schema: listSchema },
   create: {
     schema: addPropertyLinkSchema,
