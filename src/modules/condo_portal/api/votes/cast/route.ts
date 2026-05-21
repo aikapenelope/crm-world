@@ -1,9 +1,15 @@
 /**
  * Portal: Cast a vote (portal version).
  * Validates unit aliquot and prevents double-voting.
+ *
+ * Fix (2026-05-26): Removed direct cross-module import of condo_comms/events.
+ * Turbopack cannot resolve cross-module entity/config imports at build time.
+ * The event bus is now accessed via the DI container — the documented pattern
+ * for emitting events across module boundaries.
+ *
+ * Reference: docs/REALTIME.md §"Emit via DI event bus"
+ * Pattern: see src/modules/tuition/workers/overdue-checker.ts §eventBus usage
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
-import { eventsConfig as commsEventsConfig } from '../../../condo_comms/events'
 
 export const metadata = {
   POST: { requireCustomerAuth: true, requireCustomerFeatures: ['condo_portal.view_account'] },
@@ -13,6 +19,11 @@ export async function POST(request: Request, ctx: any) {
   const em = ctx.container.resolve('em')
   const scope = ctx.scope
   const kysely = (em as any).getKysely()
+
+  // Access the event bus through DI — never import another module's eventsConfig
+  const eventBus = ctx.container.resolve('eventBus') as {
+    emitEvent: (id: string, payload: Record<string, unknown>, opts?: { persistent?: boolean }) => Promise<void>
+  } | null
 
   const body = await request.json()
   const { vote_id, unit_id, choice } = body
@@ -88,13 +99,18 @@ export async function POST(request: Request, ctx: any) {
     .where('id', '=', vote_id)
     .execute()
 
-  await emitLifecycle(commsEventsConfig, 'condo_comms.vote.cast', scope, {
-    id: vote_id,
-    unit_id,
-    choice,
-    total_votes: newTotalVotes,
-    total_aliquot_voted: newTotalAliquot.toFixed(5),
-  })
+  // Emit the real-time broadcast event via the DI event bus (no cross-module imports)
+  if (eventBus) {
+    await eventBus.emitEvent('condo_comms.vote.cast', {
+      tenantId: scope.tenantId,
+      organizationId: scope.organizationId,
+      id: vote_id,
+      unit_id,
+      choice,
+      total_votes: newTotalVotes,
+      total_aliquot_voted: newTotalAliquot.toFixed(5),
+    })
+  }
 
   return Response.json({ success: true, choice, aliquot_weight: aliquotWeight })
 }
