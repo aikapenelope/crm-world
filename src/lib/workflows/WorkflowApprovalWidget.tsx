@@ -22,6 +22,7 @@
 import * as React from 'react'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { Badge } from '@open-mercato/ui/primitives/badge'
+import { Textarea } from '@open-mercato/ui/primitives/textarea'
 import { CheckCircle2, XCircle, Clock, Play, Loader2, AlertCircle } from 'lucide-react'
 import { useWorkflowApproval } from './useWorkflowApproval'
 
@@ -150,11 +151,11 @@ export function WorkflowApprovalWidget({
                   <label className="text-xs font-medium text-foreground block mb-1">
                     Comentarios <span className="text-muted-foreground">(opcional)</span>
                   </label>
-                  <textarea
+                  <Textarea
                     value={comments}
                     onChange={e => setComments(e.target.value)}
                     placeholder="Justificación o notas sobre la decisión..."
-                    className="w-full rounded-md border bg-background px-3 py-2 text-sm resize-none h-16 focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="h-16 resize-none text-sm"
                   />
                 </div>
 
