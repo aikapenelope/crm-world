@@ -8,8 +8,9 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
-import { ArrowLeft, DollarSign } from 'lucide-react'
+import { ArrowLeft, DollarSign, CalendarPlus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { calendarLinks, dueDateEvent } from '@app/lib/calendar-links'
 
 type ReceiptRow = {
   id: string
@@ -128,18 +129,40 @@ export default function CondoReceiptsPage() {
       id: 'actions',
       header: '',
       cell: ({ row }) => {
-        if (row.original.status === 'paid' || row.original.status === 'cancelled') return null
+        const isPaid = row.original.status === 'paid' || row.original.status === 'cancelled'
+
+        // Calendar reminder for pending/overdue receipts
+        const calBtn = !isPaid && row.original.due_date ? (() => {
+          const event = dueDateEvent({
+            title: `Vencimiento cuota — Unidad ${row.original.unit_number} (${row.original.period_month})`,
+            dueDate: new Date(row.original.due_date),
+            description: `Recibo ${row.original.receipt_number}\nMonto: $${row.original.total_amount} USD\nPropietario: ${row.original.owner_name}`,
+          })
+          const links = calendarLinks(event)
+          return (
+            <a href={links.google} target="_blank" rel="noopener noreferrer" title="Agregar recordatorio al calendario">
+              <Button type="button" variant="ghost" size="sm" className="h-7 w-7 p-0">
+                <CalendarPlus className="size-3 text-muted-foreground" />
+              </Button>
+            </a>
+          )
+        })() : null
+
+        if (isPaid) return calBtn
         return (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            disabled={payingId === row.original.id}
-            onClick={() => handleQuickPay(row.original.id, row.original.total_amount)}
-          >
-            <DollarSign className="mr-1 size-3" />
-            Pagar
-          </Button>
+          <div className="flex items-center gap-1">
+            {calBtn}
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={payingId === row.original.id}
+              onClick={() => handleQuickPay(row.original.id, row.original.total_amount)}
+            >
+              <DollarSign className="mr-1 size-3" />
+              Pagar
+            </Button>
+          </div>
         )
       },
     },

@@ -8,7 +8,8 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Plus, Flag, AlertTriangle } from 'lucide-react'
+import { Plus, Flag, AlertTriangle, CalendarPlus } from 'lucide-react'
+import { calendarLinks } from '@app/lib/calendar-links'
 
 type GanttTask = {
   id: string
@@ -205,6 +206,26 @@ export default function ConstSchedulePage() {
            row.original.status === 'achieved' ? 'Alcanzado' : 'Retrasado'}
         </Badge>
       ),
+    },
+    {
+      id: 'calendar',
+      header: '',
+      cell: ({ row }) => {
+        if (row.original.status === 'achieved' || row.original.status === 'delayed') return null
+        if (!row.original.planned_date) return null
+        const d = new Date(row.original.planned_date)
+        d.setHours(9, 0, 0, 0)
+        const de = new Date(row.original.planned_date)
+        de.setHours(10, 0, 0, 0)
+        const links = calendarLinks({ title: `Hito: ${row.original.name}`, start: d, end: de })
+        return (
+          <a href={links.google} target="_blank" rel="noopener noreferrer" title="Agregar al calendario">
+            <Button type="button" variant="ghost" size="sm" className="h-7 w-7 p-0">
+              <CalendarPlus className="size-3 text-muted-foreground" />
+            </Button>
+          </a>
+        )
+      },
     },
   ]
 
