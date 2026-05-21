@@ -1,6 +1,11 @@
 /**
  * Register payment for a receipt.
+ * Emits condo_fees.receipt.paid (clientBroadcast: true) so the receipts
+ * dashboard and the collections view refresh in real-time.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../../events'
+
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_fees.collect'] },
 }
@@ -48,6 +53,16 @@ export async function POST(request: Request, ctx: any) {
     })
     .where('id', '=', receipt_id)
     .execute()
+
+  // Emit lifecycle event — clientBroadcast: true means the browser receives
+  // this instantly, refreshing the receipts list and the collections dashboard
+  // without a page reload.
+  await emitLifecycle(eventsConfig, 'condo_fees.receipt.paid', scope, {
+    id: receipt_id,
+    new_status: newStatus,
+    unit_id: r.unit_id,
+    building_id: r.building_id,
+  })
 
   return Response.json({
     success: true,

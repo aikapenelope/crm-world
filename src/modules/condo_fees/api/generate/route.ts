@@ -1,7 +1,11 @@
 /**
  * Generate receipts for all units in a building based on a fee config.
  * One click = one receipt per unit, amount calculated by aliquot.
+ * Emits condo_fees.receipts.generated (clientBroadcast: true) so the
+ * receipts list and fee config status refresh instantly in the browser.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../../events'
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_fees.generate'] },
 }
@@ -123,6 +127,16 @@ export async function POST(request: Request, ctx: any) {
       .where('id', '=', feeConfigId)
       .execute()
   }
+
+  // Emit lifecycle event — clientBroadcast: true means the receipts list
+  // and fee config status update instantly across all connected browsers
+  // of this tenant without a page reload.
+  await emitLifecycle(eventsConfig, 'condo_fees.receipts.generated', scope, {
+    fee_config_id: feeConfigId,
+    building_id: config.building_id,
+    period_month: config.period_month,
+    receipts_generated: receipts.length,
+  })
 
   return Response.json({
     success: true,

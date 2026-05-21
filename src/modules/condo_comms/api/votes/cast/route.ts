@@ -1,7 +1,12 @@
 /**
  * Cast a vote — weighted by aliquot (Art. 23 LPH).
  * Validates: vote is open, unit hasn't voted, quorum tracking.
+ * Emits condo_comms.vote.cast (clientBroadcast: true) so the vote
+ * results page shows the live running tally without any polling.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../../events'
+
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_comms.view'] },
 }
@@ -77,6 +82,7 @@ export async function POST(request: Request, ctx: any) {
   // Update vote totals atomically
   const newTotalVotes = Number(v.total_votes) + 1
   const newTotalAliquot = Number(v.total_aliquot_voted) + Number(aliquotWeight)
+  const quorumReached = newTotalAliquot >= Number(v.quorum_percent)
 
   await kysely
     .updateTable('condo_votes')
@@ -88,6 +94,18 @@ export async function POST(request: Request, ctx: any) {
     .where('id', '=', vote_id)
     .execute()
 
+  // Emit — clientBroadcast: true pushes the updated totals to every browser
+  // connected to this tenant. The votes results page uses useAppEvent() to
+  // refresh the live tally counter without any polling.
+  await emitLifecycle(eventsConfig, 'condo_comms.vote.cast', scope, {
+    id: vote_id,
+    unit_id,
+    choice,
+    total_votes: newTotalVotes,
+    total_aliquot_voted: newTotalAliquot.toFixed(5),
+    quorum_reached: quorumReached,
+  })
+
   return Response.json({
     success: true,
     vote_id,
@@ -96,7 +114,7 @@ export async function POST(request: Request, ctx: any) {
     aliquot_weight: aliquotWeight,
     total_votes: newTotalVotes,
     total_aliquot_voted: newTotalAliquot.toFixed(5),
-    quorum_reached: newTotalAliquot >= Number(v.quorum_percent),
+    quorum_reached: quorumReached,
   })
 }
 

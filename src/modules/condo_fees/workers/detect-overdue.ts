@@ -2,7 +2,11 @@
  * Worker: Detect overdue receipts and apply late fees.
  * Runs daily via scheduler. Finds receipts past due_date + grace period,
  * marks them as 'overdue', and applies the configured late fee percentage.
+ * Emits condo_fees.receipt.overdue (clientBroadcast: true) per receipt so
+ * the collections dashboard alert counter increments in real-time.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../events'
 
 export const metadata = {
   queue: 'condo-fees-overdue',
@@ -65,6 +69,15 @@ export default async function handler(payload: any, ctx: any) {
       })
       .where('id', '=', receipt.id)
       .execute()
+
+    // Emit per receipt — the collections dashboard receives each overdue
+    // notification instantly so the alert counter increments in real-time.
+    await emitLifecycle(
+      eventsConfig,
+      'condo_fees.receipt.overdue',
+      { tenantId: receipt.tenant_id as string, organizationId: receipt.organization_id as string },
+      { id: receipt.id as string },
+    )
 
     markedOverdue++
   }
