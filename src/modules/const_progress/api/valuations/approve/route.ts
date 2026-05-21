@@ -1,6 +1,11 @@
 /**
  * Approve a submitted valuation.
+ * Emits const_progress.valuation.approved (clientBroadcast: true) so
+ * the project team sees the approval status change live — no refresh needed.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../../../events'
+
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['const_progress.approve'] },
 }
@@ -26,6 +31,13 @@ export async function POST(request: Request, ctx: any) {
     .where('tenant_id', '=', scope.tenantId)
     .where('status', '=', 'submitted')
     .execute()
+
+  // Emit — the submitter's browser sees the badge change from "Enviada" to
+  // "Aprobada" in real-time without requiring a page reload.
+  await emitLifecycle(eventsConfig, 'const_progress.valuation.approved', scope, {
+    id: valuation_id,
+    approved_by: approved_by ?? 'Director',
+  })
 
   return Response.json({ success: true, valuation_id, status: 'approved' })
 }

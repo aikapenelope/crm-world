@@ -1,0 +1,32 @@
+/**
+ * Tuition API interceptors.
+ * After a payment is recorded via makeCrudRoute, emit the lifecycle event
+ * so the tuition collection dashboard refreshes in real-time on all
+ * connected browsers of this tenant.
+ */
+import type { ApiInterceptor } from '@open-mercato/shared/lib/crud/api-interceptor'
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../events'
+
+export const interceptors: ApiInterceptor[] = [
+  {
+    id: 'tuition.payment-recorded-broadcast',
+    targetRoute: 'tuition/payments',
+    methods: ['POST'],
+    priority: 10,
+    async before() {
+      return { ok: true }
+    },
+    async after(_request, _response, context) {
+      // Fire after the payment row is created by makeCrudRoute.
+      // clientBroadcast: true on tuition.payment.recorded means the
+      // collection dashboard and the morosos list refresh instantly.
+      await emitLifecycle(
+        eventsConfig,
+        'tuition.payment.recorded',
+        { tenantId: context.tenantId, organizationId: context.organizationId },
+      )
+      return {}
+    },
+  },
+]

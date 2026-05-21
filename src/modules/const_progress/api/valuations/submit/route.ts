@@ -1,6 +1,12 @@
 /**
  * Submit a valuation for approval.
+ * Emits const_progress.valuation.submitted (clientBroadcast: true) so
+ * the valuations list and the approval queue refresh in real-time for
+ * the project director waiting on the other side.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../../../events'
+
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['const_progress.manage'] },
 }
@@ -20,6 +26,12 @@ export async function POST(request: Request, ctx: any) {
     .where('tenant_id', '=', scope.tenantId)
     .where('status', '=', 'draft')
     .execute()
+
+  // Emit — director's browser sees the valuation appear in the approval queue
+  // instantly without reloading.
+  await emitLifecycle(eventsConfig, 'const_progress.valuation.submitted', scope, {
+    id: valuation_id,
+  })
 
   return Response.json({ success: true, valuation_id, status: 'submitted' })
 }
