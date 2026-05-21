@@ -167,6 +167,7 @@ export default function ConstDailyPage() {
           data={reports}
           isLoading={isLoading}
           searchPlaceholder="Buscar reporte..."
+          onRowClick={(row) => router.push(`/backend/const_daily/${row.id}`)}
         />
       </PageBody>
     </Page>

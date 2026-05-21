@@ -167,6 +167,7 @@ export default function CondoPropertiesPage() {
           data={buildings}
           isLoading={isLoading}
           searchPlaceholder="Buscar edificio..."
+          onRowClick={(row) => router.push(`/backend/condo_properties/${row.id}`)}
         />
       </PageBody>
     </Page>
