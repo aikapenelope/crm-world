@@ -211,6 +211,7 @@ export default function CondoReceiptsPage() {
           data={receipts}
           isLoading={isLoading}
           searchPlaceholder="Buscar recibo..."
+          onRowClick={(row) => router.push(`/backend/condo_fees/receipts/${row.id}`)}
         />
       </PageBody>
     </Page>

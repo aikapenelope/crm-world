@@ -230,6 +230,7 @@ export default function ConstRFIsPage() {
           data={rfis}
           isLoading={isLoading}
           searchPlaceholder="Buscar RFI..."
+          onRowClick={(row) => router.push(`/backend/const_rfis/${row.id}`)}
         />
 
         {/* Answer modal */}

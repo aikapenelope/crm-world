@@ -196,6 +196,7 @@ export default function AutoServiceOrdersPage() {
           data={orders}
           isLoading={isLoading}
           searchPlaceholder="Buscar por número de orden..."
+          onRowClick={(row) => router.push(`/backend/auto_service_orders/${row.id}`)}
         />
       </PageBody>
     </Page>
