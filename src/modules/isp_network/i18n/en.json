@@ -1,0 +1,23 @@
+{
+  "isp_network.nav.nodes": "Network Nodes",
+  "isp_network.nav.cpe": "CPE Inventory",
+  "isp_network.node_types.pop_principal": "Main POP",
+  "isp_network.node_types.nodo_distribucion": "Distribution Node",
+  "isp_network.node_types.nodo_acceso": "Access Node",
+  "isp_network.node_types.repetidora": "Repeater",
+  "isp_network.status.active": "Active",
+  "isp_network.status.degraded": "Degraded",
+  "isp_network.status.offline": "Offline",
+  "isp_network.status.maintenance": "Maintenance",
+  "isp_network.cpe_types.router": "Router",
+  "isp_network.cpe_types.ont": "ONT (Fiber)",
+  "isp_network.cpe_types.antenna": "Antenna",
+  "isp_network.cpe_types.switch": "Switch",
+  "isp_network.cpe_types.other": "Other",
+  "isp_network.cpe_status.in_stock": "In stock",
+  "isp_network.cpe_status.deployed": "Deployed",
+  "isp_network.cpe_status.in_repair": "In repair",
+  "isp_network.cpe_status.written_off": "Written off",
+  "isp_network.saved": "Saved",
+  "isp_network.outage_reported": "Outage reported. Affected subscribers will be notified."
+}

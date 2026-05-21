@@ -1,0 +1,20 @@
+{
+  "isp_billing.nav.invoices": "Invoices",
+  "isp_billing.nav.payments": "Payments",
+  "isp_billing.nav.overdue": "Overdue",
+  "isp_billing.status.pending": "Pending",
+  "isp_billing.status.partial": "Partial payment",
+  "isp_billing.status.paid": "Paid",
+  "isp_billing.status.overdue": "Overdue",
+  "isp_billing.status.cancelled": "Cancelled",
+  "isp_billing.status.in_dispute": "In dispute",
+  "isp_billing.methods.zelle": "Zelle",
+  "isp_billing.methods.pago_movil": "Mobile payment",
+  "isp_billing.methods.efectivo_usd": "Cash USD",
+  "isp_billing.methods.efectivo_ves": "Cash VES",
+  "isp_billing.methods.transferencia": "Bank transfer",
+  "isp_billing.methods.binance": "Binance / USDT",
+  "isp_billing.methods.otro": "Other",
+  "isp_billing.payment_registered": "Payment registered",
+  "isp_billing.invoice_generated": "Invoices generated"
+}

@@ -1,0 +1,16 @@
+{
+  "isp_subscribers.nav.title": "Subscribers",
+  "isp_subscribers.nav.overdue": "Overdue",
+  "isp_subscribers.types.residential": "Residential",
+  "isp_subscribers.types.pyme": "SMB",
+  "isp_subscribers.types.corporate": "Corporate",
+  "isp_subscribers.types.wholesale": "Wholesale",
+  "isp_subscribers.status.pending_installation": "Pending installation",
+  "isp_subscribers.status.active": "Active",
+  "isp_subscribers.status.suspended_overdue": "Suspended (overdue)",
+  "isp_subscribers.status.suspended_voluntary": "Suspended (voluntary)",
+  "isp_subscribers.status.pending_change_plan": "Plan change pending",
+  "isp_subscribers.status.cancelled": "Cancelled",
+  "isp_subscribers.saved": "Subscriber saved",
+  "isp_subscribers.status_changed": "Service status updated"
+}
