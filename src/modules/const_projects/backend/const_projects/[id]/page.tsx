@@ -223,19 +223,20 @@ export default function ConstProjectDetailPage() {
               { id: 'valuations', label: `Valuaciones (${valuations.length})`, icon: FileText },
               { id: 'rfis', label: `RFIs (${rfis.length})`, icon: AlertTriangle },
             ] as const).map(({ id, label, icon: Icon }) => (
-              <button
+              <Button
                 key={id}
                 type="button"
+                variant="ghost"
                 onClick={() => setTab(id as Tab)}
-                className={`flex items-center gap-2 px-4 py-2.5 text-sm border-b-2 transition-colors
+                className={`flex items-center gap-2 px-4 py-2.5 h-auto text-sm border-b-2 rounded-none font-normal transition-colors
                   ${tab === id
                     ? 'border-primary text-primary font-medium'
-                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                    : 'border-transparent text-muted-foreground'
                   }`}
               >
                 <Icon className="size-4" />
                 {label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>

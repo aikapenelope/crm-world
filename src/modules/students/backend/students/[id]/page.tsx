@@ -139,18 +139,20 @@ export default function StudentDetailPage() {
             {TABS.map((tab) => {
               const Icon = tab.icon
               return (
-                <button
+                <Button
                   key={tab.id}
+                  type="button"
+                  variant="ghost"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 border-b-2 px-1 pb-3 text-sm font-medium transition-colors ${
+                  className={`flex items-center gap-2 border-b-2 px-1 pb-3 h-auto text-sm font-medium rounded-none transition-colors ${
                     activeTab === tab.id
                       ? 'border-primary text-primary'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                      : 'border-transparent text-muted-foreground'
                   }`}
                 >
                   <Icon className="h-4 w-4" />
                   {tab.label}
-                </button>
+                </Button>
               )
             })}
           </nav>
