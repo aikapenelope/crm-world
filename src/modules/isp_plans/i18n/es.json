@@ -1,0 +1,23 @@
+{
+  "isp_plans.nav.title": "Planes",
+  "isp_plans.nav.addons": "Servicios adicionales",
+  "isp_plans.fields.name": "Nombre del plan",
+  "isp_plans.fields.technology": "Tecnología",
+  "isp_plans.fields.download_mbps": "Velocidad bajada (Mbps)",
+  "isp_plans.fields.upload_mbps": "Velocidad subida (Mbps)",
+  "isp_plans.fields.monthly_price_usd": "Precio mensual (USD)",
+  "isp_plans.fields.installation_fee_usd": "Cargo instalación (USD)",
+  "isp_plans.fields.target_segment": "Segmento",
+  "isp_plans.fields.is_active": "Activo",
+  "isp_plans.fields.is_symmetric": "Simétrico",
+  "isp_plans.technologies.fiber": "Fibra óptica",
+  "isp_plans.technologies.wireless": "Inalámbrico",
+  "isp_plans.technologies.cable": "Cable coaxial",
+  "isp_plans.technologies.dedicated": "Enlace dedicado",
+  "isp_plans.segments.residential": "Residencial",
+  "isp_plans.segments.pyme": "PYME",
+  "isp_plans.segments.corporate": "Corporativo",
+  "isp_plans.segments.wholesale": "Mayorista",
+  "isp_plans.saved": "Plan guardado",
+  "isp_plans.deleted": "Plan eliminado"
+}

@@ -1,0 +1,16 @@
+{
+  "isp_subscribers.nav.title": "Abonados",
+  "isp_subscribers.nav.overdue": "Morosos",
+  "isp_subscribers.types.residential": "Residencial",
+  "isp_subscribers.types.pyme": "PYME",
+  "isp_subscribers.types.corporate": "Corporativo",
+  "isp_subscribers.types.wholesale": "Mayorista",
+  "isp_subscribers.status.pending_installation": "Pendiente instalación",
+  "isp_subscribers.status.active": "Activo",
+  "isp_subscribers.status.suspended_overdue": "Suspendido por mora",
+  "isp_subscribers.status.suspended_voluntary": "Suspendido voluntariamente",
+  "isp_subscribers.status.pending_change_plan": "Cambio de plan pendiente",
+  "isp_subscribers.status.cancelled": "Cancelado",
+  "isp_subscribers.saved": "Abonado guardado",
+  "isp_subscribers.status_changed": "Estado del servicio actualizado"
+}
