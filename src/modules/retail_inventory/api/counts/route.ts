@@ -18,6 +18,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_inventory.count' },
   list: { schema: listCountSchema },
   create: {
     schema: createCountSchema,

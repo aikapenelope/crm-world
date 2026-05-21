@@ -33,7 +33,7 @@ const STATUS_ICONS: Record<string, React.ReactNode> = {
   paid: <CheckCircle2 className="h-4 w-4 text-primary" />,
   pending: <Clock className="h-4 w-4 text-muted-foreground" />,
   overdue: <AlertTriangle className="h-4 w-4 text-destructive" />,
-  partial: <DollarSign className="h-4 w-4 text-amber-500" />,
+  partial: <DollarSign className="h-4 w-4 text-status-warning-icon" />,
 }
 
 const STATUS_LABELS: Record<string, string> = {

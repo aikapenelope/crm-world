@@ -20,6 +20,7 @@ const crud = makeCrudRoute({
     tenantField: 'tenant_id',
     softDeleteField: 'deleted_at',
   },
+  indexer: { entityType: 'retail_branches.branch' },
   list: { schema: listBranchSchema },
   create: {
     schema: createBranchSchema,

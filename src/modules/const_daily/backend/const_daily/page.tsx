@@ -25,9 +25,9 @@ type ReportRow = {
 type ProjectOption = { id: string; name: string }
 
 const WEATHER_ICONS: Record<string, React.ReactNode> = {
-  sunny: React.createElement(Sun, { className: 'size-4 text-amber-500' }),
+  sunny: React.createElement(Sun, { className: 'size-4 text-status-warning-icon' }),
   cloudy: React.createElement(Cloud, { className: 'size-4 text-muted-foreground' }),
-  rainy: React.createElement(CloudRain, { className: 'size-4 text-blue-500' }),
+  rainy: React.createElement(CloudRain, { className: 'size-4 text-status-info-icon' }),
   windy: React.createElement(Wind, { className: 'size-4 text-muted-foreground' }),
   foggy: React.createElement(Cloud, { className: 'size-4 text-muted-foreground' }),
 }

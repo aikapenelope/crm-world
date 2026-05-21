@@ -22,6 +22,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'condo_accounting.reserve_fund' },
   list: { schema: listSchema },
 })
 

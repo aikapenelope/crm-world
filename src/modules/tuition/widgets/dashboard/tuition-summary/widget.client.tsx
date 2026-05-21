@@ -130,7 +130,7 @@ const TuitionSummaryWidget: React.FC<DashboardWidgetComponentProps<TuitionSummar
           <div className="text-xs text-muted-foreground">Pagados</div>
         </div>
         <div>
-          <div className="text-lg font-bold text-amber-600">{summary.pendingCount}</div>
+          <div className="text-lg font-bold text-status-warning-text">{summary.pendingCount}</div>
           <div className="text-xs text-muted-foreground">Pendientes</div>
         </div>
         <div>

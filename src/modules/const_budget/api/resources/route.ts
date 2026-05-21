@@ -27,6 +27,7 @@ const crud = makeCrudRoute({
     orgField: null as any,
     tenantField: null as any,
   },
+  indexer: { entityType: 'const_budget.resource' },
   list: { schema: listSchema },
   create: { schema: createBudgetResourceSchema, mapToEntity: (input: any) => ({ ...input }) },
   update: { schema: updateBudgetResourceSchema, applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) } },

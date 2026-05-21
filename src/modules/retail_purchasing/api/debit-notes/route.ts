@@ -17,6 +17,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_purchasing.debit_note' },
   list: { schema: listSupplierNotesSchema },
   create: {
     schema: createSupplierNoteSchema,

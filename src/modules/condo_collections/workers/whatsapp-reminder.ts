@@ -1,8 +1,12 @@
 /**
  * Worker: Generate WhatsApp reminder messages for debtors.
  * Scheduled to run weekly. Generates wa.me links for all debtors
- * with phone numbers and logs the collection action.
+ * with phone numbers, logs the collection action, and emits
+ * condo_collections.debtor.detected (clientBroadcast: true) so the
+ * collections dashboard alert counter refreshes in real-time.
  */
+import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { eventsConfig } from '../events'
 
 export const metadata = {
   queue: 'condo-collections-whatsapp',
@@ -85,6 +89,16 @@ export default async function handler(payload: any, ctx: any) {
       })
       .execute()
     actionsLogged++
+  }
+
+  // Emit debtor.detected per tenant so the collections dashboard refreshes.
+  if (actionsLogged > 0) {
+    await emitLifecycle(
+      eventsConfig,
+      'condo_collections.debtor.detected',
+      { tenantId: tenant_id as string, organizationId: organization_id as string },
+      { debtors_count: actionsLogged },
+    )
   }
 
   return {

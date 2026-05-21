@@ -18,6 +18,7 @@ const crud = makeCrudRoute({
     orgField: 'organization_id',
     tenantField: 'tenant_id',
   },
+  indexer: { entityType: 'retail_branches.transfer' },
   list: { schema: listTransferSchema },
   create: {
     schema: createTransferSchema,

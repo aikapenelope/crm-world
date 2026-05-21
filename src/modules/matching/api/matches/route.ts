@@ -26,6 +26,7 @@ const crud = makeCrudRoute({
     tenantField: 'tenant_id',
     orgField: 'organization_id',
   },
+  indexer: { entityType: 'matching.match' },
   list: { schema: listSchema },
 })
 

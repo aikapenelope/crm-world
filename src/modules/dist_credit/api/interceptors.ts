@@ -26,4 +26,27 @@ export const interceptors: ApiInterceptor[] = [
       return {}
     },
   },
+  {
+    id: 'dist_credit.account-blocked-broadcast',
+    targetRoute: 'dist-credit/limits',
+    methods: ['PUT'],
+    priority: 10,
+    async before(request) {
+      const newStatus = typeof request.body?.status === 'string'
+        ? (request.body.status as string)
+        : null
+      return { ok: true, metadata: { newStatus } }
+    },
+    async after(_request, _response, context) {
+      const { newStatus } = (context.metadata ?? {}) as Record<string, unknown>
+      if (newStatus === 'blocked') {
+        await emitLifecycle(
+          eventsConfig,
+          'dist_credit.account.blocked',
+          { tenantId: context.tenantId, organizationId: context.organizationId },
+        )
+      }
+      return {}
+    },
+  },
 ]

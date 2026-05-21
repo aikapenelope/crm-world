@@ -9,6 +9,7 @@
 import * as React from 'react'
 import { useParams } from 'next/navigation'
 import { Badge } from '@open-mercato/ui/primitives/badge'
+import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 
 type PortalProperty = {
   id: string
@@ -54,11 +55,8 @@ export default function AgentPortalPage() {
     async function load() {
       setLoading(true)
       try {
-        const res = await fetch(`/api/agent-portal?agentId=${agentId}`)
-        if (res.ok) {
-          const data = await res.json()
-          setProperties(data.properties ?? [])
-        }
+        const { data } = await apiCall<{ properties: PortalProperty[] }>(`/api/agent-portal?agentId=${agentId}`)
+        setProperties(data?.properties ?? [])
       } finally {
         setLoading(false)
       }

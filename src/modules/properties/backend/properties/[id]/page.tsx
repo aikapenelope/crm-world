@@ -387,7 +387,7 @@ function LinksTab({ propertyId }: { propertyId: string }) {
       accessorKey: 'url',
       header: 'URL',
       cell: ({ row }) => (
-        <a href={row.original.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">
+        <a href={row.original.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline text-sm">
           {row.original.url.length > 50 ? `${row.original.url.slice(0, 50)}...` : row.original.url}
         </a>
       ),

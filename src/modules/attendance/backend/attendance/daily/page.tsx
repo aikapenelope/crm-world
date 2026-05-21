@@ -16,7 +16,7 @@ type AttendanceStatus = 'present' | 'absent' | 'late' | 'excused' | 'half_day'
 const STATUS_CONFIG: Record<AttendanceStatus, { label: string; icon: React.ReactNode; color: string }> = {
   present: { label: 'Presente', icon: <CheckCircle2 className="h-4 w-4" />, color: 'text-primary' },
   absent: { label: 'Ausente', icon: <XCircle className="h-4 w-4" />, color: 'text-destructive' },
-  late: { label: 'Tardanza', icon: <Clock className="h-4 w-4" />, color: 'text-amber-500' },
+  late: { label: 'Tardanza', icon: <Clock className="h-4 w-4" />, color: 'text-status-warning-icon' },
   excused: { label: 'Justificado', icon: <AlertTriangle className="h-4 w-4" />, color: 'text-muted-foreground' },
   half_day: { label: 'Medio día', icon: <Clock className="h-4 w-4" />, color: 'text-muted-foreground' },
 }
