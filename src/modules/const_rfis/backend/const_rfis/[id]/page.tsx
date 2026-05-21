@@ -6,6 +6,7 @@ import { Page, PageBody } from '@open-mercato/ui/backend/Page'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
+import { Textarea } from '@open-mercato/ui/primitives/textarea'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, Clock, CheckCircle2, AlertTriangle } from 'lucide-react'
@@ -160,13 +161,13 @@ export default function ConstRFIDetailPage() {
             <h3 className="font-semibold text-sm">Respuesta técnica</h3>
             <div>
               <label className="text-xs text-muted-foreground block mb-1">Respuesta *</label>
-              <textarea
+              <Textarea
                 value={answerText}
                 onChange={e => setAnswerText(e.target.value)}
                 rows={4}
                 required
                 placeholder="Descripción técnica de la respuesta..."
-                className="w-full rounded-md border bg-background px-3 py-2 text-sm resize-none"
+                className="resize-none text-sm"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
