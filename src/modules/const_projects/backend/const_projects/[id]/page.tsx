@@ -7,7 +7,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
-import { ArrowLeft, HardHat, TrendingUp, AlertTriangle, FileText, Clock } from 'lucide-react'
+import { ArrowLeft, HardHat, TrendingUp, AlertTriangle, FileText, Clock, Download } from 'lucide-react'
 
 // =============================================================================
 // Types
@@ -318,6 +318,11 @@ export default function ConstProjectDetailPage() {
                         <span className="font-semibold text-sm whitespace-nowrap">
                           {v.currency} {Number(v.net_payable).toLocaleString('es-VE', { minimumFractionDigits: 2 })}
                         </span>
+                        <a href={`/api/const-progress/valuations/pdf?id=${v.id}`} target="_blank" rel="noopener noreferrer">
+                          <Button type="button" variant="ghost" size="sm" className="h-7 px-2">
+                            <Download className="size-3" />
+                          </Button>
+                        </a>
                       </div>
                     </div>
                   ))}

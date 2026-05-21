@@ -179,6 +179,12 @@ export default function CondoAssembliesPage() {
             >
               <Download className="size-3 text-muted-foreground" />
             </Button>
+            <a href={`/api/condo-comms/acta-pdf?id=${row.original.id}`} target="_blank" rel="noopener noreferrer" title="Descargar Acta PDF">
+              <Button type="button" variant="ghost" size="sm" className="h-7 px-2 text-xs text-primary">
+                <Download className="mr-1 size-3" />
+                Acta PDF
+              </Button>
+            </a>
           </div>
         )
       },

@@ -13,7 +13,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { useOrganizationScopeDetail } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
 import type { ColumnDef } from '@tanstack/react-table'
-import { ArrowLeft, User, Users } from 'lucide-react'
+import { ArrowLeft, User, Users, Download } from 'lucide-react'
 
 // =============================================================================
 // Types
@@ -112,10 +112,24 @@ export default function StudentDetailPage() {
             Volver a estudiantes
           </Button>
           <h1 className="mt-2 text-2xl font-bold">{fullName}</h1>
-          <div className="mt-1 flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2 flex-wrap">
             <Badge variant="outline">{GRADE_LABELS[student.grade_level] ?? student.grade_level}</Badge>
             <Badge variant="secondary">Sección {student.section}</Badge>
             <Badge>{student.enrollment_status === 'active' ? 'Activo' : student.enrollment_status}</Badge>
+            <div className="ml-auto flex gap-2">
+              <a href={`/api/grades/boleta-pdf?student_id=${studentId}`} target="_blank" rel="noopener noreferrer">
+                <Button type="button" variant="outline" size="sm">
+                  <Download className="mr-1.5 size-3.5" />
+                  Boletín PDF
+                </Button>
+              </a>
+              <a href={`/api/enrollment/constancia-pdf?student_id=${studentId}`} target="_blank" rel="noopener noreferrer">
+                <Button type="button" variant="outline" size="sm">
+                  <Download className="mr-1.5 size-3.5" />
+                  Constancia PDF
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
 
