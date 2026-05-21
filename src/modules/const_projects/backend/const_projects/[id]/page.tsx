@@ -7,7 +7,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
-import { ArrowLeft, HardHat, TrendingUp, AlertTriangle, FileText, Clock } from 'lucide-react'
+import { ArrowLeft, HardHat, TrendingUp, AlertTriangle, FileText, Clock, Download } from 'lucide-react'
 
 // =============================================================================
 // Types
@@ -223,19 +223,20 @@ export default function ConstProjectDetailPage() {
               { id: 'valuations', label: `Valuaciones (${valuations.length})`, icon: FileText },
               { id: 'rfis', label: `RFIs (${rfis.length})`, icon: AlertTriangle },
             ] as const).map(({ id, label, icon: Icon }) => (
-              <button
+              <Button
                 key={id}
                 type="button"
+                variant="ghost"
                 onClick={() => setTab(id as Tab)}
-                className={`flex items-center gap-2 px-4 py-2.5 text-sm border-b-2 transition-colors
+                className={`flex items-center gap-2 px-4 py-2.5 h-auto text-sm border-b-2 rounded-none font-normal transition-colors
                   ${tab === id
                     ? 'border-primary text-primary font-medium'
-                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                    : 'border-transparent text-muted-foreground'
                   }`}
               >
                 <Icon className="size-4" />
                 {label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -318,6 +319,11 @@ export default function ConstProjectDetailPage() {
                         <span className="font-semibold text-sm whitespace-nowrap">
                           {v.currency} {Number(v.net_payable).toLocaleString('es-VE', { minimumFractionDigits: 2 })}
                         </span>
+                        <a href={`/api/const-progress/valuations/pdf?id=${v.id}`} target="_blank" rel="noopener noreferrer">
+                          <Button type="button" variant="ghost" size="sm" className="h-7 px-2">
+                            <Download className="size-3" />
+                          </Button>
+                        </a>
                       </div>
                     </div>
                   ))}

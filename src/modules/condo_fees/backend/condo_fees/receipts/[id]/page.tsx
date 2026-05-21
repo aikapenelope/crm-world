@@ -8,7 +8,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
-import { ArrowLeft, CalendarPlus, CheckCircle2, DollarSign } from 'lucide-react'
+import { ArrowLeft, CalendarPlus, CheckCircle2, DollarSign, Download } from 'lucide-react'
 import { calendarLinks, dueDateEvent } from '@app/lib/calendar-links'
 
 type Receipt = {
@@ -162,6 +162,12 @@ export default function CondoReceiptDetailPage() {
                 Registrar pago
               </Button>
             )}
+            <a href={`/api/condo-fees/receipts/pdf?id=${receipt.id}`} target="_blank" rel="noopener noreferrer">
+              <Button type="button" variant="outline" size="sm">
+                <Download className="mr-2 size-4" />
+                Descargar PDF
+              </Button>
+            </a>
           </div>
         </div>
 
