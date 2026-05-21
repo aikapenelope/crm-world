@@ -1,0 +1,19 @@
+{
+  "academy_courses.title": "Cursos",
+  "academy_courses.course": "Curso",
+  "academy_courses.courses": "Cursos",
+  "academy_courses.new": "Nuevo curso",
+  "academy_courses.edit": "Editar curso",
+  "academy_courses.category": "Categoría",
+  "academy_courses.level": "Nivel",
+  "academy_courses.duration": "Duración (horas)",
+  "academy_courses.price": "Precio (USD)",
+  "academy_courses.modality": "Modalidad",
+  "academy_courses.modality.in_person": "Presencial",
+  "academy_courses.modality.online": "Online",
+  "academy_courses.modality.hybrid": "Híbrida",
+  "academy_courses.max_students": "Capacidad máxima",
+  "academy_courses.prerequisites": "Prerequisitos",
+  "academy_courses.is_active": "Activo",
+  "academy_courses.description": "Descripción"
+}
