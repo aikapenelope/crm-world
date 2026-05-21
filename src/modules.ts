@@ -142,6 +142,17 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'const_daily', from: '@app' },
   { id: 'const_subcon', from: '@app' },
   { id: 'const_materials', from: '@app' },
+
+  // Aika: Academy / Academias y Centros de Formación vertical (Phase 20)
+  { id: 'academy_courses', from: '@app' },
+  { id: 'academy_instructors', from: '@app' },
+  { id: 'academy_groups', from: '@app' },
+  { id: 'academy_sessions', from: '@app' },
+  { id: 'academy_enrollments', from: '@app' },
+  { id: 'academy_attendance', from: '@app' },
+  { id: 'academy_payments', from: '@app' },
+  { id: 'academy_certificates', from: '@app' },
+  { id: 'academy_portal', from: '@app' },
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
