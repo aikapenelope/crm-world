@@ -200,28 +200,38 @@ export default function AcademyEnrollmentDetailPage() {
           </form>
         )}
 
-        {/* KPI strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          <div className="rounded-lg border p-3 text-center">
-            <div className="text-xs text-muted-foreground mb-1">Precio acordado</div>
-            <div className="font-bold">{enrollment.currency} {Number(enrollment.price_agreed).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</div>
-          </div>
-          <div className="rounded-lg border p-3 text-center">
-            <div className="text-xs text-muted-foreground mb-1">Pagado</div>
-            <div className="font-bold text-primary">{enrollment.currency} {paidTotal.toLocaleString('es-VE', { minimumFractionDigits: 2 })}</div>
-          </div>
-          <div className="rounded-lg border p-3 text-center">
-            <div className={`text-xs text-muted-foreground mb-1`}>Saldo</div>
-            <div className={`font-bold ${remaining > 0 ? 'text-destructive' : ''}`}>
-              {remaining > 0 ? `${enrollment.currency} ${remaining.toLocaleString('es-VE', { minimumFractionDigits: 2 })}` : 'Al día'}
+        {/* Progress rings */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {/* Attendance ring */}
+          <ProgressRing
+            value={attendancePercent ?? 0}
+            max={100}
+            label="Asistencia"
+            sublabel={attendance ? `${attendance.attended}/${attendance.total_sessions} clases` : '—'}
+            color={attendancePercent !== null && attendancePercent < 75 ? 'warning' : 'primary'}
+            suffix="%"
+          />
+          {/* Payment ring */}
+          <ProgressRing
+            value={paidTotal}
+            max={Number(enrollment.price_agreed)}
+            label="Cobrado"
+            sublabel={remaining > 0 ? `Saldo: ${enrollment.currency} ${remaining.toFixed(2)}` : 'Al día ✓'}
+            color={remaining > 0 ? 'destructive' : 'primary'}
+            prefix={enrollment.currency + ' '}
+            formatValue={(v) => v.toLocaleString('es-VE', { minimumFractionDigits: 0 })}
+          />
+          {/* Enrollment date card */}
+          <div className="rounded-xl border p-4 flex flex-col items-center justify-center text-center gap-1">
+            <div className="text-3xl font-black text-primary leading-none">
+              {enrollment.status === 'completed' ? '✓' : enrollment.status === 'active' ? '▶' : '⏳'}
             </div>
-          </div>
-          <div className="rounded-lg border p-3 text-center">
-            <div className="text-xs text-muted-foreground mb-1">Asistencia</div>
-            <div className={`font-bold ${attendancePercent !== null && attendancePercent < 75 ? 'text-status-warning-text' : ''}`}>
-              {attendancePercent !== null ? `${attendancePercent}%` : '—'}
+            <div className="text-sm font-semibold mt-1">
+              {STATUS_LABELS[enrollment.status] ?? enrollment.status}
             </div>
-            {attendance && <div className="text-xs text-muted-foreground">{attendance.attended}/{attendance.total_sessions}</div>}
+            <div className="text-xs text-muted-foreground">
+              Desde {new Date(enrollment.enrollment_date).toLocaleDateString('es-VE', { day: 'numeric', month: 'short', year: '2-digit' })}
+            </div>
           </div>
         </div>
 
@@ -280,5 +290,45 @@ export default function AcademyEnrollmentDetailPage() {
         )}
       </PageBody>
     </Page>
+  )
+}
+
+// ─── SVG Progress Ring ────────────────────────────────────────────────────────
+function ProgressRing({
+  value, max, label, sublabel, color = 'primary', suffix = '', prefix = '', formatValue,
+}: {
+  value: number; max: number; label: string; sublabel: string
+  color?: 'primary' | 'warning' | 'destructive'
+  suffix?: string; prefix?: string; formatValue?: (v: number) => string
+}) {
+  const SIZE = 88; const STROKE = 7; const RADIUS = (SIZE - STROKE) / 2
+  const CIRCUMFERENCE = 2 * Math.PI * RADIUS
+  const pct = max > 0 ? Math.min(1, Math.max(0, value / max)) : 0
+  const offset = CIRCUMFERENCE * (1 - pct)
+  const COLOR = { primary: 'text-primary', warning: 'text-status-warning-text', destructive: 'text-destructive' }
+  const TRACK = { primary: 'text-primary/15', warning: 'text-status-warning-text/20', destructive: 'text-destructive/15' }
+  const displayValue = formatValue ? formatValue(value) : Math.round(value).toString()
+
+  return (
+    <div className="rounded-xl border p-4 flex flex-col items-center text-center gap-2">
+      <div className="relative flex items-center justify-center">
+        <svg width={SIZE} height={SIZE} className="-rotate-90">
+          <circle cx={SIZE/2} cy={SIZE/2} r={RADIUS} fill="none" strokeWidth={STROKE}
+            className={`stroke-current ${TRACK[color] ?? TRACK.primary}`} />
+          <circle cx={SIZE/2} cy={SIZE/2} r={RADIUS} fill="none" strokeWidth={STROKE}
+            strokeLinecap="round" strokeDasharray={CIRCUMFERENCE} strokeDashoffset={offset}
+            className={`stroke-current transition-all duration-700 ${COLOR[color] ?? COLOR.primary}`} />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className={`text-base font-black leading-none ${COLOR[color] ?? ''}`}>
+            {prefix}{displayValue}{suffix}
+          </span>
+        </div>
+      </div>
+      <div>
+        <div className="text-xs font-semibold">{label}</div>
+        <div className="text-xs text-muted-foreground leading-tight mt-0.5">{sublabel}</div>
+      </div>
+    </div>
   )
 }

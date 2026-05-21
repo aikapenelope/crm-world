@@ -9,8 +9,9 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
+import { useAppEvent } from '@open-mercato/ui/backend/injection/useAppEvent'
 import {
-  ArrowLeft, Calendar, Users, RefreshCw, Play, CheckCircle2, Clock,
+  ArrowLeft, Calendar, Users, RefreshCw, Play, CheckCircle2, Clock, MessageCircle,
 } from 'lucide-react'
 
 type Group = {
@@ -29,7 +30,7 @@ type Enrollment = {
   id: string; student_name: string; status: string; enrollment_date: string; price_agreed: string; currency: string
 }
 
-type Tab = 'sessions' | 'students'
+type Tab = 'sessions' | 'students' | 'whatsapp'
 
 const STATUS_LABELS: Record<string, string> = {
   scheduled: 'Programado', in_progress: 'En curso', completed: 'Completado', cancelled: 'Cancelado',
@@ -79,6 +80,18 @@ export default function AcademyGroupDetailPage() {
   }
 
   React.useEffect(() => { if (groupId) load() }, [groupId])
+
+  // Real-time: update enrolled count when a new enrollment is created in this group
+  useAppEvent('academy_enrollments.enrollment.created', (event: any) => {
+    if (event.payload?.group_id === groupId) {
+      setGroup(prev => prev ? { ...prev, enrolled_count: prev.enrolled_count + 1 } : prev)
+      setEnrollments(prev => {
+        // Reload to get the new enrollment's full data
+        void load()
+        return prev
+      })
+    }
+  }, [groupId])
 
   async function handleGenerateSessions() {
     setGenerating(true)
@@ -210,6 +223,7 @@ export default function AcademyGroupDetailPage() {
             {([
               { id: 'sessions', label: `Sesiones (${sessions.length})` },
               { id: 'students', label: `Alumnos (${enrollments.length})` },
+              { id: 'whatsapp', label: '💬 WhatsApp' },
             ] as const).map(t => (
               <Button
                 key={t.id}
@@ -304,7 +318,161 @@ export default function AcademyGroupDetailPage() {
             )}
           </div>
         )}
+
+        {/* ── WHATSAPP TAB ──────────────────────────────────── */}
+        {tab === 'whatsapp' && (
+          <WhatsAppSection
+            group={group}
+            courseName={courseName}
+            enrollments={enrollments}
+            nextSession={nextSession ?? null}
+          />
+        )}
       </PageBody>
     </Page>
+  )
+}
+
+// ─── WhatsApp section (separate component for clarity) ───────────────────────
+function WhatsAppSection({
+  group,
+  courseName,
+  enrollments,
+  nextSession,
+}: {
+  group: { group_code: string; schedule_time: string; location: string | null; online_link: string | null }
+  courseName: string
+  enrollments: Enrollment[]
+  nextSession: { session_date: string; start_time: string; session_number: number } | null
+}) {
+  const activeStudents = enrollments.filter(e => e.status === 'active')
+
+  function buildClassReminderMsg(studentName: string): string {
+    const parts = [`Hola ${studentName} 👋`]
+    if (nextSession) {
+      const dateStr = new Date(nextSession.session_date).toLocaleDateString('es-VE', {
+        weekday: 'long', day: 'numeric', month: 'long',
+      })
+      parts.push(`Te recordamos que tu clase de *${courseName}* (Sesión #${nextSession.session_number}) es *mañana ${dateStr}* a las *${nextSession.start_time}*.`)
+    } else {
+      parts.push(`Te recordamos que tienes clases de *${courseName}* (${group.group_code}).`)
+    }
+    if (group.location) parts.push(`📍 Ubicación: ${group.location}`)
+    if (group.online_link) parts.push(`💻 Link: ${group.online_link}`)
+    parts.push('¡Nos vemos! 🎓')
+    return parts.join('\n')
+  }
+
+  function buildPaymentMsg(studentName: string): string {
+    return [
+      `Hola ${studentName} 👋`,
+      `Te contactamos de *${courseName}* (${group.group_code}).`,
+      `Notamos que tienes un pago pendiente en tu inscripción.`,
+      `Por favor, escríbenos para coordinar tu pago o aclarar cualquier duda.`,
+      `¡Gracias! 🙏`,
+    ].join('\n')
+  }
+
+  function waLink(phone: string | null | undefined, message: string): string | null {
+    if (!phone) return null
+    const digits = phone.replace(/\D/g, '')
+    return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Next class reminders */}
+      <div className="rounded-xl border overflow-hidden">
+        <div className="bg-[#25D366]/10 border-b px-4 py-3 flex items-center gap-2">
+          <MessageCircle className="size-4 text-[#25D366]" />
+          <h3 className="font-semibold text-sm">Recordatorio de clase</h3>
+          {nextSession && (
+            <span className="ml-auto text-xs text-muted-foreground">
+              Sesión #{nextSession.session_number} · {new Date(nextSession.session_date).toLocaleDateString('es-VE', { weekday: 'short', day: 'numeric', month: 'short' })}
+            </span>
+          )}
+        </div>
+        {activeStudents.length === 0 ? (
+          <div className="px-4 py-6 text-center text-sm text-muted-foreground">
+            No hay alumnos activos en este grupo.
+          </div>
+        ) : (
+          <div className="divide-y">
+            {activeStudents.map(e => {
+              const msg = buildClassReminderMsg(e.student_name)
+              const phone = (e as any).student_phone
+              const link = waLink(phone, msg)
+              return (
+                <div key={e.id} className="flex items-center justify-between px-4 py-3">
+                  <div>
+                    <div className="font-medium text-sm">{e.student_name}</div>
+                    {phone && <div className="text-xs text-muted-foreground">{phone}</div>}
+                  </div>
+                  {link ? (
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                      <Button type="button" size="sm"
+                        className="bg-[#25D366] hover:bg-[#25D366]/90 text-white">
+                        <MessageCircle className="mr-2 size-3" />WhatsApp
+                      </Button>
+                    </a>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Sin teléfono</span>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Payment reminders */}
+      <div className="rounded-xl border overflow-hidden">
+        <div className="bg-amber-50 dark:bg-status-warning-bg border-b px-4 py-3 flex items-center gap-2">
+          <MessageCircle className="size-4 text-status-warning-icon" />
+          <h3 className="font-semibold text-sm">Recordatorio de cobro</h3>
+          <span className="ml-auto text-xs text-muted-foreground">
+            Para alumnos con saldo pendiente
+          </span>
+        </div>
+        {activeStudents.length === 0 ? (
+          <div className="px-4 py-6 text-center text-sm text-muted-foreground">
+            No hay alumnos activos.
+          </div>
+        ) : (
+          <div className="divide-y">
+            {enrollments.filter(e => e.status === 'pending_payment').map(e => {
+              const msg = buildPaymentMsg(e.student_name)
+              const phone = (e as any).student_phone
+              const link = waLink(phone, msg)
+              return (
+                <div key={e.id} className="flex items-center justify-between px-4 py-3">
+                  <div>
+                    <div className="font-medium text-sm">{e.student_name}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {e.currency} {Number(e.price_agreed).toLocaleString('es-VE', { minimumFractionDigits: 2 })} pendiente
+                    </div>
+                  </div>
+                  {link ? (
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                      <Button type="button" size="sm" variant="outline"
+                        className="border-status-warning-border text-status-warning-text hover:bg-status-warning-bg">
+                        <MessageCircle className="mr-2 size-3" />WhatsApp
+                      </Button>
+                    </a>
+                  ) : (
+                    <span className="text-xs text-muted-foreground">Sin teléfono</span>
+                  )}
+                </div>
+              )
+            })}
+            {enrollments.filter(e => e.status === 'pending_payment').length === 0 && (
+              <div className="px-4 py-6 text-center text-sm text-muted-foreground">
+                Sin alumnos con pago pendiente. ✅
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
