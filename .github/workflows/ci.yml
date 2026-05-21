@@ -1,0 +1,165 @@
+name: CI
+
+# Follows the same patterns as Open Mercato's CI pipeline:
+# - Concurrency group: cancel in-progress runs on the same branch
+# - Cache: .yarn/cache + node_modules keyed on yarn.lock hash
+# - corepack enable → yarn install --immutable → yarn generate → typecheck
+# - Parallel jobs: typecheck, audit, lint (no Turbo / sharding needed for a single app)
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Cancel any in-progress run on the same ref when a new push arrives.
+# Prevents redundant runs queuing up from rapid pushes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  # ── TypeScript typechecking ─────────────────────────────────────────────────
+  # Primary gate: runs `yarn generate` (module discovery) then `tsc --noEmit`.
+  # Fails the PR before Coolify ever starts building.
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache .yarn/cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      # Cache extracted node_modules — avoids ~90s re-extraction on cache hit.
+      # OM pattern: key on yarn.lock so a lockfile change invalidates both.
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
+      # mercato generate discovers all modules and generates routing/DI glue.
+      # Must run before tsc so generated files exist during type resolution.
+      - name: Generate module glue
+        run: yarn generate
+
+      - name: Typecheck
+        run: yarn typecheck
+
+  # ── Security audit ──────────────────────────────────────────────────────────
+  # Runs in parallel with typecheck — only needs install, not generate.
+  # Cached by yarn.lock hash: if deps haven't changed, prior passing audit is valid.
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache audit result
+        # Key on yarn.lock: unchanged lockfile = unchanged dep graph = prior audit valid.
+        id: audit-cache
+        uses: actions/cache@v4
+        with:
+          path: .audit-passed
+          key: audit-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Cache .yarn/cache
+        if: steps.audit-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        if: steps.audit-cache.outputs.cache-hit != 'true'
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.audit-cache.outputs.cache-hit != 'true' && steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
+      - name: Audit for high/critical CVEs
+        if: steps.audit-cache.outputs.cache-hit != 'true'
+        run: |
+          yarn npm audit --severity high
+          echo "passed" > .audit-passed
+
+  # ── ESLint ──────────────────────────────────────────────────────────────────
+  # Fast static analysis — runs in parallel. Fails fast before heavier jobs.
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache .yarn/cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
+      - name: Lint
+        run: yarn lint
