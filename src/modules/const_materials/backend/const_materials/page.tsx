@@ -94,7 +94,7 @@ export default function ConstMaterialsPage() {
       header: 'Disponible',
       cell: ({ row }) => {
         const avail = Number(row.original.available_quantity)
-        return <span className={`font-mono text-sm font-semibold ${avail < 0 ? 'text-destructive' : avail < 10 ? 'text-amber-600' : ''}`}>
+        return <span className={`font-mono text-sm font-semibold ${avail < 0 ? 'text-destructive' : avail < 10 ? 'text-status-warning-text' : ''}`}>
           {avail.toLocaleString('es-VE', { minimumFractionDigits: 2 })}
         </span>
       },

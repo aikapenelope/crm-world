@@ -59,7 +59,7 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'webhooks', from: '@open-mercato/webhooks' },
   { id: 'customer_accounts', from: '@open-mercato/core' },
   { id: 'portal', from: '@open-mercato/core' },
-  { id: 'example', from: '@app' },
+  // { id: 'example', from: '@app' }, // disabled in production — dev/demo module only
   { id: 'ratelimit_probe', from: '@app' },
 
   // Aika: Regional modules (apply to all tenants)

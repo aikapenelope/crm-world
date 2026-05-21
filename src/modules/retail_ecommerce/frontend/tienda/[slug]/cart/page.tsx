@@ -113,9 +113,9 @@ export default function CartPage() {
                     <span className="font-medium text-sm">
                       USD {(item.quantity * Number(item.unit_price)).toFixed(2)}
                     </span>
-                    <button type="button" onClick={() => removeItem(index)}>
+                    <Button type="button" variant="ghost" size="icon" className="h-7 w-7" onClick={() => removeItem(index)}>
                       <Trash2 className="size-4 text-destructive" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))}
