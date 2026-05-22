@@ -1,3 +1,14 @@
+/**
+ * AGM Exception: raw <form> — inline action panel in detail view
+ *
+ * This detail page renders a small form panel for an in-place action
+ * (status update / payment recording) that appears conditionally within
+ * a read-only detail view. CrudForm is designed for dedicated create/edit
+ * pages, not for toggleable sub-panels within detail views.
+ *
+ * Acceptable to keep raw <form>. All other AGM rules apply.
+ * Migrate to a dedicated action page + CrudForm if the form grows.
+ */
 'use client'
 
 import * as React from 'react'

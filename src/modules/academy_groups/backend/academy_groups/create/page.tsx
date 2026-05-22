@@ -1,3 +1,17 @@
+/**
+ * AGM Exception: raw <form> — multi-select checkbox group
+ *
+ * This form contains a multi-select checkbox group (schedule_days) that
+ * lets users pick multiple values from a fixed set. CrudForm's 'select'
+ * field type only supports single-value selection; a checkbox-group pattern
+ * is not yet a built-in field type.
+ *
+ * Additionally, select options for course_id and instructor_id are loaded
+ * from the API at runtime, requiring component-level async state.
+ *
+ * Acceptable to keep raw <form>. All other AGM rules apply.
+ * Migrate when CrudForm adds 'checkbox-group' as a field type.
+ */
 'use client'
 
 import * as React from 'react'

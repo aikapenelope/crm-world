@@ -1,3 +1,13 @@
+/**
+ * AGM Exception: raw <form> — inline answer panel
+ *
+ * This detail page includes a small inline form for answering RFIs (toggle showAnswerForm).
+ * CrudForm is designed for full-page create/edit flows and doesn't cleanly support
+ * the "toggle-in-detail-view" UX pattern where a form panel appears inline within
+ * an otherwise read-only detail view.
+ *
+ * Migrate to a dedicated action page + CrudForm if the answer form grows beyond 3 fields.
+ */
 'use client'
 
 import * as React from 'react'

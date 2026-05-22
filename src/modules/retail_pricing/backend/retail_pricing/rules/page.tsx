@@ -1,3 +1,16 @@
+/**
+ * AGM Exception: raw <form> — inline quick-add pattern
+ *
+ * This page uses a raw <form> for a small inline creation panel (showForm toggle).
+ * CrudForm is designed for full-page create/edit flows and doesn't cleanly support
+ * the "toggle-and-submit-in-place" UX pattern this page uses.
+ *
+ * The inline form is rendered inside the list page with a show/hide toggle button,
+ * which provides a faster workflow for operators creating simple records.
+ *
+ * Migrate to a dedicated create subpage + CrudForm if the form grows beyond ~3 fields
+ * or requires validation feedback beyond flash messages.
+ */
 'use client'
 
 import * as React from 'react'

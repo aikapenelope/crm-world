@@ -1,3 +1,13 @@
+/**
+ * AGM Exception: raw <form> — inline quick-add panel in list page
+ *
+ * This list page includes a small inline creation form (showForm toggle) for
+ * recording common area reservations. CrudForm is designed for full-page
+ * create/edit flows; the toggle-in-place UX pattern this page uses does not
+ * cleanly map to CrudForm without significant layout restructuring.
+ *
+ * Acceptable to keep raw <form>. All other AGM rules apply.
+ */
 'use client'
 
 import * as React from 'react'

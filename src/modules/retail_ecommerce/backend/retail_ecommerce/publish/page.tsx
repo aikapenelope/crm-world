@@ -1,3 +1,15 @@
+/**
+ * AGM Exception: raw <form> — dynamic line items
+ *
+ * This form contains a dynamic array of line items (added/removed at runtime)
+ * that CrudForm does not currently support (no repeatable field group).
+ * Replacing with CrudForm would require a custom CrudFormGroupComponent
+ * that manages its own state for the items array.
+ *
+ * Acceptable to keep as raw <form> until CrudForm adds native support for
+ * repeatable groups, or until a dedicated line-item component is built.
+ * All other AGM rules apply (Button components, apiCall, etc.).
+ */
 'use client'
 
 import * as React from 'react'
