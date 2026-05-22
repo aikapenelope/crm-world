@@ -1,0 +1,12 @@
+{
+  "isp_portal.nav.home": "Inicio",
+  "isp_portal.nav.invoices": "Mis Facturas",
+  "isp_portal.nav.payments": "Mis Pagos",
+  "isp_portal.nav.tickets": "Soporte",
+  "isp_portal.nav.services": "Mi Servicio",
+  "isp_portal.service_status.active": "Servicio activo ✓",
+  "isp_portal.service_status.suspended_overdue": "Servicio suspendido — mora pendiente",
+  "isp_portal.service_status.suspended_voluntary": "Servicio suspendido temporalmente",
+  "isp_portal.service_status.pending_installation": "Instalación pendiente",
+  "isp_portal.service_status.cancelled": "Servicio cancelado"
+}
