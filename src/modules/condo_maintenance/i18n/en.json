@@ -20,5 +20,13 @@
   "condo_maintenance.status.assigned": "Assigned",
   "condo_maintenance.status.in_progress": "In Progress",
   "condo_maintenance.status.completed": "Completed",
-  "condo_maintenance.flash.request_created": "Request created successfully"
+  "condo_maintenance.flash.request_created": "Request created successfully",
+  "condo_maintenance.notif.request_created.title": "New maintenance request",
+  "condo_maintenance.notif.request_created.body": "A resident has created a maintenance request.",
+  "condo_maintenance.notif.request_assigned.title": "Request assigned",
+  "condo_maintenance.notif.request_assigned.body": "A maintenance request has been assigned to a vendor.",
+  "condo_maintenance.notif.request_completed.title": "Request completed",
+  "condo_maintenance.notif.request_completed.body": "A maintenance request has been completed.",
+  "condo_maintenance.notif.emergency.title": "Maintenance emergency",
+  "condo_maintenance.notif.emergency.body": "An emergency has been reported — immediate attention required."
 }

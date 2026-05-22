@@ -9,5 +9,9 @@
   "const_progress.status.rejected": "Rejected",
   "const_progress.flash.submitted": "Valuation submitted for approval",
   "const_progress.flash.approved": "Valuation approved successfully",
-  "const_progress.flash.created": "Valuation created successfully"
+  "const_progress.flash.created": "Valuation created successfully",
+  "const_progress.notif.valuation_submitted.title": "Valuation submitted",
+  "const_progress.notif.valuation_submitted.body": "A progress valuation has been submitted for review.",
+  "const_progress.notif.valuation_approved.title": "Valuation approved",
+  "const_progress.notif.valuation_approved.body": "A progress valuation has been approved for payment."
 }

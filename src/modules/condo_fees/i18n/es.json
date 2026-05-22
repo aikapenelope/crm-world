@@ -16,5 +16,13 @@
   "condo_fees.receipt.overdue": "Vencido",
   "condo_fees.flash.config_created": "Cuota creada exitosamente",
   "condo_fees.flash.receipts_generated": "Recibos generados exitosamente",
-  "condo_fees.flash.payment_registered": "Pago registrado exitosamente"
+  "condo_fees.flash.payment_registered": "Pago registrado exitosamente",
+  "condo_fees.notif.receipt_overdue.title": "Recibo vencido",
+  "condo_fees.notif.receipt_overdue.body": "Un recibo de condominio pasó a estado vencido.",
+  "condo_fees.notif.receipt_paid.title": "Pago recibido",
+  "condo_fees.notif.receipt_paid.body": "Se registró un pago de condominio.",
+  "condo_fees.notif.receipts_generated.title": "Recibos generados",
+  "condo_fees.notif.receipts_generated.body": "Se generaron los recibos del mes para el edificio.",
+  "condo_fees.notif.payment_reminder.title": "Recordatorio de pago",
+  "condo_fees.notif.payment_reminder.body": "Recordatorio automático — recibo próximo a vencer."
 }

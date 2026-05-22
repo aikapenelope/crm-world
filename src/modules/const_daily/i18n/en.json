@@ -10,5 +10,9 @@
   "const_daily.status.submitted": "Submitted",
   "const_daily.status.approved": "Approved",
   "const_daily.flash.created": "Daily report created successfully",
-  "const_daily.flash.approved": "Report approved successfully"
+  "const_daily.flash.approved": "Report approved successfully",
+  "const_daily.notif.incident_reported.title": "Safety incident reported",
+  "const_daily.notif.incident_reported.body": "A safety incident was reported in the daily site report.",
+  "const_daily.notif.report_approved.title": "Daily report approved",
+  "const_daily.notif.report_approved.body": "The daily site report has been approved."
 }
