@@ -8,5 +8,7 @@
   "dist_routes.visit.order_taken": "Pedido tomado",
   "dist_routes.visit.no_order": "Sin pedido",
   "dist_routes.flash.created": "Ruta creada exitosamente",
-  "dist_routes.flash.visit_registered": "Visita registrada"
+  "dist_routes.flash.visit_registered": "Visita registrada",
+  "dist_routes.notif.route_completed.title": "Ruta completada",
+  "dist_routes.notif.route_completed.body": "Un repartidor completó su ruta del día."
 }

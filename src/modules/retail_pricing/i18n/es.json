@@ -19,5 +19,7 @@
   "retail_pricing.alert.exchange_rate_drift": "Desfase por Tasa",
   "retail_pricing.flash.rule_created": "Regla de margen creada",
   "retail_pricing.flash.bulk_updated": "Precios actualizados masivamente",
-  "retail_pricing.flash.alert_acknowledged": "Alerta reconocida"
+  "retail_pricing.flash.alert_acknowledged": "Alerta reconocida",
+  "retail_pricing.notif.margin_violation.title": "Margen mínimo incumplido",
+  "retail_pricing.notif.margin_violation.body": "Un producto tiene precio por debajo del margen mínimo configurado."
 }

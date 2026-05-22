@@ -10,5 +10,7 @@
   "school_comms.type.emergency": "Emergency",
   "school_comms.audience.all": "All",
   "school_comms.audience.grade_specific": "By Grade",
-  "school_comms.audience.section_specific": "By Section"
+  "school_comms.audience.section_specific": "By Section",
+  "school_comms.notif.announcement_published.title": "Announcement published",
+  "school_comms.notif.announcement_published.body": "A new announcement has been published for parents."
 }

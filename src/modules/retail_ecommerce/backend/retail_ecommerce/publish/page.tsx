@@ -84,14 +84,14 @@ export default function PublishPage() {
                 { id: 'tiktok', label: 'TikTok' },
                 { id: 'facebook', label: 'Facebook' },
               ].map(({ id, label }) => (
-                <button
+                <Button type="button" variant="ghost"
                   key={id}
                   type="button"
                   onClick={() => setPlatform(id)}
                   className={`px-3 py-1.5 rounded-md text-sm border ${platform === id ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'}`}
                 >
                   {label}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

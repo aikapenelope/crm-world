@@ -7,5 +7,7 @@
   "dist_commissions.status.approved": "Aprobada",
   "dist_commissions.status.paid": "Pagada",
   "dist_commissions.flash.created": "Comisión registrada",
-  "dist_commissions.flash.approved": "Comisión aprobada"
+  "dist_commissions.flash.approved": "Comisión aprobada",
+  "dist_commissions.notif.commission_approved.title": "Comisión aprobada",
+  "dist_commissions.notif.commission_approved.body": "Una comisión de vendedor fue aprobada para pago."
 }

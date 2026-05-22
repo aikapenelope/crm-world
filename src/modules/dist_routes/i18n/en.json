@@ -8,5 +8,7 @@
   "dist_routes.visit.order_taken": "Order Taken",
   "dist_routes.visit.no_order": "No Order",
   "dist_routes.flash.created": "Route created successfully",
-  "dist_routes.flash.visit_registered": "Visit registered"
+  "dist_routes.flash.visit_registered": "Visit registered",
+  "dist_routes.notif.route_completed.title": "Route completed",
+  "dist_routes.notif.route_completed.body": "A delivery driver has completed their daily route."
 }

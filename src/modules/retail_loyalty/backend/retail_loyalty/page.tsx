@@ -98,30 +98,30 @@ export default function RetailLoyaltyPage() {
 
         {/* Quick Links */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button
+          <Button
             type="button"
             onClick={() => router.push('/backend/retail_loyalty/members')}
             className="rounded-lg border p-4 text-left hover:bg-muted/50 transition-colors"
           >
             <h3 className="font-semibold mb-1">Miembros</h3>
             <p className="text-sm text-muted-foreground">Ver clientes, puntos y niveles</p>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => router.push('/backend/retail_loyalty/campaigns')}
             className="rounded-lg border p-4 text-left hover:bg-muted/50 transition-colors"
           >
             <h3 className="font-semibold mb-1">Campañas</h3>
             <p className="text-sm text-muted-foreground">Crear y gestionar campañas de marketing</p>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => router.push('/backend/retail_loyalty/programs')}
             className="rounded-lg border p-4 text-left hover:bg-muted/50 transition-colors"
           >
             <h3 className="font-semibold mb-1">Configuración</h3>
             <p className="text-sm text-muted-foreground">Programa, niveles y reglas de puntos</p>
-          </button>
+          </Button>
         </div>
       </PageBody>
     </Page>

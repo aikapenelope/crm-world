@@ -26,5 +26,9 @@
   "retail_ecommerce.flash.order_confirmed": "Pedido confirmado",
   "retail_ecommerce.flash.order_delivered": "Pedido entregado",
   "retail_ecommerce.flash.payment_confirmed": "Pago confirmado",
-  "retail_ecommerce.flash.published": "Publicación creada"
+  "retail_ecommerce.flash.published": "Publicación creada",
+  "retail_ecommerce.notif.order_placed.title": "Nuevo pedido en tienda online",
+  "retail_ecommerce.notif.order_placed.body": "Se recibió un nuevo pedido en la tienda en línea.",
+  "retail_ecommerce.notif.catalog_published.title": "Catálogo publicado",
+  "retail_ecommerce.notif.catalog_published.body": "El catálogo de productos fue publicado en la tienda online."
 }

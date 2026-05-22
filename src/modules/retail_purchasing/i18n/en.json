@@ -24,5 +24,9 @@
   "retail_purchasing.flash.order_created": "Purchase order created",
   "retail_purchasing.flash.order_received": "Goods received",
   "retail_purchasing.flash.payment_registered": "Payment registered",
-  "retail_purchasing.flash.supplier_created": "Supplier created"
+  "retail_purchasing.flash.supplier_created": "Supplier created",
+  "retail_purchasing.notif.order_received.title": "Purchase order received",
+  "retail_purchasing.notif.order_received.body": "Merchandise from a supplier has been received.",
+  "retail_purchasing.notif.order_overdue.title": "Purchase order overdue",
+  "retail_purchasing.notif.order_overdue.body": "A purchase order has passed its expected delivery date."
 }

@@ -10,5 +10,7 @@
   "auto_vehicles.transmission.automatic": "Automático",
   "auto_vehicles.flash.created": "Vehículo registrado exitosamente",
   "auto_vehicles.flash.updated": "Vehículo actualizado",
-  "auto_vehicles.flash.photo_uploaded": "Foto subida exitosamente"
+  "auto_vehicles.flash.photo_uploaded": "Foto subida exitosamente",
+  "auto_vehicles.notif.maintenance_due.title": "Mantenimiento pendiente",
+  "auto_vehicles.notif.maintenance_due.body": "Un vehículo necesita servicio por tiempo o kilometraje."
 }

@@ -10,5 +10,7 @@
   "auto_vehicles.transmission.automatic": "Automatic",
   "auto_vehicles.flash.created": "Vehicle registered successfully",
   "auto_vehicles.flash.updated": "Vehicle updated",
-  "auto_vehicles.flash.photo_uploaded": "Photo uploaded successfully"
+  "auto_vehicles.flash.photo_uploaded": "Photo uploaded successfully",
+  "auto_vehicles.notif.maintenance_due.title": "Maintenance due",
+  "auto_vehicles.notif.maintenance_due.body": "A vehicle is due for service based on time or mileage."
 }

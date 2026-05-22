@@ -10,5 +10,7 @@
   "school_docs.type.carta_recomendacion": "Carta de recomendación",
   "school_docs.status.pending": "Pendiente",
   "school_docs.status.generated": "Generada",
-  "school_docs.status.delivered": "Entregada"
+  "school_docs.status.delivered": "Entregada",
+  "school_docs.notif.document_generated.title": "Constancia generada",
+  "school_docs.notif.document_generated.body": "Se generó una constancia escolar."
 }

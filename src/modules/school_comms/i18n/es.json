@@ -10,5 +10,7 @@
   "school_comms.type.emergency": "Emergencia",
   "school_comms.audience.all": "Todos",
   "school_comms.audience.grade_specific": "Por grado",
-  "school_comms.audience.section_specific": "Por sección"
+  "school_comms.audience.section_specific": "Por sección",
+  "school_comms.notif.announcement_published.title": "Comunicado publicado",
+  "school_comms.notif.announcement_published.body": "Se publicó un nuevo comunicado para representantes."
 }

@@ -81,12 +81,12 @@ export default function StudentsListPage() {
       accessorKey: 'last_name',
       header: 'Apellido',
       cell: ({ row }) => (
-        <button
+        <Button type="button" variant="ghost"
           className="font-medium text-primary hover:underline"
           onClick={() => router.push(`/backend/students/${row.original.id}`)}
         >
           {row.original.last_name}
-        </button>
+        </Button>
       ),
     },
     {

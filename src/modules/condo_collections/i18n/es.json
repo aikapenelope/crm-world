@@ -13,5 +13,9 @@
   "condo_collections.action.letter": "Carta",
   "condo_collections.action.legal_notice": "Notificación Legal",
   "condo_collections.flash.action_logged": "Gestión registrada exitosamente",
-  "condo_collections.flash.agreement_created": "Acuerdo de pago creado"
+  "condo_collections.flash.agreement_created": "Acuerdo de pago creado",
+  "condo_collections.notif.debtor_detected.title": "Moroso detectado",
+  "condo_collections.notif.debtor_detected.body": "Un propietario acumula deuda superior al umbral configurado.",
+  "condo_collections.notif.agreement_defaulted.title": "Acuerdo de pago incumplido",
+  "condo_collections.notif.agreement_defaulted.body": "Un propietario no cumplió con su acuerdo de pago."
 }

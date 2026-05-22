@@ -133,7 +133,7 @@ export default function VehicleDetailPage() {
         {/* Tabs */}
         <div className="mb-6 flex gap-1 border-b">
           {(['info', 'photos', 'history'] as const).map((tab) => (
-            <button
+            <Button type="button" variant="ghost"
               key={tab}
               type="button"
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
@@ -142,7 +142,7 @@ export default function VehicleDetailPage() {
               onClick={() => setActiveTab(tab)}
             >
               {tab === 'info' ? 'Información' : tab === 'photos' ? `Fotos (${photos.length})` : 'Historial'}
-            </button>
+            </Button>
           ))}
         </div>
 

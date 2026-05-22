@@ -116,30 +116,30 @@ export default function RetailInventoryPage() {
 
         {/* Quick Links */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button
+          <Button
             type="button"
             onClick={() => router.push('/backend/retail_inventory/counts')}
             className="rounded-lg border p-4 text-left hover:bg-muted/50 transition-colors"
           >
             <h3 className="font-semibold mb-1">Conteos Cíclicos</h3>
             <p className="text-sm text-muted-foreground">Planificar y ejecutar conteos de inventario</p>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => router.push('/backend/retail_inventory/rotation')}
             className="rounded-lg border p-4 text-left hover:bg-muted/50 transition-colors"
           >
             <h3 className="font-semibold mb-1">Rotación</h3>
             <p className="text-sm text-muted-foreground">Análisis de rotación por producto y sucursal</p>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => router.push('/backend/retail_inventory/dead-stock')}
             className="rounded-lg border p-4 text-left hover:bg-muted/50 transition-colors"
           >
             <h3 className="font-semibold mb-1">Dead Stock</h3>
             <p className="text-sm text-muted-foreground">Productos sin movimiento que ocupan espacio</p>
-          </button>
+          </Button>
         </div>
       </PageBody>
     </Page>

@@ -8,5 +8,9 @@
   "dist_credit.status.blocked": "Bloqueado",
   "dist_credit.flash.created": "Crédito asignado exitosamente",
   "dist_credit.flash.updated": "Crédito actualizado",
-  "dist_credit.flash.transaction_created": "Transacción registrada"
+  "dist_credit.flash.transaction_created": "Transacción registrada",
+  "dist_credit.notif.account_overdue.title": "Cuenta vencida",
+  "dist_credit.notif.account_overdue.body": "Un cliente de distribución tiene saldo vencido.",
+  "dist_credit.notif.account_blocked.title": "Cliente bloqueado por crédito",
+  "dist_credit.notif.account_blocked.body": "Un cliente fue bloqueado automáticamente por mora en su crédito."
 }

@@ -27,5 +27,9 @@
   "retail_returns.refund.cash": "Efectivo",
   "retail_returns.flash.created": "Devolución registrada",
   "retail_returns.flash.approved": "Devolución aprobada",
-  "retail_returns.flash.completed": "Devolución completada"
+  "retail_returns.flash.completed": "Devolución completada",
+  "retail_returns.notif.return_approved.title": "Devolución aprobada",
+  "retail_returns.notif.return_approved.body": "Una devolución de cliente fue aprobada.",
+  "retail_returns.notif.return_rejected.title": "Devolución rechazada",
+  "retail_returns.notif.return_rejected.body": "Una devolución no cumplió la política de devoluciones."
 }

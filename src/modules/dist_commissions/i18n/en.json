@@ -7,5 +7,7 @@
   "dist_commissions.status.approved": "Approved",
   "dist_commissions.status.paid": "Paid",
   "dist_commissions.flash.created": "Commission registered",
-  "dist_commissions.flash.approved": "Commission approved"
+  "dist_commissions.flash.approved": "Commission approved",
+  "dist_commissions.notif.commission_approved.title": "Commission approved",
+  "dist_commissions.notif.commission_approved.body": "A sales representative commission has been approved for payment."
 }

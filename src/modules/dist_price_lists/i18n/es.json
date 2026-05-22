@@ -6,5 +6,7 @@
   "dist_price_lists.type.volume": "Por Volumen",
   "dist_price_lists.flash.created": "Lista de precios creada exitosamente",
   "dist_price_lists.flash.updated": "Lista de precios actualizada",
-  "dist_price_lists.flash.item_added": "Precio agregado a la lista"
+  "dist_price_lists.flash.item_added": "Precio agregado a la lista",
+  "dist_price_lists.notif.list_updated.title": "Lista de precios actualizada",
+  "dist_price_lists.notif.list_updated.body": "Se actualizó una lista de precios activa."
 }

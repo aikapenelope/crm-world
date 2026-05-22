@@ -35,5 +35,9 @@
     "complete": "Completar cierre",
     "cancel": "Cancelar transacción",
     "calculate_commission": "Calcular comisión"
-  }
+  },
+  "transactions.notif.completed.title": "Transacción inmobiliaria completada",
+  "transactions.notif.completed.body": "Se completó una transacción de compraventa.",
+  "transactions.notif.cancelled.title": "Transacción cancelada",
+  "transactions.notif.cancelled.body": "Una transacción inmobiliaria fue cancelada."
 }
