@@ -7,7 +7,10 @@ import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
 
-export default function IspPortalNuevoTicket() {
+type Props = { params: { orgSlug: string } }
+
+export default function IspPortalNuevoTicket({ params }: Props) {
+  const { orgSlug } = params
   const router = useRouter()
   const [type, setType] = React.useState('fault')
   const [subject, setSubject] = React.useState('')
@@ -24,7 +27,7 @@ export default function IspPortalNuevoTicket() {
         body: JSON.stringify({ type, subject, description: description || null }),
       })
       flash('Ticket creado. Te responderemos a la brevedad.', 'success')
-      router.push('/abonado/soporte')
+      router.push(`/${orgSlug}/portal/soporte`)
     } catch {
       flash('Error al crear el ticket. Inténtalo de nuevo.', 'error')
     } finally {
@@ -35,7 +38,7 @@ export default function IspPortalNuevoTicket() {
   return (
     <div className="mx-auto max-w-xl p-6">
       <div className="flex items-center gap-3 mb-6">
-        <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/abonado/soporte')}>
+        <Button type="button" variant="ghost" size="sm" onClick={() => router.push(`/${orgSlug}/portal/soporte`)}>
           <ArrowLeft className="size-4 mr-1" />
         </Button>
         <h1 className="text-2xl font-bold">Reportar un problema</h1>
@@ -46,9 +49,7 @@ export default function IspPortalNuevoTicket() {
           <label className="block text-sm font-medium mb-1">¿Qué tipo de solicitud es?</label>
           <select
             className="w-full border border-input rounded-md px-3 py-2 bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
+            value={type} onChange={(e) => setType(e.target.value)}>
             <option value="fault">No tengo servicio / Velocidad lenta</option>
             <option value="inquiry">Consulta técnica</option>
             <option value="plan_change">Quiero cambiar mi plan</option>
@@ -60,13 +61,10 @@ export default function IspPortalNuevoTicket() {
         <div>
           <label className="block text-sm font-medium mb-1">Describe brevemente el problema *</label>
           <input
-            type="text"
-            required
+            type="text" required
             className="w-full border border-input rounded-md px-3 py-2 bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             placeholder="Ej: Sin internet desde las 8am de hoy"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            maxLength={255}
+            value={subject} onChange={(e) => setSubject(e.target.value)} maxLength={255}
           />
         </div>
 
@@ -75,14 +73,12 @@ export default function IspPortalNuevoTicket() {
           <textarea
             className="w-full border border-input rounded-md px-3 py-2 bg-background text-sm min-h-[120px] resize-none focus:outline-none focus:ring-2 focus:ring-ring"
             placeholder="Describe qué ocurre, desde cuándo, qué has intentado..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            maxLength={2000}
+            value={description} onChange={(e) => setDescription(e.target.value)} maxLength={2000}
           />
         </div>
 
         <div className="flex gap-3 pt-2">
-          <Button type="button" variant="outline" onClick={() => router.push('/abonado/soporte')}>
+          <Button type="button" variant="outline" onClick={() => router.push(`/${orgSlug}/portal/soporte`)}>
             Cancelar
           </Button>
           <Button type="submit" disabled={!subject.trim() || submitting}>

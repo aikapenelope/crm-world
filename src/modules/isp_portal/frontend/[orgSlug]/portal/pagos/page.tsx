@@ -6,24 +6,26 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
 
+type Props = { params: { orgSlug: string } }
+
 type Payment = {
   id: string
   payment_date: string
   amount_usd: string
-  currency: string
   payment_method: string
   reference_number: string | null
   igtf_applies: boolean
   igtf_amount_usd: string
-  confirmed_at: string | null
 }
 
 const METHOD_LABELS: Record<string, string> = {
   zelle: 'Zelle', pago_movil: 'Pago Móvil', efectivo_usd: 'Efectivo USD',
-  efectivo_ves: 'Efectivo VES', transferencia: 'Transferencia', binance: 'Binance/USDT', otro: 'Otro',
+  efectivo_ves: 'Efectivo VES', transferencia: 'Transferencia',
+  binance: 'Binance/USDT', otro: 'Otro',
 }
 
-export default function IspPortalPagos() {
+export default function IspPortalPagos({ params }: Props) {
+  const { orgSlug } = params
   const router = useRouter()
   const [payments, setPayments] = React.useState<Payment[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
@@ -48,7 +50,7 @@ export default function IspPortalPagos() {
   return (
     <div className="mx-auto max-w-xl p-6">
       <div className="flex items-center gap-3 mb-6">
-        <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/abonado/home')}>
+        <Button type="button" variant="ghost" size="sm" onClick={() => router.push(`/${orgSlug}/portal/home`)}>
           <ArrowLeft className="size-4 mr-1" />
         </Button>
         <h1 className="text-2xl font-bold">Mis Pagos</h1>

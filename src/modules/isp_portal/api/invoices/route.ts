@@ -11,7 +11,7 @@ export async function GET(request: Request, ctx: any) {
   const scope = ctx.scope
   const kysely = (em as any).getKysely()
 
-  const customerEntityId = ctx.customerContext?.entityId ?? null
+  const customerEntityId = ctx.customerContext?.customerEntityId ?? null
   if (!customerEntityId) return Response.json({ error: 'No customer session' }, { status: 401 })
 
   // Obtener el subscriber_id del abonado autenticado

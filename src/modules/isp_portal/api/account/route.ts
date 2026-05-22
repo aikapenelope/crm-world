@@ -2,7 +2,15 @@
  * GET /api/isp-portal/account
  *
  * Estado de cuenta del abonado autenticado.
- * El abonado se identifica vía customer_entity_id linkado a su customer_account.
+ *
+ * Resolución de identidad:
+ *   ctx.customerContext.customerEntityId  → FK al CRM del tenant
+ *   (claim del JWT firmado por customerSessionService)
+ *   Source: packages/core/src/modules/customer_accounts/services/customerSessionService.ts
+ *
+ * El operador vincula el abonado al CustomerUser en customer_accounts/admin/users
+ * seteando customerEntityId. Al activarse la sesión del portal, el JWT ya lleva
+ * ese campo y permite localizar el abonado directamente.
  */
 export const metadata = {
   GET: { requireCustomerAuth: true, requireCustomerFeatures: ['isp_portal.view_account'] },
@@ -14,7 +22,7 @@ export async function GET(request: Request, ctx: any) {
   const kysely = (em as any).getKysely()
 
   // El customer context tiene el entity_id del cliente autenticado
-  const customerEntityId = ctx.customerContext?.entityId ?? null
+  const customerEntityId = ctx.customerContext?.customerEntityId ?? null
 
   if (!customerEntityId) {
     return Response.json({ error: 'No customer session' }, { status: 401 })

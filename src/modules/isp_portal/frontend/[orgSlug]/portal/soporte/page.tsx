@@ -7,6 +7,8 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { Plus, ArrowLeft } from 'lucide-react'
 
+type Props = { params: { orgSlug: string } }
+
 type Ticket = {
   id: string
   ticket_number: string
@@ -27,11 +29,12 @@ const STATUS_LABEL: Record<string, string> = {
   pending_client: 'En espera', resolved: 'Resuelto', closed: 'Cerrado',
 }
 const TYPE_LABELS: Record<string, string> = {
-  fault: 'Avería / Sin servicio', inquiry: 'Consulta', plan_change: 'Cambio de plan',
-  complaint: 'Queja', other: 'Otro',
+  fault: 'Avería / Sin servicio', inquiry: 'Consulta',
+  plan_change: 'Cambio de plan', complaint: 'Queja', other: 'Otro',
 }
 
-export default function IspPortalSoporte() {
+export default function IspPortalSoporte({ params }: Props) {
+  const { orgSlug } = params
   const router = useRouter()
   const [tickets, setTickets] = React.useState<Ticket[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
@@ -52,12 +55,12 @@ export default function IspPortalSoporte() {
     <div className="mx-auto max-w-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/abonado/home')}>
+          <Button type="button" variant="ghost" size="sm" onClick={() => router.push(`/${orgSlug}/portal/home`)}>
             <ArrowLeft className="size-4 mr-1" />
           </Button>
           <h1 className="text-2xl font-bold">Soporte Técnico</h1>
         </div>
-        <Button type="button" onClick={() => router.push('/abonado/soporte/nuevo')}>
+        <Button type="button" onClick={() => router.push(`/${orgSlug}/portal/soporte/nuevo`)}>
           <Plus className="size-4 mr-2" /> Nuevo ticket
         </Button>
       </div>
@@ -65,7 +68,7 @@ export default function IspPortalSoporte() {
       {tickets.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground mb-4">No tienes tickets de soporte.</p>
-          <Button type="button" variant="outline" onClick={() => router.push('/abonado/soporte/nuevo')}>
+          <Button type="button" variant="outline" onClick={() => router.push(`/${orgSlug}/portal/soporte/nuevo`)}>
             Reportar un problema
           </Button>
         </div>

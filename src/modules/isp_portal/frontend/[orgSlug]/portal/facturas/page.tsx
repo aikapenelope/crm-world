@@ -8,17 +8,17 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { ArrowLeft } from 'lucide-react'
 
+type Props = { params: { orgSlug: string } }
+
 type Invoice = {
   id: string
   invoice_number: string
   period_month: string
-  issue_date: string
   due_date: string
   status: string
   total_usd: string
   paid_amount_usd: string
   balance_usd: string
-  paid_at: string | null
 }
 
 const STATUS_VARIANT: Record<string, 'success' | 'warning' | 'error' | 'info' | 'neutral'> = {
@@ -28,12 +28,12 @@ const STATUS_LABEL: Record<string, string> = {
   paid: 'Pagada', partial: 'Parcial', pending: 'Pendiente', overdue: 'Vencida', cancelled: 'Cancelada',
 }
 
-export default function IspPortalFacturas() {
+export default function IspPortalFacturas({ params }: Props) {
+  const { orgSlug } = params
   const router = useRouter()
   const [invoices, setInvoices] = React.useState<Invoice[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [reportingId, setReportingId] = React.useState<string | null>(null)
-  const [reportNotes, setReportNotes] = React.useState('')
   const [payMethod, setPayMethod] = React.useState('zelle')
   const [payRef, setPayRef] = React.useState('')
   const [payAmount, setPayAmount] = React.useState('')
@@ -62,14 +62,12 @@ export default function IspPortalFacturas() {
           reference_number: payRef || null,
           payment_date: payDate,
           amount_usd: payAmount,
-          notes: reportNotes || null,
         }),
       })
       flash('Pago reportado. El equipo lo verificará pronto.', 'success')
       setReportingId(null)
       setPayRef('')
       setPayAmount('')
-      setReportNotes('')
     } catch { flash('Error al reportar el pago', 'error') }
     finally { setSubmitting(false) }
   }
@@ -79,7 +77,7 @@ export default function IspPortalFacturas() {
   return (
     <div className="mx-auto max-w-2xl p-6">
       <div className="flex items-center gap-3 mb-6">
-        <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/abonado/home')}>
+        <Button type="button" variant="ghost" size="sm" onClick={() => router.push(`/${orgSlug}/portal/home`)}>
           <ArrowLeft className="size-4 mr-1" />
         </Button>
         <h1 className="text-2xl font-bold">Mis Facturas</h1>
@@ -114,13 +112,12 @@ export default function IspPortalFacturas() {
                 )}
               </div>
 
-              {/* Payment report form */}
               {reportingId === inv.id && (
                 <div className="mt-4 pt-4 border-t border-border space-y-3">
                   <p className="text-sm font-semibold">Reportar pago para esta factura</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs text-muted-foreground">Método de pago</label>
+                      <label className="text-xs text-muted-foreground">Método</label>
                       <select className="w-full mt-1 text-sm border border-input rounded-md px-2 py-1.5 bg-background"
                         value={payMethod} onChange={(e) => setPayMethod(e.target.value)}>
                         <option value="zelle">Zelle</option>
@@ -142,7 +139,7 @@ export default function IspPortalFacturas() {
                         value={payDate} onChange={(e) => setPayDate(e.target.value)} />
                     </div>
                     <div>
-                      <label className="text-xs text-muted-foreground">Referencia / confirmación</label>
+                      <label className="text-xs text-muted-foreground">Referencia (opcional)</label>
                       <input type="text" className="w-full mt-1 text-sm border border-input rounded-md px-2 py-1.5 bg-background"
                         value={payRef} onChange={(e) => setPayRef(e.target.value)} placeholder="Opcional" />
                     </div>

@@ -7,6 +7,8 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { ArrowLeft, Wifi, MapPin, Calendar } from 'lucide-react'
 
+type Props = { params: { orgSlug: string } }
+
 type AccountData = {
   subscriber: {
     account_number: string
@@ -17,7 +19,7 @@ type AccountData = {
     billing_cycle_day: number
     activation_date: string | null
   }
-  plan: { name: string; download_mbps: number; upload_mbps: number; technology: string; monthly_price_usd: string } | null
+  plan: { name: string; download_mbps: number; upload_mbps: number; technology: string } | null
 }
 
 const STATUS_VARIANT: Record<string, 'success' | 'error' | 'warning' | 'info' | 'neutral'> = {
@@ -36,7 +38,8 @@ const TECH_LABELS: Record<string, string> = {
   fiber: 'Fibra óptica', wireless: 'Inalámbrico', cable: 'Cable coaxial', dedicated: 'Dedicado',
 }
 
-export default function IspPortalServicio() {
+export default function IspPortalServicio({ params }: Props) {
+  const { orgSlug } = params
   const router = useRouter()
   const [data, setData] = React.useState<AccountData | null>(null)
   const [isLoading, setIsLoading] = React.useState(true)
@@ -59,13 +62,12 @@ export default function IspPortalServicio() {
   return (
     <div className="mx-auto max-w-xl p-6">
       <div className="flex items-center gap-3 mb-6">
-        <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/abonado/home')}>
+        <Button type="button" variant="ghost" size="sm" onClick={() => router.push(`/${orgSlug}/portal/home`)}>
           <ArrowLeft className="size-4 mr-1" />
         </Button>
         <h1 className="text-2xl font-bold">Mi Servicio</h1>
       </div>
 
-      {/* Service status */}
       <div className="rounded-xl border border-border p-5 mb-4">
         <div className="flex items-center justify-between mb-4">
           <p className="font-semibold">Estado del servicio</p>
@@ -79,7 +81,7 @@ export default function IspPortalServicio() {
             <span className="font-mono font-semibold">{subscriber.account_number}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Tipo de abonado</span>
+            <span className="text-muted-foreground">Tipo</span>
             <span>{TYPE_LABELS[subscriber.subscriber_type] ?? subscriber.subscriber_type}</span>
           </div>
           <div className="flex justify-between">
@@ -95,7 +97,6 @@ export default function IspPortalServicio() {
         </div>
       </div>
 
-      {/* Plan info */}
       {plan && (
         <div className="rounded-xl border border-border p-5 mb-4">
           <div className="flex items-center gap-3 mb-4">
@@ -122,17 +123,16 @@ export default function IspPortalServicio() {
             <span className="font-bold">USD {subscriber.monthly_price_usd}/mes</span>
           </div>
           <p className="text-xs text-center text-muted-foreground mt-2">
-            Fecha de corte: día {subscriber.billing_cycle_day} de cada mes
+            Vencimiento: día {subscriber.billing_cycle_day} de cada mes
           </p>
         </div>
       )}
 
-      {/* Suspended alert */}
       {subscriber.service_status === 'suspended_overdue' && (
         <div className="rounded-lg border border-status-error-border bg-status-error-bg p-4 text-center">
           <p className="text-sm font-semibold text-status-error-text mb-2">Servicio suspendido por mora</p>
-          <p className="text-xs text-status-error-text mb-3">Tienes facturas pendientes. Reporta tu pago para reactivar el servicio.</p>
-          <Button type="button" variant="destructive" size="sm" onClick={() => router.push('/abonado/facturas')}>
+          <p className="text-xs text-status-error-text mb-3">Tienes facturas pendientes. Reporta tu pago para reactivar.</p>
+          <Button type="button" variant="destructive" size="sm" onClick={() => router.push(`/${orgSlug}/portal/facturas`)}>
             Ver facturas y reportar pago
           </Button>
         </div>
