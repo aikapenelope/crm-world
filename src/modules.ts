@@ -162,6 +162,7 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'isp_support', from: '@app' },     // Tickets de soporte + averías masivas
   { id: 'isp_technicians', from: '@app' }, // Técnicos de campo + órdenes de trabajo
   { id: 'isp_sales', from: '@app' },       // Pipeline comercial + cobertura + comisiones
+  { id: 'isp_portal', from: '@app' },      // Portal de autogestión del abonado
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

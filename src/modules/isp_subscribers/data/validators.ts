@@ -9,7 +9,7 @@ const CONTRACT_TYPES = ['monthly', 'annual', 'special'] as const
 
 export const createSubscriberSchema = z.object({
   customer_entity_id: z.string().uuid().nullable().optional(),
-  account_number: z.string().min(1).max(20),
+  account_number: z.string().min(1).max(20).optional(), // auto-generado por interceptor si no se envía
   subscriber_type: z.enum(SUBSCRIBER_TYPES).default('residential'),
   plan_id: z.string().uuid().nullable().optional(),
   node_id: z.string().uuid().nullable().optional(),
