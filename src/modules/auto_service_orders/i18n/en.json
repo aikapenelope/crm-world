@@ -16,5 +16,15 @@
   "auto_service_orders.priority.high": "High",
   "auto_service_orders.priority.urgent": "Urgent",
   "auto_service_orders.flash.created": "Service order created",
-  "auto_service_orders.flash.status_changed": "Status updated"
+  "auto_service_orders.flash.status_changed": "Status updated",
+  "auto_service_orders.notif.vehicle_ready.title": "Vehicle ready for pickup",
+  "auto_service_orders.notif.vehicle_ready.body": "The service order is complete — the customer can pick up their vehicle.",
+  "auto_service_orders.notif.estimate_sent.title": "Estimate sent",
+  "auto_service_orders.notif.estimate_sent.body": "An estimate has been generated and sent to the customer.",
+  "auto_service_orders.notif.inspection_complete.title": "Inspection complete",
+  "auto_service_orders.notif.inspection_complete.body": "The technician has completed the digital vehicle inspection.",
+  "auto_service_orders.notif.status_changed.title": "Order status updated",
+  "auto_service_orders.notif.status_changed.body": "The service order has changed status.",
+  "auto_service_orders.notif.maintenance_due.title": "Maintenance due",
+  "auto_service_orders.notif.maintenance_due.body": "A vehicle is due for service based on time or mileage."
 }

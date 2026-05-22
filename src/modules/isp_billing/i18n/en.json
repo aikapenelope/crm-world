@@ -16,5 +16,15 @@
   "isp_billing.methods.binance": "Binance / USDT",
   "isp_billing.methods.otro": "Other",
   "isp_billing.payment_registered": "Payment registered",
-  "isp_billing.invoice_generated": "Invoices generated"
+  "isp_billing.invoice_generated": "Invoices generated",
+  "isp_billing.notif.invoice_generated.title": "Invoices generated",
+  "isp_billing.notif.invoice_generated.body": "Monthly invoices have been generated for subscribers.",
+  "isp_billing.notif.payment_received.title": "Payment received",
+  "isp_billing.notif.payment_received.body": "A subscriber payment has been recorded.",
+  "isp_billing.notif.invoice_overdue.title": "Invoice overdue — pre-cutoff",
+  "isp_billing.notif.invoice_overdue.body": "A subscriber is approaching service cutoff due to overdue balance.",
+  "isp_billing.notif.service_cut.title": "Service suspended — overdue",
+  "isp_billing.notif.service_cut.body": "A subscriber was automatically suspended for non-payment.",
+  "isp_billing.notif.service_reconnected.title": "Service reconnected",
+  "isp_billing.notif.service_reconnected.body": "The subscriber paid and their service has been reactivated."
 }

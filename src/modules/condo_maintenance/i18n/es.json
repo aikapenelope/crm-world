@@ -20,5 +20,13 @@
   "condo_maintenance.status.assigned": "Asignada",
   "condo_maintenance.status.in_progress": "En Progreso",
   "condo_maintenance.status.completed": "Completada",
-  "condo_maintenance.flash.request_created": "Solicitud creada exitosamente"
+  "condo_maintenance.flash.request_created": "Solicitud creada exitosamente",
+  "condo_maintenance.notif.request_created.title": "Nueva solicitud de mantenimiento",
+  "condo_maintenance.notif.request_created.body": "Un propietario creó una solicitud de mantenimiento.",
+  "condo_maintenance.notif.request_assigned.title": "Solicitud asignada",
+  "condo_maintenance.notif.request_assigned.body": "Una solicitud fue asignada a un proveedor.",
+  "condo_maintenance.notif.request_completed.title": "Solicitud completada",
+  "condo_maintenance.notif.request_completed.body": "Una solicitud de mantenimiento fue completada.",
+  "condo_maintenance.notif.emergency.title": "Emergencia de mantenimiento",
+  "condo_maintenance.notif.emergency.body": "Se reportó una emergencia — requiere atención inmediata."
 }

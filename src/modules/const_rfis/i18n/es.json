@@ -12,5 +12,11 @@
   "const_rfis.submittal.approved": "Aprobado",
   "const_rfis.submittal.rejected": "Rechazado",
   "const_rfis.flash.rfi_created": "RFI creado exitosamente",
-  "const_rfis.flash.rfi_answered": "RFI respondido exitosamente"
+  "const_rfis.flash.rfi_answered": "RFI respondido exitosamente",
+  "const_rfis.notif.rfi_overdue.title": "RFI vencido",
+  "const_rfis.notif.rfi_overdue.body": "Un RFI no recibió respuesta antes de su fecha límite.",
+  "const_rfis.notif.rfi_answered.title": "RFI respondido",
+  "const_rfis.notif.rfi_answered.body": "Un RFI recibió respuesta del proyectista.",
+  "const_rfis.notif.submittal_approved.title": "Submittal aprobado",
+  "const_rfis.notif.submittal_approved.body": "Un submittal fue aprobado por el proyectista."
 }

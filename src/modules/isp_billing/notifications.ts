@@ -1,39 +1,63 @@
-import type { NotificationTypeDefinition } from '@open-mercato/shared/modules/notifications'
+/**
+ * isp_billing — Notification type definitions
+ *
+ * Schema: NotificationTypeDefinition from @open-mercato/shared/modules/notifications/types
+ * Fuente oficial: packages/shared/src/modules/notifications/types.ts §58
+ * Campos requeridos: type, module, titleKey, icon, severity, actions
+ */
+import type { NotificationTypeDefinition } from '@open-mercato/shared/modules/notifications/types'
 
 export const notificationTypes: NotificationTypeDefinition[] = [
   {
-    id: 'isp_billing.invoice_generated',
-    label: 'Facturas generadas',
-    description: 'El sistema generó las facturas del mes para los abonados.',
-    category: 'info',
-    defaultChannels: ['in_app'],
+    type: 'isp_billing.invoice_generated',
+    module: 'isp_billing',
+    titleKey: 'isp_billing.notif.invoice_generated.title',
+    bodyKey: 'isp_billing.notif.invoice_generated.body',
+    icon: 'file-text',
+    severity: 'info',
+    actions: [],
+    linkHref: '/backend/isp-billing',
   },
   {
-    id: 'isp_billing.payment_received',
-    label: 'Pago registrado',
-    description: 'Se registró un pago de un abonado.',
-    category: 'info',
-    defaultChannels: ['in_app'],
+    type: 'isp_billing.payment_received',
+    module: 'isp_billing',
+    titleKey: 'isp_billing.notif.payment_received.title',
+    bodyKey: 'isp_billing.notif.payment_received.body',
+    icon: 'check-circle',
+    severity: 'success',
+    actions: [],
+    linkHref: '/backend/isp-billing',
   },
   {
-    id: 'isp_billing.invoice_overdue',
-    label: 'Factura vencida — pre-corte',
-    description: 'Un abonado está próximo al corte por mora (3 o 1 día antes).',
-    category: 'alert',
-    defaultChannels: ['in_app'],
+    type: 'isp_billing.invoice_overdue',
+    module: 'isp_billing',
+    titleKey: 'isp_billing.notif.invoice_overdue.title',
+    bodyKey: 'isp_billing.notif.invoice_overdue.body',
+    icon: 'clock',
+    severity: 'warning',
+    actions: [],
+    linkHref: '/backend/isp-billing',
   },
   {
-    id: 'isp_billing.service_cut',
-    label: 'Servicio suspendido por mora',
-    description: 'Un abonado fue suspendido automáticamente por falta de pago.',
-    category: 'alert',
-    defaultChannels: ['in_app'],
+    type: 'isp_billing.service_cut',
+    module: 'isp_billing',
+    titleKey: 'isp_billing.notif.service_cut.title',
+    bodyKey: 'isp_billing.notif.service_cut.body',
+    icon: 'alert-circle',
+    severity: 'error',
+    actions: [],
+    linkHref: '/backend/isp-subscribers',
   },
   {
-    id: 'isp_billing.service_reconnected',
-    label: 'Servicio reactivado',
-    description: 'Un abonado pagó y su servicio fue reactivado.',
-    category: 'info',
-    defaultChannels: ['in_app'],
+    type: 'isp_billing.service_reconnected',
+    module: 'isp_billing',
+    titleKey: 'isp_billing.notif.service_reconnected.title',
+    bodyKey: 'isp_billing.notif.service_reconnected.body',
+    icon: 'zap',
+    severity: 'success',
+    actions: [],
+    linkHref: '/backend/isp-subscribers',
   },
 ]
+
+export default notificationTypes

@@ -24,5 +24,15 @@
   "isp_support.causes.weather": "Condiciones climáticas",
   "isp_support.causes.theft": "Robo de equipo",
   "isp_support.causes.unknown": "Causa desconocida",
-  "isp_support.saved": "Guardado"
+  "isp_support.saved": "Guardado",
+  "isp_support.notif.ticket_assigned.title": "Ticket asignado",
+  "isp_support.notif.ticket_assigned.body": "Se te asignó un ticket de soporte técnico.",
+  "isp_support.notif.ticket_resolved.title": "Ticket resuelto",
+  "isp_support.notif.ticket_resolved.body": "Un ticket de soporte fue marcado como resuelto.",
+  "isp_support.notif.sla_breach.title": "SLA incumplido",
+  "isp_support.notif.sla_breach.body": "Un ticket superó su tiempo máximo de resolución.",
+  "isp_support.notif.outage_detected.title": "Avería masiva detectada",
+  "isp_support.notif.outage_detected.body": "Caída de nodo detectada — múltiples abonados afectados.",
+  "isp_support.notif.outage_resolved.title": "Avería resuelta",
+  "isp_support.notif.outage_resolved.body": "La avería fue resuelta y el nodo está operativo."
 }
