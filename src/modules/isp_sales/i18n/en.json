@@ -1,0 +1,18 @@
+{
+  "isp_sales.nav.leads": "Leads / Pipeline",
+  "isp_sales.nav.coverage": "Coverage Zones",
+  "isp_sales.nav.commissions": "Commissions",
+  "isp_sales.sources.whatsapp": "WhatsApp",
+  "isp_sales.sources.instagram": "Instagram",
+  "isp_sales.sources.referral": "Referral",
+  "isp_sales.sources.website": "Website",
+  "isp_sales.sources.cold_call": "Cold call",
+  "isp_sales.sources.other": "Other",
+  "isp_sales.status.new": "New",
+  "isp_sales.status.coverage_check": "Checking coverage",
+  "isp_sales.status.quoted": "Quote sent",
+  "isp_sales.status.scheduled": "Installation scheduled",
+  "isp_sales.status.installed": "Installed ✓",
+  "isp_sales.status.lost": "Lost",
+  "isp_sales.saved": "Saved"
+}

@@ -1,0 +1,19 @@
+{
+  "isp_technicians.nav.technicians": "Técnicos",
+  "isp_technicians.nav.work_orders": "Órdenes de Trabajo",
+  "isp_technicians.ot_types.installation": "Instalación",
+  "isp_technicians.ot_types.repair": "Reparación",
+  "isp_technicians.ot_types.equipment_swap": "Cambio de equipo",
+  "isp_technicians.ot_types.uninstall": "Retiro de equipo",
+  "isp_technicians.ot_types.verification": "Visita de verificación",
+  "isp_technicians.status.pending": "Pendiente",
+  "isp_technicians.status.scheduled": "Programada",
+  "isp_technicians.status.in_progress": "En proceso",
+  "isp_technicians.status.completed": "Completada",
+  "isp_technicians.status.cancelled": "Cancelada",
+  "isp_technicians.tech_status.available": "Disponible",
+  "isp_technicians.tech_status.on_route": "En ruta",
+  "isp_technicians.tech_status.on_site": "En sitio",
+  "isp_technicians.tech_status.off_duty": "No disponible",
+  "isp_technicians.saved": "Guardado"
+}

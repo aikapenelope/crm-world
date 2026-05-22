@@ -1,0 +1,18 @@
+{
+  "isp_sales.nav.leads": "Leads / Pipeline",
+  "isp_sales.nav.coverage": "Zonas de Cobertura",
+  "isp_sales.nav.commissions": "Comisiones",
+  "isp_sales.sources.whatsapp": "WhatsApp",
+  "isp_sales.sources.instagram": "Instagram",
+  "isp_sales.sources.referral": "Referido",
+  "isp_sales.sources.website": "Sitio web",
+  "isp_sales.sources.cold_call": "Llamada fría",
+  "isp_sales.sources.other": "Otro",
+  "isp_sales.status.new": "Nuevo",
+  "isp_sales.status.coverage_check": "Verificando cobertura",
+  "isp_sales.status.quoted": "Cotización enviada",
+  "isp_sales.status.scheduled": "Instalación agendada",
+  "isp_sales.status.installed": "Instalado ✓",
+  "isp_sales.status.lost": "Perdido",
+  "isp_sales.saved": "Guardado"
+}
