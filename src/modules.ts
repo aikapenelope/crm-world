@@ -154,11 +154,14 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'academy_certificates', from: '@app' },
   { id: 'academy_portal', from: '@app' },
 
-  // Aika: ISP / Telecomunicaciones vertical (Phase 22-A — MVP)
+  // Aika: ISP / Telecomunicaciones vertical (Phase 22-A + 22-B)
   { id: 'isp_plans', from: '@app' },       // Catálogo de planes de servicio
   { id: 'isp_network', from: '@app' },     // Infraestructura: nodos, CPE, segmentos
   { id: 'isp_subscribers', from: '@app' }, // Abonados: lifecycle, plan, ubicación, corte
   { id: 'isp_billing', from: '@app' },     // Facturación recurrente: facturas, cobros, morosos
+  { id: 'isp_support', from: '@app' },     // Tickets de soporte + averías masivas
+  { id: 'isp_technicians', from: '@app' }, // Técnicos de campo + órdenes de trabajo
+  { id: 'isp_sales', from: '@app' },       // Pipeline comercial + cobertura + comisiones
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
