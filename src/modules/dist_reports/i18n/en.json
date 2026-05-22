@@ -3,5 +3,7 @@
   "dist_reports.section.receivable": "Accounts Receivable",
   "dist_reports.section.inventory": "Inventory",
   "dist_reports.section.deliveries": "Deliveries",
-  "dist_reports.section.routes": "Routes"
+  "dist_reports.section.routes": "Routes",
+  "dist_reports.notif.report_ready.title": "Distribution report ready",
+  "dist_reports.notif.report_ready.body": "A distribution report has been generated."
 }

@@ -31,9 +31,5 @@
   "retail_loyalty.campaign.status.cancelled": "Cancelled",
   "retail_loyalty.flash.points_earned": "Points earned successfully",
   "retail_loyalty.flash.points_redeemed": "Points redeemed successfully",
-  "retail_loyalty.flash.campaign_created": "Campaign created",
-  "retail_loyalty.notif.tier_upgraded.title": "Customer tier upgraded",
-  "retail_loyalty.notif.tier_upgraded.body": "A loyalty customer has reached a higher VIP tier.",
-  "retail_loyalty.notif.campaign_sent.title": "Loyalty campaign sent",
-  "retail_loyalty.notif.campaign_sent.body": "A loyalty campaign was sent to the selected customers."
+  "retail_loyalty.flash.campaign_created": "Campaign created"
 }

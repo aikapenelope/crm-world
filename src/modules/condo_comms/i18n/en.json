@@ -15,5 +15,13 @@
   "condo_comms.vote_type.yes_no": "Yes/No",
   "condo_comms.vote_type.multiple_choice": "Multiple Choice",
   "condo_comms.flash.circular_published": "Circular published successfully",
-  "condo_comms.flash.vote_cast": "Vote cast successfully"
+  "condo_comms.flash.vote_cast": "Vote cast successfully",
+  "condo_comms.notif.circular_published.title": "New circular published",
+  "condo_comms.notif.circular_published.body": "A circular has been published for the building.",
+  "condo_comms.notif.vote_opened.title": "Voting opened",
+  "condo_comms.notif.vote_opened.body": "A new vote has been opened.",
+  "condo_comms.notif.vote_closing_soon.title": "Vote closing soon",
+  "condo_comms.notif.vote_closing_soon.body": "A vote closes in less than 24 hours.",
+  "condo_comms.notif.assembly_scheduled.title": "Assembly scheduled",
+  "condo_comms.notif.assembly_scheduled.body": "An assembly has been scheduled."
 }

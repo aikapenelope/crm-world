@@ -16,5 +16,13 @@
   "condo_fees.receipt.overdue": "Overdue",
   "condo_fees.flash.config_created": "Fee created successfully",
   "condo_fees.flash.receipts_generated": "Receipts generated successfully",
-  "condo_fees.flash.payment_registered": "Payment registered successfully"
+  "condo_fees.flash.payment_registered": "Payment registered successfully",
+  "condo_fees.notif.receipt_overdue.title": "Receipt overdue",
+  "condo_fees.notif.receipt_overdue.body": "A condo receipt has become overdue.",
+  "condo_fees.notif.receipt_paid.title": "Payment received",
+  "condo_fees.notif.receipt_paid.body": "A condo payment has been recorded.",
+  "condo_fees.notif.receipts_generated.title": "Receipts generated",
+  "condo_fees.notif.receipts_generated.body": "Monthly receipts have been generated for the building.",
+  "condo_fees.notif.payment_reminder.title": "Payment reminder",
+  "condo_fees.notif.payment_reminder.body": "Automatic reminder — receipt due soon."
 }

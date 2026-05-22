@@ -14,5 +14,9 @@
   "isp_sales.status.scheduled": "Instalación agendada",
   "isp_sales.status.installed": "Instalado ✓",
   "isp_sales.status.lost": "Perdido",
-  "isp_sales.saved": "Guardado"
+  "isp_sales.saved": "Guardado",
+  "isp_sales.notif.lead_converted.title": "Lead convertido a abonado",
+  "isp_sales.notif.lead_converted.body": "Un prospecto fue instalado y activado como abonado.",
+  "isp_sales.notif.commission_generated.title": "Comisión generada",
+  "isp_sales.notif.commission_generated.body": "Se generó una comisión por instalación."
 }

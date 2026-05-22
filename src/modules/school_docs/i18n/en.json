@@ -10,7 +10,5 @@
   "school_docs.type.carta_recomendacion": "Recommendation Letter",
   "school_docs.status.pending": "Pending",
   "school_docs.status.generated": "Generated",
-  "school_docs.status.delivered": "Delivered",
-  "school_docs.notif.document_generated.title": "Document generated",
-  "school_docs.notif.document_generated.body": "A school document has been generated."
+  "school_docs.status.delivered": "Delivered"
 }

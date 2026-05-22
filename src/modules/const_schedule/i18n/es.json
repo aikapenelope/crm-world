@@ -10,5 +10,7 @@
   "const_schedule.milestone.achieved": "Alcanzado",
   "const_schedule.milestone.delayed": "Retrasado",
   "const_schedule.flash.task_created": "Tarea creada exitosamente",
-  "const_schedule.flash.milestone_created": "Hito creado exitosamente"
+  "const_schedule.flash.milestone_created": "Hito creado exitosamente",
+  "const_schedule.notif.task_delayed.title": "Tarea de cronograma retrasada",
+  "const_schedule.notif.task_delayed.body": "Una tarea del cronograma de obra está retrasada."
 }

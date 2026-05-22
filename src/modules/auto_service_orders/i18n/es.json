@@ -16,5 +16,15 @@
   "auto_service_orders.priority.high": "Alta",
   "auto_service_orders.priority.urgent": "Urgente",
   "auto_service_orders.flash.created": "Orden de servicio creada",
-  "auto_service_orders.flash.status_changed": "Status actualizado"
+  "auto_service_orders.flash.status_changed": "Status actualizado",
+  "auto_service_orders.notif.vehicle_ready.title": "Vehículo listo para retirar",
+  "auto_service_orders.notif.vehicle_ready.body": "La orden de servicio pasó a estado \"listo\" — el cliente puede retirar su vehículo.",
+  "auto_service_orders.notif.estimate_sent.title": "Presupuesto enviado",
+  "auto_service_orders.notif.estimate_sent.body": "Se generó y envió un presupuesto al cliente.",
+  "auto_service_orders.notif.inspection_complete.title": "Inspección completada",
+  "auto_service_orders.notif.inspection_complete.body": "El técnico completó la inspección digital del vehículo.",
+  "auto_service_orders.notif.status_changed.title": "Estado de orden actualizado",
+  "auto_service_orders.notif.status_changed.body": "La orden de servicio cambió de estado.",
+  "auto_service_orders.notif.maintenance_due.title": "Mantenimiento pendiente",
+  "auto_service_orders.notif.maintenance_due.body": "Un vehículo necesita servicio por tiempo o kilometraje."
 }

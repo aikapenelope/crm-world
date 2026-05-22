@@ -11,9 +11,5 @@
   "dist_delivery.item.returned": "Returned",
   "dist_delivery.item.rejected": "Rejected",
   "dist_delivery.flash.created": "Dispatch created successfully",
-  "dist_delivery.flash.confirmed": "Delivery confirmed",
-  "dist_delivery.notif.delivered.title": "Delivery completed",
-  "dist_delivery.notif.delivered.body": "An order has been successfully delivered.",
-  "dist_delivery.notif.failed.title": "Delivery failed",
-  "dist_delivery.notif.failed.body": "A delivery could not be completed."
+  "dist_delivery.flash.confirmed": "Delivery confirmed"
 }

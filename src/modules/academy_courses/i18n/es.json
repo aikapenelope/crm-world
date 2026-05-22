@@ -15,5 +15,7 @@
   "academy_courses.max_students": "Capacidad máxima",
   "academy_courses.prerequisites": "Prerequisitos",
   "academy_courses.is_active": "Activo",
-  "academy_courses.description": "Descripción"
+  "academy_courses.description": "Descripción",
+  "academy_courses.notif.course_started.title": "Curso iniciado",
+  "academy_courses.notif.course_started.body": "Un grupo del curso comenzó sus clases."
 }

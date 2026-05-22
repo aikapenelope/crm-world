@@ -9,5 +9,9 @@
   "const_materials.status.received": "Received",
   "const_materials.status.cancelled": "Cancelled",
   "const_materials.flash.order_created": "Purchase order created successfully",
-  "const_materials.flash.received": "Receipt registered successfully"
+  "const_materials.flash.received": "Receipt registered successfully",
+  "const_materials.notif.order_delivered.title": "Materials received",
+  "const_materials.notif.order_delivered.body": "Materials have been received at the construction site.",
+  "const_materials.notif.order_delayed.title": "Material order delayed",
+  "const_materials.notif.order_delayed.body": "A material order has passed its expected delivery date."
 }

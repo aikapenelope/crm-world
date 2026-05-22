@@ -27,9 +27,5 @@
   "retail_returns.refund.cash": "Cash",
   "retail_returns.flash.created": "Return registered",
   "retail_returns.flash.approved": "Return approved",
-  "retail_returns.flash.completed": "Return completed",
-  "retail_returns.notif.return_approved.title": "Return approved",
-  "retail_returns.notif.return_approved.body": "A customer return has been approved.",
-  "retail_returns.notif.return_rejected.title": "Return rejected",
-  "retail_returns.notif.return_rejected.body": "A return did not meet the return policy requirements."
+  "retail_returns.flash.completed": "Return completed"
 }

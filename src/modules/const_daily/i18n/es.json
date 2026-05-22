@@ -10,5 +10,9 @@
   "const_daily.status.submitted": "Enviado",
   "const_daily.status.approved": "Aprobado",
   "const_daily.flash.created": "Reporte diario creado exitosamente",
-  "const_daily.flash.approved": "Reporte aprobado exitosamente"
+  "const_daily.flash.approved": "Reporte aprobado exitosamente",
+  "const_daily.notif.incident_reported.title": "Incidente de seguridad reportado",
+  "const_daily.notif.incident_reported.body": "Se reportó un incidente en el reporte diario de obra.",
+  "const_daily.notif.report_approved.title": "RDO aprobado",
+  "const_daily.notif.report_approved.body": "El reporte diario de obra fue aprobado."
 }

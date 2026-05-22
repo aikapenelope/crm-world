@@ -37,9 +37,5 @@
   "retail_branches.flash.created": "Sucursal creada exitosamente",
   "retail_branches.flash.updated": "Sucursal actualizada",
   "retail_branches.flash.transfer_created": "Transferencia creada",
-  "retail_branches.flash.transfer_approved": "Transferencia aprobada",
-  "retail_branches.notif.low_stock_alert.title": "Stock bajo en sucursal",
-  "retail_branches.notif.low_stock_alert.body": "Un producto tiene stock por debajo del mínimo en una sucursal.",
-  "retail_branches.notif.transfer_completed.title": "Transferencia entre sucursales completada",
-  "retail_branches.notif.transfer_completed.body": "Se completó una transferencia de inventario entre sucursales."
+  "retail_branches.flash.transfer_approved": "Transferencia aprobada"
 }

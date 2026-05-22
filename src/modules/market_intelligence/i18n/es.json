@@ -19,5 +19,7 @@
     "percentile_rank": "Percentil",
     "run_valuation": "Ejecutar tasación",
     "no_data": "No hay datos de mercado para estos criterios"
-  }
+  },
+  "market_intelligence.notif.analysis_completed.title": "Análisis de mercado actualizado",
+  "market_intelligence.notif.analysis_completed.body": "Se actualizó el análisis de inteligencia de mercado inmobiliario."
 }

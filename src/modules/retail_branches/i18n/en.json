@@ -37,9 +37,5 @@
   "retail_branches.flash.created": "Branch created successfully",
   "retail_branches.flash.updated": "Branch updated",
   "retail_branches.flash.transfer_created": "Transfer created",
-  "retail_branches.flash.transfer_approved": "Transfer approved",
-  "retail_branches.notif.low_stock_alert.title": "Low stock at branch",
-  "retail_branches.notif.low_stock_alert.body": "A product has stock below the minimum level at a branch.",
-  "retail_branches.notif.transfer_completed.title": "Branch transfer completed",
-  "retail_branches.notif.transfer_completed.body": "An inventory transfer between branches has been completed."
+  "retail_branches.flash.transfer_approved": "Transfer approved"
 }

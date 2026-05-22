@@ -1,39 +1,63 @@
-import type { NotificationTypeDefinition } from '@open-mercato/shared/modules/notifications'
+/**
+ * isp_support — Notification type definitions
+ *
+ * Schema: NotificationTypeDefinition from @open-mercato/shared/modules/notifications/types
+ * Fuente oficial: packages/shared/src/modules/notifications/types.ts §58
+ * Campos requeridos: type, module, titleKey, icon, severity, actions
+ */
+import type { NotificationTypeDefinition } from '@open-mercato/shared/modules/notifications/types'
 
 export const notificationTypes: NotificationTypeDefinition[] = [
   {
-    id: 'isp_support.ticket_assigned',
-    label: 'Ticket asignado',
-    description: 'Se te asignó un ticket de soporte técnico.',
-    category: 'info',
-    defaultChannels: ['in_app'],
+    type: 'isp_support.ticket_assigned',
+    module: 'isp_support',
+    titleKey: 'isp_support.notif.ticket_assigned.title',
+    bodyKey: 'isp_support.notif.ticket_assigned.body',
+    icon: 'user-check',
+    severity: 'info',
+    actions: [],
+    linkHref: '/backend/isp-support',
   },
   {
-    id: 'isp_support.ticket_resolved',
-    label: 'Ticket resuelto',
-    description: 'Un ticket de soporte fue marcado como resuelto.',
-    category: 'info',
-    defaultChannels: ['in_app'],
+    type: 'isp_support.ticket_resolved',
+    module: 'isp_support',
+    titleKey: 'isp_support.notif.ticket_resolved.title',
+    bodyKey: 'isp_support.notif.ticket_resolved.body',
+    icon: 'check-circle',
+    severity: 'success',
+    actions: [],
+    linkHref: '/backend/isp-support',
   },
   {
-    id: 'isp_support.sla_breach',
-    label: 'SLA incumplido',
-    description: 'Un ticket superó su tiempo máximo de resolución (SLA).',
-    category: 'alert',
-    defaultChannels: ['in_app'],
+    type: 'isp_support.sla_breach',
+    module: 'isp_support',
+    titleKey: 'isp_support.notif.sla_breach.title',
+    bodyKey: 'isp_support.notif.sla_breach.body',
+    icon: 'clock',
+    severity: 'error',
+    actions: [],
+    linkHref: '/backend/isp-support',
   },
   {
-    id: 'isp_support.outage_detected',
-    label: 'Avería masiva detectada',
-    description: 'Se detectó una caída de nodo que afecta a múltiples abonados.',
-    category: 'alert',
-    defaultChannels: ['in_app'],
+    type: 'isp_support.outage_detected',
+    module: 'isp_support',
+    titleKey: 'isp_support.notif.outage_detected.title',
+    bodyKey: 'isp_support.notif.outage_detected.body',
+    icon: 'alert-triangle',
+    severity: 'error',
+    actions: [],
+    linkHref: '/backend/isp-support/outages',
   },
   {
-    id: 'isp_support.outage_resolved',
-    label: 'Avería masiva resuelta',
-    description: 'La avería fue resuelta y el nodo está operativo.',
-    category: 'info',
-    defaultChannels: ['in_app'],
+    type: 'isp_support.outage_resolved',
+    module: 'isp_support',
+    titleKey: 'isp_support.notif.outage_resolved.title',
+    bodyKey: 'isp_support.notif.outage_resolved.body',
+    icon: 'wifi',
+    severity: 'success',
+    actions: [],
+    linkHref: '/backend/isp-support/outages',
   },
 ]
+
+export default notificationTypes

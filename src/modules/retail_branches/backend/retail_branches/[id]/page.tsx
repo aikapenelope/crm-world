@@ -130,29 +130,29 @@ export default function BranchDetailPage() {
         {/* Tabs */}
         <div className="border-b mb-6">
           <div className="flex gap-4">
-            <Button
+            <button
               type="button"
               className={`pb-2 text-sm font-medium border-b-2 ${activeTab === 'info' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'}`}
               onClick={() => setActiveTab('info')}
             >
               Información
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
               className={`pb-2 text-sm font-medium border-b-2 ${activeTab === 'staff' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'}`}
               onClick={() => setActiveTab('staff')}
             >
               <Users className="inline size-4 mr-1" />
               Personal ({staff.length})
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
               className={`pb-2 text-sm font-medium border-b-2 ${activeTab === 'inventory' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'}`}
               onClick={() => setActiveTab('inventory')}
             >
               <Package className="inline size-4 mr-1" />
               Inventario
-            </Button>
+            </button>
           </div>
         </div>
 

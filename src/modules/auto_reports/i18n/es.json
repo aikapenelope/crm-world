@@ -1,1 +1,5 @@
-{ "auto_reports.nav.title": "Reportes Taller" }
+{
+  "auto_reports.nav.title": "Reportes Taller",
+  "auto_reports.notif.report_ready.title": "Reporte de taller disponible",
+  "auto_reports.notif.report_ready.body": "Se generó un reporte de rendimiento del taller."
+}

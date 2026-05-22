@@ -12,5 +12,11 @@
   "isp_subscribers.status.pending_change_plan": "Plan change pending",
   "isp_subscribers.status.cancelled": "Cancelled",
   "isp_subscribers.saved": "Subscriber saved",
-  "isp_subscribers.status_changed": "Service status updated"
+  "isp_subscribers.status_changed": "Service status updated",
+  "isp_subscribers.notif.service_activated.title": "Service activated",
+  "isp_subscribers.notif.service_activated.body": "Installation completed — subscriber service is now active.",
+  "isp_subscribers.notif.service_suspended.title": "Service suspended",
+  "isp_subscribers.notif.service_suspended.body": "A subscriber's service has been suspended (overdue or voluntary).",
+  "isp_subscribers.notif.service_reconnected.title": "Service reconnected",
+  "isp_subscribers.notif.service_reconnected.body": "A subscriber's service has been reactivated."
 }

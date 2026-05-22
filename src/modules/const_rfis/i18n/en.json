@@ -12,5 +12,11 @@
   "const_rfis.submittal.approved": "Approved",
   "const_rfis.submittal.rejected": "Rejected",
   "const_rfis.flash.rfi_created": "RFI created successfully",
-  "const_rfis.flash.rfi_answered": "RFI answered successfully"
+  "const_rfis.flash.rfi_answered": "RFI answered successfully",
+  "const_rfis.notif.rfi_overdue.title": "RFI overdue",
+  "const_rfis.notif.rfi_overdue.body": "An RFI did not receive a response before its due date.",
+  "const_rfis.notif.rfi_answered.title": "RFI answered",
+  "const_rfis.notif.rfi_answered.body": "An RFI has received a response from the designer.",
+  "const_rfis.notif.submittal_approved.title": "Submittal approved",
+  "const_rfis.notif.submittal_approved.body": "A submittal has been approved by the designer."
 }

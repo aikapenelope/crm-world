@@ -13,5 +13,7 @@
   "attendance.summary.days_present": "Días presente",
   "attendance.summary.days_absent": "Días ausente",
   "attendance.summary.days_late": "Tardanzas",
-  "attendance.summary.percentage": "% Asistencia"
+  "attendance.summary.percentage": "% Asistencia",
+  "attendance.notif.report_generated.title": "Reporte de asistencia generado",
+  "attendance.notif.report_generated.body": "Se generó un reporte de asistencia mensual."
 }

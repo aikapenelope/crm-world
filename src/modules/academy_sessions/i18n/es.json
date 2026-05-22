@@ -1,1 +1,8 @@
-{"academy_sessions.title":"Sesiones","academy_sessions.topic":"Tema","academy_sessions.type.theory":"Teoría","academy_sessions.type.practice":"Práctica"}
+{
+  "academy_sessions.title": "Sesiones",
+  "academy_sessions.topic": "Tema",
+  "academy_sessions.type.theory": "Teoría",
+  "academy_sessions.type.practice": "Práctica",
+  "academy_sessions.notif.session_cancelled.title": "Sesión cancelada",
+  "academy_sessions.notif.session_cancelled.body": "Se canceló una sesión de clase."
+}

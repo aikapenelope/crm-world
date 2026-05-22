@@ -15,5 +15,7 @@
   "condo_accounting.category.payroll": "Payroll",
   "condo_accounting.category.insurance": "Insurance",
   "condo_accounting.category.legal": "Legal",
-  "condo_accounting.flash.entry_created": "Entry registered successfully"
+  "condo_accounting.flash.entry_created": "Entry registered successfully",
+  "condo_accounting.notif.report_closed.title": "Accounting period closed",
+  "condo_accounting.notif.report_closed.body": "The condo accounting period has been closed."
 }

@@ -1,44 +1,62 @@
 /**
- * Notification types for auto service orders.
- * These trigger in-app notifications and can be used to send WhatsApp messages.
+ * auto_service_orders — Notification type definitions
+ *
+ * Schema: NotificationTypeDefinition from @open-mercato/shared/modules/notifications/types
+ * Fuente oficial: packages/shared/src/modules/notifications/types.ts §58
+ * Campos requeridos: type, module, titleKey, icon, severity, actions
  */
-import type { NotificationTypeDefinition } from '@open-mercato/shared/modules/notifications'
+import type { NotificationTypeDefinition } from '@open-mercato/shared/modules/notifications/types'
 
 export const notificationTypes: NotificationTypeDefinition[] = [
   {
-    id: 'auto_service_orders.vehicle_ready',
-    title: 'Vehículo listo para retirar',
-    description: 'Se envía cuando la orden pasa a status "ready"',
-    category: 'automotive',
-    defaultEnabled: true,
+    type: 'auto_service_orders.vehicle_ready',
+    module: 'auto_service_orders',
+    titleKey: 'auto_service_orders.notif.vehicle_ready.title',
+    bodyKey: 'auto_service_orders.notif.vehicle_ready.body',
+    icon: 'car',
+    severity: 'success',
+    actions: [],
+    linkHref: '/backend/auto-service-orders',
   },
   {
-    id: 'auto_service_orders.estimate_sent',
-    title: 'Presupuesto enviado',
-    description: 'Se envía cuando se genera y envía un presupuesto al cliente',
-    category: 'automotive',
-    defaultEnabled: true,
+    type: 'auto_service_orders.estimate_sent',
+    module: 'auto_service_orders',
+    titleKey: 'auto_service_orders.notif.estimate_sent.title',
+    bodyKey: 'auto_service_orders.notif.estimate_sent.body',
+    icon: 'file-text',
+    severity: 'info',
+    actions: [],
+    linkHref: '/backend/auto-service-orders',
   },
   {
-    id: 'auto_service_orders.inspection_complete',
-    title: 'Inspección completada',
-    description: 'Se envía cuando el técnico completa la inspección digital',
-    category: 'automotive',
-    defaultEnabled: true,
+    type: 'auto_service_orders.inspection_complete',
+    module: 'auto_service_orders',
+    titleKey: 'auto_service_orders.notif.inspection_complete.title',
+    bodyKey: 'auto_service_orders.notif.inspection_complete.body',
+    icon: 'clipboard-check',
+    severity: 'info',
+    actions: [],
+    linkHref: '/backend/auto-service-orders',
   },
   {
-    id: 'auto_service_orders.status_changed',
-    title: 'Cambio de status',
-    description: 'Se envía cuando la orden cambia de status',
-    category: 'automotive',
-    defaultEnabled: false,
+    type: 'auto_service_orders.status_changed',
+    module: 'auto_service_orders',
+    titleKey: 'auto_service_orders.notif.status_changed.title',
+    bodyKey: 'auto_service_orders.notif.status_changed.body',
+    icon: 'refresh-cw',
+    severity: 'info',
+    actions: [],
+    linkHref: '/backend/auto-service-orders',
   },
   {
-    id: 'auto_service_orders.maintenance_due',
-    title: 'Mantenimiento pendiente',
-    description: 'Se envía cuando un vehículo necesita servicio (por tiempo o km)',
-    category: 'automotive',
-    defaultEnabled: true,
+    type: 'auto_service_orders.maintenance_due',
+    module: 'auto_service_orders',
+    titleKey: 'auto_service_orders.notif.maintenance_due.title',
+    bodyKey: 'auto_service_orders.notif.maintenance_due.body',
+    icon: 'wrench',
+    severity: 'warning',
+    actions: [],
+    linkHref: '/backend/auto-vehicles',
   },
 ]
 

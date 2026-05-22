@@ -13,5 +13,7 @@
   "attendance.summary.days_present": "Days Present",
   "attendance.summary.days_absent": "Days Absent",
   "attendance.summary.days_late": "Late Days",
-  "attendance.summary.percentage": "Attendance %"
+  "attendance.summary.percentage": "Attendance %",
+  "attendance.notif.report_generated.title": "Attendance report generated",
+  "attendance.notif.report_generated.body": "A monthly attendance report has been generated."
 }

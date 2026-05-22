@@ -35,9 +35,5 @@
     "complete": "Complete closing",
     "cancel": "Cancel transaction",
     "calculate_commission": "Calculate commission"
-  },
-  "transactions.notif.completed.title": "Real estate transaction completed",
-  "transactions.notif.completed.body": "A property transaction has been completed.",
-  "transactions.notif.cancelled.title": "Transaction cancelled",
-  "transactions.notif.cancelled.body": "A real estate transaction has been cancelled."
+  }
 }

@@ -1,16 +1,3 @@
-/**
- * AGM Exception: raw <table> — data entry grid / dynamic preview
- *
- * This page uses a raw <table> for an interactive data entry grid or
- * a dynamic preview table where the column structure is determined at runtime.
- * DataTable (@open-mercato/ui/backend/DataTable) is designed for static
- * column definitions with sorting/filtering; it does not cleanly support:
- * - Inline input cell editing (grades entry, attendance recording)
- * - Dynamic column counts from imported data (bank statements, CSV preview)
- *
- * Acceptable to keep raw <table>. Column/row rendering logic lives in this
- * component and is not suitable for the tanstack/react-table abstraction.
- */
 'use client'
 
 import * as React from 'react'

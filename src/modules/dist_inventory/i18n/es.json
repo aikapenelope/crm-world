@@ -8,7 +8,5 @@
   "dist_inventory.type.adjustment": "Ajuste",
   "dist_inventory.type.transfer": "Transferencia",
   "dist_inventory.type.count": "Conteo físico",
-  "dist_inventory.flash.movement_created": "Movimiento registrado exitosamente",
-  "dist_inventory.notif.low_stock.title": "Stock bajo",
-  "dist_inventory.notif.low_stock.body": "Un producto tiene inventario por debajo del nivel mínimo."
+  "dist_inventory.flash.movement_created": "Movimiento registrado exitosamente"
 }

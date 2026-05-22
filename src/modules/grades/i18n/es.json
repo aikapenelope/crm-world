@@ -16,5 +16,7 @@
   "grades.period.third": "Tercer Lapso",
   "grades.report.status.draft": "Borrador",
   "grades.report.status.published": "Publicado",
-  "grades.report.status.delivered": "Entregado"
+  "grades.report.status.delivered": "Entregado",
+  "grades.notif.report_card_published.title": "Boletín publicado",
+  "grades.notif.report_card_published.body": "Los boletines de calificaciones fueron publicados para un lapso."
 }

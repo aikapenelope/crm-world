@@ -14,5 +14,7 @@
   "ve_tax_books.summary.igtf_total": "IGTF for Period",
   "ve_tax_books.flash.created": "Tax entry registered successfully",
   "ve_tax_books.flash.updated": "Tax entry updated",
-  "ve_tax_books.flash.deleted": "Tax entry deleted"
+  "ve_tax_books.flash.deleted": "Tax entry deleted",
+  "ve_tax_books.notif.period_closed.title": "VAT book period closed",
+  "ve_tax_books.notif.period_closed.body": "The purchase/sales VAT book for the period has been closed."
 }

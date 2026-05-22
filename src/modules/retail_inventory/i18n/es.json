@@ -22,9 +22,5 @@
   "retail_inventory.dashboard.low_stock": "Stock Bajo",
   "retail_inventory.dashboard.dead_stock": "Sin Movimiento",
   "retail_inventory.flash.count_created": "Conteo creado exitosamente",
-  "retail_inventory.flash.count_completed": "Conteo completado",
-  "retail_inventory.notif.dead_stock_detected.title": "Dead stock detectado",
-  "retail_inventory.notif.dead_stock_detected.body": "Hay productos sin movimiento por más del umbral configurado.",
-  "retail_inventory.notif.count_completed.title": "Conteo de inventario completado",
-  "retail_inventory.notif.count_completed.body": "Se completó un conteo de inventario."
+  "retail_inventory.flash.count_completed": "Conteo completado"
 }

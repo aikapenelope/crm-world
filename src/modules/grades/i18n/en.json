@@ -16,5 +16,7 @@
   "grades.period.third": "Third Term",
   "grades.report.status.draft": "Draft",
   "grades.report.status.published": "Published",
-  "grades.report.status.delivered": "Delivered"
+  "grades.report.status.delivered": "Delivered",
+  "grades.notif.report_card_published.title": "Report cards published",
+  "grades.notif.report_card_published.body": "Report cards have been published for a grading period."
 }

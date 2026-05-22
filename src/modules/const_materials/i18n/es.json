@@ -9,5 +9,9 @@
   "const_materials.status.received": "Recibida",
   "const_materials.status.cancelled": "Cancelada",
   "const_materials.flash.order_created": "Orden de compra creada exitosamente",
-  "const_materials.flash.received": "Recepción registrada exitosamente"
+  "const_materials.flash.received": "Recepción registrada exitosamente",
+  "const_materials.notif.order_delivered.title": "Materiales recibidos",
+  "const_materials.notif.order_delivered.body": "Se recibieron materiales en obra.",
+  "const_materials.notif.order_delayed.title": "Pedido de materiales retrasado",
+  "const_materials.notif.order_delayed.body": "Un pedido de materiales pasó su fecha de entrega."
 }

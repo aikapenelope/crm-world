@@ -23,7 +23,7 @@ export default function AttendanceMainPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Button type="button" variant="ghost"
+          <button
             className="rounded-lg border p-6 text-left hover:bg-muted/30 transition-colors"
             onClick={() => router.push('/backend/attendance/daily')}
           >
@@ -32,9 +32,9 @@ export default function AttendanceMainPage() {
             <p className="text-sm text-muted-foreground">
               Pasar lista por sección para el día de hoy
             </p>
-          </Button>
+          </button>
 
-          <Button type="button" variant="ghost"
+          <button
             className="rounded-lg border p-6 text-left hover:bg-muted/30 transition-colors"
             onClick={() => router.push('/backend/attendance/reports')}
           >
@@ -43,7 +43,7 @@ export default function AttendanceMainPage() {
             <p className="text-sm text-muted-foreground">
               Resumen mensual de asistencia por grado y sección
             </p>
-          </Button>
+          </button>
         </div>
       </PageBody>
     </Page>

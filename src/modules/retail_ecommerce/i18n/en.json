@@ -26,9 +26,5 @@
   "retail_ecommerce.flash.order_confirmed": "Order confirmed",
   "retail_ecommerce.flash.order_delivered": "Order delivered",
   "retail_ecommerce.flash.payment_confirmed": "Payment confirmed",
-  "retail_ecommerce.flash.published": "Publication created",
-  "retail_ecommerce.notif.order_placed.title": "New online store order",
-  "retail_ecommerce.notif.order_placed.body": "A new order has been received in the online store.",
-  "retail_ecommerce.notif.catalog_published.title": "Catalog published",
-  "retail_ecommerce.notif.catalog_published.body": "The product catalog has been published to the online store."
+  "retail_ecommerce.flash.published": "Publication created"
 }

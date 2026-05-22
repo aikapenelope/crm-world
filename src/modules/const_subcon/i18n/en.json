@@ -9,5 +9,7 @@
   "const_subcon.status.active": "Active",
   "const_subcon.status.completed": "Completed",
   "const_subcon.flash.created": "Subcontractor created successfully",
-  "const_subcon.flash.contract_created": "Contract created successfully"
+  "const_subcon.flash.contract_created": "Contract created successfully",
+  "const_subcon.notif.payment_due.title": "Subcontractor payment due",
+  "const_subcon.notif.payment_due.body": "A subcontractor has a pending payment for an approved valuation."
 }

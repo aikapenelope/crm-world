@@ -22,9 +22,5 @@
   "retail_inventory.dashboard.low_stock": "Low Stock",
   "retail_inventory.dashboard.dead_stock": "Dead Stock",
   "retail_inventory.flash.count_created": "Count created successfully",
-  "retail_inventory.flash.count_completed": "Count completed",
-  "retail_inventory.notif.dead_stock_detected.title": "Dead stock detected",
-  "retail_inventory.notif.dead_stock_detected.body": "Products with no movement exceed the configured threshold.",
-  "retail_inventory.notif.count_completed.title": "Inventory count completed",
-  "retail_inventory.notif.count_completed.body": "An inventory count has been completed."
+  "retail_inventory.flash.count_completed": "Count completed"
 }

@@ -3,5 +3,7 @@
   "dist_reports.section.receivable": "Cuentas por Cobrar",
   "dist_reports.section.inventory": "Inventario",
   "dist_reports.section.deliveries": "Entregas",
-  "dist_reports.section.routes": "Rutas"
+  "dist_reports.section.routes": "Rutas",
+  "dist_reports.notif.report_ready.title": "Reporte de distribución disponible",
+  "dist_reports.notif.report_ready.body": "Se generó un reporte de distribución."
 }

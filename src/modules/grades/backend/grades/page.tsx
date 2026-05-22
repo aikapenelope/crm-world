@@ -58,7 +58,7 @@ export default function GradesMainPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Cargar Notas */}
-            <Button type="button" variant="ghost"
+            <button
               className="rounded-lg border p-6 text-left hover:bg-muted/30 transition-colors"
               onClick={() => router.push('/backend/grades/entry')}
             >
@@ -67,10 +67,10 @@ export default function GradesMainPage() {
               <p className="text-sm text-muted-foreground">
                 Registrar notas por sección y materia para el lapso activo
               </p>
-            </Button>
+            </button>
 
             {/* Boletines */}
-            <Button type="button" variant="ghost"
+            <button
               className="rounded-lg border p-6 text-left hover:bg-muted/30 transition-colors"
               onClick={() => router.push('/backend/grades/report-cards')}
             >
@@ -79,7 +79,7 @@ export default function GradesMainPage() {
               <p className="text-sm text-muted-foreground">
                 Generar y gestionar boletines por lapso
               </p>
-            </Button>
+            </button>
 
             {/* Lapsos */}
             <div className="rounded-lg border p-6">

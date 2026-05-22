@@ -12,5 +12,7 @@
   "const_budget.resource.equipment": "Equipo",
   "const_budget.resource.subcontract": "Subcontrato",
   "const_budget.resource.overhead": "Indirectos",
-  "const_budget.flash.created": "Partida creada exitosamente"
+  "const_budget.flash.created": "Partida creada exitosamente",
+  "const_budget.notif.item_approved.title": "Ítem de presupuesto aprobado",
+  "const_budget.notif.item_approved.body": "Un ítem del presupuesto fue aprobado."
 }

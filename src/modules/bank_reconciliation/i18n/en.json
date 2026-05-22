@@ -6,5 +6,9 @@
   "bank_reconciliation.status.unmatched": "Unmatched",
   "bank_reconciliation.status.ignored": "Ignored",
   "bank_reconciliation.flash.uploaded": "Statement uploaded successfully",
-  "bank_reconciliation.flash.reconciled": "Transaction reconciled"
+  "bank_reconciliation.flash.reconciled": "Transaction reconciled",
+  "bank_reconciliation.notif.reconciled.title": "Reconciliation completed",
+  "bank_reconciliation.notif.reconciled.body": "A bank statement has been successfully reconciled.",
+  "bank_reconciliation.notif.discrepancy.title": "Reconciliation discrepancy detected",
+  "bank_reconciliation.notif.discrepancy.body": "There are unreconciled movements in the bank statement."
 }

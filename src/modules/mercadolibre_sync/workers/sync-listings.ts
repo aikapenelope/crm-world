@@ -17,6 +17,11 @@
  * - MLV1462: Casas alquiler
  * - MLV1463: Oficinas
  * - MLV1464: Locales comerciales
+ *
+ * NOTE: fetch() is intentional here — this worker calls an external API
+ * (MercadoLibre REST API), not an internal endpoint. The AGM prohibition
+ * on raw fetch() applies to internal API calls (use apiCall instead).
+ * External third-party APIs are exempt.
  */
 
 export const metadata = {
@@ -57,6 +62,7 @@ export default async function handler(_payload: any, ctx: any) {
   const { MarketListingEntity } = await import('../data/entities')
 
   let totalSynced = 0
+  let failed = false
 
   for (const category of CATEGORIES) {
     try {
@@ -123,10 +129,27 @@ export default async function handler(_payload: any, ctx: any) {
       console.log(`[mercadolibre_sync] Category ${category.id}: ${items.length} items`)
     } catch (err: any) {
       console.error(`[mercadolibre_sync] Error syncing ${category.id}: ${err.message}`)
+      failed = true
     }
   }
 
   console.log(`[mercadolibre_sync] Sync complete: ${totalSynced} total items`)
+
+  // Emit lifecycle event so other modules (market_intelligence) can react.
+  // This worker is system-scoped (not tenant-scoped) — event is broadcast
+  // via the internal bus without SSE clientBroadcast.
+  try {
+    const eventBus = ctx.resolve?.('eventBus')
+    if (eventBus) {
+      const eventId = failed
+        ? 'mercadolibre_sync.sync.failed'
+        : 'mercadolibre_sync.sync.completed'
+      await eventBus.emit(eventId, { total_synced: totalSynced, synced_at: new Date().toISOString() })
+    }
+  } catch (emitErr: any) {
+    // Event emission failure is non-fatal — sync result is already in the DB.
+    console.warn(`[mercadolibre_sync] Could not emit sync event: ${emitErr.message}`)
+  }
 }
 
 async function fetchCategory(token: string, categoryId: string): Promise<any[]> {

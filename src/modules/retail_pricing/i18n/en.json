@@ -19,7 +19,5 @@
   "retail_pricing.alert.exchange_rate_drift": "Exchange Rate Drift",
   "retail_pricing.flash.rule_created": "Margin rule created",
   "retail_pricing.flash.bulk_updated": "Prices bulk updated",
-  "retail_pricing.flash.alert_acknowledged": "Alert acknowledged",
-  "retail_pricing.notif.margin_violation.title": "Minimum margin violated",
-  "retail_pricing.notif.margin_violation.body": "A product is priced below the configured minimum margin."
+  "retail_pricing.flash.alert_acknowledged": "Alert acknowledged"
 }

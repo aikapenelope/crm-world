@@ -5,5 +5,7 @@
   "academy_instructors.specialty": "Specialty",
   "academy_instructors.hourly_rate": "Hourly rate (USD)",
   "academy_instructors.modalities": "Modalities",
-  "academy_instructors.bio": "Bio"
+  "academy_instructors.bio": "Bio",
+  "academy_instructors.notif.instructor_assigned.title": "Instructor assigned",
+  "academy_instructors.notif.instructor_assigned.body": "An instructor has been assigned to a group."
 }

@@ -11,9 +11,5 @@
   "dist_delivery.item.returned": "Devuelto",
   "dist_delivery.item.rejected": "Rechazado",
   "dist_delivery.flash.created": "Despacho creado exitosamente",
-  "dist_delivery.flash.confirmed": "Entrega confirmada",
-  "dist_delivery.notif.delivered.title": "Entrega completada",
-  "dist_delivery.notif.delivered.body": "Un pedido fue entregado exitosamente.",
-  "dist_delivery.notif.failed.title": "Entrega fallida",
-  "dist_delivery.notif.failed.body": "No se pudo completar una entrega."
+  "dist_delivery.flash.confirmed": "Entrega confirmada"
 }

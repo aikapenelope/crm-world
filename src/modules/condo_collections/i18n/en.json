@@ -13,9 +13,5 @@
   "condo_collections.action.letter": "Letter",
   "condo_collections.action.legal_notice": "Legal Notice",
   "condo_collections.flash.action_logged": "Collection action logged successfully",
-  "condo_collections.flash.agreement_created": "Payment agreement created",
-  "condo_collections.notif.debtor_detected.title": "Overdue resident detected",
-  "condo_collections.notif.debtor_detected.body": "A resident has accumulated debt above the configured threshold.",
-  "condo_collections.notif.agreement_defaulted.title": "Payment agreement defaulted",
-  "condo_collections.notif.agreement_defaulted.body": "A resident failed to comply with their payment agreement."
+  "condo_collections.flash.agreement_created": "Payment agreement created"
 }

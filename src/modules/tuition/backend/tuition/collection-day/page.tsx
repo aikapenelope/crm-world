@@ -131,7 +131,7 @@ export default function CollectionDayPage() {
         {students.length > 0 && !selectedStudent && (
           <div className="max-w-xl mx-auto space-y-2 mb-8">
             {students.map((s) => (
-              <Button type="button" variant="ghost"
+              <button
                 key={s.id}
                 className="w-full flex items-center gap-3 rounded-lg border p-4 hover:bg-muted/30 transition-colors text-left"
                 onClick={() => handleSelectStudent(s)}
@@ -142,7 +142,7 @@ export default function CollectionDayPage() {
                 <Badge variant="outline">
                   {GRADE_LABELS[s.grade_level] ?? s.grade_level} - {s.section}
                 </Badge>
-              </Button>
+              </button>
             ))}
           </div>
         )}

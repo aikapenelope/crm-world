@@ -12,5 +12,7 @@
   "const_budget.resource.equipment": "Equipment",
   "const_budget.resource.subcontract": "Subcontract",
   "const_budget.resource.overhead": "Overhead",
-  "const_budget.flash.created": "Budget item created successfully"
+  "const_budget.flash.created": "Budget item created successfully",
+  "const_budget.notif.item_approved.title": "Budget item approved",
+  "const_budget.notif.item_approved.body": "A budget item has been approved."
 }

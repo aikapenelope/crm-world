@@ -19,5 +19,7 @@
   "condo_properties.flash.building_created": "Edificio creado exitosamente",
   "condo_properties.flash.unit_created": "Unidad creada exitosamente",
   "condo_properties.flash.area_created": "Área común creada exitosamente",
-  "condo_properties.aliquot_warning": "Las alícuotas no suman 100%"
+  "condo_properties.aliquot_warning": "Las alícuotas no suman 100%",
+  "condo_properties.notif.owner_changed.title": "Cambio de propietario",
+  "condo_properties.notif.owner_changed.body": "Una unidad cambió de propietario."
 }

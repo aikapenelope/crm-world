@@ -10,7 +10,5 @@
   "school_calendar.type.meeting": "Reunión",
   "school_calendar.type.event": "Evento",
   "school_calendar.type.administrative": "Administrativo",
-  "school_calendar.type.graduation": "Graduación",
-  "school_calendar.notif.event_upcoming.title": "Evento próximo",
-  "school_calendar.notif.event_upcoming.body": "Hay un evento del calendario escolar en los próximos días."
+  "school_calendar.type.graduation": "Graduación"
 }

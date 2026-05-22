@@ -14,5 +14,7 @@
   "ve_tax_books.summary.igtf_total": "IGTF del Período",
   "ve_tax_books.flash.created": "Entrada fiscal registrada exitosamente",
   "ve_tax_books.flash.updated": "Entrada fiscal actualizada",
-  "ve_tax_books.flash.deleted": "Entrada fiscal eliminada"
+  "ve_tax_books.flash.deleted": "Entrada fiscal eliminada",
+  "ve_tax_books.notif.period_closed.title": "Libro de IVA cerrado",
+  "ve_tax_books.notif.period_closed.body": "El libro de compras/ventas del período fue cerrado."
 }

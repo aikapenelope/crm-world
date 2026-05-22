@@ -56,12 +56,12 @@ export default function DebtorsPage() {
       accessorKey: 'studentName',
       header: 'Estudiante',
       cell: ({ row }) => (
-        <Button type="button" variant="ghost"
+        <button
           className="font-medium text-primary hover:underline"
           onClick={() => router.push(`/backend/tuition/account?student_id=${row.original.studentId}`)}
         >
           {row.original.studentName}
-        </Button>
+        </button>
       ),
     },
     {

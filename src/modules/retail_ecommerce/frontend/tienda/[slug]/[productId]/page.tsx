@@ -40,14 +40,14 @@ export default function ProductDetailPage() {
     <div className="min-h-screen bg-background">
       <header className="border-b">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <Button type="button" variant="ghost"
+          <button
             type="button"
             onClick={() => router.push(`/tienda/${slug}`)}
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="size-4" />
             Volver al catálogo
-          </Button>
+          </button>
         </div>
       </header>
 
@@ -67,21 +67,21 @@ export default function ProductDetailPage() {
               <div className="flex items-center gap-3">
                 <label className="text-sm font-medium">Cantidad:</label>
                 <div className="flex items-center border rounded-md">
-                  <Button type="button" variant="ghost"
+                  <button
                     type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     className="px-3 py-1 text-lg"
                   >
                     -
-                  </Button>
+                  </button>
                   <span className="px-4 py-1 border-x font-medium">{quantity}</span>
-                  <Button type="button" variant="ghost"
+                  <button
                     type="button"
                     onClick={() => setQuantity(quantity + 1)}
                     className="px-3 py-1 text-lg"
                   >
                     +
-                  </Button>
+                  </button>
                 </div>
               </div>
 

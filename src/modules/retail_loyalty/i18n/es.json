@@ -31,9 +31,5 @@
   "retail_loyalty.campaign.status.cancelled": "Cancelada",
   "retail_loyalty.flash.points_earned": "Puntos acumulados exitosamente",
   "retail_loyalty.flash.points_redeemed": "Puntos canjeados exitosamente",
-  "retail_loyalty.flash.campaign_created": "Campaña creada",
-  "retail_loyalty.notif.tier_upgraded.title": "Cliente ascendió de nivel",
-  "retail_loyalty.notif.tier_upgraded.body": "Un cliente de fidelización alcanzó un nivel VIP superior.",
-  "retail_loyalty.notif.campaign_sent.title": "Campaña de fidelización enviada",
-  "retail_loyalty.notif.campaign_sent.body": "Se envió una campaña de fidelización a los clientes seleccionados."
+  "retail_loyalty.flash.campaign_created": "Campaña creada"
 }

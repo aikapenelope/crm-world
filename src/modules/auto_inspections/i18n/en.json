@@ -25,5 +25,7 @@
   "auto_inspections.system.cooling": "Cooling",
   "auto_inspections.system.steering": "Steering",
   "auto_inspections.flash.created": "Inspection created",
-  "auto_inspections.flash.sent": "Inspection sent to customer"
+  "auto_inspections.flash.sent": "Inspection sent to customer",
+  "auto_inspections.notif.completed.title": "Inspection completed",
+  "auto_inspections.notif.completed.body": "The digital vehicle inspection has been completed."
 }

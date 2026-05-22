@@ -16,5 +16,15 @@
   "isp_billing.methods.binance": "Binance / USDT",
   "isp_billing.methods.otro": "Otro",
   "isp_billing.payment_registered": "Pago registrado",
-  "isp_billing.invoice_generated": "Facturas generadas"
+  "isp_billing.invoice_generated": "Facturas generadas",
+  "isp_billing.notif.invoice_generated.title": "Facturas generadas",
+  "isp_billing.notif.invoice_generated.body": "Se generaron las facturas del mes para los abonados.",
+  "isp_billing.notif.payment_received.title": "Pago registrado",
+  "isp_billing.notif.payment_received.body": "Se registró un pago de un abonado.",
+  "isp_billing.notif.invoice_overdue.title": "Factura vencida — pre-corte",
+  "isp_billing.notif.invoice_overdue.body": "Un abonado está próximo al corte por mora.",
+  "isp_billing.notif.service_cut.title": "Servicio suspendido por mora",
+  "isp_billing.notif.service_cut.body": "Un abonado fue suspendido automáticamente por falta de pago.",
+  "isp_billing.notif.service_reconnected.title": "Servicio reactivado",
+  "isp_billing.notif.service_reconnected.body": "El abonado pagó y su servicio fue reactivado."
 }

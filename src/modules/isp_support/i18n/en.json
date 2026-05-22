@@ -24,5 +24,15 @@
   "isp_support.causes.weather": "Weather conditions",
   "isp_support.causes.theft": "Equipment theft",
   "isp_support.causes.unknown": "Unknown cause",
-  "isp_support.saved": "Saved"
+  "isp_support.saved": "Saved",
+  "isp_support.notif.ticket_assigned.title": "Ticket assigned",
+  "isp_support.notif.ticket_assigned.body": "A support ticket has been assigned to you.",
+  "isp_support.notif.ticket_resolved.title": "Ticket resolved",
+  "isp_support.notif.ticket_resolved.body": "A support ticket has been marked as resolved.",
+  "isp_support.notif.sla_breach.title": "SLA breached",
+  "isp_support.notif.sla_breach.body": "A ticket has exceeded its maximum resolution time.",
+  "isp_support.notif.outage_detected.title": "Mass outage detected",
+  "isp_support.notif.outage_detected.body": "Node outage detected — multiple subscribers affected.",
+  "isp_support.notif.outage_resolved.title": "Outage resolved",
+  "isp_support.notif.outage_resolved.body": "The outage has been resolved and the node is operational."
 }

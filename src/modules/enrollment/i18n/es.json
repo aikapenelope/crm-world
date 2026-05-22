@@ -36,5 +36,7 @@
   "enrollment.doc_type.constancia_residencia": "Constancia de residencia",
   "enrollment.doc_type.carta_buena_conducta": "Carta de buena conducta",
   "enrollment.doc_type.certificado_salud": "Certificado de salud",
-  "enrollment.doc_type.otro": "Otro"
+  "enrollment.doc_type.otro": "Otro",
+  "enrollment.notif.registered.title": "Inscripción escolar registrada",
+  "enrollment.notif.registered.body": "Se registró una nueva inscripción escolar."
 }

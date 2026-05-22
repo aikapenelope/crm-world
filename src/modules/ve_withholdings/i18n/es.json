@@ -8,5 +8,7 @@
   "ve_withholdings.status.declared": "Declarada",
   "ve_withholdings.flash.created": "Retención registrada exitosamente",
   "ve_withholdings.flash.updated": "Retención actualizada",
-  "ve_withholdings.flash.declared": "Retención marcada como declarada"
+  "ve_withholdings.flash.declared": "Retención marcada como declarada",
+  "ve_withholdings.notif.declared.title": "Retención declarada",
+  "ve_withholdings.notif.declared.body": "Una retención de impuesto fue marcada como declarada."
 }

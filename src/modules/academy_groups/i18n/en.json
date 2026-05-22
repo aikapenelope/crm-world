@@ -1,1 +1,8 @@
-{"academy_groups.title":"Groups","academy_groups.new":"New group","academy_groups.group_code":"Code","academy_groups.schedule":"Schedule"}
+{
+  "academy_groups.title": "Groups",
+  "academy_groups.new": "New group",
+  "academy_groups.group_code": "Code",
+  "academy_groups.schedule": "Schedule",
+  "academy_groups.notif.capacity_reached.title": "Group at capacity",
+  "academy_groups.notif.capacity_reached.body": "A group has reached its maximum student capacity."
+}

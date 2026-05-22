@@ -8,9 +8,5 @@
   "dist_credit.status.blocked": "Blocked",
   "dist_credit.flash.created": "Credit assigned successfully",
   "dist_credit.flash.updated": "Credit updated",
-  "dist_credit.flash.transaction_created": "Transaction registered",
-  "dist_credit.notif.account_overdue.title": "Account overdue",
-  "dist_credit.notif.account_overdue.body": "A distribution customer has an overdue balance.",
-  "dist_credit.notif.account_blocked.title": "Customer credit blocked",
-  "dist_credit.notif.account_blocked.body": "A customer was automatically blocked due to overdue credit."
+  "dist_credit.flash.transaction_created": "Transaction registered"
 }

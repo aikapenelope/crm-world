@@ -10,5 +10,7 @@
   "const_schedule.milestone.achieved": "Achieved",
   "const_schedule.milestone.delayed": "Delayed",
   "const_schedule.flash.task_created": "Task created successfully",
-  "const_schedule.flash.milestone_created": "Milestone created successfully"
+  "const_schedule.flash.milestone_created": "Milestone created successfully",
+  "const_schedule.notif.task_delayed.title": "Schedule task delayed",
+  "const_schedule.notif.task_delayed.body": "A construction schedule task is running behind."
 }

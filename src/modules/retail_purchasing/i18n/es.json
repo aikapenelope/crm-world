@@ -24,9 +24,5 @@
   "retail_purchasing.flash.order_created": "Orden de compra creada",
   "retail_purchasing.flash.order_received": "Mercancía recibida",
   "retail_purchasing.flash.payment_registered": "Pago registrado",
-  "retail_purchasing.flash.supplier_created": "Proveedor creado",
-  "retail_purchasing.notif.order_received.title": "Orden de compra recibida",
-  "retail_purchasing.notif.order_received.body": "Se recibió mercancía de un proveedor.",
-  "retail_purchasing.notif.order_overdue.title": "Orden de compra vencida",
-  "retail_purchasing.notif.order_overdue.body": "Una orden de compra pasó su fecha de entrega esperada."
+  "retail_purchasing.flash.supplier_created": "Proveedor creado"
 }
