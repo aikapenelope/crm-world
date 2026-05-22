@@ -1,3 +1,18 @@
+/**
+ * AGM Exception: raw <form> — dynamic options + computed values from API
+ *
+ * This form loads select options from one or more API endpoints at runtime
+ * and computes derived values (e.g. remaining balance, enriched labels).
+ * CrudForm supports dynamic options arrays, but the pre-processing logic
+ * (cross-joining multiple API results, computing derived fields) would require
+ * a custom CrudFormGroupComponent that duplicates significant non-form logic.
+ *
+ * Acceptable to keep raw <form> here. All other AGM rules apply:
+ * - Button / input components from @open-mercato/ui
+ * - apiCall / createCrud for HTTP calls
+ * - flash for feedback
+ * Migrate when CrudForm adds an onBeforeRender hook for option enrichment.
+ */
 'use client'
 
 import * as React from 'react'
