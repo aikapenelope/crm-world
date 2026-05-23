@@ -1,0 +1,69 @@
+{
+  "mfg_bom.nav.title": "Bill of Materials",
+  "mfg_bom.nav.boms": "BOMs",
+  "mfg_bom.nav.versions": "Historial de Versiones",
+
+  "mfg_bom.list.title": "Bill of Materials",
+  "mfg_bom.list.new": "Nuevo BOM",
+  "mfg_bom.list.empty.title": "Sin BOMs registrados",
+  "mfg_bom.list.empty.description": "Crea el primer BOM para comenzar a planificar la producción.",
+
+  "mfg_bom.fields.product_code": "Código de Producto",
+  "mfg_bom.fields.product_name": "Nombre del Producto",
+  "mfg_bom.fields.version": "Versión",
+  "mfg_bom.fields.status": "Estado",
+  "mfg_bom.fields.bom_type": "Tipo de BOM",
+  "mfg_bom.fields.base_quantity": "Cantidad Base",
+  "mfg_bom.fields.base_uom": "Unidad de Medida",
+  "mfg_bom.fields.expected_yield_pct": "Rendimiento Esperado (%)",
+  "mfg_bom.fields.approved_by": "Aprobado por",
+  "mfg_bom.fields.change_reason": "Motivo del Cambio",
+  "mfg_bom.fields.notes": "Notas",
+
+  "mfg_bom.line.component_code": "Código Componente",
+  "mfg_bom.line.component_name": "Nombre Componente",
+  "mfg_bom.line.component_type": "Tipo",
+  "mfg_bom.line.quantity": "Cantidad",
+  "mfg_bom.line.uom": "UM",
+  "mfg_bom.line.scrap_pct": "Merma (%)",
+  "mfg_bom.line.is_critical": "¿Crítico?",
+  "mfg_bom.line.is_phantom": "¿Fantasma?",
+  "mfg_bom.line.lead_offset_days": "Días Anticipación",
+
+  "mfg_bom.alt.material_code": "Código Alternativo",
+  "mfg_bom.alt.material_name": "Nombre Alternativo",
+  "mfg_bom.alt.conversion_factor": "Factor de Conversión",
+  "mfg_bom.alt.usage_condition": "Condición de Uso",
+  "mfg_bom.alt.quality_impact": "Impacto en Calidad",
+
+  "mfg_bom.type.process": "Por Procesos (receta con rendimiento)",
+  "mfg_bom.type.discrete": "Discreto (lista de componentes)",
+
+  "mfg_bom.status.draft": "Borrador",
+  "mfg_bom.status.active": "Activo",
+  "mfg_bom.status.superseded": "Reemplazado",
+  "mfg_bom.status.archived": "Archivado",
+
+  "mfg_bom.component_type.raw_material": "Materia Prima",
+  "mfg_bom.component_type.packaging": "Material de Empaque",
+  "mfg_bom.component_type.subassembly": "Subconjunto",
+  "mfg_bom.component_type.consumable": "Consumible",
+
+  "mfg_bom.alt.condition.shortage_only": "Solo en escasez",
+  "mfg_bom.alt.condition.approved_equivalent": "Equivalente técnico aprobado",
+  "mfg_bom.alt.condition.cost_reduction": "Reducción de costo",
+
+  "mfg_bom.yield_note": "Rendimiento: por cada 100 kg de insumos se obtienen {{yield}}% de producto terminado",
+  "mfg_bom.quantity_required_note": "Cantidad a solicitar = cantidad × (1 + merma%/100)",
+  "mfg_bom.venezuelan_note": "Define materiales alternativos para gestionar escasez de insumos importados",
+
+  "mfg_bom.saved": "BOM guardado",
+  "mfg_bom.activated": "BOM activado — ahora disponible para órdenes de producción",
+  "mfg_bom.line.saved": "Componente guardado",
+  "mfg_bom.alt.saved": "Material alternativo guardado",
+
+  "mfg_bom.notif.activated.title": "BOM activado",
+  "mfg_bom.notif.activated.body": "Una nueva versión del BOM fue activada para producción.",
+  "mfg_bom.notif.approval_required.title": "BOM pendiente de aprobación",
+  "mfg_bom.notif.approval_required.body": "Un BOM requiere aprobación de ingeniería para activarse."
+}

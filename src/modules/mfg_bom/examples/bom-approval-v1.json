@@ -1,0 +1,74 @@
+{
+  "workflowId": "bom_approval_v1",
+  "workflowName": "Aprobación de Cambio de BOM",
+  "description": "Flujo de aprobación para cambios en el Bill of Materials. El ingeniero de proceso propone la nueva versión con los cambios y su justificación; el gerente de ingeniería o director técnico revisa, evalúa el impacto en costos y calidad, y aprueba o rechaza la activación. Sin aprobación, la nueva versión no puede usarse en órdenes de producción.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Manufactura",
+    "icon": "layers",
+    "entityType": "MfgBomHeader",
+    "tags": ["bom", "ingenieria", "cambio", "aprobacion", "manufactura"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Cambio Propuesto",
+        "stepType": "START",
+        "description": "Ingeniero de proceso completó la nueva versión del BOM con los cambios y está solicitando aprobación para activarla."
+      },
+      {
+        "stepId": "revision_ingenieria",
+        "stepName": "Revisión de Ingeniería",
+        "stepType": "USER_TASK",
+        "description": "El gerente de ingeniería o director técnico revisa el cambio propuesto, evalúa el impacto en proceso, calidad y costos",
+        "config": {
+          "taskName": "Revisar y aprobar cambio de BOM",
+          "description": "Revisar: qué componentes cambiaron, por qué, impacto en el rendimiento del proceso, impacto en calidad del producto, impacto en costo de producción. Verificar que los materiales alternativos propuestos estén calificados.",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Decisión",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — activar nueva versión" },
+                { "value": "approve_conditional", "label": "Aprobado con condiciones" },
+                { "value": "reject", "label": "Rechazado — mantener versión actual" }
+              ]
+            },
+            { "id": "quality_impact_ok", "label": "¿Impacto en calidad evaluado?", "type": "checkbox", "required": true },
+            { "id": "cost_impact", "label": "Impacto en costo estimado", "type": "text", "required": false, "placeholder": "+5% / -3% / Sin impacto significativo" },
+            { "id": "conditions", "label": "Condiciones o restricciones (si aplica)", "type": "textarea", "required": false },
+            { "id": "rejection_reason", "label": "Motivo del rechazo (si aplica)", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Aprobado",
+        "stepType": "END",
+        "description": "BOM aprobado — activar nueva versión y archivar la anterior."
+      },
+      {
+        "stepId": "end_conditional",
+        "stepName": "Aprobado con Condiciones",
+        "stepType": "END",
+        "description": "BOM aprobado con condiciones específicas documentadas."
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazado",
+        "stepType": "END",
+        "description": "Cambio rechazado — la versión anterior continúa activa."
+      }
+    ],
+    "transitions": [
+      { "from": "start",             "to": "revision_ingenieria" },
+      { "from": "revision_ingenieria", "to": "end_approved",     "condition": "decision === 'approve'" },
+      { "from": "revision_ingenieria", "to": "end_conditional",  "condition": "decision === 'approve_conditional'" },
+      { "from": "revision_ingenieria", "to": "end_rejected",     "condition": "decision === 'reject'" }
+    ]
+  }
+}
