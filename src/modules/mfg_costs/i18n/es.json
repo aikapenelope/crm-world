@@ -1,0 +1,13 @@
+{
+  "mfg_costs.nav.title": "Costos de Producción",
+  "mfg_costs.variance.total": "Variación Total",
+  "mfg_costs.variance.price": "Variación de Precio de MP",
+  "mfg_costs.variance.quantity": "Variación de Cantidad Consumida",
+  "mfg_costs.variance.labor": "Variación de Mano de Obra",
+  "mfg_costs.variance.favorable": "Favorable (real < estándar)",
+  "mfg_costs.variance.unfavorable": "Desfavorable (real > estándar)",
+  "mfg_costs.bimoneda_note": "MP importada en USD precio factura · MO y MP local en Bs convertidos al tipo BCV del día del cierre",
+  "mfg_costs.bcv_note": "Tipo de cambio BCV usado para convertir costos Bs → USD al calcular el costo real de la orden",
+  "mfg_costs.notif.unfavorable.title": "Variación desfavorable > 10%",
+  "mfg_costs.notif.unfavorable.body": "El costo real supera el estándar en más del 10%. Revisar causa raíz."
+}

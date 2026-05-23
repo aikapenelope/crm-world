@@ -1,0 +1,10 @@
+{
+  "mfg_floor.nav.title": "Plant Floor",
+  "mfg_floor.oee.total": "Total OEE",
+  "mfg_floor.oee.internal": "Internal OEE (excl. power outages)",
+  "mfg_floor.close_shift": "Close Shift & Generate Report",
+  "mfg_floor.notif.shift_closed.title": "Shift closed",
+  "mfg_floor.notif.shift_closed.body": "Shift report was generated and is available on the dashboard.",
+  "mfg_floor.notif.oee_below.title": "Internal OEE below threshold",
+  "mfg_floor.notif.oee_below.body": "Internal OEE dropped below 65% on a production line. Review root cause."
+}

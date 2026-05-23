@@ -1,0 +1,12 @@
+{
+  "mfg_mrp.nav.title": "MRP Engine",
+  "mfg_mrp.req.gross": "Gross Requirement",
+  "mfg_mrp.req.net": "Net Requirement",
+  "mfg_mrp.run_button": "Run MRP",
+  "mfg_mrp.notif.run_completed.title": "MRP run completed",
+  "mfg_mrp.notif.run_completed.body": "MRP run finished. Review net requirements and generated requisitions.",
+  "mfg_mrp.notif.at_risk.title": "Material at stockout risk",
+  "mfg_mrp.notif.at_risk.body": "An imported material requires urgent PO based on its lead time.",
+  "mfg_mrp.notif.overdue.title": "Import PO date overdue",
+  "mfg_mrp.notif.overdue.body": "PO issue date has passed. Risk of production stoppage due to missing imported material."
+}

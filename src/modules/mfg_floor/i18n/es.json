@@ -1,0 +1,15 @@
+{
+  "mfg_floor.nav.title": "Piso de Planta",
+  "mfg_floor.oee.total": "OEE Total",
+  "mfg_floor.oee.internal": "OEE Interno (sin CORPOELEC)",
+  "mfg_floor.oee.worldclass": "Clase mundial ≥ 85% · Aceptable ≥ 65% · Requiere atención < 65%",
+  "mfg_floor.shift.morning": "Turno Mañana (6:00-14:00)",
+  "mfg_floor.shift.afternoon": "Turno Tarde (14:00-22:00)",
+  "mfg_floor.shift.night": "Turno Noche (22:00-6:00)",
+  "mfg_floor.close_shift": "Cerrar Turno y Generar Reporte",
+  "mfg_floor.corpoelec_note": "Los paros por CORPOELEC se excluyen del OEE interno para evaluar eficiencia real del equipo",
+  "mfg_floor.notif.shift_closed.title": "Turno cerrado",
+  "mfg_floor.notif.shift_closed.body": "El reporte de turno fue generado y está disponible en el dashboard.",
+  "mfg_floor.notif.oee_below.title": "OEE interno bajo umbral",
+  "mfg_floor.notif.oee_below.body": "El OEE interno de una línea cayó por debajo del 65%. Revisar causa raíz."
+}
