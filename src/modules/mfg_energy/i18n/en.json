@@ -1,0 +1,10 @@
+{
+  "mfg_energy.nav.title": "Energy Management",
+  "mfg_energy.generator_note": "Generator: 5-10x more expensive than grid. Quantifies the real cost of CORPOELEC outages.",
+  "mfg_energy.notif.outage.title": "⚡ POWER OUTAGE — PLANT STOPPED",
+  "mfg_energy.notif.outage.body": "A power outage was registered. Check if generator should be activated.",
+  "mfg_energy.notif.restored.title": "Power supply restored",
+  "mfg_energy.notif.restored.body": "Electricity was restored. Restart equipment cautiously.",
+  "mfg_energy.notif.generator.title": "Generator activated due to outage",
+  "mfg_energy.notif.generator.body": "Generator is operating. Register fuel consumption when done."
+}

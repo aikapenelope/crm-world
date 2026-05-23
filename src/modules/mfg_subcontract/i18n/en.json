@@ -1,0 +1,7 @@
+{
+  "mfg_subcontract.nav.title": "Subcontracting",
+  "mfg_subcontract.notif.completed.title": "Subcontract completed",
+  "mfg_subcontract.notif.completed.body": "The subcontractor delivered finished goods. Register receipt in inventory.",
+  "mfg_subcontract.notif.scrap.title": "Scrap exceeds contractual standard",
+  "mfg_subcontract.notif.scrap.body": "Subcontractor scrap rate exceeded the contractual percentage. Review penalty."
+}
