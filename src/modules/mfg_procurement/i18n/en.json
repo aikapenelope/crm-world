@@ -1,0 +1,10 @@
+{
+  "mfg_procurement.nav.title": "Industrial Procurement",
+  "mfg_procurement.cif_note": "CIF = FOB + Freight + Insurance + Import Duty + Import VAT + Agency Fees + Inland Transport",
+  "mfg_procurement.notif.customs.title": "Shipment at Venezuelan customs",
+  "mfg_procurement.notif.customs.body": "The import arrived at the port and is in customs processing.",
+  "mfg_procurement.notif.delivered.title": "Import received at warehouse",
+  "mfg_procurement.notif.delivered.body": "Imported goods received. Register lots in inventory.",
+  "mfg_procurement.notif.delay.title": "Import delay",
+  "mfg_procurement.notif.delay.body": "Warehouse ETA has passed. Contact customs agent."
+}

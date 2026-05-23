@@ -1,0 +1,9 @@
+{
+  "mfg_subcontract.nav.title": "Maquila",
+  "mfg_subcontract.scrap_note": "Merma contractual: el maquilador puede usar hasta X% más de material sin penalización. Si supera, se descuenta de la factura.",
+  "mfg_subcontract.virtual_warehouse": "Almacén virtual: materiales enviados al maquilador aún no convertidos en PT",
+  "mfg_subcontract.notif.completed.title": "Maquila completada",
+  "mfg_subcontract.notif.completed.body": "El maquilador entregó el producto terminado. Registrar entrada en inventario.",
+  "mfg_subcontract.notif.scrap.title": "Merma excede estándar contractual",
+  "mfg_subcontract.notif.scrap.body": "La merma del maquilador supera el porcentaje acordado en contrato. Revisar penalización."
+}

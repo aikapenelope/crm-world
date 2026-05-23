@@ -1,0 +1,16 @@
+{
+  "mfg_procurement.nav.title": "Compras Industriales",
+  "mfg_procurement.cif_note": "CIF = FOB + Flete + Seguro + Arancel SENIAT + IVA aduana + Agente + Flete interno",
+  "mfg_procurement.lead_note": "Lead time mostrado = promedio real calculado del historial, NO el prometido por el proveedor",
+  "mfg_procurement.dau_note": "DAU = Declaración Aduanera Única — número de expediente en aduana venezolana (SENIAT/SIGA)",
+  "mfg_procurement.payment.advance": "Pago anticipado",
+  "mfg_procurement.payment.letter_of_credit": "Carta de crédito",
+  "mfg_procurement.payment.net_30": "Crédito 30 días",
+  "mfg_procurement.payment.net_60": "Crédito 60 días",
+  "mfg_procurement.notif.customs.title": "Mercancía en aduana venezolana",
+  "mfg_procurement.notif.customs.body": "La importación llegó al puerto y está en proceso de aduana.",
+  "mfg_procurement.notif.delivered.title": "Importación recibida en almacén",
+  "mfg_procurement.notif.delivered.body": "La mercancía importada fue recibida. Registrar lotes en inventario.",
+  "mfg_procurement.notif.delay.title": "Retraso en importación",
+  "mfg_procurement.notif.delay.body": "La fecha ETA del almacén ya venció. Contactar agente de aduana."
+}

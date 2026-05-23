@@ -1,0 +1,11 @@
+{
+  "mfg_maintenance.nav.title": "Maintenance GMAO",
+  "mfg_maintenance.wo.corrective": "Corrective",
+  "mfg_maintenance.wo.preventive": "Preventive",
+  "mfg_maintenance.notif.plan_overdue.title": "Preventive maintenance overdue",
+  "mfg_maintenance.notif.plan_overdue.body": "A preventive maintenance plan is overdue. Generate urgent work order.",
+  "mfg_maintenance.notif.spare_low.title": "Critical spare part below minimum",
+  "mfg_maintenance.notif.spare_low.body": "A spare part stock fell below reorder point. Start purchase before stockout.",
+  "mfg_maintenance.notif.breakdown.title": "Critical equipment breakdown",
+  "mfg_maintenance.notif.breakdown.body": "A breakdown was reported on critical equipment. Open urgent corrective work order."
+}

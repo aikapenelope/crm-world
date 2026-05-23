@@ -1,0 +1,18 @@
+{
+  "mfg_maintenance.nav.title": "Mantenimiento GMAO",
+  "mfg_maintenance.eq.criticality.critical": "Crítico — paro de planta sin él",
+  "mfg_maintenance.eq.criticality.high": "Alta — afecta >50% capacidad",
+  "mfg_maintenance.eq.criticality.medium": "Media — afecta una línea",
+  "mfg_maintenance.eq.criticality.low": "Baja — equipo auxiliar",
+  "mfg_maintenance.spare.safety_formula": "Stock de seguridad = ceil(lead_time_días / MTBF_días). Ejemplo: falla cada 180d, lead time 90d → safety_stock = 1 unidad siempre en almacén",
+  "mfg_maintenance.spare.imported_alert": "Repuesto importado — iniciar compra cuando llega al punto de reorden, no cuando se agota",
+  "mfg_maintenance.wo.corrective": "Correctivo",
+  "mfg_maintenance.wo.preventive": "Preventivo",
+  "mfg_maintenance.wo.predictive": "Predictivo",
+  "mfg_maintenance.notif.plan_overdue.title": "Mantenimiento preventivo vencido",
+  "mfg_maintenance.notif.plan_overdue.body": "Un plan de mantenimiento preventivo está vencido. Generar WO urgente.",
+  "mfg_maintenance.notif.spare_low.title": "Repuesto crítico bajo mínimo",
+  "mfg_maintenance.notif.spare_low.body": "El stock de un repuesto cayó por debajo del punto de reorden. Iniciar compra antes de que se agote.",
+  "mfg_maintenance.notif.breakdown.title": "Avería en equipo crítico",
+  "mfg_maintenance.notif.breakdown.body": "Se reportó una avería en un equipo crítico. Abrir WO correctiva urgente."
+}

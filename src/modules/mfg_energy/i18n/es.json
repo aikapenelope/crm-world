@@ -1,0 +1,16 @@
+{
+  "mfg_energy.nav.title": "Gestión de Energía",
+  "mfg_energy.grid_note": "Tarifa CORPOELEC Venezuela — energía subsidiada pero intermitente",
+  "mfg_energy.generator_note": "Generador propio: 5-10x más caro que la red. Cuantifica el costo real de los cortes eléctricos.",
+  "mfg_energy.premium_note": "Sobrecosto generador = Costo real durante corte - (mismo kWh a tarifa red normal)",
+  "mfg_energy.outage_types.scheduled": "Restricción programada — CORPOELEC notifica previamente",
+  "mfg_energy.outage_types.unscheduled": "Corte no programado — el más dañino para producción continua",
+  "mfg_energy.outage_types.fluctuation": "Fluctuación de voltaje — puede dañar equipos sensibles",
+  "mfg_energy.outage_types.blackout": "Apagón total — toda la zona sin suministro",
+  "mfg_energy.notif.outage.title": "⚡ CORTE ELÉCTRICO — PLANTA PARADA",
+  "mfg_energy.notif.outage.body": "Se registró un corte de energía. Verificar si se activa generador.",
+  "mfg_energy.notif.restored.title": "Suministro eléctrico restablecido",
+  "mfg_energy.notif.restored.body": "La energía fue restablecida. Reiniciar equipos con precaución.",
+  "mfg_energy.notif.generator.title": "Generador activado por corte",
+  "mfg_energy.notif.generator.body": "El generador está operando. Registrar consumo de combustible al terminar."
+}
