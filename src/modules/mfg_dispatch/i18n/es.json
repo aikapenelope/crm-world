@@ -1,0 +1,16 @@
+{
+  "mfg_dispatch.nav.title": "Despacho PT",
+  "mfg_dispatch.fields.order_number": "Número de Pedido",
+  "mfg_dispatch.fields.customer_name": "Nombre del Cliente",
+  "mfg_dispatch.fields.customer_rif": "RIF del Cliente",
+  "mfg_dispatch.fields.requires_coa": "¿Requiere Certificado de Análisis?",
+  "mfg_dispatch.fields.requires_temperature_control": "¿Requiere control de temperatura?",
+  "mfg_dispatch.fields.dispatch_number": "Número de Guía de Despacho",
+  "mfg_dispatch.fields.vehicle_plate": "Placa del Vehículo (AA-123-BC)",
+  "mfg_dispatch.coa_note": "Clientes como Farmatodo, Central Madeirense y distribuidoras exigen el CoA firmado antes de aceptar la entrega",
+  "mfg_dispatch.igtf_note": "IGTF 3% aplica para pedidos pagados en divisas (Ley IGTF Venezuela, desde 2022)",
+  "mfg_dispatch.notif.confirmed.title": "Pedido industrial confirmado",
+  "mfg_dispatch.notif.confirmed.body": "Un pedido de PT fue confirmado y los lotes reservados en almacén.",
+  "mfg_dispatch.notif.delivered.title": "Entrega confirmada por el cliente",
+  "mfg_dispatch.notif.delivered.body": "El cliente firmó la guía de despacho. Listo para facturar."
+}

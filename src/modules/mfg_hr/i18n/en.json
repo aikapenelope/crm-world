@@ -1,0 +1,7 @@
+{
+  "mfg_hr.nav.title": "Manufacturing HR",
+  "mfg_hr.lottt.night": "Night shift premium: +30% (LOTTT Art. 118)",
+  "mfg_hr.bonus_note": "Production bonus: activated when the team exceeds the quota threshold (typically 90%). Shared among all shift operators.",
+  "mfg_hr.notif.bonus_approved.title": "Production bonus approved",
+  "mfg_hr.notif.bonus_approved.body": "Production bonus was approved. Ready to process payment."
+}

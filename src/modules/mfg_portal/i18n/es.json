@@ -1,0 +1,9 @@
+{
+  "mfg_portal.nav.home": "Mis Pedidos",
+  "mfg_portal.nav.certificados": "Certificados de Análisis",
+  "mfg_portal.coa_note": "Los certificados de análisis son generados por el equipo de calidad para cada lote de producto terminado.",
+  "mfg_portal.status.confirmed": "Confirmado",
+  "mfg_portal.status.in_preparation": "Preparando para despacho",
+  "mfg_portal.status.dispatched": "En tránsito hacia su almacén",
+  "mfg_portal.status.invoiced": "Entregado — facturado"
+}

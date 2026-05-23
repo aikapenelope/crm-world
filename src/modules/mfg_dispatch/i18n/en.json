@@ -1,0 +1,10 @@
+{
+  "mfg_dispatch.nav.title": "Finished Goods Dispatch",
+  "mfg_dispatch.fields.order_number": "Order Number",
+  "mfg_dispatch.fields.customer_name": "Customer Name",
+  "mfg_dispatch.fields.requires_coa": "Requires Certificate of Analysis?",
+  "mfg_dispatch.notif.confirmed.title": "Industrial order confirmed",
+  "mfg_dispatch.notif.confirmed.body": "A finished goods order was confirmed and lots reserved in inventory.",
+  "mfg_dispatch.notif.delivered.title": "Delivery confirmed by customer",
+  "mfg_dispatch.notif.delivered.body": "Customer signed the dispatch guide. Ready to invoice."
+}
