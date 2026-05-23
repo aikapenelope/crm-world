@@ -1,0 +1,10 @@
+{
+  "mfg_planning.nav.title": "Planificación MPS",
+  "mfg_planning.energy.restriction": "Corte eléctrico previsto (CORPOELEC)",
+  "mfg_planning.energy.reliable": "Suministro confiable",
+  "mfg_planning.energy.unstable": "Suministro inestable",
+  "mfg_planning.energy_note": "Programar operaciones de alta potencia en ventanas confiables y evitar las ventanas de restricción CORPOELEC",
+  "mfg_planning.capacity.overloaded": "Sobrecargado",
+  "mfg_planning.notif.overloaded.title": "Línea sobrecargada en el MPS",
+  "mfg_planning.notif.overloaded.body": "Un centro de trabajo tiene más horas planificadas que disponibles esta semana."
+}

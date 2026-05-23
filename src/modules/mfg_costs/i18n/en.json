@@ -1,0 +1,7 @@
+{
+  "mfg_costs.nav.title": "Production Costs",
+  "mfg_costs.variance.favorable": "Favorable (actual < standard)",
+  "mfg_costs.variance.unfavorable": "Unfavorable (actual > standard)",
+  "mfg_costs.notif.unfavorable.title": "Unfavorable variance > 10%",
+  "mfg_costs.notif.unfavorable.body": "Actual cost exceeds standard by more than 10%. Review root cause."
+}

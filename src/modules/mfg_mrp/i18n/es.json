@@ -1,0 +1,21 @@
+{
+  "mfg_mrp.nav.title": "Motor MRP",
+  "mfg_mrp.plan.number": "Número de Plan",
+  "mfg_mrp.plan.period": "Período de Planificación",
+  "mfg_mrp.req.material": "Material",
+  "mfg_mrp.req.gross": "Necesidad Bruta",
+  "mfg_mrp.req.net": "Necesidad Neta",
+  "mfg_mrp.req.on_hand": "Stock Disponible",
+  "mfg_mrp.req.in_transit": "En Tránsito",
+  "mfg_mrp.req.lead_time": "Lead Time (días)",
+  "mfg_mrp.req.suggested_po": "Fecha OC Sugerida",
+  "mfg_mrp.venezuela_lead_national": "Proveedor nacional: 15 días típico",
+  "mfg_mrp.venezuela_lead_import": "Importado: 45-90 días (divisas + flete + aduana VE)",
+  "mfg_mrp.run_button": "Correr MRP",
+  "mfg_mrp.notif.run_completed.title": "Corrida MRP completada",
+  "mfg_mrp.notif.run_completed.body": "La corrida MRP finalizó. Revisa las necesidades netas y requisiciones generadas.",
+  "mfg_mrp.notif.at_risk.title": "Material en riesgo de ruptura",
+  "mfg_mrp.notif.at_risk.body": "Un material importado requiere OC urgente según su lead time venezolano.",
+  "mfg_mrp.notif.overdue.title": "⚠ OC de importación vencida",
+  "mfg_mrp.notif.overdue.body": "La fecha de emisión de OC ya pasó. Riesgo de detener producción por falta de material importado."
+}

@@ -1,0 +1,8 @@
+{
+  "mfg_planning.nav.title": "MPS Planning",
+  "mfg_planning.energy.restriction": "Power outage forecast (CORPOELEC)",
+  "mfg_planning.energy.reliable": "Reliable power supply",
+  "mfg_planning.energy.unstable": "Unstable power supply",
+  "mfg_planning.notif.overloaded.title": "Production line overloaded",
+  "mfg_planning.notif.overloaded.body": "A work center has more planned hours than available this week."
+}
