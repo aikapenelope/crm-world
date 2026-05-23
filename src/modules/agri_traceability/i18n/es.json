@@ -1,0 +1,50 @@
+{
+  "agri_traceability.nav.title": "Trazabilidad",
+  "agri_traceability.nav.trace": "Consultar Trazabilidad",
+  "agri_traceability.nav.recalls": "Recalls",
+
+  "agri_traceability.trace.title": "Trazabilidad de Lote",
+  "agri_traceability.trace.placeholder": "Ingresa el número de lote (ej: PROD-2026-001)",
+  "agri_traceability.trace.search": "Trazar",
+  "agri_traceability.trace.not_found": "Lote no encontrado",
+  "agri_traceability.trace.compliant": "✓ Cumplimiento de retiro verificado",
+  "agri_traceability.trace.non_compliant": "⚠ Lote beneficiado durante período de retiro activo",
+
+  "agri_traceability.recalls.title": "Recalls",
+  "agri_traceability.recalls.new": "Iniciar Recall",
+  "agri_traceability.recalls.empty.title": "Sin recalls registrados",
+  "agri_traceability.recalls.empty.description": "Los recalls se inician cuando se detecta un problema de inocuidad.",
+
+  "agri_traceability.fields.recall_number": "Número de Recall",
+  "agri_traceability.fields.processing_lot_id": "Lote Afectado",
+  "agri_traceability.fields.lot_number": "N° Lote",
+  "agri_traceability.fields.reason": "Razón del Retiro",
+  "agri_traceability.fields.recall_class": "Clase de Riesgo",
+  "agri_traceability.fields.detection_source": "Fuente de Detección",
+  "agri_traceability.fields.initiated_date": "Fecha de Inicio",
+  "agri_traceability.fields.status": "Estado",
+  "agri_traceability.fields.affected_clients": "Clientes Afectados",
+  "agri_traceability.fields.quantity_recalled_kg": "Cantidad Retirada (kg)",
+
+  "agri_traceability.class.I": "Clase I — Riesgo directo para el consumidor",
+  "agri_traceability.class.II": "Clase II — Posible riesgo o baja probabilidad",
+  "agri_traceability.class.III": "Clase III — Sin riesgo, cumplimiento regulatorio",
+
+  "agri_traceability.source.customer_complaint": "Reclamo de cliente",
+  "agri_traceability.source.insai_alert": "Alerta INSAI",
+  "agri_traceability.source.internal_analysis": "Análisis interno",
+  "agri_traceability.source.supplier_notification": "Notificación de proveedor",
+  "agri_traceability.source.regulatory_audit": "Auditoría regulatoria",
+
+  "agri_traceability.status.investigating": "Investigando",
+  "agri_traceability.status.executing": "En ejecución",
+  "agri_traceability.status.completed": "Completado",
+  "agri_traceability.status.closed": "Cerrado",
+
+  "agri_traceability.insai_note": "Clase I: notificar al INSAI dentro de las 24 horas",
+
+  "agri_traceability.notif.recall_initiated.title": "🚨 Recall iniciado",
+  "agri_traceability.notif.recall_initiated.body": "Se inició un retiro de mercado. Acción urgente requerida.",
+  "agri_traceability.notif.recall_approved.title": "Recall aprobado por GM",
+  "agri_traceability.notif.recall_approved.body": "El GM autorizó el recall. Proceder con notificaciones a clientes."
+}
