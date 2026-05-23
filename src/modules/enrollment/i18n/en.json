@@ -36,5 +36,7 @@
   "enrollment.doc_type.constancia_residencia": "Proof of Residence",
   "enrollment.doc_type.carta_buena_conducta": "Good Conduct Letter",
   "enrollment.doc_type.certificado_salud": "Health Certificate",
-  "enrollment.doc_type.otro": "Other"
+  "enrollment.doc_type.otro": "Other",
+  "enrollment.notif.registered.title": "School enrollment registered",
+  "enrollment.notif.registered.body": "A new school enrollment has been registered."
 }

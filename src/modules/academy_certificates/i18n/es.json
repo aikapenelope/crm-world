@@ -1,1 +1,8 @@
-{"academy_certificates.title":"Certificados","academy_certificates.new":"Emitir certificado","academy_certificates.status.pending":"Pendiente","academy_certificates.status.issued":"Emitido"}
+{
+  "academy_certificates.title": "Certificados",
+  "academy_certificates.new": "Emitir certificado",
+  "academy_certificates.status.pending": "Pendiente",
+  "academy_certificates.status.issued": "Emitido",
+  "academy_certificates.notif.certificate_issued.title": "Certificado emitido",
+  "academy_certificates.notif.certificate_issued.body": "Se emitió un certificado de completación para un alumno."
+}

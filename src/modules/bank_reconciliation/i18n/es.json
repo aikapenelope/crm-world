@@ -6,5 +6,9 @@
   "bank_reconciliation.status.unmatched": "Sin cruce",
   "bank_reconciliation.status.ignored": "Ignorado",
   "bank_reconciliation.flash.uploaded": "Extracto cargado exitosamente",
-  "bank_reconciliation.flash.reconciled": "Movimiento conciliado"
+  "bank_reconciliation.flash.reconciled": "Movimiento conciliado",
+  "bank_reconciliation.notif.reconciled.title": "Conciliación completada",
+  "bank_reconciliation.notif.reconciled.body": "Un extracto bancario fue conciliado exitosamente.",
+  "bank_reconciliation.notif.discrepancy.title": "Discrepancia detectada en conciliación",
+  "bank_reconciliation.notif.discrepancy.body": "Hay movimientos no conciliados en el extracto bancario."
 }

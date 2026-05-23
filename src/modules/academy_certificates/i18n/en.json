@@ -1,1 +1,6 @@
-{"academy_certificates.title":"Certificates","academy_certificates.status.issued":"Issued"}
+{
+  "academy_certificates.title": "Certificates",
+  "academy_certificates.status.issued": "Issued",
+  "academy_certificates.notif.certificate_issued.title": "Certificate issued",
+  "academy_certificates.notif.certificate_issued.body": "A completion certificate has been issued to a student."
+}

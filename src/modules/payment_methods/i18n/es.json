@@ -29,5 +29,7 @@
     "confirm": "Confirmar pago",
     "reject": "Rechazar pago",
     "record_payment": "Registrar pago"
-  }
+  },
+  "payment_methods.notif.method_deactivated.title": "Método de pago desactivado",
+  "payment_methods.notif.method_deactivated.body": "Un método de pago fue desactivado en el sistema."
 }

@@ -7,5 +7,7 @@
   "ve_tax_reports.summary.igtf": "IGTF for Period",
   "ve_tax_reports.export.sales": "Sales Book (CSV)",
   "ve_tax_reports.export.purchases": "Purchases Book (CSV)",
-  "ve_tax_reports.export.withholdings": "Withholdings (CSV)"
+  "ve_tax_reports.export.withholdings": "Withholdings (CSV)",
+  "ve_tax_reports.notif.report_generated.title": "Tax report generated",
+  "ve_tax_reports.notif.report_generated.body": "A Venezuelan tax report has been generated."
 }

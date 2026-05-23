@@ -47,5 +47,7 @@
   "students.grade.bachillerato_4": "12th Grade",
   "students.grade.bachillerato_5": "13th Grade",
   "students.notifications.enrollment_pending.title": "Enrollment Pending",
-  "students.notifications.enrollment_pending.body": "Student {studentName} has pending documents."
+  "students.notifications.enrollment_pending.body": "Student {studentName} has pending documents.",
+  "students.notif.graduated.title": "Student graduated",
+  "students.notif.graduated.body": "A student has successfully completed their program."
 }

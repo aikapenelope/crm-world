@@ -1,1 +1,12 @@
-{"academy_enrollments.title":"Enrollments","academy_enrollments.new":"New enrollment","academy_enrollments.student_name":"Student name","academy_enrollments.price_agreed":"Agreed price","academy_enrollments.status.active":"Active","academy_enrollments.status.completed":"Completed"}
+{
+  "academy_enrollments.title": "Enrollments",
+  "academy_enrollments.new": "New enrollment",
+  "academy_enrollments.student_name": "Student name",
+  "academy_enrollments.price_agreed": "Agreed price",
+  "academy_enrollments.status.active": "Active",
+  "academy_enrollments.status.completed": "Completed",
+  "academy_enrollments.notif.enrollment_created.title": "New enrollment",
+  "academy_enrollments.notif.enrollment_created.body": "A new enrollment has been registered.",
+  "academy_enrollments.notif.enrollment_withdrawn.title": "Student withdrawn",
+  "academy_enrollments.notif.enrollment_withdrawn.body": "A student has been withdrawn from a course."
+}

@@ -19,5 +19,7 @@
     "percentile_rank": "Percentile",
     "run_valuation": "Run valuation",
     "no_data": "No market data available for these criteria"
-  }
+  },
+  "market_intelligence.notif.analysis_completed.title": "Market intelligence updated",
+  "market_intelligence.notif.analysis_completed.body": "The real estate market intelligence analysis has been updated."
 }

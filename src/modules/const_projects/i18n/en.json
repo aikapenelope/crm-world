@@ -18,5 +18,9 @@
   "const_projects.contract.cost_plus": "Cost Plus",
   "const_projects.contract.design_build": "Design Build",
   "const_projects.flash.created": "Project created successfully",
-  "const_projects.flash.updated": "Project updated successfully"
+  "const_projects.flash.updated": "Project updated successfully",
+  "const_projects.notif.status_changed.title": "Project status updated",
+  "const_projects.notif.status_changed.body": "A construction project status has been updated.",
+  "const_projects.notif.completed.title": "Project completed",
+  "const_projects.notif.completed.body": "A construction project has been marked as completed."
 }

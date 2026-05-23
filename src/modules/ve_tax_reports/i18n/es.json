@@ -7,5 +7,7 @@
   "ve_tax_reports.summary.igtf": "IGTF del Período",
   "ve_tax_reports.export.sales": "Libro de Ventas (CSV)",
   "ve_tax_reports.export.purchases": "Libro de Compras (CSV)",
-  "ve_tax_reports.export.withholdings": "Retenciones (CSV)"
+  "ve_tax_reports.export.withholdings": "Retenciones (CSV)",
+  "ve_tax_reports.notif.report_generated.title": "Reporte fiscal generado",
+  "ve_tax_reports.notif.report_generated.body": "Se generó un reporte fiscal venezolano (SENIAT/ISLR/IVA)."
 }

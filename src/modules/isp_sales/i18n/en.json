@@ -14,5 +14,9 @@
   "isp_sales.status.scheduled": "Installation scheduled",
   "isp_sales.status.installed": "Installed ✓",
   "isp_sales.status.lost": "Lost",
-  "isp_sales.saved": "Saved"
+  "isp_sales.saved": "Saved",
+  "isp_sales.notif.lead_converted.title": "Lead converted to subscriber",
+  "isp_sales.notif.lead_converted.body": "A prospect has been installed and activated as a subscriber.",
+  "isp_sales.notif.commission_generated.title": "Commission generated",
+  "isp_sales.notif.commission_generated.body": "An installation commission has been generated."
 }

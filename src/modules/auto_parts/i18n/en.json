@@ -10,5 +10,7 @@
   "auto_parts.category.body": "Body",
   "auto_parts.category.other": "Other",
   "auto_parts.flash.created": "Part added",
-  "auto_parts.flash.updated": "Part updated"
+  "auto_parts.flash.updated": "Part updated",
+  "auto_parts.notif.low_stock.title": "Auto part low stock",
+  "auto_parts.notif.low_stock.body": "An auto part has inventory below the minimum level."
 }

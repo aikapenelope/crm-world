@@ -1,1 +1,8 @@
-{"academy_payments.title":"Payments","academy_payments.new":"Register payment"}
+{
+  "academy_payments.title": "Payments",
+  "academy_payments.new": "Register payment",
+  "academy_payments.notif.payment_confirmed.title": "Academy payment confirmed",
+  "academy_payments.notif.payment_confirmed.body": "An enrollment payment has been confirmed.",
+  "academy_payments.notif.payment_overdue.title": "Academy payment overdue",
+  "academy_payments.notif.payment_overdue.body": "A student has pending overdue payments."
+}

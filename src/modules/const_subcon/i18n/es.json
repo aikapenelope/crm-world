@@ -9,5 +9,7 @@
   "const_subcon.status.active": "Activo",
   "const_subcon.status.completed": "Completado",
   "const_subcon.flash.created": "Subcontratista creado exitosamente",
-  "const_subcon.flash.contract_created": "Contrato creado exitosamente"
+  "const_subcon.flash.contract_created": "Contrato creado exitosamente",
+  "const_subcon.notif.payment_due.title": "Pago a subcontratista pendiente",
+  "const_subcon.notif.payment_due.body": "Un subcontratista tiene un pago pendiente por valuación aprobada."
 }

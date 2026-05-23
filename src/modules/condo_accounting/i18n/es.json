@@ -15,5 +15,7 @@
   "condo_accounting.category.payroll": "Nómina",
   "condo_accounting.category.insurance": "Seguros",
   "condo_accounting.category.legal": "Legal",
-  "condo_accounting.flash.entry_created": "Movimiento registrado exitosamente"
+  "condo_accounting.flash.entry_created": "Movimiento registrado exitosamente",
+  "condo_accounting.notif.report_closed.title": "Período contable cerrado",
+  "condo_accounting.notif.report_closed.body": "Se cerró el período contable del condominio."
 }

@@ -1,1 +1,14 @@
-{"academy_enrollments.title":"Inscripciones","academy_enrollments.new":"Nueva inscripción","academy_enrollments.student_name":"Nombre del alumno","academy_enrollments.price_agreed":"Precio acordado","academy_enrollments.status.pending_payment":"Pend. pago","academy_enrollments.status.active":"Activo","academy_enrollments.status.completed":"Completado","academy_enrollments.status.withdrawn":"Retirado"}
+{
+  "academy_enrollments.title": "Inscripciones",
+  "academy_enrollments.new": "Nueva inscripción",
+  "academy_enrollments.student_name": "Nombre del alumno",
+  "academy_enrollments.price_agreed": "Precio acordado",
+  "academy_enrollments.status.pending_payment": "Pend. pago",
+  "academy_enrollments.status.active": "Activo",
+  "academy_enrollments.status.completed": "Completado",
+  "academy_enrollments.status.withdrawn": "Retirado",
+  "academy_enrollments.notif.enrollment_created.title": "Nueva inscripción",
+  "academy_enrollments.notif.enrollment_created.body": "Se registró una nueva inscripción.",
+  "academy_enrollments.notif.enrollment_withdrawn.title": "Alumno retirado",
+  "academy_enrollments.notif.enrollment_withdrawn.body": "Un alumno fue retirado de un curso."
+}

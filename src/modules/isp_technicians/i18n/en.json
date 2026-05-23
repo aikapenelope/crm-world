@@ -15,5 +15,11 @@
   "isp_technicians.tech_status.on_route": "On route",
   "isp_technicians.tech_status.on_site": "On site",
   "isp_technicians.tech_status.off_duty": "Off duty",
-  "isp_technicians.saved": "Saved"
+  "isp_technicians.saved": "Saved",
+  "isp_technicians.notif.work_order_assigned.title": "Work order assigned",
+  "isp_technicians.notif.work_order_assigned.body": "A work order has been assigned to a field technician.",
+  "isp_technicians.notif.work_order_completed.title": "Work order completed",
+  "isp_technicians.notif.work_order_completed.body": "A technician has completed their work order.",
+  "isp_technicians.notif.installation_done.title": "Installation completed",
+  "isp_technicians.notif.installation_done.body": "The technician completed the installation and the subscriber was activated."
 }

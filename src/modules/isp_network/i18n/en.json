@@ -19,5 +19,11 @@
   "isp_network.cpe_status.in_repair": "In repair",
   "isp_network.cpe_status.written_off": "Written off",
   "isp_network.saved": "Saved",
-  "isp_network.outage_reported": "Outage reported. Affected subscribers will be notified."
+  "isp_network.outage_reported": "Outage reported. Affected subscribers will be notified.",
+  "isp_network.notif.outage_reported.title": "Node outage reported",
+  "isp_network.notif.outage_reported.body": "A node outage has been reported — multiple subscribers may be affected.",
+  "isp_network.notif.node_restored.title": "Node restored",
+  "isp_network.notif.node_restored.body": "The node has been restored and service is operational.",
+  "isp_network.notif.capacity_alert.title": "Node capacity alert",
+  "isp_network.notif.capacity_alert.body": "A node is approaching its maximum capacity."
 }

@@ -10,5 +10,7 @@
   "auto_parts.category.body": "Carrocería",
   "auto_parts.category.other": "Otro",
   "auto_parts.flash.created": "Repuesto agregado",
-  "auto_parts.flash.updated": "Repuesto actualizado"
+  "auto_parts.flash.updated": "Repuesto actualizado",
+  "auto_parts.notif.low_stock.title": "Repuesto con stock bajo",
+  "auto_parts.notif.low_stock.body": "Un repuesto tiene inventario por debajo del mínimo."
 }

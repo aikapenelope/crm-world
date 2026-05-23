@@ -47,5 +47,7 @@
   "students.grade.bachillerato_4": "4to Año",
   "students.grade.bachillerato_5": "5to Año",
   "students.notifications.enrollment_pending.title": "Inscripción pendiente",
-  "students.notifications.enrollment_pending.body": "El estudiante {studentName} tiene documentos pendientes."
+  "students.notifications.enrollment_pending.body": "El estudiante {studentName} tiene documentos pendientes.",
+  "students.notif.graduated.title": "Alumno graduado",
+  "students.notif.graduated.body": "Un alumno completó exitosamente su programa."
 }

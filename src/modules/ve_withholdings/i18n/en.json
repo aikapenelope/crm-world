@@ -8,5 +8,7 @@
   "ve_withholdings.status.declared": "Declared",
   "ve_withholdings.flash.created": "Withholding registered successfully",
   "ve_withholdings.flash.updated": "Withholding updated",
-  "ve_withholdings.flash.declared": "Withholding marked as declared"
+  "ve_withholdings.flash.declared": "Withholding marked as declared",
+  "ve_withholdings.notif.declared.title": "Withholding declared",
+  "ve_withholdings.notif.declared.body": "A tax withholding has been marked as declared."
 }

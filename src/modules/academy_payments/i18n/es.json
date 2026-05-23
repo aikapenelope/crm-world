@@ -1,1 +1,8 @@
-{"academy_payments.title":"Pagos","academy_payments.new":"Registrar pago"}
+{
+  "academy_payments.title": "Pagos",
+  "academy_payments.new": "Registrar pago",
+  "academy_payments.notif.payment_confirmed.title": "Pago de academia confirmado",
+  "academy_payments.notif.payment_confirmed.body": "Se confirmó un pago de inscripción.",
+  "academy_payments.notif.payment_overdue.title": "Cuota de academia vencida",
+  "academy_payments.notif.payment_overdue.body": "Un alumno tiene cuotas pendientes de pago."
+}

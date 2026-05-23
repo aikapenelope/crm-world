@@ -18,5 +18,9 @@
   "const_projects.contract.cost_plus": "Costo + Honorarios",
   "const_projects.contract.design_build": "Diseño + Construcción",
   "const_projects.flash.created": "Proyecto creado exitosamente",
-  "const_projects.flash.updated": "Proyecto actualizado exitosamente"
+  "const_projects.flash.updated": "Proyecto actualizado exitosamente",
+  "const_projects.notif.status_changed.title": "Estado de proyecto actualizado",
+  "const_projects.notif.status_changed.body": "El estado de un proyecto de construcción fue actualizado.",
+  "const_projects.notif.completed.title": "Proyecto completado",
+  "const_projects.notif.completed.body": "Un proyecto de construcción fue marcado como completado."
 }

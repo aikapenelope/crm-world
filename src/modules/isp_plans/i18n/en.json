@@ -19,5 +19,7 @@
   "isp_plans.segments.corporate": "Corporate",
   "isp_plans.segments.wholesale": "Wholesale",
   "isp_plans.saved": "Plan saved",
-  "isp_plans.deleted": "Plan deleted"
+  "isp_plans.deleted": "Plan deleted",
+  "isp_plans.notif.plan_deactivated.title": "Service plan deactivated",
+  "isp_plans.notif.plan_deactivated.body": "An ISP service plan has been deactivated."
 }

@@ -19,5 +19,11 @@
   "isp_network.cpe_status.in_repair": "En reparación",
   "isp_network.cpe_status.written_off": "Dado de baja",
   "isp_network.saved": "Guardado",
-  "isp_network.outage_reported": "Avería reportada. Se notificará a los abonados afectados."
+  "isp_network.outage_reported": "Avería reportada. Se notificará a los abonados afectados.",
+  "isp_network.notif.outage_reported.title": "Nodo caído reportado",
+  "isp_network.notif.outage_reported.body": "Se reportó una caída de nodo — múltiples abonados pueden estar afectados.",
+  "isp_network.notif.node_restored.title": "Nodo recuperado",
+  "isp_network.notif.node_restored.body": "El nodo fue restaurado y el servicio está operativo.",
+  "isp_network.notif.capacity_alert.title": "Alerta de capacidad de nodo",
+  "isp_network.notif.capacity_alert.body": "Un nodo está cercano a su capacidad máxima."
 }

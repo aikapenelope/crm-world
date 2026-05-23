@@ -15,5 +15,11 @@
   "isp_technicians.tech_status.on_route": "En ruta",
   "isp_technicians.tech_status.on_site": "En sitio",
   "isp_technicians.tech_status.off_duty": "No disponible",
-  "isp_technicians.saved": "Guardado"
+  "isp_technicians.saved": "Guardado",
+  "isp_technicians.notif.work_order_assigned.title": "OT asignada a técnico",
+  "isp_technicians.notif.work_order_assigned.body": "Una orden de trabajo fue asignada a un técnico de campo.",
+  "isp_technicians.notif.work_order_completed.title": "OT completada",
+  "isp_technicians.notif.work_order_completed.body": "Un técnico completó su orden de trabajo.",
+  "isp_technicians.notif.installation_done.title": "Instalación completada",
+  "isp_technicians.notif.installation_done.body": "El técnico completó la instalación y el abonado fue activado."
 }

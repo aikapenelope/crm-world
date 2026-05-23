@@ -19,5 +19,7 @@
   "condo_properties.flash.building_created": "Building created successfully",
   "condo_properties.flash.unit_created": "Unit created successfully",
   "condo_properties.flash.area_created": "Common area created successfully",
-  "condo_properties.aliquot_warning": "Aliquots do not sum to 100%"
+  "condo_properties.aliquot_warning": "Aliquots do not sum to 100%",
+  "condo_properties.notif.owner_changed.title": "Owner changed",
+  "condo_properties.notif.owner_changed.body": "A unit has changed ownership."
 }
