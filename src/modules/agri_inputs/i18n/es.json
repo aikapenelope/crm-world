@@ -1,0 +1,49 @@
+{
+  "agri_inputs.nav.title": "Insumos Agropecuarios",
+  "agri_inputs.nav.items": "Inventario",
+  "agri_inputs.nav.movements": "Movimientos",
+
+  "agri_inputs.items.title": "Inventario de Insumos",
+  "agri_inputs.items.new": "Nuevo Insumo",
+  "agri_inputs.items.empty.title": "Sin insumos registrados",
+  "agri_inputs.items.empty.description": "Registra medicamentos, vacunas y materiales.",
+
+  "agri_inputs.fields.name": "Nombre del Insumo",
+  "agri_inputs.fields.input_type": "Tipo de Insumo",
+  "agri_inputs.fields.category": "Categoría",
+  "agri_inputs.fields.unit": "Unidad de Medida",
+  "agri_inputs.fields.insai_registry": "Registro INSAI",
+  "agri_inputs.fields.active_ingredient": "Principio Activo",
+  "agri_inputs.fields.manufacturer": "Fabricante",
+  "agri_inputs.fields.lot_number": "Número de Lote",
+  "agri_inputs.fields.expiry_date": "Fecha de Vencimiento",
+  "agri_inputs.fields.storage_temp_min": "Temp. Mín. Almacenamiento (°C)",
+  "agri_inputs.fields.storage_temp_max": "Temp. Máx. Almacenamiento (°C)",
+  "agri_inputs.fields.quantity_available": "Stock Disponible",
+  "agri_inputs.fields.min_stock": "Stock Mínimo de Seguridad",
+  "agri_inputs.fields.reorder_quantity": "Cantidad de Reposición",
+  "agri_inputs.fields.unit_cost_usd": "Costo Unitario (USD)",
+
+  "agri_inputs.type.medication": "Medicamento Veterinario",
+  "agri_inputs.type.vaccine": "Vacuna",
+  "agri_inputs.type.feed": "Alimento Balanceado",
+  "agri_inputs.type.agrochemical": "Agroquímico",
+  "agri_inputs.type.material": "Material de Granja",
+
+  "agri_inputs.movement.purchase_in": "Entrada por Compra",
+  "agri_inputs.movement.consumption": "Consumo",
+  "agri_inputs.movement.adjustment": "Ajuste Manual",
+  "agri_inputs.movement.expiry_write_off": "Baja por Vencimiento",
+  "agri_inputs.movement.transfer": "Transferencia",
+
+  "agri_inputs.saved": "Insumo guardado",
+  "agri_inputs.stock.adjusted": "Stock ajustado",
+  "agri_inputs.insai_note": "El registro INSAI es obligatorio para medicamentos e insumos veterinarios en Venezuela.",
+
+  "agri_inputs.notif.stock_low.title": "Stock de insumo bajo",
+  "agri_inputs.notif.stock_low.body": "El inventario está por debajo del stock mínimo de seguridad.",
+  "agri_inputs.notif.expiring_soon.title": "Insumo próximo a vencer",
+  "agri_inputs.notif.expiring_soon.body": "Un insumo vence en los próximos 30 días.",
+  "agri_inputs.notif.expired.title": "Insumo vencido",
+  "agri_inputs.notif.expired.body": "Un insumo ha superado su fecha de vencimiento."
+}

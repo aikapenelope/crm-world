@@ -1,0 +1,70 @@
+{
+  "agri_feed.nav.title": "Alimento Balanceado",
+  "agri_feed.nav.formulas": "Fórmulas",
+  "agri_feed.nav.batches": "Lotes de Alimento",
+
+  "agri_feed.formulas.title": "Fórmulas de Alimento",
+  "agri_feed.formulas.new": "Nueva Fórmula",
+  "agri_feed.formulas.empty.title": "Sin fórmulas registradas",
+  "agri_feed.formulas.empty.description": "Crea la primera fórmula de alimento balanceado.",
+
+  "agri_feed.batches.title": "Lotes de Alimento",
+  "agri_feed.batches.new": "Nuevo Lote",
+  "agri_feed.batches.empty.title": "Sin lotes registrados",
+  "agri_feed.batches.empty.description": "Registra el primer lote de alimento.",
+
+  "agri_feed.fields.name": "Nombre de la Fórmula",
+  "agri_feed.fields.formula_type": "Tipo de Fórmula",
+  "agri_feed.fields.species": "Especie",
+  "agri_feed.fields.ingredients": "Ingredientes",
+  "agri_feed.fields.protein_pct": "Proteína (%)",
+  "agri_feed.fields.energy_kcal_kg": "Energía (kcal/kg)",
+  "agri_feed.fields.lysine_pct": "Lisina (%)",
+  "agri_feed.fields.cost_per_ton_usd": "Costo por Tonelada (USD)",
+  "agri_feed.fields.is_active": "Activa",
+  "agri_feed.fields.notes": "Notas",
+
+  "agri_feed.fields.batch_number": "Número de Lote",
+  "agri_feed.fields.formula_id": "Fórmula",
+  "agri_feed.fields.batch_date": "Fecha",
+  "agri_feed.fields.quantity_tons": "Cantidad (toneladas)",
+  "agri_feed.fields.source_type": "Origen",
+  "agri_feed.fields.supplier_id": "Proveedor",
+  "agri_feed.fields.supplier_invoice": "Factura del Proveedor",
+  "agri_feed.fields.supplier_lot_number": "Lote del Proveedor",
+  "agri_feed.fields.protein_result_pct": "Proteína Real (%)",
+  "agri_feed.fields.moisture_result_pct": "Humedad (%)",
+  "agri_feed.fields.aflatoxin_ppb": "Aflatoxinas (ppb)",
+  "agri_feed.fields.status": "Estado",
+  "agri_feed.fields.cost_per_ton_usd_batch": "Costo Real (USD/ton)",
+
+  "agri_feed.formula_type.starter": "Iniciador",
+  "agri_feed.formula_type.grower": "Engorde",
+  "agri_feed.formula_type.finisher": "Finalizador",
+  "agri_feed.formula_type.layer": "Postura",
+  "agri_feed.formula_type.breeding": "Reproductores",
+  "agri_feed.formula_type.other": "Otro",
+
+  "agri_feed.source_type.own_production": "Producción Propia",
+  "agri_feed.source_type.purchased": "Comprado a Terceros",
+
+  "agri_feed.batch_status.pending_analysis": "Análisis Pendiente",
+  "agri_feed.batch_status.approved": "Aprobado",
+  "agri_feed.batch_status.rejected": "Rechazado",
+  "agri_feed.batch_status.consumed": "Consumido",
+
+  "agri_feed.saved": "Guardado correctamente",
+  "agri_feed.formula.saved": "Fórmula guardada",
+  "agri_feed.batch.saved": "Lote registrado",
+
+  "agri_feed.notif.formula_cost_updated.title": "Costo de fórmula recalculado",
+  "agri_feed.notif.formula_cost_updated.body": "El costo de alimento fue actualizado con la nueva tasa BCV.",
+  "agri_feed.notif.batch_produced.title": "Nuevo lote de alimento",
+  "agri_feed.notif.batch_produced.body": "Se registró un nuevo lote de alimento balanceado.",
+  "agri_feed.notif.batch_rejected.title": "Lote rechazado",
+  "agri_feed.notif.batch_rejected.body": "Un lote de alimento fue rechazado por control de calidad.",
+  "agri_feed.notif.stock_low.title": "Stock de alimento bajo",
+  "agri_feed.notif.stock_low.body": "El inventario de alimento está por debajo del mínimo requerido.",
+
+  "agri_feed.aflatoxin_warning": "Límite venezolano: 20 ppb (SENASAG)"
+}

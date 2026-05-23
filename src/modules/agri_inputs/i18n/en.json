@@ -1,0 +1,49 @@
+{
+  "agri_inputs.nav.title": "Farm Inputs",
+  "agri_inputs.nav.items": "Inventory",
+  "agri_inputs.nav.movements": "Movements",
+
+  "agri_inputs.items.title": "Input Inventory",
+  "agri_inputs.items.new": "New Input",
+  "agri_inputs.items.empty.title": "No inputs registered",
+  "agri_inputs.items.empty.description": "Register medications, vaccines, and materials.",
+
+  "agri_inputs.fields.name": "Input Name",
+  "agri_inputs.fields.input_type": "Input Type",
+  "agri_inputs.fields.category": "Category",
+  "agri_inputs.fields.unit": "Unit of Measure",
+  "agri_inputs.fields.insai_registry": "INSAI Registry Number",
+  "agri_inputs.fields.active_ingredient": "Active Ingredient",
+  "agri_inputs.fields.manufacturer": "Manufacturer",
+  "agri_inputs.fields.lot_number": "Lot Number",
+  "agri_inputs.fields.expiry_date": "Expiry Date",
+  "agri_inputs.fields.storage_temp_min": "Min. Storage Temp (°C)",
+  "agri_inputs.fields.storage_temp_max": "Max. Storage Temp (°C)",
+  "agri_inputs.fields.quantity_available": "Available Stock",
+  "agri_inputs.fields.min_stock": "Minimum Safety Stock",
+  "agri_inputs.fields.reorder_quantity": "Reorder Quantity",
+  "agri_inputs.fields.unit_cost_usd": "Unit Cost (USD)",
+
+  "agri_inputs.type.medication": "Veterinary Medication",
+  "agri_inputs.type.vaccine": "Vaccine",
+  "agri_inputs.type.feed": "Balanced Feed",
+  "agri_inputs.type.agrochemical": "Agrochemical",
+  "agri_inputs.type.material": "Farm Material",
+
+  "agri_inputs.movement.purchase_in": "Purchase Entry",
+  "agri_inputs.movement.consumption": "Consumption",
+  "agri_inputs.movement.adjustment": "Manual Adjustment",
+  "agri_inputs.movement.expiry_write_off": "Expiry Write-off",
+  "agri_inputs.movement.transfer": "Transfer",
+
+  "agri_inputs.saved": "Input saved",
+  "agri_inputs.stock.adjusted": "Stock adjusted",
+  "agri_inputs.insai_note": "INSAI registry number is mandatory for veterinary medications and inputs in Venezuela.",
+
+  "agri_inputs.notif.stock_low.title": "Input stock low",
+  "agri_inputs.notif.stock_low.body": "Inventory is below the minimum safety stock level.",
+  "agri_inputs.notif.expiring_soon.title": "Input expiring soon",
+  "agri_inputs.notif.expiring_soon.body": "An input expires within the next 30 days.",
+  "agri_inputs.notif.expired.title": "Input expired",
+  "agri_inputs.notif.expired.body": "An input has passed its expiry date."
+}
