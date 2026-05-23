@@ -1,334 +1,222 @@
 # Changelog — Aika Platform (CRM World)
 
-## 2026-05-20 — Fiscal + Distribution + Automotive Verticals
+## 2026-05-23 — CI Pipeline + Phase 19 Workflows (PR #69)
 
-### Módulos Fiscales Transversales (4 módulos)
+### CI Pipeline — Phase 18 (.github/workflows/ci.yml)
 
-- `ve_tax_books` — Libros de compra/venta IVA (registro manual, resumen mensual, export CSV)
-- `ve_withholdings` — Retenciones IVA 75% e ISLR (cálculo, comprobantes, declaración quincenal)
-- `ve_tax_reports` — Dashboard fiscal (débito/crédito fiscal, IGTF, export para el contador)
-- `bank_reconciliation` — Conciliación bancaria (upload CSV: Banesco, Mercantil, Provincial, BNC, BDV)
+Primera vez que el CI llega al repo. Dos jobs en paralelo sobre cada PR hacia main:
 
-### Vertical Distribuidoras (8 módulos)
+- **typecheck**: `yarn generate` (descubre módulos) → `yarn typecheck` (tsc --noEmit)
+- **lint**: `yarn lint` (ESLint)
 
-- `dist_credit` — Cuentas por cobrar, límites de crédito, aging report (0-30/31-60/61-90/90+), cobro WhatsApp, worker morosos
-- `dist_price_lists` — Listas de precios múltiples (mayorista, detallista, volumen), asignación a clientes
-- `dist_inventory` — Stock por producto/bodega, movimientos, alertas de reposición
-- `dist_routes` — Rutas por zona/día, paradas de clientes, registro de visitas, página "Mi Día"
-- `dist_delivery` — Órdenes de despacho, items por entrega, confirmación, devoluciones
-- `dist_reports` — Dashboard KPI (cuentas por cobrar, inventario, entregas, efectividad rutas)
-- `dist_commissions` — Comisiones vendedores (venta/cobranza/meta), aprobación, liquidación
-- `dist_portal` — Portal self-service del cliente (estado de cuenta, crédito disponible)
+El audit de seguridad (`yarn npm audit`) excluido deliberadamente — en un codebase con ~300+ dependencias transitivas de OM core/react/next.js, los CVEs ajenos bloquearían PRs válidos sin posibilidad de resolución.
 
-### Vertical Talleres Mecánicos (7 módulos)
+Concurrency cancel: descarta runs anteriores del mismo ref al hacer push nuevo. Cache de `.yarn/cache` + `node_modules` por hash de `yarn.lock`.
 
-- `auto_vehicles` — Registro de vehículos (placa, marca, modelo, año, km, fotos desde cámara)
-- `auto_service_orders` — Órdenes de servicio con workflow 8 pasos + board Kanban + timeline visual
-- `auto_inspections` — Inspección digital DVI (fotos por sistema, hallazgos, condición, urgencia)
-- `auto_parts` — Inventario de repuestos (categorías, costo/venta, stock, alertas)
-- `auto_estimates` — Presupuestos con aprobación interactiva (página pública, cliente aprueba/rechaza items)
-- `auto_reports` — Dashboard KPI del taller (vehículos, ingresos, repuestos)
-- `auto_portal` — Portal del cliente (status del vehículo en tiempo real)
+### Phase 19 — 5 Workflows de Aprobación
 
-### UX Moderna (Talleres)
+Infraestructura compartida (`src/lib/workflows/`):
+- `WorkflowApprovalWidget.tsx` — widget React inline para páginas de detalle. Muestra estado del workflow + botones de decisión. Llama al motor OM via `/api/workflows/instances` y `/api/workflows/tasks/[id]/complete`
+- `seed-workflow.ts` — helper que hace upsert de `WorkflowDefinition` en la BD para el tenant. Usa `WorkflowDefinition` entity de `@open-mercato/core`
+- `useWorkflowApproval.ts` — hook que encapsula estado del widget (polling instance + task)
 
-- Upload de fotos desde cámara del teléfono (`capture="environment"`)
-- Galería con lightbox (click para zoom)
-- Página pública de inspección (link compartible sin auth, mobile-first)
-- Presupuesto interactivo público (tap para aprobar/rechazar items, total en tiempo real)
-- Timeline visual de progreso de la orden (barra animada con 8 pasos)
-- Envío por wa.me con resumen de hallazgos + link público
-- Board Kanban de órdenes por status
+5 definiciones JSON en `examples/` de cada módulo + `setup.ts → seedDefaults`:
 
-### Regionalización VE (Talleres)
+| Workflow | Módulo | Página | Caso de uso |
+|---------|--------|--------|-------------|
+| `gasto_extraordinario_v1` | `condo_accounting` | `entries/[id]` (nuevo) | Junta aprueba gastos fuera presupuesto (Ley PH Venezuela) |
+| `change_order_approval_v1` | `const_rfis` | `[id]` (existente) | Revisión técnica + dirección aprueban change orders |
+| `limite_credito_v1` | `dist_credit` | `[id]` (nuevo) | Gerencia financiera autoriza cambios de límite |
+| `inscripcion_escolar_v1` | `enrollment` | `applications/[id]` (nuevo) | Comité de admisiones decide inscripciones |
+| `devolucion_fuera_politica_v1` | `retail_returns` | `[id]` (existente) | Gerente autoriza devoluciones fuera de política |
 
-- 15 marcas populares con modelos (Toyota, Chevrolet, Ford, Hyundai, Kia, etc.)
-- 20 servicios comunes pre-cargados (cambio aceite, frenos, A/C, correa tiempo, etc.)
-- Validación de placa venezolana (formato clásico ABC123 + nuevo AB123CD)
-- Búsqueda rápida por placa (retorna vehículo + cliente + última orden)
-- Recibo de pago como imagen HTML (compartible por WhatsApp)
-- Worker de recordatorio de mantenimiento (6 meses / 10,000 km)
-- 5 tipos de notificación (vehículo listo, presupuesto enviado, inspección, mantenimiento)
-
-### Fixes
-
-- `di.ts` debe exportar `register()` — causa raíz de los build failures en Coolify
-- `yarn.lock` regenerado completo (16,074 líneas)
-- Documentado en PATTERNS.md como regla #13
-
-### Documentación
-
-- `docs/DISTRIBUTION_VERTICAL_PLAN.md` — Plan completo distribuidoras
-- `docs/AUTOMOTIVE_VERTICAL_PLAN.md` — Plan completo talleres
-- `docs/ROADMAP.md` — Actualizado con todas las fases completadas
-- `docs/PATTERNS.md` — Chainlock actualizado (reglas #11, #12, #13)
-- `README.md` — Reescrito con estado actual
+Los workflows se seed automáticamente al crear un tenant. Son visibles y editables en `/backend/workflows`.
 
 ---
 
-## 2026-05-20 — Education Vertical Complete
+## 2026-05-23 — Estandarización de módulos (Sprints S1–S6) (PRs #63–#67)
 
-### Vertical Education / Colegios (9 módulos)
+Auditoría completa + corrección sistemática de 83 módulos para cumplir patrones Open Mercato oficiales. Verificados contra el repo oficial `packages/shared/src/modules/` y `packages/core/src/modules/`.
 
-#### `students` — Registro de estudiantes (Sprint 1)
-- Entidades: StudentEntity (15 grados VE: maternal → 5to año), StudentRepresentativeEntity
-- 5 estados: active, graduated, withdrawn, suspended, transferred
-- Datos médicos, alergias, contacto emergencia, tipo de sangre
-- Junction con customers.person para representantes (parentesco, principal, autorizado retiro)
-- DataTable con filtros (grado, sección, estado), CrudForm (4 grupos), detalle con tabs
-- Búsqueda Meilisearch (nombre, cédula, grado, sección)
-- 8 eventos tipados, seedDefaults (diccionarios: grados, secciones, parentescos)
+### Sprint 1 — Críticos estructurales (PR #63)
+- `mercadolibre_sync/events.ts` — declara `sync.completed` / `sync.failed`; worker emite evento al finalizar
+- `ratelimit_probe/i18n/` + `ve_tenant_defaults/i18n/` — archivos vacíos requeridos por el generador
 
-#### `enrollment` — Inscripciones (Sprint 2)
-- Entidades: EnrollmentPeriodEntity, EnrollmentApplicationEntity, EnrollmentDocumentEntity
-- Tipos de solicitud: nuevo ingreso, renovación, traslado
-- Workflow: pending → documents_pending → approved/rejected/cancelled
-- Checklist de documentos VE: partida nacimiento, notas anteriores, foto carnet, cédula representante, RIF, constancia residencia, carta buena conducta, certificado salud
-- 9 eventos tipados (período, solicitud, documento lifecycle)
+### Sprint 2 — Schema notifications.ts (PR #64)
+**Hallazgo crítico**: 10 módulos usaban campos inventados (`id`, `label`, `category`, `defaultChannels`) que NO existen en `NotificationTypeDefinition` del tipo oficial (`packages/shared/src/modules/notifications/types.ts:58`).
 
-#### `tuition` — Mensualidades (Sprint 3-4)
-- Entidades: TuitionPlanEntity, TuitionChargeEntity, TuitionPaymentEntity, TuitionDiscountEntity
-- Planes por grado con monto mensual, día de vencimiento, recargo por mora, días de gracia
-- Cargos: mensualidad, inscripción, material, uniforme, transporte, evento
-- Pagos: multi-moneda (USD/VES/USDT/EUR), tasa de cambio, método de pago, referencia
-- Descuentos: hermanos, beca, empleado, pronto pago
-- Control de morosos (status overdue automático)
-- Notificaciones: cargo vencido, pago recibido
-- 7 eventos tipados, 7 features ACL
+Schema correcto:
+```typescript
+{ type, module, titleKey, bodyKey, icon, severity, actions, linkHref, expiresAfterHours }
+```
 
-#### `grades` — Notas y boletines (Sprint 5)
-- Entidades: SubjectEntity, GradePeriodEntity (3 lapsos/año), StudentGradeEntity, ReportCardEntity
-- Notas numéricas (0-20) para primaria/bachillerato
-- Notas cualitativas (A-E) para preescolar
-- Boletines con promedio, observaciones, profesor, PDF adjunto
-- Status de boletín: draft → published → delivered
-- 4 eventos tipados, 5 features ACL
+Módulos corregidos: `isp_billing`, `isp_subscribers`, `isp_support`, `condo_fees`, `condo_comms`, `condo_maintenance`, `const_daily`, `const_progress`, `const_rfis`, `auto_service_orders`. + 74 claves i18n añadidas.
 
-#### `attendance` — Asistencia (Sprint 6)
-- Entidades: AttendanceRecordEntity (diario), AttendanceSummaryEntity (mensual materializado)
-- 5 estados: present, absent, late, excused, half_day
-- Bulk record schema (toda la sección de un día)
-- Resumen mensual: días presente/ausente/tarde/justificado + porcentaje
-- 4 eventos tipados, 3 features ACL
+### Sprint 3 — search.ts (PR #65)
+12 módulos con backend+entities sin cobertura Cmd+K añadidos: `academy_payments`, `academy_sessions`, `attendance`, `bank_reconciliation`, `const_daily`, `market_intelligence`, `mercadolibre_sync`, `payment_methods`, `school_calendar`, `school_comms`, `school_docs`, `ve_tax_books`. Coverage: 64% → 79%.
 
-#### `school_calendar` — Calendario escolar (Sprint 7)
-- Entidad: SchoolEventEntity (7 tipos: holiday, exam_period, meeting, event, etc.)
-- seedDefaults: 11 feriados nacionales venezolanos pre-configurados
-- Soporte para eventos por grado específico
-- 3 eventos tipados, 2 features ACL
+### Sprint 4 — raw `<form>` → CrudForm (PR #66)
+- 7 páginas create dedicadas migradas: `retail_branches`, `retail_inventory/counts`, `retail_loyalty/campaigns`, `const_projects`, `condo_properties`, `condo_fees/configs`, `condo_properties/units`
+- 19 páginas documentadas con comentario `AGM Exception` (3 categorías: inline quick-add, dynamic line items, dynamic API options)
 
-#### `school_comms` — Comunicaciones (Sprint 7)
-- Entidades: SchoolAnnouncementEntity, AnnouncementReadEntity
-- Tipos: circular, aviso, recordatorio, emergencia
-- Audiencia: todos, por grado, por sección
-- Tracking de lectura por representante
-- 3 eventos tipados, 3 features ACL
-
-#### `school_docs` — Constancias (Sprint 8)
-- Entidades: DocumentTemplateEntity, GeneratedDocumentEntity
-- 5 tipos: constancia estudio, inscripción, notas, buena conducta, carta recomendación
-- Templates con placeholders para generación PDF
-- Status: pending → generated → delivered
-- 3 features ACL
-
-#### `parent_portal` — Portal del representante (Sprint 8)
-- Portal público usando customer_accounts auth
-- defaultCustomerRoleFeatures (portal_admin, buyer, viewer)
-- Páginas: dashboard, pagos, notas, asistencia
-- 4 features ACL
-
-### Documentación y Configuración
-- `docs/IMPLEMENTATION_GUIDE.md` — Guía paso a paso para onboarding de tenants RE
-- `docs/ROADMAP.md` — Actualizado con Phase 6 completa + Education vertical
-- `README.md` — Sección "Flujo de Deploy Multi-Vertical"
-- `docs/DEVELOPMENT.md` — Corregidas discrepancias (moduleId, mapToEntity, type explícito)
-- `properties/setup.ts` — seedDefaults: pipeline RE (7 etapas) + tags (9 categorías)
+### Sprint 5+6 — notifications.ts + button/table cleanup (PR #67)
+- 32 `notifications.ts` nuevos → coverage 16% → **100%** (63/63 módulos operativos)
+- 15 archivos: raw `<button>` → `<Button type="button" variant="ghost">`
+- 4 archivos: raw `<table>` documentados como AGM Exception (grids de entrada de datos)
 
 ---
 
-## 2026-05-19 — Real Estate UI + Cleanup
+## 2026-05-22 — Portal Pattern Fix + PORTAL_GUIDE.md (PRs #61–#62)
 
-### UI Funcional (PR #1 merged)
-- **Properties list**: DataTable con filtros (tipo, operación, estado), búsqueda, paginación, row actions
-- **Properties create**: CrudForm con campos agrupados (info, precio, specs, ubicación)
-- **Properties edit**: CrudForm pre-populated con datos existentes
-- **Transactions list**: DataTable con filtros tipo/status, comisión, fecha cierre
-- **Matching list**: DataTable con score badges, criterios matched
+### Corrección crítica: patrón `[orgSlug]/portal/`
 
-### Phase 6 — Complete Real Estate for First Client
-- Transactions create form (CrudForm con lease fields, agentes, métodos de pago)
-- Properties search.ts (Meilisearch indexing completo con presenter)
-- Property detail tabs (General, Imágenes, Links, Matching)
-- Dashboard widgets (properties by status, pipeline summary, recent closings)
-- Notification types (lead inactivo, propiedad sin actividad, reservada, cierre completado)
-- Matching scoring engine (weighted: type 30%, city 25%, budget 25%, operation 20%)
-- Agent portal page (/agente/[id] — grid público de propiedades)
-- CSV import adapter (mapeo flexible columnas ES/EN)
-- Agent portal API
+**Hallazgo**: todos los portales de cliente en crm-world usaban slugs fijos (`condominio/`, `academia/`, etc.) en lugar del segmento dinámico `[orgSlug]/portal/` requerido por Open Mercato.
 
-### Fixes
-- Eliminados todos los imports cross-module (Turbopack restriction)
-- Módulos usan Kysely queries (`em.getKysely()`) para leer tablas de otros módulos
-- matching/data usa enums locales en vez de importar de properties
+Fuente oficial verificada: `packages/core/src/modules/portal/frontend/[orgSlug]/portal/dashboard/page.tsx`
 
-### Cleanup Coolify
-- Eliminada app duplicada que generaba builds fallidos (17 failed)
-- Eliminado proyecto vacío "My first project"
-- Solo queda "Mercato SaaS" con la app correcta configurada
+Auto-detección del `PortalLayoutShell` en `src/app/(frontend)/layout.tsx`:
+```typescript
+const portalMatch = pathname.match(/^\/([^/]+)\/portal(?:\/|$)/)
+// Si match → envuelve en PortalLayoutShell con tenant resuelto por orgSlug
+```
+
+**Bug adicional**: API routes usaban `ctx.customerContext?.entityId` (no existe en `CustomerAuthContext`) en lugar del correcto `ctx.customerContext?.customerEntityId`. Verificado en `packages/core/src/modules/customer_accounts/lib/customerAuth.ts`.
+
+PR #61: fix `isp_portal` + `docs/PORTAL_GUIDE.md` (cita exacta de fuentes OM)
+PR #62: migración de 5 portales existentes (condo, academy, dist, auto, parent) — 19 páginas totales
 
 ---
 
-## 2026-05-18 — Fundación e Infraestructura
+## 2026-05-22 — ISP/Telecomunicaciones Venezuela — Phase 22 (PRs #57–#60)
 
-### Infraestructura (mercatinfra)
+Vertical completa para ISPs venezolanos. 9 módulos, facturación USD/VES, portal del abonado.
 
-- **Servidor Hetzner CX33** desplegado en Helsinki (65.108.61.137) via Pulumi
-- **Coolify 4.0** instalado como PaaS (deploy.novaincs.com)
-- **Firewall** configurado: SSH + HTTP + HTTPS + Coolify UI
-- **SSH Key** ED25519 auto-generada, almacenada en Pulumi secrets
-- **Red privada** 10.10.0.0/16 con subnet 10.10.1.0/24
-- **Swap 4 GB** configurado para prevenir OOM durante builds
-- **fail2ban** + **UFW** activos
-- **Backups diarios** de PostgreSQL (cron, 30 días retención)
-- **Secrets** centralizados en Pulumi ESC (aikapenelope-org/mercato-secrets)
+### Phase 22-A — Core MVP (PR #58)
+- `isp_plans` — Catálogo de planes (fiber/wireless, residential/PYME/corporate), perfil Radius/OLT
+- `isp_network` — Nodos de red con autonomía UPS, CPE inventory, `report-outage` endpoint
+- `isp_subscribers` — Lifecycle completo (pending_installation → active ↔ suspended → cancelled), PPPoE/IP
+- `isp_billing` — Facturación mensual USD+VES, IVA 16%, IGTF 3%, worker detect-overdue, notify lib transversal
 
-### Aplicación (crm-world)
+### Phase 22-B — Operaciones (PR #59)
+- `isp_support` — Tickets técnicos + averías masivas, subscriber `on-node-outage` automático, worker SLA
+- `isp_technicians` — Técnicos de campo, work orders, endpoint `complete` activa servicio automáticamente
+- `isp_sales` — Pipeline leads, verificación cobertura por ciudad, comisiones con workflow aprobación
 
-- **Open Mercato v0.6.1** scaffolded como standalone app
-- **Docker Compose** hardened para producción (NODE_ENV=production, memory limits)
-- **Dockerfile** corregido con NODE_OPTIONS para builds pesados
-- **Dominios** configurados: mercato.novaincs.com (app) + deploy.novaincs.com (Coolify)
-- **HTTPS** automático via Let's Encrypt (Coolify/Traefik)
-- **Auto-deploy** en cada push a main
+### Phase 22-Portal + Gaps (PR #60)
+- `isp_portal` — Portal del abonado con patrón `[orgSlug]/portal/` correcto
+- search.ts para 7 módulos ISP (account_number como campo prioritario, pppoe_username como hashOnly)
+- notifications.ts con schema correcto
+- Worker SLA breach + account number auto-generado (interceptor)
 
-### Módulos Base Venezuela (aplican a todos los tenants)
+### Cadena event-driven
+```
+report-outage endpoint → isp_network.node.outage_reported
+  → on-node-outage subscriber → crea avería + ticket automáticamente
 
-#### `venezuela_rates` — Tasas de cambio
-- Provider DolarApi (ve.dolarapi.com/v1)
-- Tasas BCV oficial (USD/VES, EUR/VES)
-- Tasas paralelo/Binance P2P (USD/VES, EUR/VES, USDT/VES)
-- Seed de monedas: USD (base), VES, EUR, USDT
-- Formatos venezolanos (coma decimal, punto miles)
+work-orders/complete → isp_technicians.installation.done
+  → isp_subscribers activa el servicio
 
-#### `payment_methods` — Métodos de pago locales
-- 7 métodos pre-configurados: Pago Móvil, Zelle, Binance, Efectivo USD, Efectivo VES, Transferencia, Débito
-- Entidad de registro de pagos con estado (pending → confirmed/rejected)
-- Cada método tiene moneda, referencia requerida, instrucciones
-- Equivalente USD + tasa de cambio almacenados por pago
-- Eventos emitidos en registro/confirmación/rechazo
-
-#### `ve_fiscal` — Identificación fiscal
-- Validación de RIF (J-12345678-9) con prefijos J/V/E/G/P/C
-- Validación de Cédula (V-12345678, E-12345678)
-- Tasas vigentes: IVA 16%, IVA reducido 8%, IVA lujo 15%, IGTF 3%
-- Retenciones: IVA 75%, ISLR servicios 5%, ISLR compras 2%
-- Entidad de config fiscal por tenant + identidad fiscal por cliente
-
-#### `ve_tenant_defaults` — Auto-configuración de tenant
-- Reemplaza VAT polaco por IVA venezolano al crear tenant
-- Configura numeración de documentos (ORD-202605-00001, COT-202605-00001)
-- Configura formato de dirección (street_first)
-- Seed de diccionarios CRM (tipos de dirección, fuentes, industrias VE)
-- Subscriber IGTF: auto-aplica 3% en pagos en divisas via event bus
-
-### Vertical Real Estate (8 módulos)
-
-#### `properties` — Propiedades inmobiliarias
-- Tipos: apartamento, casa, terreno, comercial, oficina, galpón, otro
-- Operaciones: venta, alquiler, venta/alquiler
-- Status lifecycle: draft → active → reserved → sold/rented/inactive
-- Imágenes (max 10), links externos, GPS, comisión configurable
-
-#### `transactions` — Cierres y comisiones
-- Tipos: venta, alquiler (con campos de lease: canon, inicio, fin, meses)
-- Auto-cálculo de comisión, auto-update status de propiedad
-- Subscriber que cambia propiedad a sold/rented al completar
-
-#### `matching` — Motor de cruce contacto ↔ propiedad
-- Preferencias por contacto (tipo, ciudad, operación, presupuesto)
-- Scoring engine con pesos configurables
-- Score por propiedad y por contacto
-
-#### `property_portal` — Página pública /p/[id]
-- Carousel de fotos, specs, precio, botón WhatsApp
-- Solo propiedades activas, sin auth
-
-#### `property_docs` — Ficha PDF (data layer)
-- API de datos para generación de PDF
-
-#### `property_publishing` — Publicación asistida
-- Texto pre-formateado + links directos (ML, FB, IG, TikTok, WhatsApp)
-
-#### `mercadolibre_sync` — Sync de mercado
-- Worker diario, tabla compartida (sin tenant_id)
-- Solo lectura — no publica
-
-#### `market_intelligence` — Tasación
-- KPIs por zona, rango P25-P75, comparables
-- Consume datos de mercadolibre_sync
+isp_billing worker detect-overdue → cut_triggered
+  → isp_subscribers suspende por mora
+```
 
 ---
 
-## Resumen de módulos por vertical
+## 2026-05-21 — Phase 17: PDFs + Phase 20: Academias (PRs #49–#52)
 
-### Base Venezuela (todos los tenants)
-| Módulo | Propósito |
-|---|---|
-| `venezuela_rates` | Tasas de cambio (BCV + paralelo) |
-| `payment_methods` | 7 métodos de pago locales |
-| `ve_fiscal` | RIF/CI, IVA, IGTF, retenciones |
-| `ve_tenant_defaults` | Auto-config al crear tenant |
+### Phase 17 — 6 PDFs con branding del tenant (PR #52)
+Sistema compartido en `src/lib/pdf/` usando `@react-pdf/renderer`.
 
-### Real Estate (8 módulos)
-| Módulo | Propósito |
-|---|---|
-| `properties` | CRUD propiedades + imágenes + links |
-| `transactions` | Cierres + comisiones |
-| `matching` | Cruce contacto ↔ propiedad |
-| `property_portal` | Página pública /p/[id] |
-| `property_docs` | Ficha PDF |
-| `property_publishing` | Texto + links a portales |
-| `mercadolibre_sync` | Sync diario ML |
-| `market_intelligence` | Tasación + comparables |
+| PDF | Endpoint | Módulo |
+|-----|---------|--------|
+| Recibo de condominio | `GET /api/condo-fees/receipts/pdf?id=` | `condo_fees` |
+| Valuación de obra | `GET /api/const-progress/valuations/pdf?id=` | `const_progress` |
+| Boletín escolar | `GET /api/grades/boleta-pdf?student_id=` | `grades` |
+| Constancia de inscripción | `GET /api/enrollment/constancia-pdf?student_id=` | `enrollment` |
+| Nota de entrega | `GET /api/dist-delivery/nota-entrega-pdf?id=` | `dist_delivery` |
+| Acta de asamblea | `GET /api/condo-comms/acta-pdf?id=` | `condo_comms` |
 
-### Education (9 módulos)
-| Módulo | Propósito |
-|---|---|
-| `students` | Registro estudiantes + representantes |
-| `enrollment` | Inscripciones + documentos |
-| `tuition` | Mensualidades + pagos + morosos |
-| `grades` | Notas + boletines |
-| `attendance` | Asistencia diaria + resumen |
-| `school_calendar` | Calendario escolar + feriados VE |
-| `school_comms` | Circulares + avisos |
-| `school_docs` | Constancias + plantillas |
-| `parent_portal` | Portal del representante |
+### Phase 20 — Academia y Centros de Formación (9 módulos) (PRs #49–#50)
+- `academy_courses`, `academy_instructors`, `academy_groups`, `academy_sessions`, `academy_enrollments`, `academy_attendance`, `academy_payments`, `academy_certificates`, `academy_portal`
+- Kanban board de grupos (4 columnas, real-time)
+- Tap-to-cycle para registro de asistencia
+- Certificados con URL de verificación pública `/cert/[number]`
+- AI Agent — Asistente del Director de Academia (5 tools)
+- Portal del estudiante (cursos, sesiones, pagos, certificados)
 
 ---
 
-## Notas técnicas
+## 2026-05-21 — Condominios + Construcción + Real-time (PRs #39–#48)
 
-### Patrones utilizados
+### Phase 12 — Condominios (7 módulos)
+`condo_properties`, `condo_fees`, `condo_collections`, `condo_maintenance`, `condo_accounting`, `condo_comms`, `condo_portal`
+- PDFs: recibo de condominio + acta de asamblea
+- Votaciones con alícuota ponderada (Ley PH Venezuela)
+- WhatsApp reminder para morosos
+- AI Agent — Asistente del Administrador de Condominio
 
-Todos los módulos siguen los patrones documentados de Open Mercato v0.6.1:
+### Phase 13 — Construcción (8 módulos)
+`const_projects`, `const_budget`, `const_schedule`, `const_progress`, `const_rfis`, `const_daily`, `const_subcon`, `const_materials`
+- PDF: valuación de obra con tabla de partidas, retenciones/anticipos, firmas
+- Sistema de RFIs con respuesta técnica + impacto costo/cronograma
+- AI Agent — Asistente del Director de Obra
 
-| Patrón | Implementación |
-|---|---|
-| `@Property({ type: '...' })` | Siempre con type explícito (Turbopack) |
-| `makeCrudRoute` | Con `mapToEntity` + `applyToEntity` + `indexer` |
-| `createModuleEvents` | Con `moduleId:` + `category` |
-| `ModuleSetupConfig` | `onTenantCreated` + `seedDefaults` + `defaultRoleFeatures` |
-| Cross-module queries | `(em as any).getKysely()` — nunca imports directos |
-| Seeds | `em.create(Entity, {...} as any)` |
-| i18n | `es.json` + `en.json` por módulo |
-| Search | `SearchModuleConfig` con `fieldPolicy` |
-| Notifications | `NotificationTypeDefinition[]` |
-| Dashboard widgets | `DashboardWidgetModule` con config + client component |
+### Phase 14 — Real-time + Quality
+- `emit-lifecycle.ts` — utilidad para emitir eventos desde routes y workers
+- `clientBroadcast: true` en eventos clave
+- `search.ts` universal (después de S3: 100% cobertura)
+- Tokens semánticos OM reemplazando colores hardcoded
 
-### Principios de arquitectura
+---
 
-- Open Mercato core NO se modifica — todo es aditivo
-- Módulos son independientes y se pueden activar/desactivar por tenant
-- Comunicación entre módulos via eventos y Kysely (no imports directos)
-- Cada tenant tiene su propio pipeline, tags, configuración (aislado por tenant_id)
-- La visibilidad se controla por feature toggles + role features
+## 2026-05-20 — Retail (PR #37)
+
+### Phase 11 — Retail/Comercio (7 módulos)
+`retail_branches`, `retail_inventory`, `retail_loyalty`, `retail_returns`, `retail_ecommerce`, `retail_purchasing`, `retail_pricing`
+- Sistema de fidelización con puntos, niveles VIP, campañas
+- Tienda online (frontend/tienda/) con carrito y checkout
+- Worker rotación de inventario y dead stock detection
+- AI Agent — Asistente del Gerente de Retail
+
+---
+
+## 2026-05-20 — Fiscal + Distribución + Automotriz (ver entrada anterior)
+
+---
+
+## 2026-05-20 — Education Vertical (ver entrada anterior)
+
+---
+
+## 2026-05-19 — Real Estate UI + Cleanup (ver entrada anterior)
+
+---
+
+## 2026-05-18 — Fundación e Infraestructura (ver entrada anterior)
+
+---
+
+## Resumen de estado actual
+
+### 83 módulos — cobertura total
+
+| Feature | Coverage |
+|---------|---------|
+| `index.ts` + `di.ts` | 100% |
+| `i18n` (es+en) | 100% |
+| `@Property({ type: })` | 100% (cero bare properties) |
+| `search.ts` | 100% (módulos con backend+entities) |
+| `notifications.ts` (schema correcto) | 100% (módulos operativos) |
+| `events.ts` (módulos con workers) | 100% |
+| Portal `[orgSlug]/portal/` | 100% (portales de cliente) |
+
+### PRs abiertos (pendientes de merge)
+| PR | Contenido | Estado |
+|----|-----------|--------|
+| #68 | ROADMAP actualizado | Listo |
+| #69 | CI + 5 Workflows | Listo |
+
+### Pendiente de implementación
+- **Phase 22-C**: `isp_monitoring` — Webhooks Zabbix/PRTG + Radius/OLT (cuando haya cliente con NMS)
+- **GitHub Actions**: configurar "Allow all actions" en Settings → Actions → General
+- **Infraestructura**: Docker layer caching, Resend email, wildcard domain `*.aika.com.ve`
