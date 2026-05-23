@@ -1,0 +1,94 @@
+{
+  "workflowId": "liquidacion_productor_v1",
+  "workflowName": "Liquidación del Productor Integrado",
+  "description": "Flujo de aprobación de la liquidación económica al productor integrado al final de cada ciclo de producción. El técnico de campo calcula la liquidación basándose en los resultados reales del ciclo (FCA, peso promedio, mortalidad). El gerente de producción revisa y aprueba el pago. Una vez aprobado, el productor recibe la notificación en su portal.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Agroindustria",
+    "icon": "file-text",
+    "entityType": "AgriProducerSettlement",
+    "tags": ["produccion", "integrado", "liquidacion", "pago", "fca", "ciclo"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Liquidación Calculada",
+        "stepType": "START",
+        "description": "El técnico de campo registró los resultados finales del ciclo y calculó el monto de liquidación según las tablas del contrato de integración."
+      },
+      {
+        "stepId": "revision_tecnico",
+        "stepName": "Revisión del Técnico de Campo",
+        "stepType": "USER_TASK",
+        "description": "El técnico verifica que todos los datos del ciclo son correctos y propone la liquidación al gerente",
+        "config": {
+          "taskName": "Revisar y proponer liquidación al gerente",
+          "description": "Verifique los datos del ciclo: FCA real vs objetivo, peso promedio, mortalidad, aves finales. Confirme que el cálculo es correcto y adjunte los reportes de campo si los hay.",
+          "formFields": [
+            { "id": "data_verified", "label": "¿Datos del ciclo verificados?", "type": "checkbox", "required": true },
+            { "id": "flock_report_attached", "label": "¿Reporte final del lote adjunto?", "type": "checkbox" },
+            { "id": "technical_notes", "label": "Observaciones técnicas del ciclo", "type": "textarea", "required": false },
+            {
+              "id": "technical_recommendation",
+              "label": "Recomendación al productor para el próximo ciclo",
+              "type": "textarea",
+              "required": false
+            }
+          ]
+        }
+      },
+      {
+        "stepId": "aprobacion_gerencia",
+        "stepName": "Aprobación del Gerente de Producción",
+        "stepType": "USER_TASK",
+        "description": "El gerente revisa la liquidación y decide si aprueba el pago al productor integrado",
+        "config": {
+          "taskName": "Aprobar liquidación del productor integrado",
+          "description": "Revise el desempeño del productor en este ciclo comparado con los objetivos del contrato. Verifique el cálculo de bonos, penalizaciones y el monto total a pagar. Una vez aprobado, el productor será notificado en su portal.",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Decisión",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — proceder con el pago" },
+                { "value": "adjust", "label": "Ajustar montos — requiere recálculo" },
+                { "value": "hold", "label": "En espera — faltan datos" }
+              ]
+            },
+            { "id": "approved_amount_usd", "label": "Monto aprobado (USD) — dejar en blanco si igual al calculado", "type": "text" },
+            { "id": "payment_instructions", "label": "Instrucciones de pago / notas para contabilidad", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Pago Autorizado",
+        "stepType": "END",
+        "description": "Liquidación aprobada. Notificar al productor en su portal y procesar el pago."
+      },
+      {
+        "stepId": "end_adjust",
+        "stepName": "Requiere Ajuste",
+        "stepType": "END",
+        "description": "Gerencia solicitó ajustes. El técnico debe recalcular la liquidación."
+      },
+      {
+        "stepId": "end_hold",
+        "stepName": "En Espera",
+        "stepType": "END",
+        "description": "Liquidación pausada esperando datos adicionales."
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "revision_tecnico" },
+      { "from": "revision_tecnico", "to": "aprobacion_gerencia" },
+      { "from": "aprobacion_gerencia", "to": "end_approved", "condition": "decision === 'approve'" },
+      { "from": "aprobacion_gerencia", "to": "end_adjust",   "condition": "decision === 'adjust'" },
+      { "from": "aprobacion_gerencia", "to": "end_hold",     "condition": "decision === 'hold'" }
+    ]
+  }
+}
