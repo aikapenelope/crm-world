@@ -11,7 +11,7 @@
 | Vertical | Phase | Módulos | AI Agent | Search | PDF | Estado |
 |----------|-------|---------|----------|--------|-----|--------|
 | Real Estate / Inmobiliaria | 2–6 | 8 módulos | ✅ | ✅ | — | **COMPLETO** |
-| Fiscal Venezuela (transversal) | 7 | 4 módulos | — | — | — | **COMPLETO** |
+| Fiscal Venezuela (transversal) | 7 | 4 módulos | — | ✅ | — | **COMPLETO** |
 | Educación / Colegios | 8 | 10 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | Distribución / Distribuidoras | 9 | 8 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | Automotriz / Talleres | 10 | 7 módulos | ✅ | ✅ | — | **COMPLETO** |
@@ -19,13 +19,14 @@
 | Condominios | 12 | 7 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | Construcción / Constructoras | 13 | 8 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | **Academias y Formación** | 20 | 9 módulos | ✅ | ✅ | — | **COMPLETO** |
-| **Restaurant / Food** | 21 | — | — | — | — | **PRÓXIMA** |
+| **ISP / Telecomunicaciones** | 22 | 9 módulos | — | ✅ | — | **COMPLETO** |
 | Fitness / Gym | — | — | — | — | — | Candidata |
 | Beauty / Salones | — | — | — | — | — | Candidata |
 | Services / Agencias | — | — | — | — | — | Candidata |
 | Transporte / Logística | — | — | — | — | — | Futura |
 
 > **Healthcare / Clínicas — DESCARTADO.**
+> **Restaurant / Food — DESCARTADO.** Fuera de roadmap.
 
 ---
 
@@ -54,19 +55,19 @@
 
 ### Phase 8 — Educación / Colegios (completo)
 - [x] `students`, `enrollment`, `tuition`, `grades`, `attendance`, `school_calendar`, `school_comms`, `school_docs`, `parent_portal`, `school_migration`
-- [x] `search.ts` para `students` y `tuition`
+- [x] `search.ts` para todos los módulos de educación
 - [x] **AI Agent** — Asistente del Director Escolar (tuition, 5 tools)
 - [x] **PDFs** — Boletín escolar + Constancia de inscripción
 
 ### Phase 9 — Distribución / Distribuidoras (completo)
 - [x] `dist_credit`, `dist_price_lists`, `dist_inventory`, `dist_routes`, `dist_delivery`, `dist_reports`, `dist_commissions`, `dist_portal`
-- [x] `search.ts` para `dist_credit` (límites + transacciones)
+- [x] `search.ts` para todos los módulos dist
 - [x] **AI Agent** — Asistente del Director de Distribución (dist_reports, 5 tools)
 - [x] **PDF** — Nota de entrega / Remisión
 
 ### Phase 10 — Automotriz / Talleres Mecánicos (completo)
 - [x] `auto_vehicles`, `auto_service_orders`, `auto_inspections`, `auto_parts`, `auto_estimates`, `auto_reports`, `auto_portal`
-- [x] `search.ts` para `auto_vehicles` y `auto_service_orders`
+- [x] `search.ts` para todos los módulos auto
 - [x] **AI Agent** — Asistente del Gerente de Taller (auto_reports, 5 tools)
 - [x] Regionalización VE: 15 marcas, 20 servicios comunes, validación placa venezolana
 
@@ -83,98 +84,90 @@
 
 ### Phase 13 — Construcción / Constructoras (completo)
 - [x] `const_projects`, `const_budget`, `const_schedule`, `const_progress`, `const_rfis`, `const_daily`, `const_subcon`, `const_materials`
-- [x] `search.ts` para `const_projects`, `const_budget`, `const_rfis`, `const_progress`
+- [x] `search.ts` para todos los módulos const
 - [x] **AI Agent** — Asistente del Director de Obra (6 tools)
 - [x] **PDF** — Valuación de obra (tabla de partidas, montos, firmas)
 
-### Phase 14 — Real-time Pipeline + Platform Quality (completo)
+### Phase 14 — Real-time + Platform Quality (completo)
 - [x] `emit-lifecycle.ts`, `calendar-links.ts` — utilidades base
-- [x] `clientBroadcast: true` + `emitLifecycle()` wired en 9 módulos (13 emit() pendientes)
+- [x] `clientBroadcast: true` + `emitLifecycle()` en módulos clave
 - [x] `indexer: { entityType }` en todas las CRUD routes
-- [x] `search.ts` activos en 44 módulos (cobertura universal Cmd+K)
-- [x] Módulo `example` desactivado, colores hardcoded → tokens semánticos OM
+- [x] `search.ts` universal — 63 módulos (100% coverage)
+- [x] Módulo `example` desactivado, tokens semánticos OM
 
 ### Phase 15 — Portal del Propietario Condominios (completo)
-- [x] Recibos (lista + detalle + reportar pago)
-- [x] Mantenimiento (lista + crear solicitud)
-- [x] Circulares, votaciones (lista + emitir voto)
-- [x] Documentos/actas, estado de cuenta
+- [x] Recibos, mantenimiento, circulares, votaciones, documentos, estado de cuenta
 
 ### Phase 16 — Páginas de Detalle `[id]` (completo)
-- [x] `const_projects/[id]` — tabs Overview, Valuaciones, RFIs
-- [x] `condo_properties/[id]` — edificio con unidades y alícuotas
-- [x] `condo_fees/receipts/[id]` — recibo con pago inline
-- [x] `const_rfis/[id]` — RFI con formulario de respuesta
-- [x] `const_daily/[id]` — reporte con labor + actividades
-- [x] `auto_service_orders/[id]` — timeline visual + ítems
+- [x] `const_projects/[id]`, `condo_properties/[id]`, `condo_fees/receipts/[id]`
+- [x] `const_rfis/[id]`, `const_daily/[id]`, `auto_service_orders/[id]`
 
 ### Phase 17 — Generación de PDFs (completo)
+- [x] Recibo de condominio, Valuación de obra, Boletín escolar, Constancia de inscripción, Nota de entrega, Acta de asamblea
 
-Usa `@react-pdf/renderer` con sistema de diseño compartido (`src/lib/pdf/`).
-Todos los PDFs incluyen branding del tenant (nombre de la organización, initiales coloreadas como logo).
+### Phase 18 — CI Pipeline (código listo, requiere acción en GitHub)
+- [x] `.github/workflows/ci.yml` — en main desde el scaffold inicial. 3 jobs: `typecheck` (`yarn generate` + `yarn typecheck`), `audit` (`yarn npm audit --severity high`), `lint`
+- [x] Concurrency cancel, cache de `.yarn/cache` + `node_modules` por hash de `yarn.lock`
 
-- [x] **Recibo de condominio** — GET `/api/condo-fees/receipts/pdf?id=XXX`
-  Watermark PAGADO, watermark en recibos pagados, desglose monto+mora, equivalente VES
-- [x] **Valuación de obra** — GET `/api/const-progress/valuations/pdf?id=XXX`
-  Tabla financiera completa con retenciones/anticipos, tabla de partidas valuadas, firmas
-- [x] **Boletín escolar** — GET `/api/grades/boleta-pdf?student_id=XXX`
-  Notas por materia × período, códigos de color por rendimiento, asistencia, firmas
-- [x] **Constancia de inscripción** — GET `/api/enrollment/constancia-pdf?student_id=XXX`
-  Texto legal formal venezolano, caja resaltada con nombre del alumno, sello circular placeholder
-- [x] **Nota de entrega (distribución)** — GET `/api/dist-delivery/nota-entrega-pdf?id=XXX`
-  Ítems agrupados por cliente, estado por ítem con colores, firma receptor
-- [x] **Acta de asamblea** — GET `/api/condo-comms/acta-pdf?id=XXX`
-  Apertura legal formal, agenda numerada, resultados de votación con barras de progreso por alícuota, 3 firmas
+> **⚠ Por qué no está corriendo en los PRs:**
+> GitHub Actions requiere aprobación para workflows disparados por apps/bots externos.
+> **Fix**: `Settings → Actions → General → "Fork pull request workflows"` → cambiar a
+> "Allow all actions and reusable workflows". O aprobar manualmente en la pestaña Actions de cada PR.
+
+- [ ] Docker layer caching en Coolify — reducir build time
+- [ ] Resend email — `mail.aikalabs.cc`
+- [ ] Wildcard domain `*.aika.com.ve`
+
+### Phase 19 — Workflows de Aprobación (código listo en PR #53, requiere rebase)
+
+Usa el motor `workflows` de Open Mercato (ya habilitado). Los workflows NO son módulos nuevos:
+son **definiciones JSON** + seed en `setup.ts` + widget inline en la página de detalle de la entidad.
+Infraestructura compartida en `src/lib/workflows/` (`WorkflowApprovalWidget`, `seed-workflow.ts`, `useWorkflowApproval.ts`).
+
+- [x] **Gasto extraordinario** (`condo_accounting/entries/[id]`) — Junta de propietarios aprueba gastos fuera del presupuesto ordinario (requerido por Ley de PH Venezuela)
+- [x] **Change order** (`const_rfis/[id]`) — Gerente de obra aprueba RFIs con impacto en alcance/costo antes de facturar en valuación
+- [x] **Límite de crédito** (`dist_credit/[id]`) — Gerencia de distribución autoriza aumentos del límite de crédito de distribuidores
+- [x] **Inscripción escolar** (`enrollment/applications/[id]`) — Comité de admisiones revisa y aprueba solicitudes de inscripción
+- [x] **Devolución fuera de política** (`retail_returns/[id]`) — Gerente de tienda autoriza devoluciones que no cumplen la política estándar
+
+> **Estado de PR #53**: código completo pero el branch está basado en un main antiguo.
+> Necesita rebase para resolver conflictos con las correcciones de portales y sprints S1-S6.
 
 ### Phase 20 — Academias y Centros de Formación (completo)
-- [x] `academy_courses` — Catálogo de cursos (nivel, modalidad, precio, capacidad)
-- [x] `academy_instructors` — Perfiles de instructores
-- [x] `academy_groups` — Grupos/cohortes con generación automática de sesiones
-- [x] `academy_sessions` — Sesiones individuales con asistencia en card grid
-- [x] `academy_enrollments` — Inscripciones con anillos SVG de progreso
-- [x] `academy_attendance` — Asistencia por toque (tap-to-cycle)
-- [x] `academy_payments` — Cobros + WhatsApp cobro
-- [x] `academy_certificates` — Certificados con URL de verificación pública `/cert/[number]`
-- [x] `academy_portal` — Portal del estudiante (cursos, sesiones, pagos, certificados)
-- [x] Kanban board de grupos (tablero 4 columnas + real-time)
-- [x] `search.ts` para courses y enrollments
-- [x] **AI Agent** — Asistente del Director de Academia (5 tools)
+- [x] 9 módulos + portal del estudiante, kanban, AI Agent, search.ts universal
+
+### Phase 22 — ISP / Telecomunicaciones Venezuela (completo)
+- [x] **22-A** — `isp_plans`, `isp_network`, `isp_subscribers`, `isp_billing` — core económico
+- [x] **22-B** — `isp_support`, `isp_technicians`, `isp_sales` — operaciones diarias
+- [x] **22-Portal** — `isp_portal` — portal del abonado con patrón `[orgSlug]/portal/` correcto
+- [x] **Estandarización** — search.ts, notifications.ts, events.ts para todos los módulos ISP
+- [ ] **22-C** — `isp_monitoring` — webhooks Zabbix/PRTG + Radius/OLT (cuando haya cliente con NMS)
+
+### Estandarización de módulos — Sprints S1–S6 (completo, PRs #63–#67)
+- [x] **S1** — events.ts + i18n para módulos de infraestructura
+- [x] **S2** — Schema `NotificationTypeDefinition` correcto en 10 módulos
+- [x] **S3** — `search.ts` para 12 módulos → 100% coverage
+- [x] **S4** — `CrudForm` en 7 páginas + 19 excepciones AGM documentadas
+- [x] **S5** — `notifications.ts` en 63 módulos operativos (100%)
+- [x] **S6** — `<Button>` reemplaza `<button>` raw; `<table>` excepciones documentadas
+- [x] **Portales** — Migración a `[orgSlug]/portal/` en 6 módulos (PRs #61-#62 + docs/PORTAL_GUIDE.md)
 
 ---
 
 ## Pendiente
 
-### Phase 18 — Infraestructura y Plataforma
+### Phase 18 — Infraestructura (pendiente)
+- [ ] Activar CI en GitHub: Settings → Actions → Allow all actions (el yml ya está en main)
+- [ ] Docker layer caching en Coolify
+- [ ] Resend email (`mail.aikalabs.cc`)
+- [ ] Wildcard domain `*.aika.com.ve`
 
-- [ ] **CI pipeline** — `yarn typecheck` antes de merge a main (GitHub Actions, ~20 min de setup)
-- [ ] Docker layer caching en Coolify — reducir build time (~5 min → ~1 min)
-- [ ] Resend email — `mail.aikalabs.cc` — requiere API key por tenant (no compartir dominio)
-- [ ] Wildcard domain `*.aika.com.ve` — subdominio por tenant (requiere DNS challenge para wildcard SSL)
-- [x] Calendar links `src/lib/calendar-links.ts` — implementado
-- [x] `search.ts` universal — 44 módulos implementados
+### Phase 19 — Workflows (pendiente: rebase de PR #53)
+- [ ] Rebase PR #53 sobre main actual y resolver conflictos de portales
+- [ ] Merge — activa los 5 workflows de aprobación
 
-### Phase 19 — Workflows de Aprobación
-
-Usa el módulo `workflows` de Open Mercato (ya habilitado en `modules.ts`).
-Requiere `WorkflowDefinition` + `WorkflowEventTrigger` + UI de aprobación. ~2 semanas.
-
-- [ ] Gasto extraordinario (condominios)
-- [ ] Change order (construcción)
-- [ ] Límite de crédito (distribución)
-- [ ] Inscripción (educación)
-- [ ] Devolución fuera de política (retail)
-
-### Phase 21 — Restaurant / Food (próxima vertical)
-
-**Mercado objetivo**: Restaurantes, areperas, fondas, delivery, food courts.
-
-Módulos a construir:
-- `restaurant_menu` — carta digital con categorías, fotos, precios USD/VES, modificadores
-- `restaurant_tables` — mesas y zonas (salón, terraza, delivery), QR por mesa
-- `restaurant_orders` — comanda digital: mesa/delivery/take-away, estados, tiempos
-- `restaurant_kitchen` — pantalla cocina (KDS): tickets por estación, tiempos de preparación
-- `restaurant_inventory` — insumos con recetas, consumo automático por venta, alertas merma
-- `restaurant_reports` — ventas por hora, platos más vendidos, ticket promedio, mermas
+### Phase 22-C — ISP Monitoring (pendiente: cliente con NMS)
+- [ ] `isp_monitoring` — Webhooks Zabbix/PRTG + comandos Radius/OLT
 
 ---
 
@@ -182,9 +175,11 @@ Módulos a construir:
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
-| CI pipeline (yarn typecheck antes de merge) | Alta | Pendiente — ~20 min |
+| Activar GitHub Actions (settings) | Alta | 1 click — yml ya está en main |
+| Rebase PR #53 (workflows) | Alta | Conflictos de portales resolubles |
 | Migrations formales por módulo | Media | Solo necesario al cambiar entidades |
-| Integration tests (RE + Education + Distribution) | Media | Pendiente |
-| `portalBroadcast` en portales custom | Baja | Requiere migrar a PortalShell de OM primero |
+| Integration tests (RE + Education + Retail) | Media | Pendiente |
+| `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
 | Docker layer caching en Coolify | Baja | Optimización de build |
+| `<form>` con line items → CrudForm repeatable groups | Baja | 11 excepciones documentadas |
