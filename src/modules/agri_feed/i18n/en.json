@@ -1,0 +1,70 @@
+{
+  "agri_feed.nav.title": "Feed Management",
+  "agri_feed.nav.formulas": "Formulas",
+  "agri_feed.nav.batches": "Feed Batches",
+
+  "agri_feed.formulas.title": "Feed Formulas",
+  "agri_feed.formulas.new": "New Formula",
+  "agri_feed.formulas.empty.title": "No formulas registered",
+  "agri_feed.formulas.empty.description": "Create the first balanced feed formula.",
+
+  "agri_feed.batches.title": "Feed Batches",
+  "agri_feed.batches.new": "New Batch",
+  "agri_feed.batches.empty.title": "No batches registered",
+  "agri_feed.batches.empty.description": "Register the first feed batch.",
+
+  "agri_feed.fields.name": "Formula Name",
+  "agri_feed.fields.formula_type": "Formula Type",
+  "agri_feed.fields.species": "Species",
+  "agri_feed.fields.ingredients": "Ingredients",
+  "agri_feed.fields.protein_pct": "Protein (%)",
+  "agri_feed.fields.energy_kcal_kg": "Energy (kcal/kg)",
+  "agri_feed.fields.lysine_pct": "Lysine (%)",
+  "agri_feed.fields.cost_per_ton_usd": "Cost per Ton (USD)",
+  "agri_feed.fields.is_active": "Active",
+  "agri_feed.fields.notes": "Notes",
+
+  "agri_feed.fields.batch_number": "Batch Number",
+  "agri_feed.fields.formula_id": "Formula",
+  "agri_feed.fields.batch_date": "Date",
+  "agri_feed.fields.quantity_tons": "Quantity (tons)",
+  "agri_feed.fields.source_type": "Source",
+  "agri_feed.fields.supplier_id": "Supplier",
+  "agri_feed.fields.supplier_invoice": "Supplier Invoice",
+  "agri_feed.fields.supplier_lot_number": "Supplier Lot Number",
+  "agri_feed.fields.protein_result_pct": "Actual Protein (%)",
+  "agri_feed.fields.moisture_result_pct": "Moisture (%)",
+  "agri_feed.fields.aflatoxin_ppb": "Aflatoxins (ppb)",
+  "agri_feed.fields.status": "Status",
+  "agri_feed.fields.cost_per_ton_usd_batch": "Actual Cost (USD/ton)",
+
+  "agri_feed.formula_type.starter": "Starter",
+  "agri_feed.formula_type.grower": "Grower",
+  "agri_feed.formula_type.finisher": "Finisher",
+  "agri_feed.formula_type.layer": "Layer",
+  "agri_feed.formula_type.breeding": "Breeding",
+  "agri_feed.formula_type.other": "Other",
+
+  "agri_feed.source_type.own_production": "Own Production",
+  "agri_feed.source_type.purchased": "Purchased",
+
+  "agri_feed.batch_status.pending_analysis": "Pending Analysis",
+  "agri_feed.batch_status.approved": "Approved",
+  "agri_feed.batch_status.rejected": "Rejected",
+  "agri_feed.batch_status.consumed": "Consumed",
+
+  "agri_feed.saved": "Saved successfully",
+  "agri_feed.formula.saved": "Formula saved",
+  "agri_feed.batch.saved": "Batch registered",
+
+  "agri_feed.notif.formula_cost_updated.title": "Formula cost recalculated",
+  "agri_feed.notif.formula_cost_updated.body": "Feed cost was updated with the new BCV exchange rate.",
+  "agri_feed.notif.batch_produced.title": "New feed batch",
+  "agri_feed.notif.batch_produced.body": "A new balanced feed batch was registered.",
+  "agri_feed.notif.batch_rejected.title": "Batch rejected",
+  "agri_feed.notif.batch_rejected.body": "A feed batch was rejected by quality control.",
+  "agri_feed.notif.stock_low.title": "Feed stock low",
+  "agri_feed.notif.stock_low.body": "Feed inventory is below the minimum required level.",
+
+  "agri_feed.aflatoxin_warning": "Venezuelan limit: 20 ppb (SENASAG)"
+}

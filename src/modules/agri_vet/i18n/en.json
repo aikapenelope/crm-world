@@ -1,0 +1,83 @@
+{
+  "agri_vet.nav.title": "Veterinary Health",
+  "agri_vet.nav.programs": "Vaccination Programs",
+  "agri_vet.nav.vaccinations": "Vaccination Records",
+  "agri_vet.nav.medications": "Treatments",
+  "agri_vet.nav.mortality": "Mortality Records",
+
+  "agri_vet.programs.title": "Vaccination Programs",
+  "agri_vet.programs.new": "New Program",
+
+  "agri_vet.vaccinations.title": "Vaccinations",
+  "agri_vet.vaccinations.new": "Record Vaccination",
+  "agri_vet.vaccinations.upcoming": "Next 7 Days",
+  "agri_vet.vaccinations.overdue": "Overdue",
+
+  "agri_vet.medications.title": "Medication Treatments",
+  "agri_vet.medications.new": "New Treatment",
+  "agri_vet.medications.active_withdrawals": "Active withdrawal periods",
+
+  "agri_vet.mortality.title": "Mortality Records",
+  "agri_vet.mortality.new": "Record Mortality",
+
+  "agri_vet.fields.vaccine_name": "Vaccine Name",
+  "agri_vet.fields.active_ingredient": "Active Ingredient",
+  "agri_vet.fields.manufacturer": "Manufacturer",
+  "agri_vet.fields.administration_route": "Administration Route",
+  "agri_vet.fields.scheduled_date": "Scheduled Date",
+  "agri_vet.fields.applied_date": "Applied Date",
+  "agri_vet.fields.birds_treated": "Birds Treated",
+  "agri_vet.fields.vaccine_lot_number": "Vaccine Lot Number",
+  "agri_vet.fields.withdrawal_days": "Withdrawal Days",
+  "agri_vet.fields.withdrawal_end_date": "Withdrawal End Date",
+  "agri_vet.fields.status": "Status",
+
+  "agri_vet.fields.diagnosis": "Diagnosis",
+  "agri_vet.fields.medication_name": "Medication Name",
+  "agri_vet.fields.dose_description": "Dose Description",
+  "agri_vet.fields.treatment_start_date": "Treatment Start",
+  "agri_vet.fields.treatment_duration_days": "Duration (days)",
+  "agri_vet.fields.treatment_end_date": "Treatment End",
+  "agri_vet.fields.veterinarian_name": "Veterinarian",
+  "agri_vet.fields.medication_lot_number": "Medication Lot Number",
+  "agri_vet.fields.resolved": "Treatment Closed",
+
+  "agri_vet.fields.record_date": "Date",
+  "agri_vet.fields.count": "Death Count",
+  "agri_vet.fields.cause": "Cause",
+  "agri_vet.fields.cause_detail": "Cause Detail",
+
+  "agri_vet.route.drinking_water": "Drinking water",
+  "agri_vet.route.ocular": "Ocular",
+  "agri_vet.route.injectable": "Injectable",
+  "agri_vet.route.spray": "Spray",
+  "agri_vet.route.subcutaneous": "Subcutaneous",
+  "agri_vet.route.oral": "Oral",
+  "agri_vet.route.topical": "Topical",
+  "agri_vet.route.other": "Other",
+
+  "agri_vet.cause.sanitary": "Sanitary",
+  "agri_vet.cause.heat_stress": "Heat stress",
+  "agri_vet.cause.crushing": "Crushing",
+  "agri_vet.cause.low_weight_selection": "Low weight culling",
+  "agri_vet.cause.other": "Other",
+
+  "agri_vet.vac_status.scheduled": "Scheduled",
+  "agri_vet.vac_status.applied": "Applied",
+  "agri_vet.vac_status.missed": "Missed",
+  "agri_vet.vac_status.cancelled": "Cancelled",
+
+  "agri_vet.withdrawal_warning": "This flock CANNOT go to slaughter until: {{date}}",
+  "agri_vet.saved": "Saved successfully",
+
+  "agri_vet.notif.vaccination_applied.title": "Vaccination applied",
+  "agri_vet.notif.vaccination_applied.body": "Vaccine was applied to the flock successfully.",
+  "agri_vet.notif.vaccination_missed.title": "Missed vaccination",
+  "agri_vet.notif.vaccination_missed.body": "A scheduled vaccination was not applied on time.",
+  "agri_vet.notif.medication_prescribed.title": "Treatment started",
+  "agri_vet.notif.medication_prescribed.body": "A medication treatment was started for the flock.",
+  "agri_vet.notif.withdrawal_period_active.title": "⚠ Active withdrawal period",
+  "agri_vet.notif.withdrawal_period_active.body": "This flock cannot go to slaughter until the withdrawal period ends.",
+  "agri_vet.notif.mortality_alert.title": "🚨 Mortality alert",
+  "agri_vet.notif.mortality_alert.body": "Daily mortality exceeded the threshold. Veterinary review required."
+}

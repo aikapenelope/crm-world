@@ -163,6 +163,23 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'isp_technicians', from: '@app' }, // Técnicos de campo + órdenes de trabajo
   { id: 'isp_sales', from: '@app' },       // Pipeline comercial + cobertura + comisiones
   { id: 'isp_portal', from: '@app' },      // Portal de autogestión del abonado
+
+  // Aika: Agroalimentario con Procesamiento vertical (Phase 23)
+  // Sprint A — Capa de producción primaria
+  { id: 'agri_units', from: '@app' },      // Fincas, galpones, flocks, registros semanales FCA/IEP
+  { id: 'agri_feed', from: '@app' },       // Fórmulas de alimento, lotes, recálculo automático BCV
+  { id: 'agri_vet', from: '@app' },        // Vacunación, medicación, mortalidad, retiro
+  { id: 'agri_inputs', from: '@app' },     // Inventario de insumos (medicamentos, vacunas, agroquímicos)
+  // Sprint B — Capa industrial (implementación futura)
+  { id: 'agri_processing', from: '@app' }, // Planta de beneficio y procesamiento
+  { id: 'agri_cold_chain', from: '@app' }, // Cadena de frío, cuartos fríos, transporte
+  { id: 'agri_quality', from: '@app' },    // HACCP, BPM, no-conformidades
+  { id: 'agri_traceability', from: '@app' }, // Trazabilidad alimentaria completa + recalls
+  // Sprint C — Capa comercial (implementación futura)
+  { id: 'agri_sales', from: '@app' },      // Ventas industriales a cadenas y distribuidores
+  { id: 'agri_field', from: '@app' },      // Operaciones de campo agrícola (parcelas, cultivos)
+  { id: 'agri_hr', from: '@app' },         // RRHH: nómina, jornaleros, liquidación integrado
+  { id: 'agri_portal', from: '@app' },     // Portal del productor integrado
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {
