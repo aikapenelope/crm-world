@@ -1,0 +1,113 @@
+{
+  "workflowId": "no_conformidad_ccp_v1",
+  "workflowName": "No-Conformidad Crítica de PCC",
+  "description": "Flujo de gestión de no-conformidades originadas en desviaciones de Puntos Críticos de Control (PCCs). Cuando un CCP supera su límite, el lote queda bloqueado automáticamente. El gerente de calidad investiga y decide la disposición del lote (retrabajo, destrucción, liberación con excepción documentada, o cuarentena). El flujo cumple los requisitos de HACCP Codex Alimentarius y las normas COVENIN venezolanas.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Agroindustria",
+    "icon": "alert-octagon",
+    "entityType": "AgriNonConformity",
+    "tags": ["calidad", "haccp", "ccp", "no-conformidad", "inocuidad"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Desviación de PCC Detectada",
+        "stepType": "START",
+        "description": "Sistema detectó que el valor medido superó el límite crítico del PCC. Lote bloqueado automáticamente hasta decisión del gerente de calidad."
+      },
+      {
+        "stepId": "investigacion",
+        "stepName": "Investigación y Análisis de Causa Raíz",
+        "stepType": "USER_TASK",
+        "description": "El equipo de calidad investiga la causa raíz de la desviación antes de tomar una decisión sobre el lote afectado",
+        "config": {
+          "taskName": "Investigar causa raíz de la desviación",
+          "description": "Revisar: parámetros del proceso al momento de la desviación, historial del equipo/sensor, condiciones ambientales, posible contaminación del lote. Documentar todos los hallazgos.",
+          "formFields": [
+            {
+              "id": "root_cause",
+              "label": "Causa raíz identificada",
+              "type": "textarea",
+              "required": true
+            },
+            {
+              "id": "lot_risk",
+              "label": "Evaluación de riesgo para el lote",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "high", "label": "Alto riesgo — posible peligro para el consumidor" },
+                { "value": "medium", "label": "Riesgo moderado — requiere análisis adicional" },
+                { "value": "low", "label": "Bajo riesgo — desviación controlable" }
+              ]
+            },
+            { "id": "additional_analysis_needed", "label": "¿Se requieren análisis adicionales?", "type": "checkbox" },
+            { "id": "investigation_notes", "label": "Notas de investigación", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "decision_calidad",
+        "stepName": "Decisión del Gerente de Calidad",
+        "stepType": "USER_TASK",
+        "description": "El gerente de calidad toma la decisión final sobre la disposición del lote basándose en la investigación",
+        "config": {
+          "taskName": "Decidir disposición del lote afectado",
+          "description": "Basándose en la investigación de causa raíz y la evaluación de riesgo, determine la disposición del lote. La decisión debe ser proporcional al riesgo real para el consumidor y estar documentada con justificación.",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Disposición del lote",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "rework", "label": "Retrabajo — reprocesar bajo condiciones controladas" },
+                { "value": "destroy", "label": "Destrucción — eliminar el lote completamente" },
+                { "value": "release", "label": "Liberar — con desviación documentada y justificada" },
+                { "value": "hold", "label": "Cuarentena — análisis adicionales requeridos" }
+              ]
+            },
+            { "id": "corrective_action", "label": "Acción correctiva inmediata", "type": "textarea", "required": true },
+            { "id": "preventive_action", "label": "Acción preventiva (para evitar recurrencia)", "type": "textarea", "required": true },
+            { "id": "decision_justification", "label": "Justificación de la decisión", "type": "textarea", "required": true }
+          ]
+        }
+      },
+      {
+        "stepId": "end_rework",
+        "stepName": "Retrabajo Autorizado",
+        "stepType": "END",
+        "description": "Lote enviado a reproceso bajo condiciones controladas. Documentar procedimiento de retrabajo."
+      },
+      {
+        "stepId": "end_destroy",
+        "stepName": "Destrucción Autorizada",
+        "stepType": "END",
+        "description": "Lote destruido. Documentar método de destrucción, cantidad y evidencia fotográfica."
+      },
+      {
+        "stepId": "end_release",
+        "stepName": "Lote Liberado con Excepción",
+        "stepType": "END",
+        "description": "Lote liberado con desviación documentada y justificación del gerente de calidad."
+      },
+      {
+        "stepId": "end_hold",
+        "stepName": "Cuarentena",
+        "stepType": "END",
+        "description": "Lote en cuarentena hasta recibir resultados de análisis adicionales."
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "investigacion" },
+      { "from": "investigacion", "to": "decision_calidad" },
+      { "from": "decision_calidad", "to": "end_rework",   "condition": "decision === 'rework'" },
+      { "from": "decision_calidad", "to": "end_destroy",  "condition": "decision === 'destroy'" },
+      { "from": "decision_calidad", "to": "end_release",  "condition": "decision === 'release'" },
+      { "from": "decision_calidad", "to": "end_hold",     "condition": "decision === 'hold'" }
+    ]
+  }
+}
