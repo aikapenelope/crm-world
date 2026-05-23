@@ -1,0 +1,91 @@
+{
+  "workflowId": "recall_v1",
+  "workflowName": "Recall de Producto — Retiro de Mercado",
+  "description": "Flujo de autorización y ejecución de un recall de producto terminado. Iniciado por el equipo de calidad cuando se detecta un peligro de inocuidad. El Gerente General (GM) aprueba el recall y autoriza las notificaciones a clientes e instituciones regulatorias (INSAI). Clase I requiere notificación al INSAI dentro de las 24 horas según normativa venezolana.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Agroindustria",
+    "icon": "alert-triangle",
+    "entityType": "AgriRecall",
+    "tags": ["recall", "inocuidad", "trazabilidad", "insai", "retiro-mercado"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Recall Iniciado",
+        "stepType": "START",
+        "description": "Equipo de calidad detecta un peligro de inocuidad y crea el recall. Sistema genera automáticamente la lista de clientes afectados. Lote marcado como 'recalled'."
+      },
+      {
+        "stepId": "aprobacion_gm",
+        "stepName": "Aprobación del Gerente General",
+        "stepType": "USER_TASK",
+        "description": "El GM revisa el alcance del recall, los clientes afectados y la clase de riesgo. Autoriza el inicio de las notificaciones y comunicaciones regulatorias.",
+        "config": {
+          "taskName": "Aprobar y autorizar recall de producto",
+          "description": "Revisar: clase de riesgo, clientes afectados, cantidades involucradas, causa del problema. Si es Clase I, se requiere notificación al INSAI en < 24 horas. Autorizar las comunicaciones necesarias.",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Decisión",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — proceder con el recall" },
+                { "value": "investigate_more", "label": "Ampliar investigación antes de decidir" },
+                { "value": "cancel", "label": "Cancelar — evidencia insuficiente" }
+              ]
+            },
+            { "id": "insai_notified", "label": "¿INSAI notificado?", "type": "checkbox" },
+            { "id": "public_statement_needed", "label": "¿Se requiere comunicado público?", "type": "checkbox" },
+            { "id": "client_notification_approved", "label": "Autorizar notificación a clientes", "type": "checkbox", "required": true },
+            { "id": "gm_notes", "label": "Instrucciones del GM", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "ejecucion",
+        "stepName": "Ejecución del Recall",
+        "stepType": "USER_TASK",
+        "description": "Equipo de calidad ejecuta el recall: notifica a clientes, coordina devoluciones, documenta cantidades recuperadas",
+        "config": {
+          "taskName": "Ejecutar y documentar el recall",
+          "description": "Notificar a todos los clientes en la lista de afectados. Coordinar la devolución o destrucción del producto. Documentar las cantidades recuperadas de cada cliente.",
+          "formFields": [
+            { "id": "clients_notified_count", "label": "Clientes notificados", "type": "text", "required": true },
+            { "id": "quantity_recovered_kg", "label": "Cantidad recuperada (kg)", "type": "text" },
+            { "id": "destruction_method", "label": "Método de destrucción (si aplica)", "type": "textarea" },
+            { "id": "execution_notes", "label": "Notas de ejecución", "type": "textarea", "required": true }
+          ]
+        }
+      },
+      {
+        "stepId": "end_completed",
+        "stepName": "Recall Completado",
+        "stepType": "END",
+        "description": "Recall ejecutado exitosamente. Generar informe final para archivo y reguladores."
+      },
+      {
+        "stepId": "end_investigate",
+        "stepName": "En Investigación Adicional",
+        "stepType": "END",
+        "description": "Recall pausado — se requiere más información antes de proceder."
+      },
+      {
+        "stepId": "end_cancelled",
+        "stepName": "Recall Cancelado",
+        "stepType": "END",
+        "description": "Recall cancelado por el GM. Documentar la justificación."
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "aprobacion_gm" },
+      { "from": "aprobacion_gm", "to": "ejecucion",        "condition": "decision === 'approve'" },
+      { "from": "aprobacion_gm", "to": "end_investigate",  "condition": "decision === 'investigate_more'" },
+      { "from": "aprobacion_gm", "to": "end_cancelled",    "condition": "decision === 'cancel'" },
+      { "from": "ejecucion",     "to": "end_completed" }
+    ]
+  }
+}

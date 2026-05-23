@@ -10,7 +10,8 @@ import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { LoadingMessage, ErrorMessage } from '@open-mercato/ui/backend/detail'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
-import { ArrowLeft, Plus, RefreshCw } from 'lucide-react'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@open-mercato/ui/primitives/select'
+import { ArrowLeft, Plus, RefreshCw, Syringe } from 'lucide-react'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'error' | 'ready'
@@ -47,6 +48,15 @@ export default function FlockDetailPage() {
   const [records, setRecords]   = React.useState<any[]>([])
   const [showForm, setShowForm] = React.useState(false)
 
+  // Vaccination program state
+  const [vacPrograms, setVacPrograms]     = React.useState<{ id: string; name: string; species: string }[]>([])
+  const [selectedProgram, setSelProgram]  = React.useState('')
+  const [showVacDialog, setVacDialog]     = React.useState(false)
+  const [applyingProgram, setApplying]    = React.useState(false)
+
+  // Cost breakdown state
+  const [costData, setCostData]           = React.useState<any>(null)
+
   const load = React.useCallback(async () => {
     setState('loading')
     const [flockRes, kpisRes, recRes] = await Promise.all([
@@ -59,6 +69,15 @@ export default function FlockDetailPage() {
     setFlock(flockItem)
     if (kpisRes.ok && kpisRes.result) setKpis(kpisRes.result)
     setRecords((recRes.result?.items ?? []).sort((a: any, b: any) => b.week_number - a.week_number))
+
+    // Load vaccination programs for apply-program dialog
+    const progRes = await apiCall<{ items: any[] }>('/api/agri-vet/vaccination-programs?is_active=true&pageSize=20', undefined, { fallback: { items: [] } })
+    setVacPrograms((progRes.result?.items ?? []).map((p: any) => ({ id: p.id, name: p.name, species: p.species })))
+
+    // Load cost breakdown
+    const costRes = await apiCall<any>(`/api/agri-units/flock-cost-breakdown?flock_id=${flockId}`, undefined, { fallback: null })
+    if (costRes.ok && costRes.result) setCostData(costRes.result)
+
     setState('ready')
   }, [flockId])
 
@@ -121,6 +140,30 @@ export default function FlockDetailPage() {
 
   const nextWeek = records.length > 0 ? ((records[0] as any).week_number as number) + 1 : 1
 
+  const handleApplyProgram = async () => {
+    if (!selectedProgram) return
+    setApplying(true)
+    try {
+      const res = await apiCallOrThrow('/api/agri-vet/apply-program', {
+        method: 'POST',
+        body: JSON.stringify({ flock_id: flockId, program_id: selectedProgram }),
+      })
+      const data = res as any
+      flash(`${data.created} vacunaciones programadas automáticamente (${data.program_name})`, 'success')
+      setVacDialog(false)
+      setSelProgram('')
+    } catch (err: any) {
+      const msg = err?.message ?? 'Error al aplicar el programa'
+      if (msg.includes('PROGRAM_ALREADY_APPLIED')) {
+        flash('Este programa ya fue aplicado a este lote', 'warning')
+      } else {
+        flash(msg, 'error')
+      }
+    } finally {
+      setApplying(false)
+    }
+  }
+
   return (
     <Page>
       <PageHeader
@@ -134,6 +177,11 @@ export default function FlockDetailPage() {
             <Button type="button" variant="outline" size="sm" onClick={load}>
               <RefreshCw className="size-4" />
             </Button>
+            {flock.status === 'active' && vacPrograms.length > 0 && (
+              <Button type="button" variant="outline" size="sm" onClick={() => setVacDialog(!showVacDialog)}>
+                <Syringe className="size-4 mr-2" /> Aplicar programa
+              </Button>
+            )}
             {flock.status === 'active' && (
               <Button type="button" onClick={() => setShowForm(!showForm)}>
                 <Plus className="size-4 mr-2" /> Sem. {nextWeek}
@@ -143,6 +191,36 @@ export default function FlockDetailPage() {
         }
       />
       <PageBody>
+
+        {/* Vaccination program apply dialog */}
+        {showVacDialog && flock.status === 'active' && (
+          <div className="mb-4 border border-border rounded-lg p-4 bg-background">
+            <div className="flex items-center gap-2 mb-3">
+              <Syringe className="size-4 text-primary" />
+              <h3 className="text-sm font-semibold">Aplicar Programa de Vacunación</h3>
+            </div>
+            <p className="text-xs text-muted-foreground mb-3">
+              Selecciona el programa de vacunación para este lote. El sistema generará automáticamente todas las vacunaciones programadas con sus fechas calculadas desde la fecha de entrada de los pollitos.
+            </p>
+            <div className="flex items-center gap-3">
+              <Select value={selectedProgram} onValueChange={setSelProgram}>
+                <SelectTrigger className="max-w-xs">
+                  <SelectValue placeholder="Selecciona un programa..." />
+                </SelectTrigger>
+                <SelectContent>
+                  {vacPrograms.map((p) => (
+                    <SelectItem key={p.id} value={p.id}>{p.name} ({p.species})</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button type="button" onClick={handleApplyProgram} disabled={!selectedProgram || applyingProgram}>
+                <Syringe className="size-4 mr-2" />
+                {applyingProgram ? 'Aplicando...' : 'Aplicar y generar calendario'}
+              </Button>
+              <Button type="button" variant="ghost" size="sm" onClick={() => setVacDialog(false)}>Cancelar</Button>
+            </div>
+          </div>
+        )}
 
         {/* KPI Cards */}
         {kpis && (
@@ -204,6 +282,75 @@ export default function FlockDetailPage() {
                 load()
               }}
             />
+          </div>
+        )}
+
+        {/* Cost Breakdown Section */}
+        {costData && (
+          <div className="mb-6">
+            <h3 className="text-sm font-semibold mb-3">Costo de Producción</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+              <div className="bg-card border border-border rounded-lg p-4">
+                <div className="text-xs text-muted-foreground mb-1">Costo total acumulado</div>
+                <div className="text-2xl font-bold text-primary">USD {costData.total_cost_usd}</div>
+              </div>
+              <div className="bg-card border border-border rounded-lg p-4">
+                <div className="text-xs text-muted-foreground mb-1">Costo por kg vivo</div>
+                <div className="text-2xl font-bold">
+                  {costData.cost_per_kg_live_usd
+                    ? `USD ${costData.cost_per_kg_live_usd}`
+                    : <span className="text-muted-foreground">—</span>}
+                </div>
+                {costData.cost_per_kg_live_ves && costData.bcv_rate && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    ≈ Bs {Number(costData.cost_per_kg_live_ves).toLocaleString('es-VE')} (BCV {Number(costData.bcv_rate).toFixed(2)})
+                  </div>
+                )}
+              </div>
+              <div className="bg-card border border-border rounded-lg p-4">
+                <div className="text-xs text-muted-foreground mb-1">Biomasa viva</div>
+                <div className="text-2xl font-bold">{costData.live_biomass_kg} kg</div>
+              </div>
+            </div>
+
+            {/* Cost breakdown bars */}
+            <div className="border border-border rounded-lg p-4 bg-card">
+              <div className="space-y-3">
+                {/* Feed */}
+                <div>
+                  <div className="flex items-center justify-between text-sm mb-1">
+                    <span className="font-medium">Alimento</span>
+                    <span className="font-semibold">USD {costData.breakdown.feed.cost_usd} <span className="text-muted-foreground font-normal">({costData.breakdown.feed.pct_total}%)</span></span>
+                  </div>
+                  <div className="h-2 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-primary rounded-full"
+                      style={{ width: `${Math.min(100, Number(costData.breakdown.feed.pct_total) || 0)}%` }}
+                    />
+                  </div>
+                </div>
+                {/* Inputs */}
+                {Number(costData.breakdown.inputs.cost_usd) > 0 && (
+                  <div>
+                    <div className="flex items-center justify-between text-sm mb-1">
+                      <span className="font-medium">Veterinario / Insumos</span>
+                      <span className="font-semibold">USD {costData.breakdown.inputs.cost_usd} <span className="text-muted-foreground font-normal">({costData.breakdown.inputs.pct_total}%)</span></span>
+                    </div>
+                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-status-warning-bg rounded-full border border-status-warning-border"
+                        style={{ width: `${Math.min(100, Number(costData.breakdown.inputs.pct_total) || 0)}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+              {costData.breakdown.feed.details.length === 0 && Number(costData.total_cost_usd) === 0 && (
+                <p className="text-xs text-muted-foreground mt-3">
+                  Sin datos de costo disponibles. Asigna lotes de alimento a este flock en el módulo Alimento Balanceado.
+                </p>
+              )}
+            </div>
           </div>
         )}
 

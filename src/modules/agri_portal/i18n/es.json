@@ -1,0 +1,26 @@
+{
+  "agri_portal.nav.title": "Portal del Productor",
+  "agri_portal.nav.mi_ciclo": "Mi Ciclo Actual",
+  "agri_portal.nav.mis_liquidaciones": "Mis Liquidaciones",
+  "agri_portal.nav.mis_datos": "Mis Datos",
+
+  "agri_portal.ciclo.title": "Mi Ciclo Actual",
+  "agri_portal.ciclo.no_active": "Sin ciclo activo",
+  "agri_portal.ciclo.no_active_desc": "No tienes un lote activo en este momento.",
+  "agri_portal.ciclo.days_in_cycle": "Días en ciclo",
+  "agri_portal.ciclo.fca_excellent": "FCA excelente — por encima de las metas del contrato",
+  "agri_portal.ciclo.fca_good": "FCA aceptable — revisar programa de alimentación",
+  "agri_portal.ciclo.fca_poor": "FCA por encima del objetivo — atención urgente al alimento",
+
+  "agri_portal.liquidaciones.title": "Mis Liquidaciones",
+  "agri_portal.liquidaciones.total_earned": "Total cobrado",
+  "agri_portal.liquidaciones.pending": "Pendiente por cobrar",
+  "agri_portal.liquidaciones.no_records": "Aún no tienes liquidaciones registradas.",
+  "agri_portal.liquidaciones.cycle": "Ciclo",
+  "agri_portal.liquidaciones.paid_on": "Pagado el",
+
+  "agri_portal.datos.title": "Mis Datos",
+  "agri_portal.datos.my_barn": "Mi Galpón",
+  "agri_portal.datos.active_cycle": "Ciclo Activo",
+  "agri_portal.datos.contact": "Contacto del Técnico de Campo"
+}

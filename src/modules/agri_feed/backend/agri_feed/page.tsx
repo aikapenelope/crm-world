@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useRouter } from 'next/navigation'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
@@ -35,6 +36,7 @@ const SPECIES_LABEL: Record<string, string> = {
 }
 
 export default function AgriFeedPage() {
+  const router = useRouter()
   const [formulas, setFormulas]  = React.useState<FormulaRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)
@@ -129,7 +131,8 @@ export default function AgriFeedPage() {
       cell: ({ row }) => (
         <RowActions
           items={[
-            { id: 'edit', label: 'Editar', onSelect: () => { setEditing(row.original); setShowForm(true) } },
+            { id: 'open',  label: 'Editar ingredientes', onSelect: () => router.push(`/backend/agri-feed/formulas/${row.original.id}`) },
+            { id: 'edit',  label: 'Editar datos',        onSelect: () => { setEditing(row.original); setShowForm(true) } },
           ]}
         />
       ),

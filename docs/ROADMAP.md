@@ -20,6 +20,7 @@
 | Construcción / Constructoras | 13 | 8 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | **Academias y Formación** | 20 | 9 módulos | ✅ | ✅ | — | **COMPLETO** |
 | **ISP / Telecomunicaciones** | 22 | 9 módulos | — | ✅ | — | **COMPLETO** |
+| **Agroalimentario con Procesamiento** | 23 | 12 módulos | ✅ | ✅ | — | **COMPLETO** |
 | Fitness / Gym | — | — | — | — | — | Candidata |
 | Beauty / Salones | — | — | — | — | — | Candidata |
 | Services / Agencias | — | — | — | — | — | Candidata |
@@ -105,33 +106,21 @@
 ### Phase 17 — Generación de PDFs (completo)
 - [x] Recibo de condominio, Valuación de obra, Boletín escolar, Constancia de inscripción, Nota de entrega, Acta de asamblea
 
-### Phase 18 — CI Pipeline (código listo, requiere acción en GitHub)
-- [x] `.github/workflows/ci.yml` — en main desde el scaffold inicial. 3 jobs: `typecheck` (`yarn generate` + `yarn typecheck`), `audit` (`yarn npm audit --severity high`), `lint`
-- [x] Concurrency cancel, cache de `.yarn/cache` + `node_modules` por hash de `yarn.lock`
-
-> **⚠ Por qué no está corriendo en los PRs:**
-> GitHub Actions requiere aprobación para workflows disparados por apps/bots externos.
-> **Fix**: `Settings → Actions → General → "Fork pull request workflows"` → cambiar a
-> "Allow all actions and reusable workflows". O aprobar manualmente en la pestaña Actions de cada PR.
-
-- [ ] Docker layer caching en Coolify — reducir build time
-- [ ] Resend email — `mail.aikalabs.cc`
+### Phase 18 — CI Pipeline (completo en código)
+- [x] `.github/workflows/ci.yml` — typecheck + lint en cada PR
+- [x] Concurrency cancel, cache de `.yarn/cache` + `node_modules`
+- [ ] **Activar en GitHub**: Settings → Actions → General → "Allow all actions" ← **1 click pendiente**
+- [ ] Docker layer caching en Coolify
+- [ ] Resend email (`mail.aikalabs.cc`)
 - [ ] Wildcard domain `*.aika.com.ve`
 
-### Phase 19 — Workflows de Aprobación (código listo en PR #53, requiere rebase)
-
-Usa el motor `workflows` de Open Mercato (ya habilitado). Los workflows NO son módulos nuevos:
-son **definiciones JSON** + seed en `setup.ts` + widget inline en la página de detalle de la entidad.
-Infraestructura compartida en `src/lib/workflows/` (`WorkflowApprovalWidget`, `seed-workflow.ts`, `useWorkflowApproval.ts`).
-
-- [x] **Gasto extraordinario** (`condo_accounting/entries/[id]`) — Junta de propietarios aprueba gastos fuera del presupuesto ordinario (requerido por Ley de PH Venezuela)
-- [x] **Change order** (`const_rfis/[id]`) — Gerente de obra aprueba RFIs con impacto en alcance/costo antes de facturar en valuación
-- [x] **Límite de crédito** (`dist_credit/[id]`) — Gerencia de distribución autoriza aumentos del límite de crédito de distribuidores
-- [x] **Inscripción escolar** (`enrollment/applications/[id]`) — Comité de admisiones revisa y aprueba solicitudes de inscripción
-- [x] **Devolución fuera de política** (`retail_returns/[id]`) — Gerente de tienda autoriza devoluciones que no cumplen la política estándar
-
-> **Estado de PR #53**: código completo pero el branch está basado en un main antiguo.
-> Necesita rebase para resolver conflictos con las correcciones de portales y sprints S1-S6.
+### Phase 19 — Workflows de Aprobación (completo)
+- [x] Infraestructura: `WorkflowApprovalWidget`, `seed-workflow.ts`, `useWorkflowApproval.ts`
+- [x] **Gasto extraordinario** (`condo_accounting`) — Junta aprueba gastos fuera del presupuesto
+- [x] **Change order** (`const_rfis`) — Gerente de obra aprueba RFIs con impacto en costo
+- [x] **Límite de crédito** (`dist_credit`) — Gerencia autoriza cambios de límite
+- [x] **Inscripción escolar** (`enrollment`) — Comité de admisiones decide solicitudes
+- [x] **Devolución fuera de política** (`retail_returns`) — Gerente autoriza devoluciones
 
 ### Phase 20 — Academias y Centros de Formación (completo)
 - [x] 9 módulos + portal del estudiante, kanban, AI Agent, search.ts universal
@@ -139,47 +128,92 @@ Infraestructura compartida en `src/lib/workflows/` (`WorkflowApprovalWidget`, `s
 ### Phase 22 — ISP / Telecomunicaciones Venezuela (completo)
 - [x] **22-A** — `isp_plans`, `isp_network`, `isp_subscribers`, `isp_billing` — core económico
 - [x] **22-B** — `isp_support`, `isp_technicians`, `isp_sales` — operaciones diarias
-- [x] **22-Portal** — `isp_portal` — portal del abonado con patrón `[orgSlug]/portal/` correcto
+- [x] **22-Portal** — `isp_portal` — portal del abonado
 - [x] **Estandarización** — search.ts, notifications.ts, events.ts para todos los módulos ISP
-- [ ] **22-C** — `isp_monitoring` — webhooks Zabbix/PRTG + Radius/OLT (cuando haya cliente con NMS)
+- [ ] **22-C** — `isp_monitoring` — webhooks Zabbix/PRTG + Radius/OLT (pendiente: cliente con NMS)
 
-### Estandarización de módulos — Sprints S1–S6 (completo, PRs #63–#67)
+### Estandarización de módulos — Sprints S1–S6 (completo)
 - [x] **S1** — events.ts + i18n para módulos de infraestructura
 - [x] **S2** — Schema `NotificationTypeDefinition` correcto en 10 módulos
 - [x] **S3** — `search.ts` para 12 módulos → 100% coverage
 - [x] **S4** — `CrudForm` en 7 páginas + 19 excepciones AGM documentadas
 - [x] **S5** — `notifications.ts` en 63 módulos operativos (100%)
 - [x] **S6** — `<Button>` reemplaza `<button>` raw; `<table>` excepciones documentadas
-- [x] **Portales** — Migración a `[orgSlug]/portal/` en 6 módulos (PRs #61-#62 + docs/PORTAL_GUIDE.md)
+- [x] **Portales** — Migración a `[orgSlug]/portal/` en 6 módulos
+
+### Phase 23 — Agroalimentario con Procesamiento (completo)
+
+Vertical para empresas con integración vertical completa: campo → planta → distribución.
+Spec completo en `.ai/specs/2026-05-26-agri-agroalimentario-vertical.md`.
+
+**12 módulos en 3 capas:**
+
+#### Sprint A — Producción primaria
+- [x] `agri_units` — Fincas, galpones, flocks (lotes de aves). KPIs: FCA, IEP, viabilidad, proyección día 42. AI Agent con 6 tools.
+- [x] `agri_feed` — Fórmulas de alimento con ingredientes USD/VES. Worker de recálculo automático al cambiar tasa BCV. Editor de ingredientes con cálculo de costo en tiempo real.
+- [x] `agri_vet` — Vacunación (con calendario automático), medicación, mortalidad diaria. Bloqueo de despacho por período de retiro activo.
+- [x] `agri_inputs` — Inventario de insumos (medicamentos, vacunas, agroquímicos). Descuento automático al aplicar tratamientos.
+
+#### Sprint B — Capa industrial
+- [x] `agri_processing` — Planta de beneficio. Verificación de retiro activo antes de permitir beneficio. Workflow `despacho_sanitario_v1`.
+- [x] `agri_cold_chain` — Cadena de frío. Endpoint IoT batch, worker de excursiones, historial con sparkline. Alert threshold para micro-cortes venezolanos.
+- [x] `agri_quality` — HACCP con editor de PCCs, monitoreo de PCCs con auto-NC, checklists BPM. Workflow `no_conformidad_ccp_v1`.
+- [x] `agri_traceability` — Trazabilidad completa (producto → flock → alimentos → medicamentos) via Kysely. Recall con workflow `recall_v1`.
+
+#### Sprint C — Capa comercial
+- [x] `agri_sales` — Ventas a cadenas/distribuidores. Multi-moneda: USD + IVA 16% VES + IGTF 3%.
+- [x] `agri_field` — Operaciones de campo (maíz, soya, sorgo). Costo real de materia prima propia.
+- [x] `agri_hr` — Nómina jornaleros (provisiones LOTTT automáticas) + liquidación productor integrado. Workflow `liquidacion_productor_v1`.
+- [x] `agri_portal` — Portal del productor integrado: ciclo activo (FCA/IEP en tiempo real), liquidaciones, datos.
+
+**UI completa + 5 flujos inteligentes:**
+- [x] Dashboard "Programa de Cosecha" — todos los flocks activos con semáforos de retiro/cosecha
+- [x] Editor inline de PCCs (HACCP) y calendario de vacunación (VetPrograms)
+- [x] Editor de ingredientes de fórmula con cálculo BCV en tiempo real
+- [x] Nóminas jornaleros con preview de LOTTT antes de guardar
+- [x] Historial de temperatura con sparkline SVG
+- [x] Auto-aplicar programa de vacunación al iniciar flock
+- [x] Auto-calcular liquidación del productor al completar flock
+- [x] Excursión de temperatura → No-Conformidad automática
+- [x] Vacunación/medicación → descuento automático en inventario
+- [x] Costo de producción por lote en tiempo real (endpoint + tab UI)
+
+**Workflows activados (seedModuleWorkflow en setup.ts + páginas [id]):**
+- [x] `despacho_sanitario_v1` — `agri_processing/[id]`
+- [x] `no_conformidad_ccp_v1` — `agri_quality/non-conformities/[id]`
+- [x] `recall_v1` — `agri_traceability/recalls/[id]`
+- [x] `liquidacion_productor_v1` — `agri_hr/settlements/[id]`
 
 ---
 
 ## Pendiente
 
-### Phase 18 — Infraestructura (pendiente)
-- [ ] Activar CI en GitHub: Settings → Actions → Allow all actions (el yml ya está en main)
-- [ ] Docker layer caching en Coolify
-- [ ] Resend email (`mail.aikalabs.cc`)
-- [ ] Wildcard domain `*.aika.com.ve`
+### Phase 18 — Infraestructura (acción manual)
+- [ ] **Activar CI**: Settings → Actions → General → "Allow all actions and reusable workflows" (1 click)
+- [ ] Docker layer caching en Coolify (~15 min)
+- [ ] Resend email (`mail.aikalabs.cc`) — API key por tenant
+- [ ] Wildcard domain `*.aika.com.ve` — DNS challenge
 
-### Phase 19 — Workflows (pendiente: rebase de PR #53)
-- [ ] Rebase PR #53 sobre main actual y resolver conflictos de portales
-- [ ] Merge — activa los 5 workflows de aprobación
+### Phase 22-C — ISP Monitoring (bloqueado)
+- [ ] `isp_monitoring` — webhooks Zabbix/PRTG + comandos Radius/OLT — **esperando cliente ISP con NMS**
 
-### Phase 22-C — ISP Monitoring (pendiente: cliente con NMS)
-- [ ] `isp_monitoring` — Webhooks Zabbix/PRTG + comandos Radius/OLT
+### Phase 23 — Deuda técnica residual
+- [ ] PDFs del agri: liquidación productor, guía de despacho sanitaria, certificado de trazabilidad, informe semanal del lote
+- [ ] Índices de DB en entidades agri críticas (tenant_id + organization_id, flock_id)
+- [ ] Porcicultura y bovino: lógica específica (reproductores, ciclos reproductivos)
 
 ---
 
-## Deuda técnica residual
+## Deuda técnica general
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
 | Activar GitHub Actions (settings) | Alta | 1 click — yml ya está en main |
-| Rebase PR #53 (workflows) | Alta | Conflictos de portales resolubles |
-| Migrations formales por módulo | Media | Solo necesario al cambiar entidades |
+| Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
 | Integration tests (RE + Education + Retail) | Media | Pendiente |
 | `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
 | Docker layer caching en Coolify | Baja | Optimización de build |
 | `<form>` con line items → CrudForm repeatable groups | Baja | 11 excepciones documentadas |
+| Índices DB en módulos agri | Media | Pendiente — fase 23 específico |
+| PDFs vertical agri (4 documentos) | Media | Pendiente |

@@ -1,5 +1,44 @@
 # Changelog — Aika Platform (CRM World)
 
+## 2026-05-26 — Phase 23: Vertical Agroalimentario con Procesamiento
+
+Vertical completa para empresas del sector agropecuario venezolano con integración vertical: campo → planta → distribución. Avicultura industrial (broilers Ross 308/Cobb 500), porcicultura, producción agrícola propia y gestión de productores integrados bajo contrato.
+
+### 12 módulos en 3 sprints
+
+**Sprint A — Producción primaria** (PRs #71)
+- `agri_units` — Flocks con KPIs FCA/IEP calculados server-side. AI Agent "Director de Producción" con 6 tools.
+- `agri_feed` — Fórmulas con recálculo automático de costo cuando cambia el tipo BCV. Editor inline de ingredientes con precio USD/ton y Bs/ton.
+- `agri_vet` — Programas de vacunación con calendario automático. Bloqueo de despacho por período de retiro. Worker de alertas de mortalidad.
+- `agri_inputs` — Inventario con descuento automático al aplicar tratamientos. Alertas de stock mínimo y vencimiento.
+
+**Sprint B — Capa industrial** (PR #72)
+- `agri_processing` — Planta de beneficio. Verificación de retiro activo vía Kysely antes de permitir el beneficio (409 si hay retiro). Workflow despacho sanitario.
+- `agri_cold_chain` — Endpoint IoT batch para sensores. Worker de excursiones configurado a 15 min (absorbe micro-cortes CORPOELEC). Historial con sparkline SVG.
+- `agri_quality` — Editor de PCCs con tabla inline. Monitoreo de PCCs con auto-creación de No-Conformidad al detectar desviación. Workflow NC crítica.
+- `agri_traceability` — JOIN de 8 tablas cross-module vía Kysely: producto → flock → alimentos → medicamentos → proveedor. Workflow recall con lista auto-generada de clientes.
+
+**Sprint C — Capa comercial** (PR #73)
+- `agri_sales` — Precio base USD + IVA 16% en VES al tipo BCV + IGTF 3%.
+- `agri_field` — Ciclos de cultivo (maíz, soya, sorgo) con costo real por tonelada.
+- `agri_hr` — Nóminas de jornaleros con provisiones LOTTT automáticas (vacaciones 15d, utilidades 30d, prestaciones 15d). Liquidación del productor integrado con bonos/penalizaciones por FCA y peso.
+- `agri_portal` — Portal del productor: ciclo activo (KPIs en tiempo real), liquidaciones con desglose, datos.
+
+### UI completa + 5 flujos inteligentes (PR #74)
+- Dashboard "Programa de Cosecha" con cards por harvest date + semáforos FCA/IEP/retiro
+- Editor de PCCs HACCP, editor de ingredientes de fórmula, nóminas jornaleros, historial temperatura
+- 5 automatizaciones cross-módulo: auto-calendario vacunación, auto-liquidación al cosecha, NC por excursión temperatura, descuento inventario por vacunación/medicación, costo/kg vivo en tiempo real
+
+### Activación de workflows (PR #75)
+Los 4 workflows del agri estaban definidos como JSON pero no se cargaban a la DB porque faltaba `seedModuleWorkflow` en los `setup.ts`. Verificado contra el repo oficial Open Mercato (`packages/core/src/modules/sales/setup.ts`). Patrón idéntico al de `condo_accounting`, `dist_credit`, `const_rfis` que ya funcionan en producción.
+
+- `agri_processing/setup.ts` → `despacho_sanitario_v1` + widget en `[id]` page
+- `agri_quality/setup.ts` → `no_conformidad_ccp_v1` + nueva página `non-conformities/[id]`
+- `agri_traceability/setup.ts` → `recall_v1` + nueva página `recalls/[id]`
+- `agri_hr/setup.ts` → `liquidacion_productor_v1` + nueva página `settlements/[id]`
+
+---
+
 ## 2026-05-23 — CI Pipeline + Phase 19 Workflows (PR #69)
 
 ### CI Pipeline — Phase 18 (.github/workflows/ci.yml)

@@ -1,0 +1,15 @@
+{
+  "agri_portal.nav.title": "Producer Portal",
+  "agri_portal.nav.mi_ciclo": "My Current Cycle",
+  "agri_portal.nav.mis_liquidaciones": "My Settlements",
+  "agri_portal.nav.mis_datos": "My Data",
+  "agri_portal.ciclo.title": "My Current Cycle",
+  "agri_portal.ciclo.no_active": "No active cycle",
+  "agri_portal.ciclo.no_active_desc": "You have no active flock at this time.",
+  "agri_portal.liquidaciones.title": "My Settlements",
+  "agri_portal.liquidaciones.total_earned": "Total earned",
+  "agri_portal.liquidaciones.pending": "Pending payment",
+  "agri_portal.datos.title": "My Data",
+  "agri_portal.datos.my_barn": "My Barn",
+  "agri_portal.datos.active_cycle": "Active Cycle"
+}
