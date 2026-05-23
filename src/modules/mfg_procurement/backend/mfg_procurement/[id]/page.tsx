@@ -10,6 +10,7 @@ import { LoadingMessage, ErrorMessage } from '@open-mercato/ui/backend/detail'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { ArrowLeft, Plus } from 'lucide-react'
+import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
 
 type PageState = 'loading' | 'notFound' | 'ready'
 
@@ -153,6 +154,30 @@ export default function ProcurementDetailPage() {
             <DateRow label="Levante de aduana" estimated={p.estimated_customs_clearance} actual={p.actual_customs_clearance} />
             <DateRow label="Llegada al almacén" estimated={p.estimated_warehouse_arrival} actual={p.actual_warehouse_arrival} />
           </div>
+
+          {/* Workflow: autorización para OCs de importación en status draft o sent */}
+          {(p.po_type === 'international' && ['draft', 'sent', 'confirmed'].includes(p.status)) && (
+            <WorkflowApprovalWidget
+              workflowId="purchase_authorization_v1"
+              entityId={params.id}
+              entityType="MfgPurchaseOrder"
+              title="Autorización de OC de Importación"
+              startLabel="Solicitar autorización de gerencia general"
+              startContext={{
+                po_number:       p.po_number,
+                supplier_name:   p.supplier_name,
+                total_cif_cost:  p.total_cif_cost,
+                incoterm:        p.incoterm,
+                country_of_origin: p.country_of_origin,
+              }}
+              decisions={[
+                { value: 'approve',               label: 'Aprobado — emitir OC al proveedor',        variant: 'default' },
+                { value: 'approve_with_conditions', label: 'Aprobado con condiciones documentadas',  variant: 'outline' },
+                { value: 'reject',                label: 'Rechazado — no procede',                    variant: 'destructive' },
+              ]}
+              onCompleted={() => load()}
+            />
+          )}
 
           {/* Lines */}
           <div className="border border-border rounded-xl p-5 bg-card">

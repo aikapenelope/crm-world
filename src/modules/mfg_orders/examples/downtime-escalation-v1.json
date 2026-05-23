@@ -1,0 +1,96 @@
+{
+  "workflowId": "downtime_escalation_v1",
+  "workflowName": "Escalación de Paro Prolongado",
+  "description": "Flujo que se activa cuando un paro de producción supera las 2 horas sin resolución. El supervisor de turno documenta el paro y escala al gerente de mantenimiento (si es falla mecánica) o al gerente de planta (si es corte eléctrico o falta de material). El objetivo es formalizar la escalación y garantizar que la gerencia esté informada antes de que el paro afecte la entrega de pedidos confirmados.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Producción",
+    "icon": "alert-octagon",
+    "entityType": "MfgProductionDowntime",
+    "tags": ["paro", "produccion", "escalacion", "mantenimiento", "manufactura"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Paro Escalado",
+        "stepType": "START",
+        "description": "El supervisor de turno ha reportado un paro > 2 horas sin resolución y solicita intervención de la gerencia."
+      },
+      {
+        "stepId": "atencion_gerencia",
+        "stepName": "Atención de Gerencia",
+        "stepType": "USER_TASK",
+        "description": "El gerente de mantenimiento o gerente de planta revisa el paro, asigna recursos y documenta el plan de acción para reanudar producción.",
+        "config": {
+          "taskName": "Intervenir y resolver paro prolongado",
+          "description": "Revisar: causa raíz del paro, recursos disponibles para resolverlo, impacto en órdenes de producción con fecha comprometida, y si aplica: activar generador, llamar técnico especialista, buscar repuesto de emergencia.",
+          "formFields": [
+            {
+              "id": "intervention_type",
+              "label": "Tipo de intervención",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "technical_repair",  "label": "Reparación técnica en curso" },
+                { "value": "generator",          "label": "Activando generador / alternativa energética" },
+                { "value": "spare_part_ordered", "label": "Repuesto solicitado — en espera" },
+                { "value": "resolved",           "label": "Resuelto — producción reiniciada" },
+                { "value": "production_rerouted", "label": "Producción redirigida a otra línea" }
+              ]
+            },
+            { "id": "estimated_resolution_hrs", "label": "Tiempo estimado para resolver (horas)", "type": "number", "required": true },
+            { "id": "action_plan", "label": "Plan de acción detallado", "type": "textarea", "required": true },
+            { "id": "orders_at_risk", "label": "Órdenes de producción en riesgo de incumplir fecha", "type": "textarea", "required": false },
+            { "id": "customer_notification_needed", "label": "¿Notificar a clientes con pedidos afectados?", "type": "checkbox", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "seguimiento",
+        "stepName": "Seguimiento Resolución",
+        "stepType": "USER_TASK",
+        "description": "Confirmar que el paro fue resuelto y la producción se reinició. Documentar tiempo total y causa raíz definitiva.",
+        "config": {
+          "taskName": "Confirmar resolución del paro",
+          "description": "Confirmar: ¿se reinició la producción? ¿Se actualizó el registro de downtime con la duración real? ¿Se documentó la causa raíz para el análisis de modos de falla?",
+          "formFields": [
+            {
+              "id": "resolution",
+              "label": "Estado final",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "resolved_fully",    "label": "Resuelto completamente — producción normal" },
+                { "value": "resolved_partial",  "label": "Resuelto parcialmente — producción reducida" },
+                { "value": "escalated_external", "label": "Escalado a servicio técnico externo" }
+              ]
+            },
+            { "id": "root_cause_final", "label": "Causa raíz definitiva", "type": "textarea", "required": true },
+            { "id": "preventive_action", "label": "Acción preventiva para evitar recurrencia", "type": "textarea", "required": false },
+            { "id": "actual_duration_hrs", "label": "Duración total real del paro (horas)", "type": "number", "required": true }
+          ]
+        }
+      },
+      {
+        "stepId": "end_resolved",
+        "stepName": "Resuelto",
+        "stepType": "END",
+        "description": "Paro resuelto — producción reiniciada y causa raíz documentada."
+      },
+      {
+        "stepId": "end_external",
+        "stepName": "Escalado Externamente",
+        "stepType": "END",
+        "description": "Paro escalado a servicio técnico externo — seguimiento fuera del sistema."
+      }
+    ],
+    "transitions": [
+      { "from": "start",           "to": "atencion_gerencia" },
+      { "from": "atencion_gerencia", "to": "seguimiento" },
+      { "from": "seguimiento",     "to": "end_resolved",  "condition": "resolution === 'resolved_fully' || resolution === 'resolved_partial'" },
+      { "from": "seguimiento",     "to": "end_external",  "condition": "resolution === 'escalated_external'" }
+    ]
+  }
+}
