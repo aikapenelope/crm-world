@@ -1,0 +1,69 @@
+{
+  "workflowId": "limite_credito_v1",
+  "workflowName": "Aprobación de Límite de Crédito",
+  "description": "Flujo de aprobación para aumentos o modificaciones del límite de crédito de distribuidores. El agente de ventas solicita el cambio con justificación; gerencia financiera evalúa el historial y aprueba, condiciona o rechaza.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Distribución",
+    "icon": "credit-card",
+    "entityType": "DistCreditLimit",
+    "tags": ["distribucion", "credito", "limite", "aprobacion"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "Agente solicita cambio de límite de crédito para el distribuidor"
+      },
+      {
+        "stepId": "revision_gerencia",
+        "stepName": "Revisión de Gerencia Financiera",
+        "stepType": "USER_TASK",
+        "description": "El gerente financiero o de crédito evalúa el historial del distribuidor y decide",
+        "config": {
+          "taskName": "Aprobar cambio de límite de crédito",
+          "description": "Revise el historial de pagos, saldo actual y la solicitud del agente. Determine si el nuevo límite es prudente.",
+          "formFields": [
+            { "id": "decision", "label": "Decisión", "type": "select", "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — aplicar nuevo límite" },
+                { "value": "approve_conditional", "label": "Aprobado con condiciones" },
+                { "value": "reject", "label": "Rechazado — mantener límite actual" }
+              ]
+            },
+            { "id": "approved_limit", "label": "Límite aprobado (USD)", "type": "text", "required": false },
+            { "id": "conditions", "label": "Condiciones o restricciones", "type": "textarea", "required": false },
+            { "id": "reason", "label": "Justificación de la decisión", "type": "textarea", "required": true }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Aprobado",
+        "stepType": "END",
+        "description": "Nuevo límite de crédito aprobado — aplicar en el sistema"
+      },
+      {
+        "stepId": "end_conditional",
+        "stepName": "Aprobado con condiciones",
+        "stepType": "END",
+        "description": "Límite aprobado con condiciones específicas"
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazado",
+        "stepType": "END",
+        "description": "Solicitud rechazada — mantener límite actual"
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "revision_gerencia" },
+      { "from": "revision_gerencia", "to": "end_approved", "condition": "decision === 'approve'" },
+      { "from": "revision_gerencia", "to": "end_conditional", "condition": "decision === 'approve_conditional'" },
+      { "from": "revision_gerencia", "to": "end_rejected", "condition": "decision === 'reject'" }
+    ]
+  }
+}

@@ -1,0 +1,117 @@
+# CI — Aika Platform
+#
+# Corre en cada PR hacia main y en cada push a main.
+# Dos jobs en paralelo: typecheck y lint.
+#
+# typecheck: yarn generate (descubre módulos) → yarn typecheck (tsc --noEmit)
+# lint:      yarn lint (ESLint)
+#
+# El audit de seguridad (yarn npm audit) está deliberadamente excluido del CI
+# de PR para no bloquear trabajo por CVEs en dependencias transitivas que no
+# controlamos. Se puede correr manualmente con: yarn npm audit --severity high
+#
+# Patrón basado en Open Mercato CI:
+# packages/core/.github/workflows/ci.yml (corepack + yarn immutable + generate + tsc)
+
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Cancela runs en curso del mismo ref al hacer push nuevo.
+# Evita que se acumulen runs de la misma branch.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  # ── TypeScript ─────────────────────────────────────────────────────────────
+  # Gate principal. yarn generate descubre módulos y genera el glue de DI/rutas.
+  # DEBE correr antes de tsc para que los archivos generados existan al resolver tipos.
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache .yarn/cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
+      - name: Generate module glue
+        run: yarn generate
+
+      - name: Typecheck
+        run: yarn typecheck
+
+  # ── ESLint ─────────────────────────────────────────────────────────────────
+  # Análisis estático en paralelo con typecheck.
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache .yarn/cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install --immutable
+
+      - name: Lint
+        run: yarn lint

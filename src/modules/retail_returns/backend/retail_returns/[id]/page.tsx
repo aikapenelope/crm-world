@@ -7,6 +7,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
+import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
 import { RotateCcw } from 'lucide-react'
 
 type Return = {
@@ -112,6 +113,31 @@ export default function ReturnDetailPage() {
             <div className="flex justify-between font-bold border-t pt-1"><span>Reembolso</span><span>{ret.currency} {fmt(ret.refund_amount)}</span></div>
           </div>
         </div>
+
+        {/* Workflow de autorización — para devoluciones fuera de política */}
+        {(ret.status === 'requested' || (ret as any).out_of_policy) && (
+          <div className="mt-6 max-w-md">
+            <WorkflowApprovalWidget
+              workflowId="devolucion_fuera_politica_v1"
+              entityId={ret.id}
+              entityType="RetailReturn"
+              title="Autorización Fuera de Política"
+              startLabel="Escalar al gerente para autorización"
+              startContext={{
+                return_id: ret.id,
+                return_number: ret.return_number,
+                reason: ret.reason,
+                refund_amount: ret.refund_amount,
+              }}
+              decisions={[
+                { value: 'approve', label: 'Autorizar devolución', variant: 'default' },
+                { value: 'approve_exchange', label: 'Solo cambio', variant: 'outline' },
+                { value: 'reject', label: 'Rechazar', variant: 'destructive' },
+              ]}
+              onCompleted={() => window.location.reload()}
+            />
+          </div>
+        )}
       </PageBody>
     </Page>
   )

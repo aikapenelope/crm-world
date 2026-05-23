@@ -1,0 +1,73 @@
+{
+  "workflowId": "inscripcion_escolar_v1",
+  "workflowName": "Aprobación de Inscripción Escolar",
+  "description": "Flujo de admisión para instituciones que requieren revisión formal del comité antes de confirmar la inscripción de un estudiante. El comité de admisiones revisa documentos, evalúa cupos y emite la decisión.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Educación",
+    "icon": "graduation-cap",
+    "entityType": "EnrollmentApplication",
+    "tags": ["educacion", "inscripcion", "admisiones", "aprobacion"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "Solicitud de inscripción recibida — inicia revisión del comité de admisiones"
+      },
+      {
+        "stepId": "revision_admisiones",
+        "stepName": "Revisión del Comité de Admisiones",
+        "stepType": "USER_TASK",
+        "description": "El comité de admisiones revisa los documentos del estudiante y evalúa disponibilidad de cupo",
+        "config": {
+          "taskName": "Decidir solicitud de inscripción",
+          "description": "Revise los documentos presentados, el grado al que aplica y la disponibilidad de cupos. Emita la decisión del comité.",
+          "formFields": [
+            { "id": "decision", "label": "Decisión", "type": "select", "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — confirmar inscripción" },
+                { "value": "waitlist", "label": "Lista de espera — no hay cupo disponible" },
+                { "value": "reject", "label": "Rechazado — no cumple requisitos" }
+              ]
+            },
+            { "id": "documents_complete", "label": "¿Documentación completa?", "type": "select", "required": true,
+              "options": [
+                { "value": "yes", "label": "Sí, completa" },
+                { "value": "pending", "label": "Pendiente — solicitada al representante" }
+              ]
+            },
+            { "id": "comments", "label": "Observaciones del comité", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Inscripción Aprobada",
+        "stepType": "END",
+        "description": "Inscripción aprobada — proceder con el proceso de matrícula"
+      },
+      {
+        "stepId": "end_waitlist",
+        "stepName": "Lista de Espera",
+        "stepType": "END",
+        "description": "En lista de espera — se notificará si se libera un cupo"
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazada",
+        "stepType": "END",
+        "description": "Inscripción rechazada — no cumple requisitos de admisión"
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "revision_admisiones" },
+      { "from": "revision_admisiones", "to": "end_approved", "condition": "decision === 'approve'" },
+      { "from": "revision_admisiones", "to": "end_waitlist", "condition": "decision === 'waitlist'" },
+      { "from": "revision_admisiones", "to": "end_rejected", "condition": "decision === 'reject'" }
+    ]
+  }
+}

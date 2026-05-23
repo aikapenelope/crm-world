@@ -1,0 +1,70 @@
+{
+  "workflowId": "gasto_extraordinario_v1",
+  "workflowName": "Aprobación de Gasto Extraordinario",
+  "description": "Flujo de aprobación para gastos extraordinarios del condominio. El administrador propone el gasto, la junta de propietarios delibera y vota. Si se aprueba, el gasto queda registrado formalmente. Requerido por la Ley de Propiedad Horizontal venezolana para gastos fuera del presupuesto ordinario.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Condominios",
+    "icon": "building",
+    "entityType": "CondoAccountingEntry",
+    "tags": ["condominio", "gasto", "junta", "aprobacion"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "El administrador envía el gasto a aprobación de la junta"
+      },
+      {
+        "stepId": "junta_vota",
+        "stepName": "Votación de la Junta",
+        "stepType": "USER_TASK",
+        "description": "La junta de propietarios delibera y vota el gasto extraordinario",
+        "config": {
+          "taskName": "Aprobar gasto extraordinario",
+          "description": "Revise el gasto propuesto y emita su decisión. El gasto solo procede si la junta lo aprueba.",
+          "formFields": [
+            { "id": "decision", "label": "Decisión", "type": "select", "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — proceder con el gasto" },
+                { "value": "reject", "label": "Rechazado — no procede" }
+              ]
+            },
+            { "id": "comments", "label": "Observaciones de la junta", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "check_decision",
+        "stepName": "Evaluar decisión",
+        "stepType": "AUTOMATED",
+        "description": "Verifica el resultado de la votación",
+        "config": {
+          "activity": "evaluate_condition",
+          "condition": "context.decision === 'approve'"
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Aprobado",
+        "stepType": "END",
+        "description": "Gasto aprobado por la junta — queda registrado en contabilidad"
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazado",
+        "stepType": "END",
+        "description": "Gasto rechazado por la junta — no procede"
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "junta_vota" },
+      { "from": "junta_vota", "to": "check_decision" },
+      { "from": "check_decision", "to": "end_approved", "condition": "approved" },
+      { "from": "check_decision", "to": "end_rejected", "condition": "rejected" }
+    ]
+  }
+}

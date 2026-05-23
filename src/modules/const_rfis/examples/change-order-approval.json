@@ -1,0 +1,90 @@
+{
+  "workflowId": "change_order_approval_v1",
+  "workflowName": "Aprobación de Change Order (RFI)",
+  "description": "Flujo de aprobación formal para RFIs que implican cambio de alcance en construcción. Un change order modifica el contrato original: puede afectar el monto, el cronograma o ambos. Debe aprobarse formalmente antes de incluirse en la siguiente valuación.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Construcción",
+    "icon": "hard-hat",
+    "entityType": "ConstRfi",
+    "tags": ["construccion", "change-order", "rfi", "aprobacion"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "RFI identificado como change order — inicia flujo de aprobación formal"
+      },
+      {
+        "stepId": "revision_tecnica",
+        "stepName": "Revisión Técnica",
+        "stepType": "USER_TASK",
+        "description": "El residente de obra o gerente técnico evalúa el impacto técnico del change order",
+        "config": {
+          "taskName": "Revisar impacto técnico del change order",
+          "description": "Evalúe si el cambio es técnicamente necesario y justificado. Incluya el impacto estimado en costo y cronograma.",
+          "formFields": [
+            { "id": "decision", "label": "Decisión técnica", "type": "select", "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobación técnica — procede" },
+                { "value": "needs_revision", "label": "Requiere revisión adicional" },
+                { "value": "reject", "label": "Rechazado — no procede técnicamente" }
+              ]
+            },
+            { "id": "technical_comments", "label": "Justificación técnica", "type": "textarea", "required": true },
+            { "id": "cost_impact_confirmed", "label": "Impacto en costo confirmado (USD)", "type": "text", "required": false },
+            { "id": "schedule_impact_days", "label": "Impacto en cronograma (días)", "type": "number", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "aprobacion_direccion",
+        "stepName": "Aprobación de Dirección",
+        "stepType": "USER_TASK",
+        "description": "El director de obra o gerente de proyecto aprueba formalmente el change order",
+        "config": {
+          "taskName": "Aprobar change order — Dirección de obra",
+          "description": "La revisión técnica fue aprobada. Emita la aprobación formal de la dirección para proceder.",
+          "formFields": [
+            { "id": "decision", "label": "Decisión", "type": "select", "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — incluir en próxima valuación" },
+                { "value": "reject", "label": "Rechazado — no procede" }
+              ]
+            },
+            { "id": "comments", "label": "Observaciones de dirección", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Change Order Aprobado",
+        "stepType": "END",
+        "description": "Change order aprobado — puede incluirse en la siguiente valuación"
+      },
+      {
+        "stepId": "end_revision",
+        "stepName": "En Revisión",
+        "stepType": "END",
+        "description": "Requiere revisión adicional por el equipo técnico"
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazado",
+        "stepType": "END",
+        "description": "Change order rechazado — no procede"
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "revision_tecnica" },
+      { "from": "revision_tecnica", "to": "aprobacion_direccion", "condition": "decision === 'approve'" },
+      { "from": "revision_tecnica", "to": "end_revision", "condition": "decision === 'needs_revision'" },
+      { "from": "revision_tecnica", "to": "end_rejected", "condition": "decision === 'reject'" },
+      { "from": "aprobacion_direccion", "to": "end_approved", "condition": "decision === 'approve'" },
+      { "from": "aprobacion_direccion", "to": "end_rejected", "condition": "decision === 'reject'" }
+    ]
+  }
+}
