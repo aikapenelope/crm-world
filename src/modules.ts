@@ -163,6 +163,28 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'isp_technicians', from: '@app' }, // Técnicos de campo + órdenes de trabajo
   { id: 'isp_sales', from: '@app' },       // Pipeline comercial + cobertura + comisiones
   { id: 'isp_portal', from: '@app' },      // Portal de autogestión del abonado
+
+  // Aika: Manufactura Industrial vertical (Phase 24)
+  // Sprint A — Núcleo productivo
+  { id: 'mfg_bom', from: '@app' },         // Bill of Materials multinivel + versiones + alternativos
+  { id: 'mfg_inventory', from: '@app' },   // Almacén 4-tier MP/WIP/empaque/PT + lotes FEFO
+  { id: 'mfg_orders', from: '@app' },      // Órdenes de producción + routing + AI Agent
+  { id: 'mfg_quality', from: '@app' },     // Control de calidad industrial + SPC + NCs
+  // Sprint B — Inteligencia productiva
+  { id: 'mfg_mrp', from: '@app' },         // Motor MRP con lead times de importación venezolanos
+  { id: 'mfg_floor', from: '@app' },       // Piso de planta MES: OEE, paros eléctricos vs. internos
+  { id: 'mfg_planning', from: '@app' },    // MPS: capacidad vs. demanda + ventanas energéticas
+  { id: 'mfg_costs', from: '@app' },       // Contabilidad de costos bimoneda + variaciones
+  // Sprint C — Operaciones completas
+  { id: 'mfg_maintenance', from: '@app' }, // GMAO: preventivo + correctivo + repuestos críticos
+  { id: 'mfg_procurement', from: '@app' }, // Compras industriales + importaciones + costo CIF
+  { id: 'mfg_subcontract', from: '@app' }, // Maquila y subcontratación con control de merma
+  { id: 'mfg_energy', from: '@app' },      // Energía eléctrica: consumo, cortes CORPOELEC, planificación
+  // Sprint D — Capa comercial e inteligencia
+  { id: 'mfg_dispatch', from: '@app' },    // Despacho PT: lotes reservados + Certificate of Analysis
+  { id: 'mfg_hr', from: '@app' },          // RRHH manufactura: turnos + HH por orden + bonos
+  { id: 'mfg_reports', from: '@app' },     // KPI Dashboard + AI Agent Director de Producción
+  { id: 'mfg_portal', from: '@app' },      // Portal cliente industrial: pedidos + CoA + facturas
 ]
 
 if (enabledModules.some((entry) => entry.id === 'example')) {

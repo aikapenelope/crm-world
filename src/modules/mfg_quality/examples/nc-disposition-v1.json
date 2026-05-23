@@ -1,0 +1,100 @@
+{
+  "workflowId": "nc_disposition_v1",
+  "workflowName": "Disposición de No-Conformidad",
+  "description": "Flujo formal para investigar la causa raíz y decidir la disposición del material de una No-Conformidad de manufactura. El especialista de calidad documenta la investigación y propone disposición; el gerente de calidad o director técnico revisa y aprueba. Para NC críticas (riesgo de inocuidad), la aprobación es requerida por ley (BPF, HACCP).",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Calidad",
+    "icon": "x-octagon",
+    "entityType": "MfgNonconformance",
+    "tags": ["calidad", "no-conformidad", "disposicion", "manufactura", "haccp"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "NC Abierta",
+        "stepType": "START",
+        "description": "No-Conformidad registrada. Especialista de calidad asignado para investigar."
+      },
+      {
+        "stepId": "root_cause_investigation",
+        "stepName": "Investigación de Causa Raíz",
+        "stepType": "USER_TASK",
+        "description": "El especialista de calidad investiga la causa raíz y determina el alcance del material afectado",
+        "config": {
+          "taskName": "Investigar causa raíz y proponer disposición",
+          "description": "Documentar: ¿qué ocurrió exactamente? ¿Por qué? ¿Cuánto material está afectado? ¿Cuál es el riesgo? Proponer disposición del material.",
+          "formFields": [
+            {
+              "id": "root_cause",
+              "label": "Causa raíz identificada",
+              "type": "textarea",
+              "required": true,
+              "placeholder": "Descripción detallada de la causa raíz..."
+            },
+            {
+              "id": "proposed_disposition",
+              "label": "Disposición propuesta",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "rework", "label": "Retrabajo / Reproceso" },
+                { "value": "scrap", "label": "Destrucción (baja)" },
+                { "value": "use_as_is", "label": "Uso condicionado con desviación documentada" },
+                { "value": "return_to_supplier", "label": "Devolución al proveedor" },
+                { "value": "downgrade", "label": "Reclasificación a calidad inferior" }
+              ]
+            },
+            { "id": "corrective_action", "label": "Acción correctiva propuesta", "type": "textarea", "required": true },
+            { "id": "preventive_action", "label": "Acción preventiva propuesta", "type": "textarea", "required": false },
+            { "id": "cost_estimate_usd", "label": "Costo estimado de la NC (USD)", "type": "number", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "disposition_approval",
+        "stepName": "Aprobación de Disposición",
+        "stepType": "USER_TASK",
+        "description": "El gerente o director de calidad revisa la investigación y aprueba o rechaza la disposición propuesta",
+        "config": {
+          "taskName": "Revisar y aprobar disposición del material",
+          "description": "Revisar la causa raíz documentada, la disposición propuesta y las acciones correctivas. Para NC críticas (inocuidad, BPF), verificar que la disposición cumple los requisitos regulatorios venezolanos.",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Decisión",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — ejecutar disposición propuesta" },
+                { "value": "approve_modified", "label": "Aprobado con modificaciones" },
+                { "value": "reject", "label": "Rechazado — requiere investigación adicional" }
+              ]
+            },
+            { "id": "approval_notes", "label": "Observaciones del gerente de calidad", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Disposición Aprobada",
+        "stepType": "END",
+        "description": "Disposición aprobada — ejecutar acción sobre el material y cerrar NC."
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Devuelta a Investigación",
+        "stepType": "END",
+        "description": "Investigación insuficiente — NC devuelta para investigación adicional."
+      }
+    ],
+    "transitions": [
+      { "from": "start",                  "to": "root_cause_investigation" },
+      { "from": "root_cause_investigation", "to": "disposition_approval" },
+      { "from": "disposition_approval",   "to": "end_approved",  "condition": "decision === 'approve' || decision === 'approve_modified'" },
+      { "from": "disposition_approval",   "to": "end_rejected",  "condition": "decision === 'reject'" }
+    ]
+  }
+}
