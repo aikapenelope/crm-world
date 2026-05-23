@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useRouter } from 'next/navigation'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
@@ -24,6 +25,7 @@ const STATUS_VARIANT: Record<string, 'info' | 'success' | 'neutral'> = {
 const STATUS_LABEL: Record<string, string> = { calculated: 'Calculada', approved: 'Aprobada', paid: 'Pagada' }
 
 export default function SettlementsPage() {
+  const router = useRouter()
   const { runMutation } = useGuardedMutation()
   const [settlements, setSettlements] = React.useState<SettlementRow[]>([])
   const [isLoading, setLoading]       = React.useState(true)
@@ -98,6 +100,9 @@ export default function SettlementsPage() {
       id: 'actions',
       cell: ({ row }) => (
         <div className="flex gap-2">
+          <Button type="button" size="sm" variant="ghost" onClick={() => router.push(`/backend/agri-hr/settlements/${row.original.id}`)}>
+            Ver / Workflow
+          </Button>
           {row.original.status === 'calculated' && (
             <Button type="button" size="sm" onClick={() => handleApprove(row.original)}>
               <CheckCircle className="size-3 mr-1" /> Aprobar

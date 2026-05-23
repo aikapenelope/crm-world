@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import { useRouter } from 'next/navigation'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
@@ -36,6 +37,7 @@ const SOURCE_LABEL: Record<string, string> = {
 }
 
 export default function AgriQualityPage() {
+  const router = useRouter()
   const { runMutation } = useGuardedMutation()
   const [ncs, setNcs]           = React.useState<NcRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
@@ -115,6 +117,7 @@ export default function AgriQualityPage() {
       cell: ({ row }) => (
         <RowActions
           items={[
+            { id: 'open', label: 'Ver detalle / Workflow', onSelect: () => router.push(`/backend/agri-quality/non-conformities/${row.original.id}`) },
             ...(['open', 'investigating', 'pending_decision'].includes(row.original.status) ? [
               { id: 'rework',   label: 'Decidir: Retrabajo',    onSelect: () => handleDecide(row.original, 'rework') },
               { id: 'destroy',  label: 'Decidir: Destrucción',   variant: 'destructive' as const, onSelect: () => handleDecide(row.original, 'destroy') },

@@ -12,6 +12,7 @@ import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, CheckCircle } from 'lucide-react'
+import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'error' | 'ready'
@@ -185,6 +186,33 @@ export default function SlaughterBatchDetailPage() {
                 setLotForm(false)
                 load()
               }}
+            />
+          </div>
+        )}
+
+        {/* Workflow de Despacho Sanitario — aparece cuando el lote llega a pending_qc */}
+        {(batch.status === 'pending_qc' || batch.status === 'approved') && (
+          <div className="mb-6">
+            <WorkflowApprovalWidget
+              workflowId="despacho_sanitario_v1"
+              entityId={batchId}
+              entityType="AgriSlaughterBatch"
+              title="Despacho Sanitario"
+              startLabel="Solicitar aprobación de calidad para despacho"
+              startContext={{
+                batch_id:               batchId,
+                batch_number:           batch.batch_number,
+                birds_processed:        batch.birds_processed,
+                yield_pct:              batch.yield_pct,
+                microbiological_result: batch.microbiological_result,
+                condemned_count:        batch.condemned_count,
+              }}
+              decisions={[
+                { value: 'approve', label: 'Aprobado — autorizar despacho',   variant: 'default' },
+                { value: 'hold',    label: 'En espera — falta documentación', variant: 'outline' },
+                { value: 'reject',  label: 'Rechazado — no cumple estándares', variant: 'destructive' },
+              ]}
+              onCompleted={() => load()}
             />
           </div>
         )}
