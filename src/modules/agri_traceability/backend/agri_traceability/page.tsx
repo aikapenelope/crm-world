@@ -1,8 +1,10 @@
 'use client'
 
 import * as React from 'react'
+import { useRouter } from 'next/navigation'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
+import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
@@ -38,6 +40,7 @@ const SOURCE_LABEL: Record<string, string> = {
 }
 
 export default function AgriTraceabilityPage() {
+  const router = useRouter()
   const [recalls, setRecalls]     = React.useState<RecallRow[]>([])
   const [isLoading, setLoading]   = React.useState(true)
   const [searchLot, setSearchLot] = React.useState('')
@@ -80,6 +83,16 @@ export default function AgriTraceabilityPage() {
         <StatusBadge variant={RECALL_STATUS[row.original.status] ?? 'neutral'} dot>
           {RECALL_STATUS_LABEL[row.original.status] ?? row.original.status}
         </StatusBadge>
+      ),
+    },
+    {
+      id: 'actions',
+      cell: ({ row }) => (
+        <RowActions
+          items={[
+            { id: 'open', label: 'Ver detalle / Workflow', onSelect: () => router.push(`/backend/agri-traceability/recalls/${row.original.id}`) },
+          ]}
+        />
       ),
     },
   ]
