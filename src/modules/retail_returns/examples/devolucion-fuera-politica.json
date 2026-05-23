@@ -1,0 +1,68 @@
+{
+  "workflowId": "devolucion_fuera_politica_v1",
+  "workflowName": "Autorización de Devolución Fuera de Política",
+  "description": "Flujo de autorización para devoluciones que no cumplen la política estándar de la tienda (plazo vencido, sin recibo, condición inaceptable). El agente escala al gerente, quien evalúa el caso y decide si autoriza la devolución, ofrece solo cambio, o rechaza.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Retail",
+    "icon": "package-x",
+    "entityType": "RetailReturn",
+    "tags": ["retail", "devolucion", "politica", "autorizacion"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Inicio",
+        "stepType": "START",
+        "description": "Agente escala devolución fuera de política al gerente"
+      },
+      {
+        "stepId": "autorizacion_gerente",
+        "stepName": "Autorización del Gerente",
+        "stepType": "USER_TASK",
+        "description": "El gerente de tienda evalúa el caso y decide si la excepción es válida",
+        "config": {
+          "taskName": "Autorizar devolución fuera de política",
+          "description": "El agente está solicitando autorización para procesar una devolución que no cumple la política estándar. Evalúe el caso y emita su decisión.",
+          "formFields": [
+            { "id": "decision", "label": "Decisión", "type": "select", "required": true,
+              "options": [
+                { "value": "approve", "label": "Autorizar devolución completa" },
+                { "value": "approve_exchange", "label": "Solo cambio — no reembolso" },
+                { "value": "reject", "label": "Rechazar — no procede" }
+              ]
+            },
+            { "id": "reason", "label": "Justificación de la excepción", "type": "textarea", "required": true },
+            { "id": "customer_satisfaction", "label": "Acción de satisfacción al cliente", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Devolución Autorizada",
+        "stepType": "END",
+        "description": "Devolución completa autorizada — proceder con el reembolso"
+      },
+      {
+        "stepId": "end_exchange",
+        "stepName": "Solo Cambio Autorizado",
+        "stepType": "END",
+        "description": "Solo se autoriza cambio por otro producto — no reembolso"
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazada",
+        "stepType": "END",
+        "description": "Devolución rechazada — no aplica excepción"
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "autorizacion_gerente" },
+      { "from": "autorizacion_gerente", "to": "end_approved", "condition": "decision === 'approve'" },
+      { "from": "autorizacion_gerente", "to": "end_exchange", "condition": "decision === 'approve_exchange'" },
+      { "from": "autorizacion_gerente", "to": "end_rejected", "condition": "decision === 'reject'" }
+    ]
+  }
+}

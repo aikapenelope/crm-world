@@ -19,6 +19,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, Clock, CheckCircle2, AlertTriangle } from 'lucide-react'
+import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
 
 type RFI = {
   id: string
@@ -273,6 +274,28 @@ export default function ConstRFIDetailPage() {
             )}
           </div>
         )}
+
+        {/* Change Order — flujo de aprobación formal para RFIs con impacto contractual */}
+        <div className="mt-6 max-w-md">
+          <WorkflowApprovalWidget
+            workflowId="change_order_approval_v1"
+            entityId={rfi?.id ?? null}
+            entityType="ConstRfi"
+            title="Aprobación de Change Order"
+            startLabel="Iniciar flujo de change order"
+            startContext={{
+              rfi_id: rfi?.id,
+              rfi_number: rfi?.rfi_number,
+              subject: rfi?.subject,
+            }}
+            decisions={[
+              { value: 'approve', label: 'Aprobación técnica', variant: 'default' },
+              { value: 'needs_revision', label: 'Requiere revisión', variant: 'outline' },
+              { value: 'reject', label: 'Rechazar', variant: 'destructive' },
+            ]}
+            onCompleted={() => load()}
+          />
+        </div>
       </PageBody>
     </Page>
   )
