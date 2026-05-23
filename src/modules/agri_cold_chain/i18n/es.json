@@ -1,0 +1,44 @@
+{
+  "agri_cold_chain.nav.title": "Cadena de Frío",
+  "agri_cold_chain.nav.units": "Cuartos Fríos",
+  "agri_cold_chain.nav.readings": "Lecturas de Temperatura",
+  "agri_cold_chain.nav.lots": "Lotes Almacenados",
+
+  "agri_cold_chain.units.title": "Cuartos Fríos y Congeladores",
+  "agri_cold_chain.units.new": "Nueva Unidad",
+  "agri_cold_chain.units.empty.title": "Sin unidades de frío registradas",
+  "agri_cold_chain.units.empty.description": "Registra los cuartos fríos para monitorear la cadena de temperatura.",
+
+  "agri_cold_chain.fields.name": "Nombre",
+  "agri_cold_chain.fields.unit_type": "Tipo de Unidad",
+  "agri_cold_chain.fields.target_temp_min": "Temperatura Mínima Objetivo (°C)",
+  "agri_cold_chain.fields.target_temp_max": "Temperatura Máxima Objetivo (°C)",
+  "agri_cold_chain.fields.capacity_tons": "Capacidad (toneladas)",
+  "agri_cold_chain.fields.sensor_id": "ID del Sensor IoT",
+  "agri_cold_chain.fields.min_alert_minutes": "Minutos para Disparar Alerta",
+  "agri_cold_chain.fields.alert_phone": "Teléfono de Alerta (WhatsApp)",
+  "agri_cold_chain.fields.status": "Estado",
+  "agri_cold_chain.fields.location_description": "Descripción de Ubicación",
+  "agri_cold_chain.fields.temperature_c": "Temperatura (°C)",
+  "agri_cold_chain.fields.humidity_pct": "Humedad (%)",
+  "agri_cold_chain.fields.recorded_at": "Fecha/Hora de la Lectura",
+
+  "agri_cold_chain.type.chill_room": "Cuarto Frío (0-4°C)",
+  "agri_cold_chain.type.freezer": "Congelador (-18°C)",
+  "agri_cold_chain.type.refrigerator": "Refrigerador (2-8°C)",
+  "agri_cold_chain.type.reefer_truck": "Camión Refrigerado",
+
+  "agri_cold_chain.status.active": "Activo",
+  "agri_cold_chain.status.maintenance": "En Mantenimiento",
+  "agri_cold_chain.status.offline": "Fuera de Línea",
+
+  "agri_cold_chain.temp_reference": "Carne fresca: 0-4°C · Congelados: -18°C o menos · Vacunas: 2-8°C",
+  "agri_cold_chain.alert_note": "Venezuela: configurar ≥15 min para absorber micro-cortes eléctricos",
+
+  "agri_cold_chain.saved": "Guardado correctamente",
+
+  "agri_cold_chain.notif.excursion.title": "🌡 Excursión de temperatura",
+  "agri_cold_chain.notif.excursion.body": "Un cuarto frío lleva más de {{minutes}} min fuera del rango de temperatura.",
+  "agri_cold_chain.notif.lot_nonconformity.title": "⚠ No-conformidad de temperatura en lote",
+  "agri_cold_chain.notif.lot_nonconformity.body": "Un lote almacenado estuvo fuera de rango. Requiere revisión de calidad."
+}

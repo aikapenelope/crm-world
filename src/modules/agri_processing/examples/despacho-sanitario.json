@@ -1,0 +1,74 @@
+{
+  "workflowId": "despacho_sanitario_v1",
+  "workflowName": "Despacho Sanitario — Aprobación de Calidad",
+  "description": "Flujo de aprobación obligatorio antes de despachar un lote de beneficio. El responsable de planta solicita el despacho; el jefe de control de calidad verifica los resultados microbiológicos, el rendimiento del lote y la documentación INSAI, y firma la autorización.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Agroindustria",
+    "icon": "clipboard-check",
+    "entityType": "AgriSlaughterBatch",
+    "tags": ["beneficio", "calidad", "despacho", "sanitario", "insai"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "Solicitud de Despacho",
+        "stepType": "START",
+        "description": "Responsable de planta solicita autorización para despachar el lote beneficiado"
+      },
+      {
+        "stepId": "revision_calidad",
+        "stepName": "Revisión de Control de Calidad",
+        "stepType": "USER_TASK",
+        "description": "El jefe de control de calidad revisa resultados microbiológicos, temperatura de canal, decomisos y documentación INSAI",
+        "config": {
+          "taskName": "Aprobar despacho sanitario del lote",
+          "description": "Revise: resultado microbiológico del lote, temperatura de canal frío, porcentaje de decomisos vs normal, registros de vacunación y medicación del flock de origen. El despacho solo puede aprobarse si todos los parámetros están dentro de los límites.",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Decisión",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — autorizar despacho" },
+                { "value": "hold", "label": "En espera — falta documentación" },
+                { "value": "reject", "label": "Rechazado — no cumple estándares" }
+              ]
+            },
+            { "id": "microbiological_ok", "label": "¿Resultado microbiológico aprobado?", "type": "checkbox", "required": true },
+            { "id": "temperature_ok", "label": "¿Temperatura de canal dentro del rango (<4°C)?", "type": "checkbox", "required": true },
+            { "id": "insai_docs_ok", "label": "¿Documentación INSAI completa?", "type": "checkbox", "required": true },
+            { "id": "observations", "label": "Observaciones / condicionantes", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Despacho Autorizado",
+        "stepType": "END",
+        "description": "Lote autorizado para despacho. Registrar dispatch_approved_by en el sistema."
+      },
+      {
+        "stepId": "end_hold",
+        "stepName": "En Espera",
+        "stepType": "END",
+        "description": "Lote en espera de documentación faltante antes de autorizar"
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazado",
+        "stepType": "END",
+        "description": "Lote rechazado — no cumple estándares mínimos de calidad o inocuidad"
+      }
+    ],
+    "transitions": [
+      { "from": "start", "to": "revision_calidad" },
+      { "from": "revision_calidad", "to": "end_approved", "condition": "decision === 'approve'" },
+      { "from": "revision_calidad", "to": "end_hold",     "condition": "decision === 'hold'" },
+      { "from": "revision_calidad", "to": "end_rejected", "condition": "decision === 'reject'" }
+    ]
+  }
+}
