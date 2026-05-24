@@ -325,6 +325,79 @@ Esperar 10-15 segundos después del deploy y reintentar. Si persiste, verificar 
 
 ---
 
+## 14. Tests Zod — Anti-patrones en specs de validadores
+
+> Aprendido en Phase 25, Sprint T9/T10 (PRs #103/#104). Causó 4 tests rojos en CI.
+
+### 14a. `z.string()` sin `.min(1)` acepta cadena vacía `''`
+
+`z.string()` solo valida que el valor sea de tipo string. Sin restricciones adicionales, `''` es **válido**.
+
+```typescript
+// ❌ TEST INCORRECTO — z.string() acepta ''
+it('rejects empty date', () => {
+  expect(schema.safeParse({ date: '' }).success).toBe(false) // FALLA: recibe true
+})
+
+// ✅ CORRECTO — solo assertear el comportamiento real
+it('accepts date as plain string', () => {
+  expect(schema.safeParse({ date: '2026-01-15' }).success).toBe(true)
+})
+```
+
+**Regla:** Antes de escribir "rejects empty X", verificar si el campo usa `z.string().min(1)`. Si usa solo `z.string()`, no escribir ese test.
+
+| Schema | Acepta `''`? |
+|--------|:-----------:|
+| `z.string()` | ✅ SÍ |
+| `z.string().min(1)` | ❌ NO |
+| `z.string().min(1).max(N)` | ❌ NO |
+
+### 14b. `z.coerce.boolean()` usa `Boolean()` nativo de JS
+
+`z.coerce.boolean()` convierte el valor usando el constructor `Boolean()` de JavaScript. Cualquier string no vacío (incluyendo `'false'`, `'0'`, `'no'`) resulta en `true`.
+
+```typescript
+// Comportamiento real de z.coerce.boolean():
+Boolean('false') === true  // ← 'false' es string no vacío → true
+Boolean('true')  === true
+Boolean('0')     === true
+Boolean('')      === false
+Boolean(null)    === false
+Boolean(0)       === false
+```
+
+```typescript
+// ❌ TEST INCORRECTO — espera que 'false' coercione a false
+it('coerces is_active from string', () => {
+  const r = schema.safeParse({ is_active: 'false' })
+  if (r.success) expect(r.data.is_active).toBe(false) // FALLA: recibe true
+})
+
+// ✅ CORRECTO — demostrar que coerce funciona para truthy strings
+it('coerces is_active from string', () => {
+  // z.coerce.boolean() usa Boolean() — cualquier string no vacío coerciona a true
+  const r = schema.safeParse({ is_active: 'true' })
+  expect(r.success).toBe(true)
+  if (r.success) expect(r.data.is_active).toBe(true)
+})
+```
+
+**Regla:** Para `z.coerce.boolean()`, solo testear con valores que demuestren la coerción real: `'true'` → `true`, o pasar un booleano directamente.
+
+### 14c. Checklist antes de escribir tests de Zod validators
+
+Antes de escribir cualquier "rejects X" test, verificar en `data/validators.ts`:
+
+- [ ] `z.string()` → NO rechaza `''`. Solo `z.string().min(1)` lo hace.
+- [ ] `z.string().min(1)` → SÍ rechaza `''`. OK escribir el test.
+- [ ] `z.coerce.boolean()` → `'false'` coerciona a `true`. No usar `'false'` esperando `false`.
+- [ ] `z.coerce.number()` → `'5'` coerciona a `5`. Sí funciona para números.
+- [ ] `z.number().int().min(1)` → NO acepta `0` ni negativos. OK escribir el test.
+- [ ] `z.array(...).min(1)` → NO acepta `[]`. OK escribir el test.
+
+---
+
 ## Historial de incidentes
 
 | Fecha | Problema | Causa | Fix |
@@ -348,6 +421,7 @@ Esperar 10-15 segundos después del deploy y reintentar. Si persiste, verificar 
 | 2026-05-24 | CI Tests: `TypeError: Cannot read .errors.map` | Zod v4 renombró `.errors` a `.issues` | Cambiar a `.issues` en tests |
 | 2026-05-24 | CI Tests: `TS5103: ignoreDeprecations` | Flag solo válido en TypeScript 6.x | Remover de jest.config.cjs (proyecto usa TS 5.x) |
 | 2026-05-24 | 900+ errores TS al activar CI | Módulos escritos con APIs antiguas (nunca validados) | Corrección sistemática de APIs: ver PR #83 |
+| 2026-05-24 | CI Tests T9/T10: 4 tests rojos | `z.string()` sin `.min(1)` acepta `''`; `z.coerce.boolean('false')` → `true` | Fix en PRs #103/#104 + Sección §14 en PATTERNS.md |
 
 ---
 
