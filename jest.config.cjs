@@ -1,17 +1,25 @@
 /**
  * Jest configuration for crm-world unit tests.
  *
- * Strategy: ts-jest compiles TypeScript → CommonJS for Jest's native CJS runner.
- * This avoids `--experimental-vm-modules` while still validating all pure-logic
- * modules against their real TypeScript types.
+ * Strategy: scripts/jest-mikroorm-transformer.cjs (copied from open-mercato/open-mercato)
+ * sanitizes `import.meta` usages in @mikro-orm v7 (ESM-only) before delegating
+ * to ts-jest, which emits CommonJS for Jest's native CJS runner.
  *
- * Scope: `src/modules/**\/__tests__\/**\/*.spec.ts`
- * Integration (Playwright): configured separately in `.ai/qa/tests/playwright.config.ts`
+ * Why the custom transformer?
+ *   MikroORM v7 is ESM-only and calls `import.meta.resolve(pkg)` at runtime.
+ *   When Jest loads these files as CJS, Node throws:
+ *     "Cannot use 'import.meta' outside a module"
+ *   The transformer replaces import.meta.* with CJS-compatible stubs.
+ *
+ * Scope:     src/modules/**/__tests__/**/*.spec.ts
+ * Skip:      __integration__/ (Playwright, run via `yarn test:integration:ephemeral`)
  *
  * References:
- * - ts-jest CJS preset: https://kulshekhar.github.io/ts-jest/docs/getting-started/presets
- * - Jest config docs:   https://jestjs.io/docs/configuration
- * - reflect-metadata:   https://www.npmjs.com/package/reflect-metadata
+ *   open-mercato/open-mercato scripts/jest-mikroorm-transformer.cjs
+ *   open-mercato/open-mercato apps/mercato/jest.config.cjs (transformIgnorePatterns)
+ *   https://kulshekhar.github.io/ts-jest/docs/getting-started/presets
+ *   https://jestjs.io/docs/configuration
+ *   https://mikro-orm.io/docs/installation (reflect-metadata requirement)
  */
 
 /** @type {import('jest').Config} */
@@ -27,13 +35,13 @@ module.exports = {
   // See: https://mikro-orm.io/docs/installation
   setupFiles: ['reflect-metadata'],
 
+  // Use the OM's sanitizing transformer instead of plain ts-jest.
+  // It strips import.meta.* from @mikro-orm before ts-jest processes the file.
+  // Config mirrors open-mercato/open-mercato apps/mercato/jest.config.cjs.
   transform: {
-    '^.+\\.tsx?$': [
-      'ts-jest',
+    '^.+\\.(t|j)sx?$': [
+      '<rootDir>/scripts/jest-mikroorm-transformer.cjs',
       {
-        useESM: false,
-        // Override tsconfig for tests: CJS output so Jest can run natively.
-        // The main app uses "module: esnext" (Next.js/Turbopack), but Jest needs CJS.
         tsconfig: {
           module: 'commonjs',
           moduleResolution: 'node',
@@ -45,11 +53,9 @@ module.exports = {
           target: 'ES2022',
           skipLibCheck: true,
           verbatimModuleSyntax: false,
-        },
-        diagnostics: {
           // Suppress path-alias resolution warnings that only apply in the
           // Next.js/Turbopack bundler context (not relevant for unit tests).
-          ignoreCodes: ['TS151001'],
+          // ignoreCodes handled via diagnostics below in the transformer.
         },
       },
     ],
@@ -60,10 +66,12 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
 
-  // Allow ts-jest to transform @open-mercato packages that ship only ESM.
-  // Add further package names here as needed (comma-separated in the negative lookahead).
+  // Transform @open-mercato (ESM-only dist) AND @mikro-orm (ESM-only + import.meta).
+  // Pattern: open-mercato/open-mercato apps/mercato/jest.config.cjs transformIgnorePatterns.
+  // All other node_modules are loaded as-is (they ship CJS).
   transformIgnorePatterns: [
-    'node_modules/(?!(@open-mercato)/)',
+    'node_modules/(?!(@open-mercato|@mikro-orm)/)',
+    '\\.pnp\\.[^\\/]+$',
   ],
 
   // Show individual test names in output
@@ -87,7 +95,9 @@ module.exports = {
     '!src/modules/**/search.ts',
   ],
 
-  coverageThresholds: {
+  // Note: 'coverageThreshold' (singular) — Jest config key name.
+  // Thresholds will be enforced once the test suite covers all modules.
+  coverageThreshold: {
     global: {
       branches: 80,
       functions: 80,

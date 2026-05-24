@@ -132,7 +132,12 @@ jobs:
         run: yarn generate
 
       - name: Typecheck
+        # NODE_OPTIONS aumenta el heap de Node para que tsc pueda analizar
+        # los 111 módulos sin OOM (exit code 129 en GHA con heap por defecto).
+        # Patrón: open-mercato/open-mercato ci.yml NODE_OPTIONS usage.
         run: yarn typecheck
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
 
   # ── Unit Tests (Jest) ────────────────────────────────────────────────────────
   # Scope: src/modules/**/__tests__/**/*.spec.ts

@@ -70,7 +70,7 @@ describe('rifSchema', () => {
       const result = rifSchema.safeParse('INVALID')
       expect(result.success).toBe(false)
       if (!result.success) {
-        const messages = result.error.errors.map((e) => e.message)
+        const messages = result.error.issues.map((e) => e.message)
         expect(messages).toContain('RIF inválido. Formato: J-12345678-9')
       }
     })
@@ -133,7 +133,7 @@ describe('cedulaSchema', () => {
       const result = cedulaSchema.safeParse('99999999')
       expect(result.success).toBe(false)
       if (!result.success) {
-        const messages = result.error.errors.map((e) => e.message)
+        const messages = result.error.issues.map((e) => e.message)
         expect(messages).toContain('Cédula inválida. Formato: V-12345678')
       }
     })
