@@ -1,8 +1,9 @@
 # Roadmap — Aika Platform
 
-> Última actualización: Mayo 2026
-> Stack: Open Mercato v0.6.1 · Next.js 16 · Hetzner CX33 Helsinki · Coolify 4.0
+> Última actualización: 24 Mayo 2026 — CI verde ✅
+> Stack: Open Mercato v0.6.1 · Next.js 16 · Hetzner CX43 Helsinki · Coolify 4.0
 > Deploy URL: mercato.novaincs.com · Panel: deploy.novaincs.com
+> CI: github.com/aikapenelope/crm-world/actions — Lint ✅ Typecheck ✅ Unit Tests ✅
 
 ---
 
@@ -193,10 +194,14 @@ Spec completo en `.ai/specs/2026-05-26-agri-agroalimentario-vertical.md`.
 
 ---
 
-### Phase 18 — CI Pipeline (completo y operativo)
-- [x] `.github/workflows/ci.yml` — typecheck + lint en cada PR/push a main
-- [x] Fix: eliminado `--immutable` de `yarn install` (Yarn 4 + YN0086 peer dep warnings)
-- [x] CI corre en cada PR — resultados visibles en la pestaña Actions de GitHub
+### Phase 18 — CI Pipeline (COMPLETO Y VERDE ✅ — PR #83)
+- [x] `.github/workflows/ci.yml` — 3 jobs paralelos: Lint + Typecheck + Unit Tests
+- [x] Lint verde: `typescript-eslint` en `src/modules` (patrón OM standalone)
+- [x] Typecheck verde: `tsc --noEmit` en TODO el código (incluye `.tsx` backend pages)
+- [x] Unit Tests verde: Jest con `jest-mikroorm-transformer.cjs` del repo oficial
+- [x] Fix 900+ errores TS preexistentes: módulos escritos con APIs antiguas de OM v0.5.x
+- [x] Documentación CI completa en `docs/CI.md`
+- [x] `docs/OPEN_MERCATO_REFERENCE.md` actualizado con todos los breaking changes
 
 ### Phase 24 — Manufactura Industrial (completo)
 
@@ -244,12 +249,127 @@ Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
 
 ---
 
+## Próximas Fases — Roadmap
+
+> Orden sugerido basado en impacto y dependencias técnicas.
+
+### Phase 25 — Tests unitarios para módulos custom (PRIORIDAD ALTA)
+
+**Por qué ahora**: El CI tiene los 3 jobs verdes pero la cobertura de tests es baja.
+Solo tienen tests los módulos: `properties`, `ve_fiscal`, `matching`, `mfg_bom`,
+`mfg_orders`, `mfg_mrp`. El resto (95+ módulos) no tienen ningún test.
+
+**Objetivo**: Al menos 1 test de validators por vertical.
+
+**Cómo hacerlo** (patrón OM establecido):
+```
+src/modules/<module>/__tests__/validators.spec.ts
+```
+
+Cada test debe cubrir:
+- `createSchema.safeParse(validPayload)` → success
+- Campos requeridos faltantes → failure
+- Valores de enum inválidos → failure
+- Reglas de negocio venezolanas (RIF, tasas, etc.)
+
+**Prioridad de módulos** (por impacto de negocio):
+1. `ve_fiscal` ← ya tiene tests, ampliar
+2. `agri_units`, `agri_feed`, `agri_quality` (validaciones de KPIs)
+3. `isp_billing`, `isp_subscribers` (lógica de facturación)
+4. `const_progress`, `const_budget` (cálculos financieros)
+5. Resto de verticales
+
+---
+
+### Phase 26 — Upgrade Open Mercato v0.6.2
+
+**Por qué**: La versión actual del repo oficial es `0.6.2`. El proyecto usa `0.6.1`.
+La diferencia incluye parches de TypeScript 6 y correcciones de eslint-config-next.
+
+**Qué cambiaría**:
+- `"typescript": "^5.9.3"` → `"typescript": "^6.0.3"`
+- `"eslint-config-next": "16.2.6"` (ya está en 16.2.6)
+- `@open-mercato/*`: `"0.6.1"` → `"0.6.2"`
+- `"jest": "^30.3.0"` → `"^30.4.2"` (ya disponible)
+
+**Riesgo**: TypeScript 6 es un major bump. Revisar breaking changes antes.
+**Cómo**: Leer `UPGRADE_NOTES.md` del repo oficial antes de proceder.
+
+---
+
+### Phase 27 — Nuevas Verticales
+
+**Candidatas prioritarias:**
+
+#### Fitness / Gym
+- `gym_members`, `gym_plans`, `gym_attendance`, `gym_payments`, `gym_classes`, `gym_portal`
+- Venezuela: planes en USD, múltiples métodos de pago, control de acceso
+
+#### Beauty / Salones / Spas
+- `beauty_services`, `beauty_appointments`, `beauty_inventory`, `beauty_staff`, `beauty_portal`
+- Venezuela: citas online, comisiones, productos de belleza
+
+#### Agencias de Servicios Profesionales
+- `agency_projects`, `agency_billing`, `agency_time_tracking`, `agency_contracts`
+- Venezuela: facturación en USD/VES, retenciones ISLR
+
+**Proceso para cada vertical nueva** (aprendido en CI verde):
+1. Leer repo OM antes de escribir código → `open-mercato/open-mercato apps/mercato/src/modules/example/`
+2. Escribir validators con tests PRIMERO
+3. Verificar `yarn generate && yarn typecheck` después de cada módulo
+4. Usar API correcta v0.6.1: `id:` en campos, `title:` en grupos, etc.
+5. `acl.ts` siempre con `export default features`
+
+---
+
+### Phase 28 — Integration Tests
+
+**Objetivo**: Tests end-to-end para los flujos críticos.
+
+**Patrón OM**: `apps/mercato/src/modules/example/__integration__/`
+
+Los tests de integración en el repo oficial usan:
+- Playwright (`@playwright/test`)
+- `mercato test:integration:ephemeral` — boot efímero del app
+- PostgreSQL en memoria (Docker)
+
+**Candidatos prioritarios**:
+1. Creación de tenant → módulos base venezolanos auto-configurados
+2. Flujo completo inmobiliaria: propiedad → lead → transacción
+3. Flujo ISP: abonado → factura → pago → estado cuenta
+4. Flujo manufactura: BOM → orden → despacho → CoA
+
+---
+
+### Phase 29 — Actualización CI con coverage threshold
+
+Una vez que haya tests en todos los módulos, activar el threshold de coverage:
+
+```js
+// jest.config.cjs — activar cuando coverage sea suficiente
+coverageThreshold: {
+  global: {
+    branches: 70,   // Empezar conservador
+    functions: 80,
+    lines: 80,
+    statements: 80,
+  },
+},
+```
+
+**Condición**: Al menos 1 test por módulo con validators (Phase 25 completada).
+
+---
+
 ## Deuda técnica general
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
+| Tests unitarios validators (95+ módulos sin tests) | **ALTA** | Phase 25 |
+| Upgrade OM v0.6.2 + TypeScript 6 | **MEDIA** | Phase 26 |
 | Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
-| Integration tests (RE + Education + Retail) | Media | Pendiente |
+| Integration tests (RE + Education + Retail) | Media | Phase 28 |
 | `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
+| Coverage threshold activado en CI | Baja | Phase 29 (requiere Phase 25) |
 | Docker layer caching en Coolify | Baja | Optimización de build |

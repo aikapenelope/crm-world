@@ -1,40 +1,51 @@
 # Fuentes de Verdad — Open Mercato
 
 > **IMPORTANTE**: Cuando tengas dudas sobre cómo implementar algo, consulta estas fuentes EN ESTE ORDEN.
+> Última revisión: Mayo 2026 (post CI verde, @open-mercato@0.6.1)
 
 ---
 
-## 1. Repositorio oficial (código fuente)
+## 1. Repositorio oficial (código fuente) — FUENTE DE VERDAD #1
 
 **URL**: https://github.com/open-mercato/open-mercato
 
-Este es la fuente de verdad #1. El código real siempre gana sobre la documentación.
+El código real siempre gana sobre la documentación. Clonar localmente para inspeccionar:
+
+```bash
+git clone --depth 1 https://github.com/open-mercato/open-mercato /tmp/open-mercato
+```
 
 ### Dónde buscar patrones:
 
 | Necesitas... | Busca en... |
 |---|---|
 | Cómo definir entidades | `packages/core/src/modules/*/data/entities.ts` |
-| Cómo hacer CRUD routes | `packages/core/src/modules/*/api/*/route.ts` |
-| Cómo configurar search | `packages/core/src/modules/*/search.ts` |
-| Cómo definir eventos | `packages/core/src/modules/*/events.ts` |
-| Cómo registrar DI | `packages/core/src/modules/*/di.ts` |
-| Cómo hacer setup/seeds | `packages/core/src/modules/*/setup.ts` |
-| Cómo crear páginas | `packages/core/src/modules/*/backend/*/page.tsx` |
 | Tipos del CRUD factory | `packages/shared/src/lib/crud/factory.ts` |
+| CrudForm props | `packages/ui/src/backend/CrudForm.tsx` |
+| DataTable props | `packages/ui/src/backend/DataTable.tsx` |
+| useGuardedMutation API | `packages/ui/src/backend/injection/useGuardedMutation.ts` |
+| flash() API | `packages/ui/src/backend/FlashMessages.tsx` |
 | Tipos de search | `packages/shared/src/modules/search.ts` |
-| Tipos de eventos | `packages/shared/src/modules/events/` |
+| Tipos de eventos | `packages/shared/src/modules/events/types.ts` |
+| PageMetadata, ModuleInfo | `packages/shared/src/modules/registry.ts` |
+| acl.ts patrón | `packages/core/src/modules/example/acl.ts` |
+| jest.config.cjs standalone | `apps/mercato/jest.config.cjs` |
+| CI workflow | `apps/mercato/.github/workflows/ci.yml` |
+| jest-mikroorm-transformer | `scripts/jest-mikroorm-transformer.cjs` |
 
-### Ejemplo de referencia (módulo `customers`):
+### Ejemplo de referencia (módulo `example`):
 ```
-packages/core/src/modules/customers/
-├── data/entities.ts      ← Entidades con @Property({ columnType: 'uuid' })
-├── api/*/route.ts        ← CRUD con mapToEntity
+apps/mercato/src/modules/example/
+├── acl.ts                ← DEBE tener export default features
+├── data/entities.ts      ← @Property({ type: 'text' }) — usa `type` no `columnType`
+├── data/validators.ts    ← Zod schemas
+├── api/*/route.ts        ← CRUD routes con metadata
 ├── search.ts             ← SearchModuleConfig
-├── events.ts             ← createModuleEvents({ moduleId: ... })
-├── di.ts                 ← asClass(Service).scoped()
+├── events.ts             ← createModuleEvents({ moduleId, events } as const)
+├── di.ts                 ← export function register(_: AppContainer) {}
 ├── setup.ts              ← ModuleSetupConfig
-└── backend/*/page.tsx    ← Páginas React
+├── __tests__/*.spec.ts   ← Unit tests (jest)
+└── backend/*/page.tsx    ← React pages
 ```
 
 ---
@@ -43,159 +54,205 @@ packages/core/src/modules/customers/
 
 **URL**: https://docs.openmercato.com/
 
-### Páginas clave:
+### ⚠️ ADVERTENCIA: la docs puede estar desactualizada
 
-| Tema | URL |
-|------|-----|
-| Crear módulo | https://docs.openmercato.com/customization/create-first-module |
-| Entidades y migraciones | https://docs.openmercato.com/customization/create-inventory-data |
-| API REST (CRUD factory) | https://docs.openmercato.com/customization/create-inventory-api |
-| Arquitectura | https://docs.openmercato.com/architecture/system-overview |
-| IoC Container | https://docs.openmercato.com/framework/ioc/container |
-| Módulos | https://docs.openmercato.com/framework/modules/overview |
-| Rutas y páginas | https://docs.openmercato.com/framework/modules/routes-and-pages |
-| Entidades (framework) | https://docs.openmercato.com/framework/database/entities |
-
-### ⚠️ ADVERTENCIA sobre la documentación
-
-La documentación puede estar **desactualizada** respecto al código real. Ejemplo conocido:
-
-- La docs muestra `create: { schema }` sin `mapToEntity`
-- El código real (v0.6.1) REQUIERE `mapToEntity`
-
-**Cuando hay conflicto entre docs y código, el código gana.**
+**Cuando hay conflicto entre docs y código, EL CÓDIGO GANA.**
 
 ---
 
-## 3. Discrepancias conocidas (docs vs código real)
+## 3. Discrepancias conocidas (docs/código antiguo vs código real v0.6.1)
 
-| Docs dice | Código real requiere | Impacto |
-|-----------|---------------------|---------|
-| `@Property()` sin type | `@Property({ columnType: 'uuid' })` | Runtime crash sin metadata |
-| `create: { schema }` | `create: { schema, mapToEntity }` | Build error |
-| `module: 'name'` en events | `moduleId: 'name'` | Build error |
-| `import from '@mikro-orm/core'` | `import from '@mikro-orm/decorators/legacy'` | Puede funcionar pero legacy es más seguro |
+### Críticas (causan fallos de typecheck/build/runtime)
+
+| Código antiguo / docs dice | Código correcto (v0.6.1) | Fuente | Impacto |
+|---|---|---|---|
+| `@Property()` sin type | `@Property({ type: 'text' })` | `packages/core/src/modules/example/data/entities.ts` | Runtime crash |
+| `@Property({ columnType: 'uuid' })` | `@Property({ type: 'uuid' })` | `packages/ui/src/backend/CrudForm.tsx` CrudFieldBase | Build error |
+| `create: { schema }` sin mapToEntity | `create: { schema, mapToEntity: (i) => ({...i}) }` | `packages/shared/src/lib/crud/factory.ts` | Build error |
+| `module: 'name'` en events | `moduleId: 'name'` | `packages/shared/src/modules/events/types.ts` | Build error |
+| `CrudForm entityId apiPath mode` | Esas props no existen — ver §4 | `packages/ui/src/backend/CrudForm.tsx` | TS2353 error |
+| `DataTable extensionTableId` prop | No es una prop — se computa internamente | `packages/ui/src/backend/DataTable.tsx` | TS2353 excess prop |
+| `DataTable emptyState={{ label, description }}` | `emptyState={<string o ReactNode>}` | `packages/ui/src/backend/DataTable.tsx:223` | TS2353 error |
+| `useGuardedMutation()` sin args | `useGuardedMutation({ contextId: 'mod.page' })` | `packages/ui/src/backend/injection/useGuardedMutation.ts` | TS2554 error |
+| `runMutation({ operation: 'str', mutationPayload: fn })` | `runMutation({ operation: async () => {...}, context })` | `packages/ui/src/backend/injection/useGuardedMutation.ts` | TS2345 error |
+| `flash({ type: 'success', message: 'txt' })` | `flash('txt', 'success')` | `packages/ui/src/backend/FlashMessages.tsx` | TS2345 error |
+| `DocHeader title subtitle docId` | `DocHeader docTitle docNumber` | `src/lib/pdf/components.tsx` | TS2322 error |
+| `DocFooter org pageLabel` | `DocFooter generatedAt` | `src/lib/pdf/components.tsx` | TS2322 error |
+| `acl.ts` sin export default | `export default features` **REQUERIDO** | `packages/core/src/modules/example/acl.ts` | `.mercato/generated/` falla `.default` |
+| `z.record(schema)` (Zod v3) | `z.record(z.string(), schema)` (Zod v4) | `zod@4.x` docs | TS2554 error |
+| `EventCategory: 'alert'` | `EventCategory: 'custom'` | `packages/shared/src/modules/events/types.ts` | TS2322 error |
+| `CrudBuiltinField.name` | `CrudBuiltinField.id` | `packages/ui/src/backend/CrudForm.tsx` CrudFieldBase | TS2353 error |
+| `CrudFormGroup.label` | `CrudFormGroup.title` (solo cuando hay `fields:`) | `packages/ui/src/backend/CrudForm.tsx` CrudFormGroup | TS2353 error |
+| `RowActionItem.title` | `RowActionItem.label` | `packages/ui/src/backend/RowActions.tsx` | TS2353 error |
+| `PageMetadata.hidden` | `PageMetadata.navHidden` | `packages/shared/src/modules/registry.ts` | TS2353 error |
+| `PortalNavMetadata.group: 'vertical-name'` | Solo acepta `'main' \| 'account' \| undefined` | `packages/shared/src/modules/registry.ts` | TS2322 error |
+| `tab.label` en tab unions | `tab.title` (o cast `(tab as any).title`) | Depende del componente | TS2339 error |
 
 ---
 
-## 4. Patrón correcto de entidad (extraído del repo, NO de la docs)
+## 4. API correcta de CrudForm v0.6.1
 
-La documentación usa `columnType`. El código interno del core usa `type`. Ambos funcionan, pero `columnType` es más explícito y seguro con Turbopack:
+**Fuente**: `node_modules/@open-mercato/ui/src/backend/CrudForm.tsx`
+
+```tsx
+// ✅ CORRECTO — API actual v0.6.1
+<CrudForm
+  fields={[
+    { id: 'name', label: 'Nombre', type: 'text', required: true },
+    { id: 'status', label: 'Estado', type: 'select', options: [...] },
+  ]}
+  groups={[
+    { id: 'basic', title: 'Información básica', fields: ['name', 'status'] },
+  ]}
+  initialValues={{ name: record?.name ?? '', status: 'active' }}
+  onSubmit={async (values) => {
+    await apiCallOrThrow('/api/my-module/items', { method: 'POST', body: JSON.stringify(values) })
+    flash('Guardado', 'success')
+  }}
+  cancelHref="/backend/my-module"
+/>
+
+// ❌ INCORRECTO — API antigua (ya no existe)
+<CrudForm entityId="..." apiPath="/api/..." mode="create" fields={[...]} onSuccess={() => {}} />
+```
+
+**Reglas clave**:
+- `CrudFieldBase.id` (no `name`)
+- `CrudFieldBase.label` (el display label del campo)
+- `CrudFormGroup.title` (no `label`) para el header del grupo
+- `CrudFormGroup.fields` lista los `id` de los campos
+- `cancelHref` (string) en vez de `onCancel` (función)
+- `RowActionItem.label` (no `title`)
+
+---
+
+## 5. API correcta de useGuardedMutation v0.6.1
+
+**Fuente**: `node_modules/@open-mercato/ui/src/backend/injection/useGuardedMutation.ts`
+
+```tsx
+// ✅ CORRECTO — API actual v0.6.1
+const { runMutation } = useGuardedMutation({ contextId: 'my_module.page' })
+
+const handleApprove = (item: ItemRow) => {
+  runMutation({
+    operation: async () => {
+      await apiCallOrThrow(`/api/my-module/items/${item.id}/approve`, { method: 'POST', body: '{}' })
+      flash('Aprobado', 'success')
+      load()
+    },
+    context: { entityId: 'my_module.item', recordId: item.id },
+  })
+}
+
+// ❌ INCORRECTO — API antigua
+const { runMutation } = useGuardedMutation()
+runMutation({
+  operation: 'update',
+  context: { entityId: 'my_module.item', recordId: item.id },
+  mutationPayload: async () => { /* la función estaba aquí */ },
+})
+```
+
+---
+
+## 6. Patrones correctos de entidades v0.6.1
+
+**Fuente**: `packages/core/src/modules/example/data/entities.ts`
 
 ```typescript
-import { Entity, Property, PrimaryKey } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Enum, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 @Entity({ tableName: 'my_items' })
 export class MyItemEntity {
-  @PrimaryKey({ columnType: 'uuid' })
+  @PrimaryKey({ type: 'uuid' })
   id: string = v4()
 
-  @Property({ columnType: 'uuid' })
+  @Property({ type: 'text' })         // 'text', no 'varchar'
   tenant_id!: string
 
-  @Property({ columnType: 'uuid' })
+  @Property({ type: 'text' })
   organization_id!: string
 
-  @Property({ columnType: 'text' })
+  @Property({ type: 'text' })
   name!: string
 
-  @Property({ columnType: 'integer' })
+  @Property({ type: 'int', default: 0 })
   quantity!: number
 
-  @Property({ columnType: 'text', nullable: true })
-  description?: string | null
-
-  @Property({ columnType: 'boolean', default: false })
+  @Property({ type: 'boolean', default: false })
   is_active: boolean = false
 
-  @Property({ columnType: 'timestamptz', defaultRaw: 'now()' })
+  @Property({ type: 'timestamptz' })
   created_at: Date = new Date()
 
-  @Property({ columnType: 'timestamptz', defaultRaw: 'now()', onUpdate: () => new Date() })
+  @Property({ type: 'timestamptz', onUpdate: () => new Date() })
   updated_at: Date = new Date()
 
-  @Property({ columnType: 'timestamptz', nullable: true })
+  @Property({ type: 'timestamptz', nullable: true })
   deleted_at?: Date | null
 }
 ```
 
 ---
 
-## 5. Patrón correcto de CRUD route (extraído del repo)
+## 7. acl.ts — export default OBLIGATORIO
+
+**Fuente**: `packages/core/src/modules/example/acl.ts`
 
 ```typescript
-import { z } from 'zod'
-import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
-import { MyItemEntity } from '../../data/entities'
-import { createSchema, updateSchema } from '../../data/validators'
+// ✅ CORRECTO — el generador accede .default en el import
+export const features = [
+  { id: 'my_module.view', title: 'View my module', module: 'my_module' },
+  { id: 'my_module.manage', title: 'Manage my module', module: 'my_module' },
+]
 
-const listSchema = z.object({
-  page: z.coerce.number().min(1).default(1),
-  pageSize: z.coerce.number().min(1).max(100).default(50),
-  search: z.string().optional(),
-}).passthrough()
+export default features  // ← REQUERIDO. Sin esto el generador falla.
 
-const routeMetadata = {
-  GET:    { requireAuth: true, requireFeatures: ['my_module.view'] },
-  POST:   { requireAuth: true, requireFeatures: ['my_module.create'] },
-  PUT:    { requireAuth: true, requireFeatures: ['my_module.edit'] },
-  DELETE: { requireAuth: true, requireFeatures: ['my_module.delete'] },
-}
-
-export const metadata = routeMetadata
-
-const crud = makeCrudRoute({
-  metadata: routeMetadata,
-  orm: {
-    entity: MyItemEntity,
-    idField: 'id',
-    orgField: 'organization_id',
-    tenantField: 'tenant_id',
-    softDeleteField: 'deleted_at',
-  },
-  list: { schema: listSchema },
-  create: {
-    schema: createSchema,
-    mapToEntity: (input: any) => ({ ...input }),
-  },
-  update: {
-    schema: updateSchema,
-    applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) },
-  },
-})
-
-export const GET = crud.GET
-export const POST = crud.POST
-export const PUT = crud.PUT
-export const DELETE = crud.DELETE
-
-export const openApi = {}
+// ❌ INCORRECTO — causa error en .mercato/generated/modules.generated.ts
+// Property 'default' does not exist on type 'typeof import(".../acl")'
 ```
 
 ---
 
-## 6. Por qué fallamos tanto
+## 8. Zod v4 — cambios de API
 
-### Causa raíz
-Los módulos se escribieron siguiendo la **documentación** (que está desactualizada) en vez del **código fuente real**. Además, el build pasaba "a ciegas" porque `NODE_ENV=production` como buildtime ocultaba errores de tipos.
+**Fuente**: `zod@4.x` changelog. El proyecto usa `"zod": "4.3.6"`.
 
-### Lección
-1. Siempre verificar contra el código fuente del repo, no solo la docs
-2. Siempre correr el type-checker localmente antes de deployar
-3. Nunca confiar en que "si compila, funciona" — verificar también en runtime
-4. Usar `columnType` (no `type`) en decoradores para máxima compatibilidad con Turbopack
+```typescript
+// ✅ CORRECTO — Zod v4 requiere key schema en z.record()
+z.record(z.string(), z.unknown())
+z.record(z.string(), z.object({ open: z.string(), close: z.string() }))
+
+// ❌ INCORRECTO — Zod v3 syntax (un solo argumento)
+z.record(z.unknown())    // TS2554: Expected 2-3 arguments, but got 1
+```
 
 ---
 
-## 7. Checklist de verificación antes de cada PR
+## 9. EventCategory — valores válidos
 
-- [ ] Entidades usan `columnType:` explícito en TODOS los `@Property()`
-- [ ] CRUD routes tienen `mapToEntity` y `applyToEntity`
-- [ ] Events usan `moduleId:` (no `module:`)
-- [ ] Kysely access usa `(em as any).getKysely()`
-- [ ] Seeds usan `as any` en `em.create()` y `em.find()`
-- [ ] Componentes UI tienen todas las props requeridas
-- [ ] `useOrganizationScopeDetail()` retorna `string | null` — manejar el null
-- [ ] Dependencias directas declaradas en package.json
-- [ ] Verificado contra el código del repo de Open Mercato (no solo docs)
+**Fuente**: `packages/shared/src/modules/events/types.ts`
+
+```typescript
+export type EventCategory = 'crud' | 'lifecycle' | 'system' | 'custom'
+// 'alert' NO existe — usar 'custom'
+```
+
+---
+
+## 10. Checklist de verificación antes de cada PR
+
+- [ ] `@Property({ type: '...' })` en TODOS los decoradores (no `columnType`)
+- [ ] `acl.ts` tiene `export default features`
+- [ ] `CrudForm` usa `id:` en campos, `title:` en grupos, `cancelHref` (no `onCancel`)
+- [ ] `useGuardedMutation({ contextId: 'module.page' })` con contextId
+- [ ] `runMutation({ operation: async () => {...}, context })` — operation es función
+- [ ] `flash('msg', 'type')` — firmatura con 2 args (mensaje primero)
+- [ ] `z.record(z.string(), valueSchema)` para Zod v4
+- [ ] `EventCategory`: solo `'crud' | 'lifecycle' | 'system' | 'custom'`
+- [ ] `DataTable.emptyState` es string o ReactNode (no objeto)
+- [ ] `RowActionItem.label` (no `title`)
+- [ ] `PageMetadata.navHidden` (no `hidden`)
+- [ ] CI verde: `yarn lint && yarn typecheck && yarn test`
