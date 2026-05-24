@@ -1,6 +1,6 @@
 # Roadmap — Aika Platform
 
-> Última actualización: 24 Mayo 2026 — CI verde ✅ · TypeScript limpio ✅
+> Última actualización: 24 Mayo 2026 — CI verde ✅ · TypeScript limpio ✅ · Phase 25 COMPLETA ✅ (80 módulos, ~3.246 tests)
 > Stack: Open Mercato v0.6.1 · Next.js 16 · Hetzner CX43 Helsinki · Coolify 4.0
 > Deploy URL: mercato.novaincs.com · Panel: deploy.novaincs.com
 > CI: github.com/aikapenelope/crm-world/actions — Lint ✅ Typecheck ✅ Unit Tests ✅
@@ -270,28 +270,29 @@ Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
 
 > Orden sugerido basado en impacto y dependencias técnicas.
 
-### Phase 25 — Tests unitarios para módulos custom (EN PROGRESO 🔄)
+### Phase 25 — Tests unitarios para módulos custom (COMPLETO ✅ — PRs #94–#106)
 
 > **Infraestructura lista**: `jest.config.cjs` alineado con OM oficial (PR #92).
-> **Progreso actual**: 26 módulos con tests · 899 assertions · CI verde en todos los sprints.
+> **Completado**: 80 módulos con tests · ~3,246 assertions · CI verde en todos los sprints.
+> **Lección registrada**: §14 en `docs/PATTERNS.md` — anti-patrones Zod (`z.string()` sin min(1) acepta `''`; `z.coerce.boolean('false')` → `true`).
 
-**Progreso por sprints** (divididos en 11 sprints atómicos por vertical):
+**Sprints completados** (11 sprints atómicos por vertical):
 
-| Sprint | Módulos | Tests | PR | Estado |
-|--------|---------|-------|-----|--------|
+| Sprint | Módulos | Tests est. | PR | Estado |
+|--------|---------|-----------|-----|--------|
 | **T1 — Venezuela base** | `payment_methods`, `ve_tax_books`, `ve_withholdings` | 101 | #94 | ✅ MERGED |
 | **T2 — ISP completo** | `isp_billing`, `isp_subscribers`, `isp_plans`, `isp_network`, `isp_support`, `isp_technicians`, `isp_sales` | 223 | #95 | ✅ MERGED |
 | **T3 — Agro producción** | `agri_units`, `agri_feed`, `agri_hr`, `agri_vet`, `agri_inputs` | 181 | #96 | ✅ MERGED |
 | **T4 — Agro industrial** | `agri_processing`, `agri_cold_chain`, `agri_quality`, `agri_sales`, `agri_field`, `agri_traceability` | 186 | #97 | ✅ MERGED |
-| **T5 — Manufactura α** | `mfg_inventory`, `mfg_quality`, `mfg_floor`, `mfg_planning`, `mfg_costs`, `mfg_energy` | — | — | ⏳ PENDIENTE |
-| **T6 — Manufactura β** | `mfg_maintenance`, `mfg_procurement`, `mfg_dispatch`, `mfg_hr`, `mfg_subcontract` | — | — | ⏳ PENDIENTE |
-| **T7 — Construcción** | 8 × `const_*` | — | — | ⏳ PENDIENTE |
-| **T8 — Distribución** | 6 × `dist_*` | — | — | ⏳ PENDIENTE |
-| **T9 — Retail + Condo** | 7 × `retail_*` + 6 × `condo_*` | — | — | ⏳ PENDIENTE |
-| **T10 — Educación** | `students`, `enrollment`, `tuition`, `grades`, `attendance`, 3 × `school_*` | — | — | ⏳ PENDIENTE |
-| **T11 — Academia + Auto + Varios** | 5 × `academy_*`, 5 × `auto_*`, `transactions`, `bank_reconciliation`, `market_intelligence` | — | — | ⏳ PENDIENTE |
+| **T5 — Manufactura α** | `mfg_inventory`, `mfg_quality`, `mfg_floor`, `mfg_planning`, `mfg_costs`, `mfg_energy` | ~259 | #99 | ✅ MERGED |
+| **T6 — Manufactura β** | `mfg_maintenance`, `mfg_procurement`, `mfg_dispatch`, `mfg_hr`, `mfg_subcontract` | ~273 | #100 | ✅ MERGED |
+| **T7 — Construcción** | 8 × `const_*` | ~310 | #101 | ✅ MERGED |
+| **T8 — Distribución** | 6 × `dist_*` | ~285 | #102 | ✅ MERGED |
+| **T9 — Retail + Condo** | 7 × `retail_*` + 6 × `condo_*` | ~580 | #103 | ✅ MERGED |
+| **T10 — Educación** | `students`, `enrollment`, `tuition`, `grades`, `attendance`, 3 × `school_*` | ~280 | #104 | ✅ MERGED |
+| **T11 — Academia + Auto + Finanzas** | 5 × `academy_*`, 5 × `auto_*`, `transactions`, `bank_reconciliation`, `market_intelligence` | ~360 | #106 | ✅ MERGED |
 
-**Estado global**: 21 módulos cubiertos (T1-T4) · 59 módulos pendientes (T5-T11) · 899 tests.
+**Total**: 80 módulos · 11 sprints · ~3,246 tests · CI verde continuo.
 
 **Patrón establecido** — cada spec sigue exactamente este patrón:
 ```
@@ -405,11 +406,57 @@ coverageThreshold: {
 
 ---
 
+### Phase 30 — Vertical Presets + Organización Super Admin
+
+> **Motivación**: La plataforma tiene 112 módulos en 12 verticales. Desde el super admin
+> el onboarding de un nuevo tenant es complejo: hay que habilitar módulos, configurar roles
+> y seleccionar la vertical manualmente. Esta phase introduce presets por vertical y
+> reorganiza el super admin para que sea intuitivo.
+
+**Qué se va a construir:**
+
+1. **`vertical_presets` module** — Módulo propio de crm-world que:
+   - Define las 12 verticales con nombre, ícono, descripción y lista de módulos incluidos
+   - Expone `/api/vertical_presets` para listar verticales disponibles
+   - Expone `/api/vertical_presets/[id]/apply` para aplicar un preset a un tenant
+     (activa features por vertical vía `sync-role-acls`, corre `seedDefaults` de cada módulo)
+   - Sidebar del admin agrupado por vertical (usando `useInjectedMenuItems`)
+
+2. **Flujo de creación de tenant mejorado** — Extender el onboarding wizard:
+   - Paso 0: Selección de vertical (tarjetas con nombre + módulos incluidos)
+   - El `onTenantCreated` de `vertical_presets` activa automáticamente las features del preset
+   - Botón "Agregar módulo" post-creación vía el preset
+
+3. **Sidebar super admin agrupado** — Agrupar los 112 módulos en la sidebar por vertical:
+   - Cada grupo colapsable: Manufactura (16), Construcción (8), Distribución (8), etc.
+   - Implementado via `widgets/injection-table.ts` en `vertical_presets`
+
+**Cómo funciona la activación/desactivación de módulos por tenant en OM:**
+- Los módulos en `modules.ts` están todos activos a nivel de **app**
+- La granularidad **por tenant** se logra via RBAC: `defaultRoleFeatures` en `setup.ts`
+- Para "deshabilitar un módulo para un tenant" → revocar las features de sus roles
+- Para "habilitar" → ejecutar `yarn mercato auth sync-role-acls --tenant <id>` con el preset
+
+**Prerequisitos:** Phase 25 ✅, `ve_tenant_defaults` ✅
+
+---
+
+### Phase 31 — Coverage Threshold en CI
+
+Una vez Phase 30 completada (activación de Phase 29):
+
+```js
+coverageThreshold: { global: { branches: 70, functions: 80, lines: 80, statements: 80 } }
+```
+
+---
+
 ## Deuda técnica general
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
-| Tests unitarios validators (59 módulos pendientes T5-T11) | **ALTA** | Phase 25 — EN PROGRESO (21/80 módulos, 899 tests) |
+| Tests unitarios validators (T1-T11) | ~~ALTA~~ | Phase 25 — **COMPLETA ✅** (80/80 módulos, ~3.246 tests) |
+| Vertical presets + organización super admin | **ALTA** | Phase 30 — pendiente (ver §30 abajo) |
 | Integration tests (properties spec no corre en CI) | **ALTA** | Phase 28 — activar spec existente |
 | Upgrade OM v0.6.2 + TypeScript 6 | **MEDIA** | Phase 26 |
 | `yarn build` validado en CI (next build completo) | **MEDIA** | Sin phase asignada |
