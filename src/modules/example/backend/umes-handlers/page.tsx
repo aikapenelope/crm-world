@@ -299,12 +299,12 @@ export default function UmesHandlersPage() {
   }, [appEventResult, dispatchMockEvent, draftTitle, emitServerTodoCreated, runEnricherProbe, submittedData, t])
   const loadBlockedSaveExample = React.useCallback(() => {
     const title = '[block] save demo'
-    setFormSeed((prev) => ({ nonce: prev.nonce + 1, title, note: 'Should be blocked by onBeforeSave rule' }))
+    setFormSeed((prev) => ({ nonce: prev.nonce + 1, label: title, note: 'Should be blocked by onBeforeSave rule' }))
     setDraftTitle(title)
   }, [])
   const loadTransformSaveExample = React.useCallback(() => {
     const title = '[confirm][transform] transform demo'
-    setFormSeed((prev) => ({ nonce: prev.nonce + 1, title, note: 'transform: make me uppercase' }))
+    setFormSeed((prev) => ({ nonce: prev.nonce + 1, label: title, note: 'transform: make me uppercase' }))
     setDraftTitle(title)
   }, [])
 
@@ -312,13 +312,13 @@ export default function UmesHandlersPage() {
     () => [
       {
         id: 'title',
-        title: t('example.umes.handlers.fields.title'),
+        label: t('example.umes.handlers.fields.title'),
         type: 'text',
         required: true,
       },
       {
         id: 'note',
-        title: t('example.umes.handlers.fields.note'),
+        label: t('example.umes.handlers.fields.note'),
         type: 'text',
       },
     ],
@@ -326,7 +326,7 @@ export default function UmesHandlersPage() {
   )
 
   const groups = React.useMemo<CrudFormGroup[]>(
-    () => [{ id: 'phase-c-main', title: t('example.umes.handlers.group.main'), fields: ['title', 'note'] }],
+    () => [{ id: 'phase-c-main', label: t('example.umes.handlers.group.main'), fields: ['title', 'note'] }],
     [t],
   )
 

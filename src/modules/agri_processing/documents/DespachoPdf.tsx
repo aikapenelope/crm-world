@@ -129,7 +129,7 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
           ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString()} />
       </Page>
     </Document>
   )

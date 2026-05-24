@@ -43,7 +43,7 @@ export const searchConfig: SearchModuleConfig = {
         const cropLabel = CROP_TYPE[String(r.crop_type ?? '')] ?? String(r.crop_type ?? '')
         return {
           text: [cropLabel, norm(r.crop_variety as string) ?? ''].filter(Boolean),
-          presenter: { title: `${cropLabel}${r.crop_variety ? ` (${r.crop_variety})` : ''}`, subtitle: new Date(r.planting_date as string).toLocaleDateString('es-VE'), icon: 'sprout', badge: r.status === 'harvested' ? 'Cosechado' : r.status === 'active' ? 'Activo' : String(r.status) },
+          presenter: { title: `${cropLabel}${r.crop_variety ? ` (${r.crop_variety})` : ''}`, subtitle: new Date(r.planting_date as string).toLocaleDateString(), icon: 'sprout', badge: r.status === 'harvested' ? 'Cosechado' : r.status === 'active' ? 'Activo' : String(r.status) },
           links: [{ href: `/backend/agri-field`, label: 'Ver campo', kind: 'primary' }],
           checksumSource: { crop_type: r.crop_type, status: r.status, updated_at: r.updated_at },
         }

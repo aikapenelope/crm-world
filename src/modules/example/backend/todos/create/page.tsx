@@ -10,21 +10,21 @@ export default function CreateTodoPage() {
   const fields = React.useMemo<CrudField[]>(() => [
     {
       id: 'title',
-      title: t('example.todos.form.fields.title.label'),
+      label: t('example.todos.form.fields.title.label'),
       type: 'text',
       required: true,
       placeholder: t('example.todos.form.fields.title.placeholder'),
     },
-    { id: 'is_done', title: t('example.todos.form.fields.isDone.label'), type: 'checkbox' },
-    { id: 'cf_blocked', title: t('example.todos.table.column.blocked'), type: 'checkbox' },
+    { id: 'is_done', label: t('example.todos.form.fields.isDone.label'), type: 'checkbox' },
+    { id: 'cf_blocked', label: t('example.todos.table.column.blocked'), type: 'checkbox' },
   ], [t])
   const groups = React.useMemo<CrudFormGroup[]>(() => [
-    { id: 'details', title: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },
-    { id: 'status', title: t('example.todos.form.groups.status'), column: 2, fields: ['is_done', 'cf_blocked'] },
-    { id: 'attributes', title: t('example.todos.form.groups.attributes'), column: 1, kind: 'customFields' },
+    { id: 'details', label: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },
+    { id: 'status', label: t('example.todos.form.groups.status'), column: 2, fields: ['is_done', 'cf_blocked'] },
+    { id: 'attributes', label: t('example.todos.form.groups.attributes'), column: 1, kind: 'customFields' },
     {
       id: 'tips',
-      title: t('example.todos.form.groups.tips'),
+      label: t('example.todos.form.groups.tips'),
       column: 2,
       component: () => (
         <div className="text-sm text-muted-foreground">

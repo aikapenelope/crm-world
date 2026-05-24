@@ -231,7 +231,7 @@ export function BoletinEscolar({ data }: { data: BoletinPDFData }) {
                       </Text>
                     )
                   })}
-                  <Text style={styles.gradeCellObs} numberOfLines={2}>
+                  <Text style={styles.gradeCellObs}>
                     {sub.observations ?? ''}
                   </Text>
                 </View>

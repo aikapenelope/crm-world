@@ -32,7 +32,7 @@ export default function AcademyInstructorCreatePage() {
       fields: [
         { id: 'hourly_rate_usd', label: 'Tarifa por hora (USD)', type: 'number',
           placeholder: '15.00' },
-        { id: 'modalities', label: 'Modalidades que puede enseñar', type: 'multiselect',
+        { id: 'modalities', label: 'Modalidades que puede enseñar', type: 'tags',
           options: [
             { value: 'in_person', label: 'Presencial' },
             { value: 'online', label: 'Online' },

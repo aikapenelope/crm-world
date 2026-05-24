@@ -31,7 +31,7 @@ export const searchConfig: SearchModuleConfig = {
         text: [String(r.title)],
         presenter: {
           title: (norm(r.title as string) as string | undefined) ?? 'Comunicado',
-          subtitle: r.created_at ? new Date(String(r.created_at)).toLocaleDateString('es-VE') : undefined,
+          subtitle: r.created_at ? new Date(String(r.created_at)).toLocaleDateString() : undefined,
           icon: 'megaphone',
         },
         links: [{ href: '/backend/school-comms', label: 'Ver comunicados', kind: 'primary' }],

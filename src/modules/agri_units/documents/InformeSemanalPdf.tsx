@@ -145,7 +145,7 @@ export function InformeSemanalPdf({ data: d }: { data: InformeSemanalData }) {
           )}
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString()} />
       </Page>
     </Document>
   )

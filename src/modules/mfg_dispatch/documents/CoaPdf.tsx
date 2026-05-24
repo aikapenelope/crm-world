@@ -146,7 +146,7 @@ export function CoaPdf({ data: d }: { data: CoaPdfData }) {
           </View>
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString()} />
       </Page>
     </Document>
   )

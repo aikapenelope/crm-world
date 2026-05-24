@@ -82,8 +82,8 @@ export default function UmesIntegrationsPage() {
   const externalIdsStatus: PhaseStatus = 'ok'
 
   const registrySnapshot = React.useMemo(() => {
-    registerIntegration({ id: 'sync_shopify', label: 'Shopify', icon: 'shopify', buildExternalUrl: (externalId) => `https://admin.shopify.com/store/demo/products/${externalId}` })
-    registerIntegration({ id: 'gateway_stripe', label: 'Stripe', icon: 'stripe' })
+    registerIntegration({ id: 'sync_shopify', title: 'Shopify', icon: 'shopify', buildExternalUrl: (externalId) => `https://admin.shopify.com/store/demo/products/${externalId}` })
+    registerIntegration({ id: 'gateway_stripe', title: 'Stripe', icon: 'stripe' })
 
     return {
       integrations: getAllIntegrations(),

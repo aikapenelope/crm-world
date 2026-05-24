@@ -6,6 +6,5 @@ export const metadata: PageMetadata = {
   pageTitleKey: 'agri_units.nav.farm_units',
   pageGroup: 'Agroindustria',
   pageGroupKey: 'nav.group.agri',
-  pageOrder: 11,
-  hidden: false,
+  pageOrder: 11
 }

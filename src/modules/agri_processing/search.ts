@@ -28,7 +28,7 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.batch_number) return null
         return {
           text: [norm(r.batch_number as string) ?? ''],
-          presenter: { title: (norm(r.batch_number as string) as string | undefined) ?? 'Beneficio', subtitle: new Date(r.slaughter_date as string).toLocaleDateString('es-VE'), icon: 'factory', badge: BATCH_STATUS[String(r.status)] ?? String(r.status) },
+          presenter: { title: (norm(r.batch_number as string) as string | undefined) ?? 'Beneficio', subtitle: new Date(r.slaughter_date as string).toLocaleDateString(), icon: 'factory', badge: BATCH_STATUS[String(r.status)] ?? String(r.status) },
           links: [{ href: `/backend/agri-processing/${r.id}`, label: 'Ver lote', kind: 'primary' }],
           checksumSource: { batch_number: r.batch_number, status: r.status, updated_at: r.updated_at },
         }

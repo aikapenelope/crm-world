@@ -311,7 +311,7 @@ export function ValuacionObra({ data }: { data: ValuacionPDFData }) {
                     <Text style={[styles.linesCell, { width: '6%', color: COLORS.textMuted }]}>
                       {line.item_number}
                     </Text>
-                    <Text style={[styles.linesCell, { flex: 1 }]} numberOfLines={2}>
+                    <Text style={[styles.linesCell, { flex: 1 }]}>
                       {line.item_name}
                     </Text>
                     <Text style={[styles.linesCellRight, { width: '10%' }]}>

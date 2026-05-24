@@ -45,7 +45,7 @@ export const searchConfig: SearchModuleConfig = {
         const statusLabel = SETTLE_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
           text: [`FCA: ${r.actual_fca}`, `USD ${r.total_payment_usd}`].filter(Boolean),
-          presenter: { title: `Liquidación · Ciclo ${new Date(r.cycle_end_date as string).toLocaleDateString('es-VE')}`, subtitle: `USD ${r.total_payment_usd}`, icon: 'file-text', badge: statusLabel },
+          presenter: { title: `Liquidación · Ciclo ${new Date(r.cycle_end_date as string).toLocaleDateString()}`, subtitle: `USD ${r.total_payment_usd}`, icon: 'file-text', badge: statusLabel },
           links: [{ href: `/backend/agri-hr/settlements`, label: 'Ver liquidación', kind: 'primary' }],
           checksumSource: { status: r.status, total_payment_usd: r.total_payment_usd, updated_at: r.updated_at },
         }

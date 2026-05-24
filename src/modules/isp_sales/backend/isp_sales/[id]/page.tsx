@@ -49,7 +49,7 @@ export default function LeadDetailPage() {
         method: 'POST',
         body: JSON.stringify({ lead_id: params.id, city: lead.city }),
       })
-      const data = await res.json()
+      const data = res.result as any
       if (data.coverage_status === 'covered') {
         flash(`✓ Cobertura disponible en ${data.zone_name}`, 'success')
       } else {
