@@ -152,7 +152,7 @@ export default function MfgBomPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Bill of Materials</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_bom.header"
               apiPath="/api/mfg-bom/bom-headers"
               mode="create"

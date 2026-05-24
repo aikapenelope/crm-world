@@ -183,7 +183,7 @@ export default function EquipmentDetailPage() {
             </div>
             {showPlanForm && (
               <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-                <CrudForm entityId="mfg_maintenance.plan" apiPath="/api/mfg-maintenance/maintenance-plans" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_maintenance.plan" apiPath="/api/mfg-maintenance/maintenance-plans" mode="create"
                   initial={{ equipment_id: params.id, equipment_code: eq.equipment_code }}
                   fields={[
                     { type: 'text' as const,   id: 'plan_name',           label: 'Nombre del plan (ej: Cambio de aceite cada 500h)', required: true },
@@ -210,7 +210,7 @@ export default function EquipmentDetailPage() {
             </div>
             {showWoForm && (
               <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-                <CrudForm entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
                   initial={{ equipment_id: params.id, equipment_code: eq.equipment_code, equipment_name: eq.name, work_type: 'corrective', priority: 'high' }}
                   fields={[
                     { type: 'text' as const,     id: 'wo_number',        label: 'N° WO (WO-MAINT-2026-XXX)', required: true },

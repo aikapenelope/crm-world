@@ -75,8 +75,8 @@ export default function CreateValuationPage() {
     const currentPeriod = lines.reduce((s, l) => {
       return s + Number(l.curr_qty) * Number(l.item.unit_cost)
     }, 0)
-    const selectedProject = projects.find((p) => p.project_id === form.project_id) ??
-      projects.find((p) => p.id === form.project_id)
+    const selectedProject = projects.find((p) => p.id === form.id) ??
+      projects.find((p) => p.id === form.id)
     const retPct = Number(form.retention_percent) / 100
     const retention = currentPeriod * retPct
     const netPayable = currentPeriod - retention - Number(form.advance_deduction)
@@ -87,14 +87,14 @@ export default function CreateValuationPage() {
       netPayable: netPayable.toFixed(2),
       totalContract: contractAmount.toFixed(2),
     }
-  }, [lines, form.retention_percent, form.advance_deduction, projects, form.project_id])
+  }, [lines, form.retention_percent, form.advance_deduction, projects, form.id])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setIsSubmitting(true)
 
     const valuationPayload = {
-      project_id: form.project_id,
+      project_id: form.id,
       period_from: form.period_from,
       period_to: form.period_to,
       status: 'draft',
@@ -171,7 +171,7 @@ export default function CreateValuationPage() {
                 <label className="mb-1 block text-xs font-medium">Proyecto *</label>
                 <select
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
-                  value={form.project_id}
+                  value={form.id}
                   onChange={(e) => {
                     set('project_id', e.target.value)
                     if (e.target.value) loadBudgetItems(e.target.value)

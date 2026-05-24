@@ -132,7 +132,7 @@ export default function MfgDispatchPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Truck className="size-4" /> Nuevo Pedido Industrial</h3>
-            <CrudForm entityId="mfg_dispatch.sale_order" apiPath="/api/mfg-dispatch/sale-orders" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_dispatch.sale_order" apiPath="/api/mfg-dispatch/sale-orders" mode="create"
               initial={{ currency: 'USD', iva_pct: '16.00' }}
               fields={[
                 { type: 'text' as const,   id: 'order_number',           label: 'Número de Pedido (SO-MFG-2026-XXX)', required: true },

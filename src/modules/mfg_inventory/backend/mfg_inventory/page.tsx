@@ -214,7 +214,7 @@ export default function MfgInventoryPage() {
         {showReceive && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Recibir Material en Almacén (GR)</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_inventory.lot"
               apiPath="/api/mfg-inventory/stock-lots"
               mode="create"

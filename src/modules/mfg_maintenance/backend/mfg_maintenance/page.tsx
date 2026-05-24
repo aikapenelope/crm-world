@@ -182,7 +182,7 @@ export default function MfgMaintenancePage() {
         {showWoForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Crear Orden de Trabajo de Mantenimiento</h3>
-            <CrudForm entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
               fields={[
                 { type: 'text' as const,   id: 'wo_number',       label: 'Número WO (WO-MAINT-2026-XXX)', required: true },
                 { type: 'text' as const,   id: 'equipment_code',  label: 'Código de Equipo', required: true },

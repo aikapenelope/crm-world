@@ -179,7 +179,7 @@ export default function MfgSubcontractPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Nueva Orden de Maquila</h3>
-            <CrudForm entityId="mfg_subcontract.order" apiPath="/api/mfg-subcontract/subcontract-orders" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_subcontract.order" apiPath="/api/mfg-subcontract/subcontract-orders" mode="create"
               fields={[
                 { type: 'text' as const,   id: 'order_number',       label: 'Número SC (SC-2026-XXX)', required: true },
                 { type: 'text' as const,   id: 'subcontractor_name', label: 'Nombre del maquilador', required: true },
@@ -216,7 +216,7 @@ export default function MfgSubcontractPage() {
 
             {showMatForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm entityId="mfg_subcontract.material" apiPath="/api/mfg-subcontract/subcontract-materials" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_subcontract.material" apiPath="/api/mfg-subcontract/subcontract-materials" mode="create"
                   initial={{ subcontract_order_id: selectedOrder.id, sent_date: new Date().toISOString().split('T')[0] }}
                   fields={[
                     { type: 'text' as const, id: 'material_code',  label: 'Código del material', required: true },

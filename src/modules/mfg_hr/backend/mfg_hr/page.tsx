@@ -155,7 +155,7 @@ export default function MfgHrPage() {
         {showWorkerForm && activeTab === 'workers' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Registrar Operario</h3>
-            <CrudForm entityId="mfg_hr.worker" apiPath="/api/mfg-hr/workers" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_hr.worker" apiPath="/api/mfg-hr/workers" mode="create"
               fields={[
                 { type: 'text' as const,   id: 'employee_code',       label: 'Código de empleado (OP-001)', required: true },
                 { type: 'text' as const,   id: 'full_name',           label: 'Nombre completo', required: true },
@@ -174,7 +174,7 @@ export default function MfgHrPage() {
         {showBonusForm && activeTab === 'bonuses' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Award className="size-4" /> Calcular Bono de Producción</h3>
-            <CrudForm entityId="mfg_hr.bonus" apiPath="/api/mfg-hr/production-bonuses" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_hr.bonus" apiPath="/api/mfg-hr/production-bonuses" mode="create"
               initial={{ status: 'calculated' }}
               fields={[
                 { type: 'text' as const,   id: 'bonus_number',       label: 'Número de bono (BONUS-2026-XXX)', required: true },

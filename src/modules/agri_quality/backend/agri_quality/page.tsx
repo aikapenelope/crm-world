@@ -173,7 +173,7 @@ export default function AgriQualityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nueva No-Conformidad</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_quality.non_conformity"
               apiPath="/api/agri-quality/non-conformities"
               mode="create"

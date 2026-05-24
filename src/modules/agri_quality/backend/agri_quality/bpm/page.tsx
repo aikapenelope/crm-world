@@ -114,7 +114,7 @@ export default function BpmChecklistsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Checklist BPM</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_quality.bpm_checklist"
               apiPath="/api/agri-quality/bpm-checklists"
               mode="create"

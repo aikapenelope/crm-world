@@ -130,7 +130,7 @@ export default function SaleOrderDetailPage() {
         {showDispForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Guía de Despacho</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_sales.dispatch"
               mode="create"
               fields={[
@@ -163,7 +163,7 @@ export default function SaleOrderDetailPage() {
         {showInvForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Generar Factura</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_sales.invoice"
               mode="create"
               fields={[

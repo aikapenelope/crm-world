@@ -159,7 +159,7 @@ export default function MfgQualityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar No-Conformidad</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_quality.nc"
               apiPath="/api/mfg-quality/nonconformances"
               mode="create"

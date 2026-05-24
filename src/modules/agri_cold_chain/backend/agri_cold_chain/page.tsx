@@ -168,7 +168,7 @@ export default function AgriColdChainPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.name}` : 'Nueva Unidad de Frío'}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_cold_chain.storage_unit"
               apiPath="/api/agri-cold-chain/cold-storage-units"
               mode={editing ? 'edit' : 'create'}

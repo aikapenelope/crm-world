@@ -114,7 +114,7 @@ export default function AgriHrPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.first_name} ${editing.last_name}` : 'Nuevo Personal'}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_hr.employee"
               apiPath="/api/agri-hr/employees"
               mode={editing ? 'edit' : 'create'}

@@ -127,7 +127,7 @@ export default function DispatchDetailPage() {
             </div>
             {showLineForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm entityId="mfg_dispatch.sale_order_line" apiPath="/api/mfg-dispatch/sale-order-lines" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_dispatch.sale_order_line" apiPath="/api/mfg-dispatch/sale-order-lines" mode="create"
                   initial={{ sale_order_id: params.id, line_number: lines.length + 1 }}
                   fields={[
                     { type: 'text' as const, id: 'product_code',   label: 'Código producto', required: true },
@@ -192,7 +192,7 @@ export default function DispatchDetailPage() {
             </div>
             {showDispForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm entityId="mfg_dispatch.dispatch_order" apiPath="/api/mfg-dispatch/dispatch-orders" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_dispatch.dispatch_order" apiPath="/api/mfg-dispatch/dispatch-orders" mode="create"
                   initial={{ sale_order_id: params.id, sale_order_number: so.order_number, customer_name: so.customer_name, dispatch_date: new Date().toISOString().split('T')[0], requires_temperature_control: so.requires_temperature_control }}
                   fields={[
                     { type: 'text' as const,   id: 'dispatch_number',  label: 'Número guía (DISP-2026-XXX)', required: true },

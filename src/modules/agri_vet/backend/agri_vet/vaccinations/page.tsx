@@ -165,7 +165,7 @@ export default function VaccinationsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Vacunación</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_vet.vaccination"
               apiPath="/api/agri-vet/vaccination-records"
               mode="create"

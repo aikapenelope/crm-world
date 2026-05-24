@@ -164,7 +164,7 @@ export default function FeedBatchesPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Alimento</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_feed.batch"
               apiPath="/api/agri-feed/batches"
               mode="create"

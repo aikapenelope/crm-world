@@ -165,7 +165,7 @@ export default function FarmUnitsPage() {
             <h3 className="text-sm font-semibold mb-4">
               {editing ? `Editar — ${editing.name}` : 'Nueva Unidad Productiva'}
             </h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_units.farm_unit"
               apiPath="/api/agri-units/farm-units"
               mode={editing ? 'edit' : 'create'}

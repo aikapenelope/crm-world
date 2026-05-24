@@ -194,7 +194,7 @@ export default function AgriProcessingPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Beneficio</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_processing.slaughter_batch"
               apiPath="/api/agri-processing/slaughter-batches"
               mode="create"

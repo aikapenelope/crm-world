@@ -155,7 +155,7 @@ export default function SlaughterBatchDetailPage() {
         {showLotForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Producto Terminado</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_processing.lot"
               apiPath="/api/agri-processing/processing-lots"
               mode="create"

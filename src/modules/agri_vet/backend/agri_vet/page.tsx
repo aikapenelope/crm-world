@@ -163,7 +163,7 @@ export default function AgriVetPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Tratamiento Medicamentoso</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_vet.medication"
               apiPath="/api/agri-vet/medication-records"
               mode="create"

@@ -122,7 +122,7 @@ export default function CreateMaterialOrderPage() {
                 <label className="mb-1 block text-xs font-medium">Proyecto *</label>
                 <select
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
-                  value={form.project_id}
+                  value={form.id}
                   onChange={(e) => set('project_id', e.target.value)}
                   required
                 >

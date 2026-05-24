@@ -165,7 +165,7 @@ export default function AgriFeedPage() {
             <h3 className="text-sm font-semibold mb-4">
               {editing ? `Editar — ${editing.name}` : 'Nueva Fórmula'}
             </h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_feed.formula"
               apiPath="/api/agri-feed/formulas"
               mode={editing ? 'edit' : 'create'}

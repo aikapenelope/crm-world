@@ -218,7 +218,7 @@ export default function BomDetailPage() {
         {showAddLine && isEditable && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Agregar Componente al BOM</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_bom.line"
               apiPath="/api/mfg-bom/bom-lines"
               mode="create"

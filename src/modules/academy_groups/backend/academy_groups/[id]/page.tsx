@@ -223,7 +223,7 @@ export default function AcademyGroupDetailPage() {
             {([
               { id: 'sessions', title: `Sesiones (${sessions.length})` },
               { id: 'students', title: `Alumnos (${enrollments.length})` },
-              { id: 'whatsapp', label: '💬 WhatsApp' },
+              { id: 'whatsapp', title: '💬 WhatsApp' },
             ] as const).map(t => (
               <Button
                 key={t.id}

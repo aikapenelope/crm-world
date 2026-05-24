@@ -193,7 +193,7 @@ export default function MfgPlanningPage() {
         {showEnergyForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Registrar Ventana Energética (patrón CORPOELEC)</h3>
-            <CrudForm entityId="mfg_planning.energy_window" apiPath="/api/mfg-planning/energy-windows" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_planning.energy_window" apiPath="/api/mfg-planning/energy-windows" mode="create"
               fields={[
                 { type: 'text' as const,   id: 'zone',             label: 'Zona / Municipio (ej: Zona Industrial Tejerías)', required: true },
                 { type: 'select' as const, id: 'day_of_week',      label: 'Día de la semana', required: true, options: [{ value: '0', label: 'Lunes' }, { value: '1', label: 'Martes' }, { value: '2', label: 'Miércoles' }, { value: '3', label: 'Jueves' }, { value: '4', label: 'Viernes' }, { value: '5', label: 'Sábado' }, { value: '6', label: 'Domingo' }] },
@@ -211,7 +211,7 @@ export default function MfgPlanningPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Agregar Ítem al MPS</h3>
-            <CrudForm entityId="mfg_planning.schedule" apiPath="/api/mfg-planning/master-schedule" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_planning.schedule" apiPath="/api/mfg-planning/master-schedule" mode="create"
               initial={{ week_start: weekFilter, week_end: weekEnd.toISOString().split('T')[0] }}
               fields={[
                 { type: 'text' as const,   id: 'schedule_number',  label: 'N° MPS (MPS-2026-W23-XXX)', required: true },

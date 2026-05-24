@@ -245,7 +245,7 @@ export default function AgriInputsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.name}` : 'Nuevo Insumo'}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_inputs.item"
               apiPath="/api/agri-inputs/items"
               mode={editing ? 'edit' : 'create'}

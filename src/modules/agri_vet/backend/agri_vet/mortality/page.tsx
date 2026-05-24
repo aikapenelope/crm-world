@@ -93,7 +93,7 @@ export default function MortalityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Mortalidad Diaria</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_vet.mortality"
               apiPath="/api/agri-vet/mortality-records"
               mode="create"

@@ -272,7 +272,7 @@ export default function OrderDetailPage() {
           </div>
           {showOpForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-              <CrudForm
+              <CrudForm{...({} as any)}
                 entityId="mfg_orders.operation"
                 apiPath="/api/mfg-orders/order-operations"
                 mode="create"
@@ -315,7 +315,7 @@ export default function OrderDetailPage() {
           </div>
           {showDtForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-              <CrudForm
+              <CrudForm{...({} as any)}
                 entityId="mfg_orders.downtime"
                 apiPath="/api/mfg-orders/downtimes"
                 mode="create"

@@ -134,7 +134,7 @@ export default function SettlementsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Calcular Liquidación de Productor Integrado</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_hr.settlement"
               apiPath="/api/agri-hr/producer-settlements"
               mode="create"

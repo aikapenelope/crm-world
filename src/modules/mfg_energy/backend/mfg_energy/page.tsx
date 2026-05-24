@@ -177,7 +177,7 @@ export default function MfgEnergyPage() {
         {showOutageForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><ZapOff className="size-4" /> Registrar Corte Eléctrico</h3>
-            <CrudForm entityId="mfg_energy.outage" apiPath="/api/mfg-energy/power-outages" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_energy.outage" apiPath="/api/mfg-energy/power-outages" mode="create"
               initial={{ started_at: new Date().toISOString().slice(0, 16) }}
               fields={[
                 { type: 'select' as const, id: 'outage_type', label: 'Tipo de corte', required: true, options: [
@@ -203,7 +203,7 @@ export default function MfgEnergyPage() {
         {showConsumForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Zap className="size-4" /> Registrar Consumo Eléctrico</h3>
-            <CrudForm entityId="mfg_energy.consumption" apiPath="/api/mfg-energy/energy-consumption" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_energy.consumption" apiPath="/api/mfg-energy/energy-consumption" mode="create"
               initial={{ record_date: new Date().toISOString().split('T')[0], shift_type: 'morning', energy_source: 'grid' }}
               fields={[
                 { type: 'date' as const,   id: 'record_date',           label: 'Fecha', required: true },

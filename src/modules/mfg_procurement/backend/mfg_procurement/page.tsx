@@ -160,7 +160,7 @@ export default function MfgProcurementPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Ship className="size-4" /> Crear Orden de Compra</h3>
-            <CrudForm entityId="mfg_procurement.po" apiPath="/api/mfg-procurement/purchase-orders" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_procurement.po" apiPath="/api/mfg-procurement/purchase-orders" mode="create"
               fields={[
                 { type: 'text' as const,   id: 'po_number',          label: 'Número OC (PO-IMP-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'supplier_id',        label: 'Proveedor', required: true, options: supplierOptions },

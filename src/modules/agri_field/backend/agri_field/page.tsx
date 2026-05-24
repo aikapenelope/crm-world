@@ -104,7 +104,7 @@ export default function AgriFieldPage() {
         {showPlotForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Parcela Agrícola</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_field.plot"
               apiPath="/api/agri-field/field-plots"
               mode="create"
@@ -128,7 +128,7 @@ export default function AgriFieldPage() {
         {showCycleForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Ciclo de Cultivo</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_field.cycle"
               apiPath="/api/agri-field/crop-cycles"
               mode="create"

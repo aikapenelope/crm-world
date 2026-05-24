@@ -249,7 +249,7 @@ export default function FlockDetailPage() {
         {showForm && flock.status === 'active' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registro Semana {nextWeek}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_units.flock_weekly_record"
               mode="create"
               initial={{ week_number: nextWeek }}

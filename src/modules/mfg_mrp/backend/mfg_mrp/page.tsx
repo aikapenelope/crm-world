@@ -199,7 +199,7 @@ export default function MfgMrpPage() {
         {showPlanForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Crear Plan de Producción</h3>
-            <CrudForm entityId="mfg_mrp.plan" apiPath="/api/mfg-mrp/production-plans" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_mrp.plan" apiPath="/api/mfg-mrp/production-plans" mode="create"
               fields={[
                 { type: 'text' as const,  id: 'plan_number',  label: 'Número de Plan (PLAN-2026-XX)', required: true },
                 { type: 'date' as const,  id: 'period_start', label: 'Inicio del período', required: true },

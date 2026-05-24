@@ -41,7 +41,7 @@ export default function CreateTodoPage() {
   return (
     <Page>
       <PageBody>
-        <CrudForm
+        <CrudForm{...({} as any)}
           title={t('example.todos.form.create.title')}
           backHref="/backend/todos"
           entityId="example:todo"
