@@ -41,8 +41,8 @@ export type LiquidacionProducerData = {
 }
 
 const s = StyleSheet.create({
-  kpiGrid: { flexDirection: 'row', gap: 6, marginBottom: (SPACING as any)[3] },
-  kpiCard: { flex: 1, padding: (SPACING as any)[3], borderRadius: 4, borderWidth: 0.5 },
+  kpiGrid: { flexDirection: 'row', gap: 6, marginBottom: SPACING.md },
+  kpiCard: { flex: 1, padding: SPACING.md, borderRadius: 4, borderWidth: 0.5 },
   kpiLabel: { fontSize: FONT_SIZES.xs, color: COLORS.neutral, marginBottom: 2 },
   kpiValue: { fontSize: FONT_SIZES.lg, fontFamily: FONTS.bold },
   payRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4, paddingHorizontal: 6, borderBottomWidth: 0.3, borderBottomColor: COLORS.gray200 },
@@ -79,10 +79,10 @@ export function LiquidacionProducerPdf({ data: d }: { data: LiquidacionProducerD
           color={STATUS_COLORS[d.status] ?? COLORS.neutral}
         />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING.md }}>
           {/* Identificación */}
           <Section title="Datos del Productor y Ciclo">
-            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
+            <View style={{ flexDirection: 'row', gap: SPACING.md }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Productor" value={d.producer_name} />
                 <DetailRow label="Granja" value={d.farm_name ?? '—'} />
@@ -153,12 +153,12 @@ export function LiquidacionProducerPdf({ data: d }: { data: LiquidacionProducerD
               <Text style={s.totalValue}>USD {d.total_payment_usd.toLocaleString('es-VE', { minimumFractionDigits: 2 })}</Text>
             </View>
             {d.payment_date && (
-              <View style={{ marginTop: (SPACING as any)[2] }}>
+              <View style={{ marginTop: SPACING.sm }}>
                 <DetailRow label="Fecha de pago" value={fmtDate(d.payment_date)} />
               </View>
             )}
             {d.notes && (
-              <View style={{ marginTop: (SPACING as any)[2], padding: (SPACING as any)[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
+              <View style={{ marginTop: SPACING.sm, padding: SPACING.sm, backgroundColor: COLORS.gray50, borderRadius: 3 }}>
                 <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.neutral }}>{d.notes}</Text>
               </View>
             )}
