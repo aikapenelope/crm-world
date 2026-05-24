@@ -272,11 +272,8 @@ export default function OrderDetailPage() {
           </div>
           {showOpForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-              <CrudForm{...({} as any)}
-                entityId="mfg_orders.operation"
-                apiPath="/api/mfg-orders/order-operations"
-                mode="create"
-                initial={{ order_id: params.id, operation_number: operations.length + 1 }}
+              <CrudForm
+                initialValues={{ order_id: params.id, operation_number: operations.length + 1 }}
                 fields={[
                   { type: 'number' as const, id: 'operation_number',     label: 'N° de secuencia', required: true },
                   { type: 'text' as const,   id: 'operation_name',       label: 'Nombre de la operación', required: true },
@@ -292,6 +289,7 @@ export default function OrderDetailPage() {
                   setOpForm(false)
                   load()
                 }}
+                cancelHref={`/backend/mfg_orders/${params.id}`}
               />
             </div>
           )}
@@ -315,11 +313,8 @@ export default function OrderDetailPage() {
           </div>
           {showDtForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-              <CrudForm{...({} as any)}
-                entityId="mfg_orders.downtime"
-                apiPath="/api/mfg-orders/downtimes"
-                mode="create"
-                initial={{ order_id: params.id, started_at: new Date().toISOString().slice(0, 16) }}
+              <CrudForm
+                initialValues={{ order_id: params.id, started_at: new Date().toISOString().slice(0, 16), cause_category: '' }}
                 fields={[
                   { type: 'select' as const, id: 'cause_category', label: 'Categoría del paro', required: true,
                     options: [
@@ -345,6 +340,7 @@ export default function OrderDetailPage() {
                   setDtForm(false)
                   load()
                 }}
+                cancelHref={`/backend/mfg_orders/${params.id}`}
               />
             </div>
           )}

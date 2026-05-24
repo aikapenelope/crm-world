@@ -218,11 +218,8 @@ export default function BomDetailPage() {
         {showAddLine && isEditable && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Agregar Componente al BOM</h3>
-            <CrudForm{...({} as any)}
-              entityId="mfg_bom.line"
-              apiPath="/api/mfg-bom/bom-lines"
-              mode="create"
-              initial={{ bom_id: params.id, line_number: lines.length + 1 }}
+            <CrudForm
+              initialValues={{ bom_id: params.id, line_number: lines.length + 1 }}
               fields={[
                 { type: 'text' as const,   id: 'component_code',   label: 'Código del Componente', required: true },
                 { type: 'text' as const,   id: 'component_name',   label: 'Nombre del Componente', required: true },
@@ -253,6 +250,7 @@ export default function BomDetailPage() {
                 setAddLine(false)
                 load()
               }}
+              cancelHref={`/backend/mfg_bom/${params.id}`}
             />
           </div>
         )}

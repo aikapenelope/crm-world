@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -152,10 +153,7 @@ export default function MfgBomPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Bill of Materials</h3>
-            <CrudForm{...({} as any)}
-              entityId="mfg_bom.header"
-              apiPath="/api/mfg-bom/bom-headers"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'product_code',       label: 'Código de Producto', required: true },
                 { type: 'text' as const,   id: 'product_name',       label: 'Nombre del Producto', required: true },
@@ -175,7 +173,9 @@ export default function MfgBomPage() {
                 { id: 'output',   title: 'Producción',  fields: ['base_quantity', 'base_uom', 'expected_yield_pct'] },
                 { id: 'meta',     title: 'Versión',     fields: ['version', 'notes'] },
               ]}
-              onSuccess={() => {
+              cancelHref="/backend/mfg_bom"
+              onSubmit={async (values) => {
+                await createCrud('mfg-bom/bom-headers', values)
                 flash('BOM creado — ahora agrega los componentes en el detalle', 'success')
                 setShowForm(false)
                 load()

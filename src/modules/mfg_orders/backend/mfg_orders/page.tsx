@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -181,10 +182,7 @@ export default function MfgOrdersPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Orden de Producción</h3>
-            <CrudForm{...({} as any)}
-              entityId="mfg_orders.production_order"
-              apiPath="/api/mfg-orders/production-orders"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'order_number',     label: 'Número de Orden (PO-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'bom_id',           label: 'BOM / Fórmula del Producto', required: true, options: bomOptions },
@@ -203,7 +201,9 @@ export default function MfgOrdersPage() {
                 { id: 'qty',       title: 'Producción',  fields: ['planned_quantity', 'uom', 'work_center_id'] },
                 { id: 'schedule',  title: 'Cronograma',  fields: ['scheduled_start', 'scheduled_end', 'planned_cost_usd', 'notes'] },
               ]}
-              onSuccess={() => {
+              cancelHref="/backend/mfg_orders"
+              onSubmit={async (values) => {
+                await createCrud('mfg-orders/production-orders', values)
                 flash('Orden de producción creada', 'success')
                 setShowForm(false)
                 load()
