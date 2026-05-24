@@ -28,7 +28,22 @@ export async function GET(request: Request, ctx: any) {
     .executeTakeFirst()
 
   if (!settlement) return Response.json({ error: 'Settlement not found' }, { status: 404 })
-  const s = settlement as any
+
+  // Kysely selectAll() — fields used to build the PDF
+  type SettlementRow = {
+    flock_id: string; settlement_number: string | null
+    cycle_start_date: string; cycle_end_date: string
+    initial_birds: number | string; final_birds: number | string
+    actual_mortality_pct: string; actual_fca: string; target_fca: string
+    actual_avg_weight_kg: string; target_weight_kg: string
+    price_per_kg_usd: string; base_payment_usd: string
+    fca_bonus_usd: string | null; weight_bonus_usd: string | null
+    fca_penalty_usd: string | null; total_payment_usd: string
+    status: string; payment_date: string | null; notes: string | null
+  }
+  const s = settlement as SettlementRow
+
+  type FlockRow = { flock_number: string | null; farm_name: string | null; producer_name: string | null }
 
   // Load flock and producer info
   const flock = await kysely
@@ -36,17 +51,16 @@ export async function GET(request: Request, ctx: any) {
     .leftJoin('agri_farm_units as u', 'u.id', 'f.farm_unit_id')
     .select(['f.flock_number', 'u.name as farm_name', 'u.owner_name as producer_name'])
     .where('f.id', '=', s.flock_id)
-    .executeTakeFirst()
+    .executeTakeFirst() as FlockRow | undefined
 
   const org = await loadOrgBranding(kysely, scope)
-  const f = flock as any
 
   const data: LiquidacionProducerData = {
     org,
     settlement_number: s.settlement_number ?? `LIQ-${settlementId.slice(-6).toUpperCase()}`,
-    flock_number: f?.flock_number ?? 'N/D',
-    producer_name: f?.producer_name ?? 'Productor',
-    farm_name: f?.farm_name ?? null,
+    flock_number: flock?.flock_number ?? 'N/D',
+    producer_name: flock?.producer_name ?? 'Productor',
+    farm_name: flock?.farm_name ?? null,
     cycle_start_date: s.cycle_start_date,
     cycle_end_date: s.cycle_end_date,
     initial_birds: Number(s.initial_birds ?? 0),
@@ -68,8 +82,9 @@ export async function GET(request: Request, ctx: any) {
     id: settlementId,
   }
 
+  // @react-pdf/renderer renderToStream returns a non-standard stream — Response cast is required
   const stream = await renderToStream(React.createElement(LiquidacionProducerPdf, { data }) as any)
-  return new Response(stream as any, {
+  return new Response(stream as unknown as BodyInit, {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `inline; filename="liquidacion-${data.flock_number}.pdf"`,

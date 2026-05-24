@@ -55,7 +55,16 @@ export default async function handler(payload: any, ctx: any) {
     return { skipped: true }
   }
 
-  const f = flock as any
+  type FlockRecord = {
+    farm_unit_id: string | null; initial_count: number | string
+    start_date: string; actual_end_date: string | null
+  }
+  const f = flock as FlockRecord
+
+  type FarmUnitRecord = {
+    id: string; name: string; ownership_type: string
+    owner_producer_id: string | null; notes: string | null
+  }
 
   // Load the farm unit to check if it belongs to an integrated producer
   const farmUnit = f.farm_unit_id ? await kysely
@@ -63,14 +72,14 @@ export default async function handler(payload: any, ctx: any) {
     .select(['id', 'name', 'ownership_type', 'owner_producer_id', 'notes'])
     .where('id', '=', f.farm_unit_id)
     .where('tenant_id', '=', tenantId)
-    .executeTakeFirst() : null
+    .executeTakeFirst() as FarmUnitRecord | undefined : null
 
-  if (!farmUnit || (farmUnit as any).ownership_type !== 'integrated') {
+  if (!farmUnit || farmUnit.ownership_type !== 'integrated') {
     console.log(`[agri_hr.on-flock-completed] Farm unit is not integrated — no settlement needed`)
     return { skipped: true, reason: 'not_integrated' }
   }
 
-  const fu = farmUnit as any
+  const fu = farmUnit
   if (!fu.owner_producer_id) {
     console.log(`[agri_hr.on-flock-completed] Integrated farm unit has no owner_producer_id — skipping`)
     return { skipped: true, reason: 'no_producer_id' }
@@ -86,7 +95,12 @@ export default async function handler(payload: any, ctx: any) {
     .limit(1)
     .executeTakeFirst()
 
-  const lw = lastWeekly as any
+  type WeeklyRecord = {
+    live_count: number | string | null
+    fca_accumulated: number | string | null
+    avg_body_weight_g: number | string | null
+  }
+  const lw = lastWeekly as WeeklyRecord | undefined
 
   if (!lw) {
     console.log(`[agri_hr.on-flock-completed] No weekly records found for flock ${flockId} — cannot calculate settlement`)

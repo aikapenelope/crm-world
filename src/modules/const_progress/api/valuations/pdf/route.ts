@@ -29,29 +29,46 @@ export async function GET(request: Request, ctx: any) {
     .executeTakeFirst()
 
   if (!valuation) return Response.json({ error: 'Valuation not found' }, { status: 404 })
-  const v = valuation as any
+
+  // Kysely selectAll() — fields used to build the PDF
+  type ValuationRow = {
+    id: string; project_id: string; valuation_number: string
+    period_from: string; period_to: string; status: string
+    invoice_number: string | null; approved_by: string | null
+    approved_at: string | null; submitted_at: string | null
+    notes: string | null; currency: string | null
+    total_contract: string; previous_billed: string; current_period: string
+    retention_amount: string; advance_deduction: string; net_payable: string
+    exchange_rate: string | null; amount_ves: string | null
+  }
+  const v = valuation as ValuationRow
+
+  type ProjectRow = { name: string | null; code: string | null; client_name: string | null }
+  type LineRow = {
+    item_number: string; item_name: string; unit: string | null
+    contracted_quantity: string; unit_price: string
+    current_quantity: string; current_amount: string; accumulated_percent: string
+  }
 
   // Load related data in parallel
   const [project, lines, org] = await Promise.all([
     kysely.selectFrom('const_projects')
       .select(['name', 'code', 'client_name'])
       .where('id', '=', v.project_id)
-      .executeTakeFirst(),
+      .executeTakeFirst() as Promise<ProjectRow | undefined>,
     kysely.selectFrom('const_valuation_lines')
       .selectAll()
       .where('valuation_id', '=', id)
       .orderBy('item_number', 'asc')
-      .execute(),
+      .execute() as Promise<LineRow[]>,
     loadOrgBranding(kysely, scope),
   ])
 
-  const p = project as any
-
   const data: ValuacionPDFData = {
     org,
-    projectName: p?.name ?? 'Proyecto',
-    projectCode: p?.code ?? '',
-    clientName: p?.client_name ?? '',
+    projectName: project?.name ?? 'Proyecto',
+    projectCode: project?.code ?? '',
+    clientName: project?.client_name ?? '',
     valuationNumber: v.valuation_number,
     periodFrom: v.period_from,
     periodTo: v.period_to,
@@ -70,7 +87,7 @@ export async function GET(request: Request, ctx: any) {
     netPayable: v.net_payable,
     exchangeRate: v.exchange_rate ?? null,
     amountVes: v.amount_ves ?? null,
-    lines: (lines as any[]).map((l: any) => ({
+    lines: lines.map((l) => ({
       item_number: l.item_number,
       item_name: l.item_name,
       unit: l.unit ?? null,

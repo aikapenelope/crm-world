@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -134,10 +135,7 @@ export default function SettlementsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Calcular Liquidación de Productor Integrado</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_hr.settlement"
-              apiPath="/api/agri-hr/producer-settlements"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'select' as const, id: 'flock_id',             label: 'Lote de Aves',            required: true, options: flockOptions },
                 { type: 'select' as const, id: 'farm_unit_id',         label: 'Galpón (Productor)',       required: true, options: unitOptions },
@@ -165,7 +163,13 @@ export default function SettlementsPage() {
                 { id: 'contract', title: 'Contrato',      fields: ['target_fca', 'target_weight_kg', 'price_per_kg_usd'] },
                 { id: 'payment',  title: 'Liquidación',   fields: ['base_payment_usd', 'fca_bonus_usd', 'weight_bonus_usd', 'fca_penalty_usd', 'total_payment_usd', 'notes'] },
               ]}
-              onSuccess={() => { flash('Liquidación calculada', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_hr/settlements"
+              onSubmit={async (values) => {
+                await createCrud('agri-hr/producer-settlements', values)
+                flash('Liquidación calculada', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}

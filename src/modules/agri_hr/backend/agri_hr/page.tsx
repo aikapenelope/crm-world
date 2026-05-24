@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud, updateCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -114,19 +115,28 @@ export default function AgriHrPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.first_name} ${editing.last_name}` : 'Nuevo Personal'}</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_hr.employee"
-              apiPath="/api/agri-hr/employees"
-              mode={editing ? 'edit' : 'create'}
-              initial={editing ?? undefined}
+            <CrudForm
               fields={employeeFormFields}
+              initialValues={editing ?? undefined}
               groups={[
                 { id: 'personal',  title: 'Datos Personales', fields: ['first_name', 'last_name', 'cedula', 'hire_date'] },
                 { id: 'job',       title: 'Cargo y Tipo',     fields: ['employee_type', 'department', 'position'] },
                 { id: 'pay',       title: 'Remuneración',     fields: ['salary_usd', 'base_jornal_usd', 'base_destajo_usd'] },
                 { id: 'bank',      title: 'Datos Bancarios',  fields: ['bank_name', 'bank_account'] },
               ]}
-              onSuccess={() => { flash(editing ? 'Personal actualizado' : 'Personal registrado', 'success'); setShowForm(false); setEditing(null); load() }}
+              cancelHref="/backend/agri_hr"
+              onSubmit={async (values) => {
+                if (editing) {
+                  await updateCrud('agri-hr/employees', { ...values, id: editing.id })
+                  flash('Personal actualizado', 'success')
+                } else {
+                  await createCrud('agri-hr/employees', values)
+                  flash('Personal registrado', 'success')
+                }
+                setShowForm(false)
+                setEditing(null)
+                load()
+              }}
             />
           </div>
         )}
