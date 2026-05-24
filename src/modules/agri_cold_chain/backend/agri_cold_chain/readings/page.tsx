@@ -286,7 +286,7 @@ export default function TemperatureReadingsPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin lecturas en este período',
+            label: 'Sin lecturas en este período',
             description: selectedUnit?.sensor_id
               ? 'El sensor aún no ha enviado lecturas en este período.'
               : 'Esta unidad no tiene sensor IoT. Usa "Ingresar manual" para registrar lecturas.',

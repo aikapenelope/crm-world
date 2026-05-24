@@ -24,7 +24,7 @@ export default function CreateTaxBookEntryPage() {
       {
         id: 'document',
         column: 1,
-        title: 'Datos del documento',
+        label: 'Datos del documento',
         fields: [
           {
             id: 'book_type', type: 'select', label: 'Tipo de libro', required: true,
@@ -51,7 +51,7 @@ export default function CreateTaxBookEntryPage() {
       {
         id: 'counterpart',
         column: 1,
-        title: 'Contraparte',
+        label: 'Contraparte',
         fields: [
           { id: 'counterpart_rif', type: 'text', label: 'RIF', required: true, placeholder: 'J-12345678-9' },
           { id: 'counterpart_name', type: 'text', label: 'Razón Social', required: true, placeholder: 'Nombre de la empresa' },
@@ -60,7 +60,7 @@ export default function CreateTaxBookEntryPage() {
       {
         id: 'amounts',
         column: 2,
-        title: 'Montos',
+        label: 'Montos',
         fields: [
           { id: 'taxable_base', type: 'text', label: 'Base imponible', required: true, placeholder: '1000.00' },
           {
@@ -81,7 +81,7 @@ export default function CreateTaxBookEntryPage() {
       {
         id: 'payment',
         column: 2,
-        title: 'Pago y moneda',
+        label: 'Pago y moneda',
         fields: [
           {
             id: 'currency', type: 'select', label: 'Moneda', defaultValue: 'USD',

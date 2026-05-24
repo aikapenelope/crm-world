@@ -23,7 +23,7 @@ export default function CreateWithholdingPage() {
       {
         id: 'withholding',
         column: 1,
-        title: 'Datos de la retención',
+        label: 'Datos de la retención',
         fields: [
           {
             id: 'type', type: 'select', label: 'Tipo de retención', required: true,
@@ -57,7 +57,7 @@ export default function CreateWithholdingPage() {
       {
         id: 'supplier',
         column: 1,
-        title: 'Datos del proveedor',
+        label: 'Datos del proveedor',
         fields: [
           { id: 'supplier_rif', type: 'text', label: 'RIF del proveedor', required: true, placeholder: 'J-12345678-9' },
           { id: 'supplier_name', type: 'text', label: 'Razón social', required: true, placeholder: 'Nombre del proveedor' },
@@ -66,7 +66,7 @@ export default function CreateWithholdingPage() {
       {
         id: 'invoice',
         column: 2,
-        title: 'Datos de la factura',
+        label: 'Datos de la factura',
         fields: [
           { id: 'invoice_number', type: 'text', label: 'Número de factura', required: true, placeholder: '00001234' },
           { id: 'invoice_date', type: 'text', label: 'Fecha de factura', required: true, defaultValue: today, placeholder: 'YYYY-MM-DD' },
@@ -77,7 +77,7 @@ export default function CreateWithholdingPage() {
       {
         id: 'result',
         column: 2,
-        title: 'Resultado',
+        label: 'Resultado',
         fields: [
           { id: 'withholding_amount', type: 'text', label: 'Monto retenido (calculado)', required: true, placeholder: '120.00' },
           { id: 'voucher_number', type: 'text', label: 'Nro. comprobante de retención', placeholder: 'Se genera al aplicar' },

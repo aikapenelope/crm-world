@@ -171,7 +171,7 @@ export default function MfgFloorPage() {
         <div className="mb-6">
           <h3 className="text-sm font-semibold mb-3">Órdenes Activas en Planta ({activeOrders.length})</h3>
           <DataTable entityId="mfg_floor.active_order" extensionTableId="mfg-floor-active-orders" data={activeOrders} columns={orderCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin órdenes en proceso', description: 'No hay órdenes de producción activas en este momento.' }} />
+            emptyState={{ label: 'Sin órdenes en proceso', description: 'No hay órdenes de producción activas en este momento.' }} />
         </div>
 
         {/* Recent shift reports */}
@@ -179,7 +179,7 @@ export default function MfgFloorPage() {
           <div>
             <h3 className="text-sm font-semibold mb-3">Últimos Reportes de Turno</h3>
             <DataTable entityId="mfg_floor.shift_report" extensionTableId="mfg-floor-shifts" data={shiftReports} columns={shiftCols} isLoading={isLoading}
-              emptyState={{ title: 'Sin reportes de turno' }} />
+              emptyState={{ label: 'Sin reportes de turno' }} />
           </div>
         )}
       </PageBody>

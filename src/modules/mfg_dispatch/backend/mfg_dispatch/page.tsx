@@ -150,7 +150,7 @@ export default function MfgDispatchPage() {
         )}
 
         <DataTable entityId="mfg_dispatch.sale_order" extensionTableId="mfg-dispatch-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState={{ title: 'Sin pedidos industriales', description: 'Registra el primer pedido de producto terminado.' }}
+          emptyState={{ label: 'Sin pedidos industriales', description: 'Registra el primer pedido de producto terminado.' }}
           stickyActionsColumn />
       </PageBody>
     </Page>

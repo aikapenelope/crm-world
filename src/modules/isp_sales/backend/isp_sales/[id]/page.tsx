@@ -65,25 +65,25 @@ export default function LeadDetailPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'contact', title: 'Datos del prospecto',
+      id: 'contact', label: 'Datos del prospecto',
       fields: [
-        { id: 'name', title: 'Nombre', type: 'text', required: true },
-        { id: 'phone', title: 'Teléfono / WhatsApp', type: 'text', required: true },
-        { id: 'email', title: 'Email', type: 'text' },
+        { id: 'name', label: 'Nombre', type: 'text', required: true },
+        { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true },
+        { id: 'email', label: 'Email', type: 'text' },
       ],
     },
     {
-      id: 'location', title: 'Ubicación',
+      id: 'location', label: 'Ubicación',
       fields: [
-        { id: 'address', title: 'Dirección', type: 'text', required: true },
-        { id: 'city', title: 'Ciudad', type: 'text', required: true },
+        { id: 'address', label: 'Dirección', type: 'text', required: true },
+        { id: 'city', label: 'Ciudad', type: 'text', required: true },
       ],
     },
     {
-      id: 'pipeline', title: 'Pipeline',
+      id: 'pipeline', label: 'Pipeline',
       fields: [
         {
-          id: 'status', title: 'Estado', type: 'select', required: true,
+          id: 'status', label: 'Estado', type: 'select', required: true,
           options: [
             { value: 'new', label: 'Nuevo' }, { value: 'coverage_check', label: 'Verificando cobertura' },
             { value: 'quoted', label: 'Cotización enviada' }, { value: 'scheduled', label: 'Instalación agendada' },
@@ -91,15 +91,15 @@ export default function LeadDetailPage() {
           ],
         },
         {
-          id: 'lost_reason', title: 'Motivo de pérdida', type: 'select',
+          id: 'lost_reason', label: 'Motivo de pérdida', type: 'select',
           options: [
             { value: 'price', label: 'Precio' }, { value: 'no_coverage', label: 'Sin cobertura' },
             { value: 'chose_competitor', label: 'Eligió competencia' },
             { value: 'not_responsive', label: 'Sin respuesta' }, { value: 'other', label: 'Otro' },
           ],
         },
-        { id: 'installation_date', title: 'Fecha de instalación', type: 'date' },
-        { id: 'notes', title: 'Notas', type: 'textarea' },
+        { id: 'installation_date', label: 'Fecha de instalación', type: 'date' },
+        { id: 'notes', label: 'Notas', type: 'textarea' },
       ],
     },
   ]

@@ -112,7 +112,7 @@ export default function IspNetworkPage() {
         <RowActions items={[
           { id: 'edit', label: 'Editar', onSelect: () => router.push(`/backend/isp-network/${row.original.id}`) },
           {
-            id: 'report_outage', title: 'Reportar avería',
+            id: 'report_outage', label: 'Reportar avería',
             onSelect: () => reportOutage(row.original.id, row.original.name),
           },
         ]} />
@@ -146,7 +146,7 @@ export default function IspNetworkPage() {
           data={nodes}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin nodos', description: 'Registra el primer nodo de tu red.' }}
+          emptyState={{ label: 'Sin nodos', description: 'Registra el primer nodo de tu red.' }}
           stickyActionsColumn
         />
       </PageBody>

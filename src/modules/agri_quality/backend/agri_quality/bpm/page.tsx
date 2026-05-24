@@ -158,7 +158,7 @@ export default function BpmChecklistsPage() {
           data={checklists}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin checklists BPM', description: 'Registra los checklists diarios de Buenas Prácticas de Manufactura.' }}
+          emptyState={{ label: 'Sin checklists BPM', description: 'Registra los checklists diarios de Buenas Prácticas de Manufactura.' }}
         />
       </PageBody>
     </Page>

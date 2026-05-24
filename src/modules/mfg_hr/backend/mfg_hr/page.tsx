@@ -205,11 +205,11 @@ export default function MfgHrPage() {
 
         {activeTab === 'workers' && (
           <DataTable entityId="mfg_hr.worker" extensionTableId="mfg-hr-workers" data={workers} columns={workerCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin operarios registrados', description: 'Registra el personal de planta para gestionar turnos y horas-hombre.' }} />
+            emptyState={{ label: 'Sin operarios registrados', description: 'Registra el personal de planta para gestionar turnos y horas-hombre.' }} />
         )}
         {activeTab === 'bonuses' && (
           <DataTable entityId="mfg_hr.bonus" extensionTableId="mfg-hr-bonuses" data={bonuses} columns={bonusCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin bonos registrados', description: 'Calcula el primer bono de producción para el equipo.' }}
+            emptyState={{ label: 'Sin bonos registrados', description: 'Calcula el primer bono de producción para el equipo.' }}
             stickyActionsColumn />
         )}
       </PageBody>

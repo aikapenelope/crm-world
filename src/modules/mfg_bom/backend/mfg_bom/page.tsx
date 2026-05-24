@@ -192,7 +192,7 @@ export default function MfgBomPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin BOMs registrados',
+            label: 'Sin BOMs registrados',
             description: 'Crea el primer BOM para comenzar a planificar la producción.',
           }}
           stickyActionsColumn

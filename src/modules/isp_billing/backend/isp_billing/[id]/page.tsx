@@ -47,12 +47,12 @@ export default function InvoiceDetailPage() {
 
   const paymentGroups: CrudFormGroup[] = [
     {
-      id: 'payment', title: 'Cobro',
+      id: 'payment', label: 'Cobro',
       fields: [
-        { id: 'payment_date', title: 'Fecha del pago', type: 'date', required: true },
-        { id: 'amount_usd', title: 'Monto (USD)', type: 'text', required: true, placeholder: invoice.balance_usd },
+        { id: 'payment_date', label: 'Fecha del pago', type: 'date', required: true },
+        { id: 'amount_usd', label: 'Monto (USD)', type: 'text', required: true, placeholder: invoice.balance_usd },
         {
-          id: 'payment_method', title: 'Método de pago', type: 'select', required: true,
+          id: 'payment_method', label: 'Método de pago', type: 'select', required: true,
           options: [
             { value: 'zelle', label: 'Zelle' },
             { value: 'pago_movil', label: 'Pago Móvil' },
@@ -63,9 +63,9 @@ export default function InvoiceDetailPage() {
             { value: 'otro', label: 'Otro' },
           ],
         },
-        { id: 'reference_number', title: 'Referencia / confirmación', type: 'text' },
-        { id: 'igtf_applies', title: 'Aplica IGTF 3% (pago en divisas)', type: 'checkbox', defaultValue: false },
-        { id: 'notes', title: 'Notas', type: 'textarea' },
+        { id: 'reference_number', label: 'Referencia / confirmación', type: 'text' },
+        { id: 'igtf_applies', label: 'Aplica IGTF 3% (pago en divisas)', type: 'checkbox', defaultValue: false },
+        { id: 'notes', label: 'Notas', type: 'textarea' },
       ],
     },
   ]

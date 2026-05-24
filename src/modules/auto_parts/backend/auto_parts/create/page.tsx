@@ -13,7 +13,7 @@ export default function CreatePartPage() {
 
   const groups = React.useMemo<CrudFormGroup[]>(() => [
     {
-      id: 'part', column: 1, title: 'Datos del repuesto',
+      id: 'part', column: 1, label: 'Datos del repuesto',
       fields: [
         { id: 'code', type: 'text', label: 'Código', required: true, placeholder: 'FRE-001' },
         { id: 'name', type: 'text', label: 'Nombre', required: true, placeholder: 'Pastillas de freno delanteras' },
@@ -29,7 +29,7 @@ export default function CreatePartPage() {
       ],
     },
     {
-      id: 'pricing', column: 2, title: 'Precios y stock',
+      id: 'pricing', column: 2, label: 'Precios y stock',
       fields: [
         { id: 'cost_price', type: 'text', label: 'Precio de costo', required: true, placeholder: '15.00' },
         { id: 'sell_price', type: 'text', label: 'Precio de venta', required: true, placeholder: '25.00' },

@@ -147,7 +147,7 @@ export default function IspBillingPage() {
           data={invoices}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin facturas', description: 'Usa "Generar mes" para crear las facturas del período actual.' }}
+          emptyState={{ label: 'Sin facturas', description: 'Usa "Generar mes" para crear las facturas del período actual.' }}
           stickyActionsColumn
         />
       </PageBody>

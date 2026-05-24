@@ -225,7 +225,7 @@ export default function AgriProcessingPage() {
           data={batches}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin lotes de beneficio', description: 'Registra el primer lote cuando inicies el beneficio en planta.' }}
+          emptyState={{ label: 'Sin lotes de beneficio', description: 'Registra el primer lote cuando inicies el beneficio en planta.' }}
           stickyActionsColumn
         />
       </PageBody>

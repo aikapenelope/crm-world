@@ -189,7 +189,7 @@ function GeneralTab({ student, studentId, organizationId, tenantId, router }: {
     {
       id: 'personal',
       column: 1,
-      title: 'Datos personales',
+      label: 'Datos personales',
       fields: [
         { id: 'first_name', type: 'text', label: 'Nombre', required: true, defaultValue: student.first_name },
         { id: 'last_name', type: 'text', label: 'Apellido', required: true, defaultValue: student.last_name },
@@ -209,7 +209,7 @@ function GeneralTab({ student, studentId, organizationId, tenantId, router }: {
     {
       id: 'academic',
       column: 2,
-      title: 'Datos académicos',
+      label: 'Datos académicos',
       fields: [
         {
           id: 'grade_level', type: 'select', label: 'Grado', required: true, defaultValue: student.grade_level,
@@ -256,7 +256,7 @@ function GeneralTab({ student, studentId, organizationId, tenantId, router }: {
     {
       id: 'emergency',
       column: 1,
-      title: 'Emergencia y salud',
+      label: 'Emergencia y salud',
       fields: [
         { id: 'emergency_contact_name', type: 'text', label: 'Contacto de emergencia', defaultValue: student.emergency_contact_name },
         { id: 'emergency_contact_phone', type: 'text', label: 'Teléfono de emergencia', defaultValue: student.emergency_contact_phone },
@@ -267,7 +267,7 @@ function GeneralTab({ student, studentId, organizationId, tenantId, router }: {
     {
       id: 'notes_group',
       column: 2,
-      title: 'Notas',
+      label: 'Notas',
       fields: [
         { id: 'notes', type: 'textarea', label: 'Observaciones', defaultValue: student.notes },
       ],

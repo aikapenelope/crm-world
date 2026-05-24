@@ -206,7 +206,7 @@ export default function VaccinationsPage() {
           data={records}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin vacunaciones registradas', description: 'Registra el primer esquema de vacunación.' }}
+          emptyState={{ label: 'Sin vacunaciones registradas', description: 'Registra el primer esquema de vacunación.' }}
           stickyActionsColumn
         />
       </PageBody>

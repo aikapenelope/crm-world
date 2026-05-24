@@ -197,7 +197,7 @@ export default function EquipmentDetailPage() {
               </div>
             )}
             <DataTable entityId="mfg_maintenance.plan" extensionTableId="mfg-maint-plans" data={plans} columns={planCols} isLoading={false}
-              emptyState={{ title: 'Sin planes de mantenimiento', description: 'Agrega el primer plan preventivo para este equipo.' }} />
+              emptyState={{ label: 'Sin planes de mantenimiento', description: 'Agrega el primer plan preventivo para este equipo.' }} />
           </div>
 
           {/* Work orders */}
@@ -223,7 +223,7 @@ export default function EquipmentDetailPage() {
               </div>
             )}
             <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maint-wo-history" data={wos} columns={woCols} isLoading={false}
-              emptyState={{ title: 'Sin órdenes de trabajo' }} stickyActionsColumn />
+              emptyState={{ label: 'Sin órdenes de trabajo' }} stickyActionsColumn />
           </div>
         </div>
       </PageBody>

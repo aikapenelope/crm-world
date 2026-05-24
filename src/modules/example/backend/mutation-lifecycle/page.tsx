@@ -75,7 +75,7 @@ export default function MutationLifecyclePage() {
       const createResponse = await apiCall<{ id: string }>('/api/example/todos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'm1-guard-probe' }),
+        body: JSON.stringify({ label: 'm1-guard-probe' }),
       })
 
       setGuardPayload(createResponse.result)
@@ -132,7 +132,7 @@ export default function MutationLifecyclePage() {
       const createResponse = await apiCall<{ id: string }>('/api/example/todos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'm2-sync-probe' }),
+        body: JSON.stringify({ label: 'm2-sync-probe' }),
       })
       payloads.create = createResponse.result
       const createOk = createResponse.ok && createResponse.status === 201

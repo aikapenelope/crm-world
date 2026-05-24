@@ -13,11 +13,11 @@ export default function CreateCampaignPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'main',
-      title: 'Datos de la campaña',
+      label: 'Datos de la campaña',
       fields: [
-        { id: 'name', title: 'Nombre', type: 'text', required: true, placeholder: 'Promo Navidad 2026' },
+        { id: 'name', label: 'Nombre', type: 'text', required: true, placeholder: 'Promo Navidad 2026' },
         {
-          id: 'type', title: 'Tipo de campaña', type: 'select', defaultValue: 'bonus_points',
+          id: 'type', label: 'Tipo de campaña', type: 'select', defaultValue: 'bonus_points',
           options: [
             { value: 'bonus_points', label: 'Puntos Bonus — otorgar puntos fijos' },
             { value: 'points_multiplier', label: 'Multiplicador — doble o triple puntos' },
@@ -26,7 +26,7 @@ export default function CreateCampaignPage() {
           ],
         },
         {
-          id: 'target_segment', title: 'Segmento objetivo', type: 'select', defaultValue: 'all',
+          id: 'target_segment', label: 'Segmento objetivo', type: 'select', defaultValue: 'all',
           options: [
             { value: 'all', label: 'Todos los miembros' },
             { value: 'tier', label: 'Por nivel VIP' },
@@ -34,18 +34,18 @@ export default function CreateCampaignPage() {
             { value: 'birthday', label: 'Cumpleañeros del mes' },
           ],
         },
-        { id: 'starts_at', title: 'Fecha de inicio', type: 'date', required: true },
-        { id: 'ends_at', title: 'Fecha de fin (opcional)', type: 'date' },
+        { id: 'starts_at', label: 'Fecha de inicio', type: 'date', required: true },
+        { id: 'ends_at', label: 'Fecha de fin (opcional)', type: 'date' },
       ],
     },
     {
       id: 'config',
-      title: 'Configuración de la recompensa (llenar según el tipo)',
+      label: 'Configuración de la recompensa (llenar según el tipo)',
       fields: [
-        { id: 'bonus_points', title: 'Puntos bonus (tipo: bonus_points)', type: 'number', placeholder: '50' },
-        { id: 'multiplier', title: 'Multiplicador (tipo: points_multiplier, ej: 2)', type: 'number', placeholder: '2' },
-        { id: 'discount_percent', title: 'Descuento % (tipo: discount)', type: 'number', placeholder: '10' },
-        { id: 'message_template', title: 'Plantilla mensaje (tipo: whatsapp_blast)', type: 'textarea', placeholder: 'Hola {nombre}! Tienes {puntos} puntos.' },
+        { id: 'bonus_points', label: 'Puntos bonus (tipo: bonus_points)', type: 'number', placeholder: '50' },
+        { id: 'multiplier', label: 'Multiplicador (tipo: points_multiplier, ej: 2)', type: 'number', placeholder: '2' },
+        { id: 'discount_percent', label: 'Descuento % (tipo: discount)', type: 'number', placeholder: '10' },
+        { id: 'message_template', label: 'Plantilla mensaje (tipo: whatsapp_blast)', type: 'textarea', placeholder: 'Hola {nombre}! Tienes {puntos} puntos.' },
       ],
     },
   ]

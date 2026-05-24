@@ -127,7 +127,7 @@ export default function HaccpPlansPage() {
           items={[
             {
               id: 'edit',
-              title: 'Editar PCCs',
+              label: 'Editar PCCs',
               onSelect: () => router.push(`/backend/agri-quality/haccp/${row.original.id}`),
             },
             ...(row.original.status === 'draft'
@@ -201,7 +201,7 @@ export default function HaccpPlansPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin planes HACCP',
+            label: 'Sin planes HACCP',
             description: 'Crea el primer plan HACCP para tu proceso de beneficio. Un plan debe tener sus PCCs configurados antes de activarse.',
           }}
           stickyActionsColumn

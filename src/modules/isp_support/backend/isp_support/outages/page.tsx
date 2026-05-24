@@ -125,7 +125,7 @@ export default function IspOutagesPage() {
           data={outages}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin averías registradas', description: 'Las averías masivas se crean automáticamente cuando se reporta un nodo caído.' }}
+          emptyState={{ label: 'Sin averías registradas', description: 'Las averías masivas se crean automáticamente cuando se reporta un nodo caído.' }}
           stickyActionsColumn
         />
       </PageBody>

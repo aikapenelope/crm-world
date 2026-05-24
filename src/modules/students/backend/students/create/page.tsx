@@ -17,7 +17,7 @@ export default function CreateStudentPage() {
       {
         id: 'personal',
         column: 1,
-        title: 'Datos personales',
+        label: 'Datos personales',
         fields: [
           { id: 'first_name', type: 'text', label: 'Nombre', required: true },
           { id: 'last_name', type: 'text', label: 'Apellido', required: true },
@@ -37,7 +37,7 @@ export default function CreateStudentPage() {
       {
         id: 'academic',
         column: 2,
-        title: 'Datos académicos',
+        label: 'Datos académicos',
         fields: [
           {
             id: 'grade_level', type: 'select', label: 'Grado', required: true,
@@ -75,7 +75,7 @@ export default function CreateStudentPage() {
       {
         id: 'emergency',
         column: 1,
-        title: 'Emergencia y salud',
+        label: 'Emergencia y salud',
         fields: [
           { id: 'emergency_contact_name', type: 'text', label: 'Contacto de emergencia' },
           { id: 'emergency_contact_phone', type: 'text', label: 'Teléfono de emergencia', placeholder: '+58 4XX-XXX-XXXX' },
@@ -86,7 +86,7 @@ export default function CreateStudentPage() {
       {
         id: 'notes_group',
         column: 2,
-        title: 'Notas',
+        label: 'Notas',
         fields: [
           { id: 'notes', type: 'textarea', label: 'Observaciones generales' },
         ],

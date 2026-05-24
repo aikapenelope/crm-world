@@ -209,7 +209,7 @@ export default function MfgQualityPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin no-conformidades',
+            label: 'Sin no-conformidades',
             description: 'Registra una NC cuando detectes una desviación de los estándares de calidad.',
           }}
           stickyActionsColumn

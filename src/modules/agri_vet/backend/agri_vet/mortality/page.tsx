@@ -125,7 +125,7 @@ export default function MortalityPage() {
           data={records}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin registros de mortalidad', description: 'Registra las muertes diarias para calcular la mortalidad acumulada del lote.' }}
+          emptyState={{ label: 'Sin registros de mortalidad', description: 'Registra las muertes diarias para calcular la mortalidad acumulada del lote.' }}
         />
       </PageBody>
     </Page>

@@ -129,7 +129,7 @@ export default function FarmUnitsPage() {
           items={[
             {
               id: 'edit',
-              title: 'Editar',
+              label: 'Editar',
               onSelect: () => { setEditing(row.original); setShowForm(true) },
             },
           ]}
@@ -188,7 +188,7 @@ export default function FarmUnitsPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin unidades productivas',
+            label: 'Sin unidades productivas',
             description: 'Registra tus granjas y galpones para comenzar.',
           }}
           stickyActionsColumn

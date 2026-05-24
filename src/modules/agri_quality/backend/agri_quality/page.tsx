@@ -216,7 +216,7 @@ export default function AgriQualityPage() {
           data={ncs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin no-conformidades', description: 'Las desviaciones de PCCs se crean automáticamente al registrar una medición fuera de límite.' }}
+          emptyState={{ label: 'Sin no-conformidades', description: 'Las desviaciones de PCCs se crean automáticamente al registrar una medición fuera de límite.' }}
           stickyActionsColumn
         />
       </PageBody>

@@ -154,7 +154,7 @@ export default function IspSupportPage() {
           data={tickets}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin tickets', description: 'Crea el primer ticket de soporte.' }}
+          emptyState={{ label: 'Sin tickets', description: 'Crea el primer ticket de soporte.' }}
           stickyActionsColumn
         />
       </PageBody>

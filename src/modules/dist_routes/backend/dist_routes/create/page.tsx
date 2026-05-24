@@ -16,7 +16,7 @@ export default function CreateRoutePage() {
       {
         id: 'route',
         column: 1,
-        title: 'Datos de la ruta',
+        label: 'Datos de la ruta',
         fields: [
           { id: 'name', type: 'text', label: 'Nombre', required: true, placeholder: 'Ej: Ruta Norte - Lunes' },
           { id: 'code', type: 'text', label: 'Código', required: true, placeholder: 'ruta-norte-lun' },

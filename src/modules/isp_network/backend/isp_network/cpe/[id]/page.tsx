@@ -36,37 +36,37 @@ export default function EditCpePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'equip', title: 'Equipo',
+      id: 'equip', label: 'Equipo',
       fields: [
         {
-          id: 'cpe_type', title: 'Tipo', type: 'select', required: true,
+          id: 'cpe_type', label: 'Tipo', type: 'select', required: true,
           options: [
             { value: 'router', label: 'Router' }, { value: 'ont', label: 'ONT (Fibra)' },
             { value: 'antenna', label: 'Antena' }, { value: 'switch', label: 'Switch' },
             { value: 'other', label: 'Otro' },
           ],
         },
-        { id: 'brand', title: 'Marca', type: 'text', required: true },
-        { id: 'model', title: 'Modelo', type: 'text', required: true },
-        { id: 'serial_number', title: 'Número serie', type: 'text', required: true },
-        { id: 'mac_address', title: 'MAC Address', type: 'text' },
+        { id: 'brand', label: 'Marca', type: 'text', required: true },
+        { id: 'model', label: 'Modelo', type: 'text', required: true },
+        { id: 'serial_number', label: 'Número serie', type: 'text', required: true },
+        { id: 'mac_address', label: 'MAC Address', type: 'text' },
       ],
     },
     {
-      id: 'status_group', title: 'Estado',
+      id: 'status_group', label: 'Estado',
       fields: [
         {
-          id: 'status', title: 'Estado', type: 'select', required: true,
+          id: 'status', label: 'Estado', type: 'select', required: true,
           options: [
             { value: 'in_stock', label: 'En bodega' }, { value: 'deployed', label: 'Instalado' },
             { value: 'in_repair', label: 'En reparación' }, { value: 'written_off', label: 'Dado de baja' },
           ],
         },
-        { id: 'purchase_price_usd', title: 'Precio compra (USD)', type: 'text' },
+        { id: 'purchase_price_usd', label: 'Precio compra (USD)', type: 'text' },
       ],
     },
     {
-      id: 'notes', title: 'Notas',
+      id: 'notes', label: 'Notas',
       fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]

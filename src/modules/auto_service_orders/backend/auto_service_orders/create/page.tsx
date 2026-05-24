@@ -25,7 +25,7 @@ export default function CreateServiceOrderPage() {
       {
         id: 'reception',
         column: 1,
-        title: 'Recepción del vehículo',
+        label: 'Recepción del vehículo',
         fields: [
           { id: 'order_number', type: 'text', label: 'Número de Orden', required: true, defaultValue: orderNumber },
           { id: 'vehicle_id', type: 'text', label: 'ID del Vehículo', required: true, placeholder: 'UUID del vehículo registrado' },
@@ -37,7 +37,7 @@ export default function CreateServiceOrderPage() {
       {
         id: 'assignment',
         column: 2,
-        title: 'Asignación',
+        label: 'Asignación',
         fields: [
           { id: 'assigned_technician_id', type: 'text', label: 'Técnico asignado (ID)', placeholder: 'UUID del mecánico' },
           {

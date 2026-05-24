@@ -17,7 +17,7 @@ export default function CreatePropertyPage() {
       {
         id: 'basic',
         column: 1,
-        title: 'Información básica',
+        label: 'Información básica',
         fields: [
           { id: 'title', type: 'text', label: 'Título', required: true, placeholder: 'Ej: Apartamento en Las Mercedes' },
           { id: 'description', type: 'textarea', label: 'Descripción', placeholder: 'Descripción detallada de la propiedad...' },
@@ -53,7 +53,7 @@ export default function CreatePropertyPage() {
       {
         id: 'pricing',
         column: 2,
-        title: 'Precio y comisión',
+        label: 'Precio y comisión',
         fields: [
           { id: 'price', type: 'text', label: 'Precio', required: true, placeholder: '150000' },
           {
@@ -70,7 +70,7 @@ export default function CreatePropertyPage() {
       {
         id: 'specs',
         column: 2,
-        title: 'Características',
+        label: 'Características',
         fields: [
           { id: 'area_m2', type: 'text', label: 'Área (m²)', placeholder: '120' },
           { id: 'bedrooms', type: 'number', label: 'Habitaciones', min: 0, max: 50 },
@@ -81,7 +81,7 @@ export default function CreatePropertyPage() {
       {
         id: 'location',
         column: 1,
-        title: 'Ubicación',
+        label: 'Ubicación',
         fields: [
           { id: 'address_line', type: 'text', label: 'Dirección', placeholder: 'Av. Principal, Edificio Torre Norte' },
           { id: 'city', type: 'text', label: 'Ciudad', required: true, placeholder: 'Caracas' },

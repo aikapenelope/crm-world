@@ -80,7 +80,7 @@ export default function IspPaymentsPage() {
           data={payments}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin cobros', description: 'Los pagos registrados aparecerán aquí.' }}
+          emptyState={{ label: 'Sin cobros', description: 'Los pagos registrados aparecerán aquí.' }}
         />
       </PageBody>
     </Page>

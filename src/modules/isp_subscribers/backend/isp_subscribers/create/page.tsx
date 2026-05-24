@@ -33,54 +33,54 @@ export default function CreateIspSubscriberPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'account', title: 'Cuenta',
+      id: 'account', label: 'Cuenta',
       fields: [
-        { id: 'account_number', title: 'Número de cuenta', type: 'text', required: true, placeholder: 'NETBQ-00001' },
+        { id: 'account_number', label: 'Número de cuenta', type: 'text', required: true, placeholder: 'NETBQ-00001' },
         {
-          id: 'subscriber_type', title: 'Tipo de abonado', type: 'select', required: true,
+          id: 'subscriber_type', label: 'Tipo de abonado', type: 'select', required: true,
           options: [
             { value: 'residential', label: 'Residencial' }, { value: 'pyme', label: 'PYME' },
             { value: 'corporate', label: 'Corporativo' }, { value: 'wholesale', label: 'Mayorista' },
           ],
           defaultValue: 'residential',
         },
-        { id: 'plan_id', title: 'Plan de servicio', type: 'select', options: planOptions },
-        { id: 'monthly_price_usd', title: 'Precio mensual (USD)', type: 'text', required: true, placeholder: '25.00' },
+        { id: 'plan_id', label: 'Plan de servicio', type: 'select', options: planOptions },
+        { id: 'monthly_price_usd', label: 'Precio mensual (USD)', type: 'text', required: true, placeholder: '25.00' },
       ],
     },
     {
-      id: 'location', title: 'Instalación',
+      id: 'location', label: 'Instalación',
       fields: [
-        { id: 'node_id', title: 'Nodo de red', type: 'select', options: nodeOptions },
-        { id: 'installation_address', title: 'Dirección de instalación', type: 'text', required: true },
-        { id: 'installation_city', title: 'Ciudad', type: 'text', required: true },
-        { id: 'installation_state', title: 'Estado/Municipio', type: 'text' },
-        { id: 'reference_description', title: 'Referencia de ubicación', type: 'textarea', placeholder: 'Casa blanca, portón azul, frente al semáforo...' },
+        { id: 'node_id', label: 'Nodo de red', type: 'select', options: nodeOptions },
+        { id: 'installation_address', label: 'Dirección de instalación', type: 'text', required: true },
+        { id: 'installation_city', label: 'Ciudad', type: 'text', required: true },
+        { id: 'installation_state', label: 'Estado/Municipio', type: 'text' },
+        { id: 'reference_description', label: 'Referencia de ubicación', type: 'textarea', placeholder: 'Casa blanca, portón azul, frente al semáforo...' },
       ],
     },
     {
-      id: 'network', title: 'Configuración de red',
+      id: 'network', label: 'Configuración de red',
       fields: [
-        { id: 'ip_address', title: 'IP asignada', type: 'text', placeholder: '192.168.1.50' },
-        { id: 'pppoe_username', title: 'Usuario PPPoE/Radius', type: 'text' },
+        { id: 'ip_address', label: 'IP asignada', type: 'text', placeholder: '192.168.1.50' },
+        { id: 'pppoe_username', label: 'Usuario PPPoE/Radius', type: 'text' },
       ],
     },
     {
-      id: 'billing', title: 'Cobranza',
+      id: 'billing', label: 'Cobranza',
       fields: [
-        { id: 'billing_cycle_day', title: 'Día de vencimiento (1-28)', type: 'number', defaultValue: 1 },
-        { id: 'cut_policy_days', title: 'Días de gracia antes del corte', type: 'number', defaultValue: 7 },
+        { id: 'billing_cycle_day', label: 'Día de vencimiento (1-28)', type: 'number', defaultValue: 1 },
+        { id: 'cut_policy_days', label: 'Días de gracia antes del corte', type: 'number', defaultValue: 7 },
       ],
     },
     {
-      id: 'contact', title: 'Contacto técnico',
+      id: 'contact', label: 'Contacto técnico',
       fields: [
-        { id: 'technical_contact_name', title: 'Nombre del contacto técnico', type: 'text' },
-        { id: 'technical_contact_phone', title: 'Teléfono contacto técnico', type: 'text' },
+        { id: 'technical_contact_name', label: 'Nombre del contacto técnico', type: 'text' },
+        { id: 'technical_contact_phone', label: 'Teléfono contacto técnico', type: 'text' },
       ],
     },
     {
-      id: 'notes', title: 'Notas',
+      id: 'notes', label: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

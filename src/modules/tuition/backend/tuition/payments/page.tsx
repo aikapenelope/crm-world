@@ -85,7 +85,7 @@ export default function RegisterPaymentPage() {
       {
         id: 'payment',
         column: 1,
-        title: 'Datos del pago',
+        label: 'Datos del pago',
         fields: [
           { id: 'amount', type: 'text', label: 'Monto pagado', required: true, placeholder: '150.00', defaultValue: selectedChargeData?.amount ?? '' },
           {
@@ -116,7 +116,7 @@ export default function RegisterPaymentPage() {
       {
         id: 'exchange',
         column: 2,
-        title: 'Tasa de cambio (si paga en VES)',
+        label: 'Tasa de cambio (si paga en VES)',
         fields: [
           { id: 'exchange_rate', type: 'text', label: 'Tasa USD/VES', placeholder: 'Ej: 36.50 (se llena automáticamente)' },
           { id: 'notes', type: 'textarea', label: 'Notas', placeholder: 'Observaciones del pago...' },

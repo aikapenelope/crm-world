@@ -16,7 +16,7 @@ export default function CreatePriceListPage() {
       {
         id: 'info',
         column: 1,
-        title: 'Información de la lista',
+        label: 'Información de la lista',
         fields: [
           { id: 'name', type: 'text', label: 'Nombre', required: true, placeholder: 'Ej: Mayorista, Detallista, Farmacias' },
           { id: 'code', type: 'text', label: 'Código (slug)', required: true, placeholder: 'mayorista' },
@@ -43,7 +43,7 @@ export default function CreatePriceListPage() {
       {
         id: 'validity',
         column: 2,
-        title: 'Vigencia (opcional)',
+        label: 'Vigencia (opcional)',
         fields: [
           { id: 'valid_from', type: 'text', label: 'Válida desde', placeholder: 'YYYY-MM-DD (dejar vacío = sin inicio)' },
           { id: 'valid_until', type: 'text', label: 'Válida hasta', placeholder: 'YYYY-MM-DD (dejar vacío = permanente)' },

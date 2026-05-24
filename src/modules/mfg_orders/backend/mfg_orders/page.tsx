@@ -220,7 +220,7 @@ export default function MfgOrdersPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin órdenes de producción',
+            label: 'Sin órdenes de producción',
             description: 'Crea la primera orden para iniciar la planificación de manufactura.',
           }}
           stickyActionsColumn

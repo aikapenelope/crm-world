@@ -13,12 +13,12 @@ export default function CreateBuildingPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'identity',
-      title: 'Datos del edificio',
+      label: 'Datos del edificio',
       fields: [
-        { id: 'name', title: 'Nombre', type: 'text', required: true, placeholder: 'Residencias La Castellana' },
-        { id: 'code', title: 'Código', type: 'text', required: true, placeholder: 'RLC-01' },
+        { id: 'name', label: 'Nombre', type: 'text', required: true, placeholder: 'Residencias La Castellana' },
+        { id: 'code', label: 'Código', type: 'text', required: true, placeholder: 'RLC-01' },
         {
-          id: 'building_type', title: 'Tipo', type: 'select', defaultValue: 'residential',
+          id: 'building_type', label: 'Tipo', type: 'select', defaultValue: 'residential',
           options: [
             { value: 'residential', label: 'Residencial' },
             { value: 'commercial', label: 'Comercial' },
@@ -29,28 +29,28 @@ export default function CreateBuildingPage() {
     },
     {
       id: 'location',
-      title: 'Ubicación',
+      label: 'Ubicación',
       fields: [
-        { id: 'address', title: 'Dirección', type: 'text', required: true },
-        { id: 'city', title: 'Ciudad', type: 'text', required: true },
-        { id: 'state', title: 'Estado', type: 'text' },
+        { id: 'address', label: 'Dirección', type: 'text', required: true },
+        { id: 'city', label: 'Ciudad', type: 'text', required: true },
+        { id: 'state', label: 'Estado', type: 'text' },
       ],
     },
     {
       id: 'details',
-      title: 'Detalles físicos',
+      label: 'Detalles físicos',
       fields: [
-        { id: 'total_units', title: 'Total de unidades', type: 'number', required: true },
-        { id: 'total_floors', title: 'Número de pisos', type: 'number' },
-        { id: 'year_built', title: 'Año de construcción', type: 'number' },
+        { id: 'total_units', label: 'Total de unidades', type: 'number', required: true },
+        { id: 'total_floors', label: 'Número de pisos', type: 'number' },
+        { id: 'year_built', label: 'Año de construcción', type: 'number' },
       ],
     },
     {
       id: 'admin',
-      title: 'Datos administrativos',
+      label: 'Datos administrativos',
       fields: [
-        { id: 'rif', title: 'RIF de la junta', type: 'text', placeholder: 'J-12345678-9' },
-        { id: 'admin_company', title: 'Empresa administradora', type: 'text' },
+        { id: 'rif', label: 'RIF de la junta', type: 'text', placeholder: 'J-12345678-9' },
+        { id: 'admin_company', label: 'Empresa administradora', type: 'text' },
       ],
     },
   ]

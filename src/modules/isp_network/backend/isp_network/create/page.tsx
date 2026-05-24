@@ -14,11 +14,11 @@ export default function CreateIspNetworkNodePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', title: 'Información básica',
+      id: 'basic', label: 'Información básica',
       fields: [
-        { id: 'name', title: 'Nombre del nodo', type: 'text', required: true, placeholder: 'Ej: Nodo-BQ-Norte' },
+        { id: 'name', label: 'Nombre del nodo', type: 'text', required: true, placeholder: 'Ej: Nodo-BQ-Norte' },
         {
-          id: 'node_type', title: 'Tipo de nodo', type: 'select', required: true,
+          id: 'node_type', label: 'Tipo de nodo', type: 'select', required: true,
           options: [
             { value: 'pop_principal', label: 'POP Principal' },
             { value: 'nodo_distribucion', label: 'Nodo de Distribución' },
@@ -27,36 +27,36 @@ export default function CreateIspNetworkNodePage() {
           ],
           defaultValue: 'nodo_acceso',
         },
-        { id: 'city', title: 'Ciudad', type: 'text', required: true },
-        { id: 'address', title: 'Dirección física', type: 'text' },
+        { id: 'city', label: 'Ciudad', type: 'text', required: true },
+        { id: 'address', label: 'Dirección física', type: 'text' },
       ],
     },
     {
-      id: 'equip', title: 'Equipamiento',
+      id: 'equip', label: 'Equipamiento',
       fields: [
-        { id: 'equipment_model', title: 'Equipo instalado', type: 'text', placeholder: 'Huawei MA5800-X17, MikroTik CCR2004' },
-        { id: 'equipment_serial', title: 'Serie del equipo', type: 'text' },
-        { id: 'total_capacity_mbps', title: 'Capacidad total (Mbps)', type: 'number' },
+        { id: 'equipment_model', label: 'Equipo instalado', type: 'text', placeholder: 'Huawei MA5800-X17, MikroTik CCR2004' },
+        { id: 'equipment_serial', label: 'Serie del equipo', type: 'text' },
+        { id: 'total_capacity_mbps', label: 'Capacidad total (Mbps)', type: 'number' },
       ],
     },
     {
-      id: 'power', title: 'Energía eléctrica',
+      id: 'power', label: 'Energía eléctrica',
       fields: [
-        { id: 'power_provider', title: 'Fuente de energía', type: 'text', placeholder: 'CORPOELEC + UPS 4h + Planta propia' },
-        { id: 'has_generator', title: 'Tiene planta eléctrica (generador)', type: 'checkbox', defaultValue: false },
-        { id: 'battery_hours', title: 'Horas de autonomía UPS/baterías', type: 'number' },
+        { id: 'power_provider', label: 'Fuente de energía', type: 'text', placeholder: 'CORPOELEC + UPS 4h + Planta propia' },
+        { id: 'has_generator', label: 'Tiene planta eléctrica (generador)', type: 'checkbox', defaultValue: false },
+        { id: 'battery_hours', label: 'Horas de autonomía UPS/baterías', type: 'number' },
       ],
     },
     {
-      id: 'monitor', title: 'Monitoreo y GPS',
+      id: 'monitor', label: 'Monitoreo y GPS',
       fields: [
-        { id: 'monitoring_host', title: 'Host en Zabbix/PRTG', type: 'text', placeholder: 'Nodo-BQ-Norte' },
-        { id: 'coordinates_lat', title: 'Latitud GPS', type: 'text', placeholder: '10.4806' },
-        { id: 'coordinates_lng', title: 'Longitud GPS', type: 'text', placeholder: '-66.9036' },
+        { id: 'monitoring_host', label: 'Host en Zabbix/PRTG', type: 'text', placeholder: 'Nodo-BQ-Norte' },
+        { id: 'coordinates_lat', label: 'Latitud GPS', type: 'text', placeholder: '10.4806' },
+        { id: 'coordinates_lng', label: 'Longitud GPS', type: 'text', placeholder: '-66.9036' },
       ],
     },
     {
-      id: 'notes', title: 'Notas',
+      id: 'notes', label: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

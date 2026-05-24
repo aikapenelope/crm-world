@@ -243,7 +243,7 @@ export default function MfgMrpPage() {
           <div>
             <h3 className="text-sm font-semibold mb-3">Requisiciones de Compra ({requisitions.length})</h3>
             <DataTable entityId="mfg_mrp.requisition" extensionTableId="mfg-mrp-requisitions" data={requisitions} columns={reqnColumns} isLoading={isLoading}
-              emptyState={{ title: 'Sin requisiciones' }} stickyActionsColumn />
+              emptyState={{ label: 'Sin requisiciones' }} stickyActionsColumn />
           </div>
         )}
       </PageBody>

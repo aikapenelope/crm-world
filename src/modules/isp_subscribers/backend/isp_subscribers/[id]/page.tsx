@@ -62,42 +62,42 @@ export default function IspSubscriberDetailPage() {
 
   const infoGroups: CrudFormGroup[] = [
     {
-      id: 'account', title: 'Plan y precio',
+      id: 'account', label: 'Plan y precio',
       fields: [
         {
-          id: 'subscriber_type', title: 'Tipo', type: 'select', required: true,
+          id: 'subscriber_type', label: 'Tipo', type: 'select', required: true,
           options: [
             { value: 'residential', label: 'Residencial' }, { value: 'pyme', label: 'PYME' },
             { value: 'corporate', label: 'Corporativo' }, { value: 'wholesale', label: 'Mayorista' },
           ],
         },
-        { id: 'monthly_price_usd', title: 'Precio mensual (USD)', type: 'text', required: true },
+        { id: 'monthly_price_usd', label: 'Precio mensual (USD)', type: 'text', required: true },
       ],
     },
     {
-      id: 'location', title: 'Instalación',
+      id: 'location', label: 'Instalación',
       fields: [
-        { id: 'installation_address', title: 'Dirección', type: 'text', required: true },
-        { id: 'installation_city', title: 'Ciudad', type: 'text', required: true },
-        { id: 'reference_description', title: 'Referencia de ubicación', type: 'textarea' },
+        { id: 'installation_address', label: 'Dirección', type: 'text', required: true },
+        { id: 'installation_city', label: 'Ciudad', type: 'text', required: true },
+        { id: 'reference_description', label: 'Referencia de ubicación', type: 'textarea' },
       ],
     },
     {
-      id: 'network', title: 'Red',
+      id: 'network', label: 'Red',
       fields: [
-        { id: 'ip_address', title: 'IP asignada', type: 'text' },
-        { id: 'pppoe_username', title: 'Usuario PPPoE/Radius', type: 'text' },
+        { id: 'ip_address', label: 'IP asignada', type: 'text' },
+        { id: 'pppoe_username', label: 'Usuario PPPoE/Radius', type: 'text' },
       ],
     },
     {
-      id: 'billing', title: 'Cobranza',
+      id: 'billing', label: 'Cobranza',
       fields: [
-        { id: 'billing_cycle_day', title: 'Día de vencimiento', type: 'number' },
-        { id: 'cut_policy_days', title: 'Días de gracia', type: 'number' },
+        { id: 'billing_cycle_day', label: 'Día de vencimiento', type: 'number' },
+        { id: 'cut_policy_days', label: 'Días de gracia', type: 'number' },
       ],
     },
     {
-      id: 'notes', title: 'Notas',
+      id: 'notes', label: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

@@ -109,7 +109,7 @@ export default function EditTodoPage({ params }: { params?: { id?: string } }) {
 
   const fallbackInitialValues = React.useMemo<TodoFormValues>(() => ({
     id: id ?? '',
-    title: '',
+    label: '',
     is_done: false,
   }), [id])
 

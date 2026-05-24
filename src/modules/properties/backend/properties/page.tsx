@@ -201,7 +201,7 @@ export default function PropertiesPage() {
     () => [
       {
         id: 'property_type',
-        title: 'Tipo',
+        label: 'Tipo',
         type: 'select',
         options: [
           { label: 'Todos', value: '' },
@@ -215,7 +215,7 @@ export default function PropertiesPage() {
       },
       {
         id: 'operation',
-        title: 'Operación',
+        label: 'Operación',
         type: 'select',
         options: [
           { label: 'Todas', value: '' },
@@ -226,7 +226,7 @@ export default function PropertiesPage() {
       },
       {
         id: 'status',
-        title: 'Estado',
+        label: 'Estado',
         type: 'select',
         options: [
           { label: 'Todos', value: '' },

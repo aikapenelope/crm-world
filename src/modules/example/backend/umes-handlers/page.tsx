@@ -77,7 +77,7 @@ export default function UmesHandlersPage() {
   const [serverEmitStatus, setServerEmitStatus] = React.useState<'idle' | 'pending' | 'ok' | 'error'>('idle')
   const [serverEmitError, setServerEmitError] = React.useState<string | null>(null)
   const [draftTitle, setDraftTitle] = React.useState('display me')
-  const [formSeed, setFormSeed] = React.useState({ nonce: 0, title: 'display me', note: '  draft note  ' })
+  const [formSeed, setFormSeed] = React.useState({ nonce: 0, label: 'display me', note: '  draft note  ' })
   const [personId, setPersonId] = React.useState('')
   const personIdInputRef = React.useRef<HTMLInputElement | null>(null)
   const [probeTodoTitle, setProbeTodoTitle] = React.useState('UMES enricher probe')

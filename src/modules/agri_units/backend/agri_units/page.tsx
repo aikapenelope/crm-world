@@ -164,7 +164,7 @@ export default function AgriUnitsPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin lotes registrados',
+            label: 'Sin lotes registrados',
             description: 'Inicia un nuevo lote cuando lleguen las aves.',
           }}
           stickyActionsColumn

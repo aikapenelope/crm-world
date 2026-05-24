@@ -71,7 +71,7 @@ export default function IspTechniciansPage() {
         <RowActions items={[
           { id: 'edit', label: 'Editar', onSelect: () => router.push(`/backend/isp-technicians/${row.original.id}`) },
           {
-            id: 'delete', title: 'Eliminar', destructive: true,
+            id: 'delete', label: 'Eliminar', destructive: true,
             onSelect: async () => { await deleteCrud('isp-technicians/technicians', row.original.id); flash('Técnico eliminado', 'success'); load() },
           },
         ]} />
@@ -105,7 +105,7 @@ export default function IspTechniciansPage() {
           data={techs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin técnicos', description: 'Registra tu primer técnico de campo.' }}
+          emptyState={{ label: 'Sin técnicos', description: 'Registra tu primer técnico de campo.' }}
           stickyActionsColumn
         />
       </PageBody>

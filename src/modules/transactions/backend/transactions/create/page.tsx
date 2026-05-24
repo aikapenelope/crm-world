@@ -17,7 +17,7 @@ export default function CreateTransactionPage() {
       {
         id: 'basic',
         column: 1,
-        title: 'Datos de la operación',
+        label: 'Datos de la operación',
         fields: [
           {
             id: 'transaction_type', type: 'select', label: 'Tipo de operación', required: true,
@@ -42,7 +42,7 @@ export default function CreateTransactionPage() {
       {
         id: 'financial',
         column: 2,
-        title: 'Datos financieros',
+        label: 'Datos financieros',
         fields: [
           { id: 'sale_price', type: 'text', label: 'Precio', required: true, placeholder: '150000.00' },
           {
@@ -74,7 +74,7 @@ export default function CreateTransactionPage() {
       {
         id: 'lease',
         column: 1,
-        title: 'Datos de alquiler',
+        label: 'Datos de alquiler',
         fields: [
           { id: 'monthly_rent', type: 'text', label: 'Canon mensual', placeholder: '1500.00' },
           { id: 'lease_start', type: 'text', label: 'Inicio del contrato', placeholder: 'YYYY-MM-DD' },
@@ -85,7 +85,7 @@ export default function CreateTransactionPage() {
       {
         id: 'agents',
         column: 2,
-        title: 'Agentes',
+        label: 'Agentes',
         fields: [
           { id: 'listing_agent_id', type: 'text', label: 'Agente captador', placeholder: 'UUID (opcional)' },
           { id: 'buyer_agent_id', type: 'text', label: 'Agente comprador', placeholder: 'UUID (opcional)' },
@@ -94,7 +94,7 @@ export default function CreateTransactionPage() {
       {
         id: 'notes_group',
         column: 1,
-        title: 'Notas',
+        label: 'Notas',
         fields: [
           { id: 'notes', type: 'textarea', label: 'Notas internas', placeholder: 'Observaciones sobre la transacción...' },
         ],

@@ -86,7 +86,7 @@ export default function TransactionsPage() {
 
   const handleDelete = React.useCallback(
     async (row: TransactionRow) => {
-      const confirmed = await confirmDialog({ title: '¿Eliminar esta transacción?', variant: 'destructive' })
+      const confirmed = await confirmDialog({ label: '¿Eliminar esta transacción?', variant: 'destructive' })
       if (!confirmed) return
       const call = await apiCall('/api/transactions/transactions', {
         method: 'DELETE',
@@ -150,7 +150,7 @@ export default function TransactionsPage() {
   const filterDefs = React.useMemo<FilterDef[]>(
     () => [
       {
-        id: 'transaction_type', title: 'Tipo', type: 'select',
+        id: 'transaction_type', label: 'Tipo', type: 'select',
         options: [
           { label: 'Todos', value: '' },
           { label: 'Venta', value: 'sale' },
@@ -158,7 +158,7 @@ export default function TransactionsPage() {
         ],
       },
       {
-        id: 'status', title: 'Estado', type: 'select',
+        id: 'status', label: 'Estado', type: 'select',
         options: [
           { label: 'Todos', value: '' },
           { label: 'Pendiente', value: 'pending' },

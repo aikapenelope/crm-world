@@ -81,7 +81,7 @@ export default function IspPlansPage() {
         <RowActions items={[
           { id: 'edit', label: 'Editar', onSelect: () => router.push(`/backend/isp-plans/${row.original.id}`) },
           {
-            id: 'delete', title: 'Eliminar', destructive: true,
+            id: 'delete', label: 'Eliminar', destructive: true,
             onSelect: async () => {
               await deleteCrud('isp-plans/plans', row.original.id)
               flash('Plan eliminado', 'success')
@@ -110,7 +110,7 @@ export default function IspPlansPage() {
           data={plans}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin planes', description: 'Crea tu primer plan de servicio.' }}
+          emptyState={{ label: 'Sin planes', description: 'Crea tu primer plan de servicio.' }}
           stickyActionsColumn
         />
       </PageBody>

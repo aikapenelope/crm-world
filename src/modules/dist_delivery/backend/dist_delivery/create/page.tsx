@@ -17,7 +17,7 @@ export default function CreateDeliveryOrderPage() {
       {
         id: 'dispatch',
         column: 1,
-        title: 'Datos del despacho',
+        label: 'Datos del despacho',
         fields: [
           { id: 'dispatch_date', type: 'text', label: 'Fecha de despacho', required: true, defaultValue: today, placeholder: 'YYYY-MM-DD' },
           { id: 'vehicle_plate', type: 'text', label: 'Placa del vehículo', placeholder: 'ABC123' },

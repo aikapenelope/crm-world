@@ -15,11 +15,11 @@ export default function CreateIspPlanPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'basic',
-      title: 'Información básica',
+      label: 'Información básica',
       fields: [
-        { id: 'name', title: 'Nombre del plan', type: 'text', required: true, placeholder: 'Ej: Fibra 100M Plus' },
+        { id: 'name', label: 'Nombre del plan', type: 'text', required: true, placeholder: 'Ej: Fibra 100M Plus' },
         {
-          id: 'technology', title: 'Tecnología', type: 'select', required: true,
+          id: 'technology', label: 'Tecnología', type: 'select', required: true,
           options: [
             { value: 'wireless', label: 'Inalámbrico (Wireless)' },
             { value: 'fiber', label: 'Fibra óptica (GPON/FTTH)' },
@@ -29,7 +29,7 @@ export default function CreateIspPlanPage() {
           defaultValue: 'wireless',
         },
         {
-          id: 'target_segment', title: 'Segmento objetivo', type: 'select', required: true,
+          id: 'target_segment', label: 'Segmento objetivo', type: 'select', required: true,
           options: [
             { value: 'residential', label: 'Residencial' },
             { value: 'pyme', label: 'PYME / Empresas pequeñas' },
@@ -42,36 +42,36 @@ export default function CreateIspPlanPage() {
     },
     {
       id: 'speed',
-      title: 'Velocidad',
+      label: 'Velocidad',
       fields: [
-        { id: 'download_mbps', title: 'Velocidad bajada (Mbps)', type: 'number', required: true },
-        { id: 'upload_mbps', title: 'Velocidad subida (Mbps)', type: 'number', required: true },
-        { id: 'is_symmetric', title: 'Velocidad simétrica (bajada = subida)', type: 'checkbox', defaultValue: false },
+        { id: 'download_mbps', label: 'Velocidad bajada (Mbps)', type: 'number', required: true },
+        { id: 'upload_mbps', label: 'Velocidad subida (Mbps)', type: 'number', required: true },
+        { id: 'is_symmetric', label: 'Velocidad simétrica (bajada = subida)', type: 'checkbox', defaultValue: false },
       ],
     },
     {
       id: 'pricing',
-      title: 'Precios',
+      label: 'Precios',
       fields: [
-        { id: 'monthly_price_usd', title: 'Precio mensual (USD)', type: 'text', required: true, placeholder: '25.00' },
-        { id: 'installation_fee_usd', title: 'Cargo de instalación (USD)', type: 'text', placeholder: '0.00', defaultValue: '0.00' },
+        { id: 'monthly_price_usd', label: 'Precio mensual (USD)', type: 'text', required: true, placeholder: '25.00' },
+        { id: 'installation_fee_usd', label: 'Cargo de instalación (USD)', type: 'text', placeholder: '0.00', defaultValue: '0.00' },
       ],
     },
     {
       id: 'network',
-      title: 'Configuración de red',
+      label: 'Configuración de red',
       fields: [
-        { id: 'radius_profile', title: 'Perfil Radius', type: 'text', placeholder: 'plan-20mbps' },
-        { id: 'olt_profile', title: 'Perfil OLT (GPON)', type: 'text', placeholder: 'gpon-100m' },
+        { id: 'radius_profile', label: 'Perfil Radius', type: 'text', placeholder: 'plan-20mbps' },
+        { id: 'olt_profile', label: 'Perfil OLT (GPON)', type: 'text', placeholder: 'gpon-100m' },
       ],
     },
     {
       id: 'settings',
-      title: 'Configuración',
+      label: 'Configuración',
       fields: [
-        { id: 'is_active', title: 'Plan activo (disponible para venta)', type: 'checkbox', defaultValue: true },
-        { id: 'is_promotional', title: 'Promoción temporal', type: 'checkbox', defaultValue: false },
-        { id: 'description', title: 'Descripción', type: 'textarea' },
+        { id: 'is_active', label: 'Plan activo (disponible para venta)', type: 'checkbox', defaultValue: true },
+        { id: 'is_promotional', label: 'Promoción temporal', type: 'checkbox', defaultValue: false },
+        { id: 'description', label: 'Descripción', type: 'textarea' },
       ],
     },
   ]

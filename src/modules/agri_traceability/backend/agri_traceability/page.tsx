@@ -219,7 +219,7 @@ export default function AgriTraceabilityPage() {
             data={recalls}
             columns={recallColumns}
             isLoading={isLoading}
-            emptyState={{ title: 'Sin recalls registrados', description: 'Los recalls se crean desde esta pantalla cuando se detecta un problema de inocuidad.' }}
+            emptyState={{ label: 'Sin recalls registrados', description: 'Los recalls se crean desde esta pantalla cuando se detecta un problema de inocuidad.' }}
           />
         </div>
       </PageBody>

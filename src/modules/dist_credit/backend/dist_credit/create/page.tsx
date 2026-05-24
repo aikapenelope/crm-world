@@ -16,7 +16,7 @@ export default function CreateCreditLimitPage() {
       {
         id: 'credit',
         column: 1,
-        title: 'Datos del crédito',
+        label: 'Datos del crédito',
         fields: [
           { id: 'customer_id', type: 'text', label: 'ID del Cliente', required: true, placeholder: 'UUID del cliente (customers module)' },
           { id: 'credit_limit', type: 'text', label: 'Límite de crédito (USD)', required: true, placeholder: '5000.00' },

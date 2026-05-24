@@ -126,7 +126,7 @@ export default function SaleInvoicesPage() {
           data={invoices}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin facturas', description: 'Las facturas se generan desde el detalle de una orden de venta.' }}
+          emptyState={{ label: 'Sin facturas', description: 'Las facturas se generan desde el detalle de una orden de venta.' }}
           stickyActionsColumn
         />
       </PageBody>

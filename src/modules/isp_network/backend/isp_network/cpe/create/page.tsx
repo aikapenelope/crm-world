@@ -14,10 +14,10 @@ export default function CreateCpePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'equip', title: 'Equipo',
+      id: 'equip', label: 'Equipo',
       fields: [
         {
-          id: 'cpe_type', title: 'Tipo de equipo', type: 'select', required: true,
+          id: 'cpe_type', label: 'Tipo de equipo', type: 'select', required: true,
           options: [
             { value: 'router', label: 'Router' }, { value: 'ont', label: 'ONT (Fibra GPON)' },
             { value: 'antenna', label: 'Antena (Wireless)' }, { value: 'switch', label: 'Switch' },
@@ -25,21 +25,21 @@ export default function CreateCpePage() {
           ],
           defaultValue: 'router',
         },
-        { id: 'brand', title: 'Marca', type: 'text', required: true, placeholder: 'MikroTik, Ubiquiti, Huawei, ZTE' },
-        { id: 'model', title: 'Modelo', type: 'text', required: true, placeholder: 'hAP ac3, LiteBeam 5AC, HG8145' },
-        { id: 'serial_number', title: 'Número de serie', type: 'text', required: true },
-        { id: 'mac_address', title: 'MAC Address', type: 'text', placeholder: 'AA:BB:CC:DD:EE:FF' },
+        { id: 'brand', label: 'Marca', type: 'text', required: true, placeholder: 'MikroTik, Ubiquiti, Huawei, ZTE' },
+        { id: 'model', label: 'Modelo', type: 'text', required: true, placeholder: 'hAP ac3, LiteBeam 5AC, HG8145' },
+        { id: 'serial_number', label: 'Número de serie', type: 'text', required: true },
+        { id: 'mac_address', label: 'MAC Address', type: 'text', placeholder: 'AA:BB:CC:DD:EE:FF' },
       ],
     },
     {
-      id: 'purchase', title: 'Compra',
+      id: 'purchase', label: 'Compra',
       fields: [
-        { id: 'purchase_price_usd', title: 'Precio de compra (USD)', type: 'text', placeholder: '45.00' },
-        { id: 'purchase_date', title: 'Fecha de compra', type: 'date' },
+        { id: 'purchase_price_usd', label: 'Precio de compra (USD)', type: 'text', placeholder: '45.00' },
+        { id: 'purchase_date', label: 'Fecha de compra', type: 'date' },
       ],
     },
     {
-      id: 'notes', title: 'Notas',
+      id: 'notes', label: 'Notas',
       fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]

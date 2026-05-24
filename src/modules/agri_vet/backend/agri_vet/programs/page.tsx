@@ -109,7 +109,7 @@ export default function VaccinationProgramsPage() {
           items={[
             {
               id: 'edit',
-              title: 'Editar calendario',
+              label: 'Editar calendario',
               onSelect: () => router.push(`/backend/agri-vet/programs/${row.original.id}`),
             },
             {
@@ -184,7 +184,7 @@ export default function VaccinationProgramsPage() {
           columns={columns}
           isLoading={isLoading}
           emptyState={{
-            title: 'Sin programas de vacunación',
+            label: 'Sin programas de vacunación',
             description: 'Crea el primer programa de vacunación para Ross 308 o Cobb 500. Una vez activo, los nuevos flocks podrán asignarlo para generar el calendario automáticamente.',
           }}
           stickyActionsColumn

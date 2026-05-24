@@ -32,40 +32,40 @@ export default function CreateFeeConfigPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'main',
-      title: 'Configuración de cuota',
+      label: 'Configuración de cuota',
       fields: [
         {
-          id: 'building_id', title: 'Edificio', type: 'select', required: true,
+          id: 'building_id', label: 'Edificio', type: 'select', required: true,
           options: buildingOptions,
           placeholder: isLoadingBuildings ? 'Cargando edificios...' : 'Seleccionar',
         },
-        { id: 'name', title: 'Nombre de la cuota', type: 'text', required: true, placeholder: 'Cuota Ordinaria Enero 2026' },
+        { id: 'name', label: 'Nombre de la cuota', type: 'text', required: true, placeholder: 'Cuota Ordinaria Enero 2026' },
         {
-          id: 'fee_type', title: 'Tipo', type: 'select', defaultValue: 'ordinary',
+          id: 'fee_type', label: 'Tipo', type: 'select', defaultValue: 'ordinary',
           options: [
             { value: 'ordinary', label: 'Cuota ordinaria' },
             { value: 'extraordinary', label: 'Cuota extraordinaria' },
             { value: 'reserve_fund', label: 'Fondo de reserva' },
           ],
         },
-        { id: 'period_month', title: 'Período (YYYY-MM)', type: 'text', required: true, placeholder: '2026-01' },
-        { id: 'base_amount', title: 'Monto base', type: 'text', required: true, placeholder: '0.00' },
+        { id: 'period_month', label: 'Período (YYYY-MM)', type: 'text', required: true, placeholder: '2026-01' },
+        { id: 'base_amount', label: 'Monto base', type: 'text', required: true, placeholder: '0.00' },
         {
-          id: 'currency', title: 'Moneda', type: 'select', defaultValue: 'USD',
+          id: 'currency', label: 'Moneda', type: 'select', defaultValue: 'USD',
           options: [{ value: 'USD', label: 'USD' }, { value: 'VES', label: 'VES' }],
         },
         {
-          id: 'distribution_method', title: 'Distribución', type: 'select', defaultValue: 'aliquot',
+          id: 'distribution_method', label: 'Distribución', type: 'select', defaultValue: 'aliquot',
           options: [
             { value: 'aliquot', label: 'Por alícuota' },
             { value: 'equal', label: 'Partes iguales' },
           ],
         },
-        { id: 'due_date', title: 'Fecha de vencimiento', type: 'date', required: true },
-        { id: 'late_fee_percent', title: 'Mora (%)', type: 'text', defaultValue: '0' },
-        { id: 'late_fee_days', title: 'Días de gracia antes de mora', type: 'number', defaultValue: '15' },
-        { id: 'approved_in_assembly', title: 'Aprobada en asamblea', type: 'checkbox', defaultValue: false },
-        { id: 'notes', title: 'Notas', type: 'textarea' },
+        { id: 'due_date', label: 'Fecha de vencimiento', type: 'date', required: true },
+        { id: 'late_fee_percent', label: 'Mora (%)', type: 'text', defaultValue: '0' },
+        { id: 'late_fee_days', label: 'Días de gracia antes de mora', type: 'number', defaultValue: '15' },
+        { id: 'approved_in_assembly', label: 'Aprobada en asamblea', type: 'checkbox', defaultValue: false },
+        { id: 'notes', label: 'Notas', type: 'textarea' },
       ],
     },
   ]

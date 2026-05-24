@@ -13,12 +13,12 @@ export default function CreateBranchPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'basic',
-      title: 'Identificación',
+      label: 'Identificación',
       fields: [
-        { id: 'name', title: 'Nombre', type: 'text', required: true, placeholder: 'Tienda Centro' },
-        { id: 'code', title: 'Código', type: 'text', required: true, placeholder: 'CENTRO' },
+        { id: 'name', label: 'Nombre', type: 'text', required: true, placeholder: 'Tienda Centro' },
+        { id: 'code', label: 'Código', type: 'text', required: true, placeholder: 'CENTRO' },
         {
-          id: 'branch_type', title: 'Tipo', type: 'select', defaultValue: 'store',
+          id: 'branch_type', label: 'Tipo', type: 'select', defaultValue: 'store',
           options: [
             { value: 'store', label: 'Tienda' },
             { value: 'warehouse', label: 'Bodega' },
@@ -30,19 +30,19 @@ export default function CreateBranchPage() {
     },
     {
       id: 'location',
-      title: 'Ubicación',
+      label: 'Ubicación',
       fields: [
-        { id: 'address_line1', title: 'Dirección', type: 'text', placeholder: 'Av. Principal, Local 5' },
-        { id: 'city', title: 'Ciudad', type: 'text', placeholder: 'Caracas' },
-        { id: 'state', title: 'Estado', type: 'text', placeholder: 'Distrito Capital' },
+        { id: 'address_line1', label: 'Dirección', type: 'text', placeholder: 'Av. Principal, Local 5' },
+        { id: 'city', label: 'Ciudad', type: 'text', placeholder: 'Caracas' },
+        { id: 'state', label: 'Estado', type: 'text', placeholder: 'Distrito Capital' },
       ],
     },
     {
       id: 'contact',
-      title: 'Contacto',
+      label: 'Contacto',
       fields: [
-        { id: 'phone', title: 'Teléfono', type: 'text', placeholder: '+58 412-000-0000' },
-        { id: 'email', title: 'Email', type: 'text', placeholder: 'tienda@empresa.com' },
+        { id: 'phone', label: 'Teléfono', type: 'text', placeholder: '+58 412-000-0000' },
+        { id: 'email', label: 'Email', type: 'text', placeholder: 'tienda@empresa.com' },
       ],
     },
   ]

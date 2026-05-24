@@ -211,17 +211,17 @@ export default function MfgMaintenancePage() {
 
         {activeTab === 'work_orders' && (
           <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maintenance-wos" data={workOrders} columns={woCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin órdenes de trabajo abiertas', description: 'Ejecuta la verificación de mantenimientos para generar WOs automáticamente.' }}
+            emptyState={{ label: 'Sin órdenes de trabajo abiertas', description: 'Ejecuta la verificación de mantenimientos para generar WOs automáticamente.' }}
             stickyActionsColumn />
         )}
         {activeTab === 'equipment' && (
           <DataTable entityId="mfg_maintenance.equipment" extensionTableId="mfg-maintenance-equipment" data={equipment} columns={eqCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin equipos registrados', description: 'Registra los equipos de la planta para gestionar su mantenimiento.' }}
+            emptyState={{ label: 'Sin equipos registrados', description: 'Registra los equipos de la planta para gestionar su mantenimiento.' }}
             stickyActionsColumn />
         )}
         {activeTab === 'spare_parts' && (
           <DataTable entityId="mfg_maintenance.spare_part" extensionTableId="mfg-maintenance-spares" data={spareParts} columns={spCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin repuestos registrados', description: 'Registra los repuestos críticos para que el sistema alerte antes de agotarse.' }} />
+            emptyState={{ label: 'Sin repuestos registrados', description: 'Registra los repuestos críticos para que el sistema alerte antes de agotarse.' }} />
         )}
       </PageBody>
     </Page>

@@ -40,7 +40,7 @@ export default function SettingsPage() {
     {
       id: 'social',
       column: 1,
-      title: 'Cuentas de redes sociales',
+      label: 'Cuentas de redes sociales',
       fields: [
         { id: 'instagram_url', type: 'text', label: 'Instagram', placeholder: 'https://instagram.com/tu_cuenta', defaultValue: settings.instagram_url },
         { id: 'facebook_url', type: 'text', label: 'Facebook', placeholder: 'https://facebook.com/tu_pagina', defaultValue: settings.facebook_url },
@@ -52,7 +52,7 @@ export default function SettingsPage() {
     {
       id: 'branding',
       column: 2,
-      title: 'Branding',
+      label: 'Branding',
       fields: [
         { id: 'company_name', type: 'text', label: 'Nombre de la empresa', placeholder: 'Mi Inmobiliaria', defaultValue: settings.company_name },
         { id: 'agent_name', type: 'text', label: 'Nombre del agente', placeholder: 'Juan Pérez', defaultValue: settings.agent_name },
