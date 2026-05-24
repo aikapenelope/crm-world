@@ -1,6 +1,6 @@
 # Roadmap — Aika Platform
 
-> Última actualización: 24 Mayo 2026 — CI verde ✅
+> Última actualización: 24 Mayo 2026 — CI verde ✅ · TypeScript limpio ✅
 > Stack: Open Mercato v0.6.1 · Next.js 16 · Hetzner CX43 Helsinki · Coolify 4.0
 > Deploy URL: mercato.novaincs.com · Panel: deploy.novaincs.com
 > CI: github.com/aikapenelope/crm-world/actions — Lint ✅ Typecheck ✅ Unit Tests ✅
@@ -108,13 +108,14 @@
 ### Phase 17 — Generación de PDFs (completo)
 - [x] Recibo de condominio, Valuación de obra, Boletín escolar, Constancia de inscripción, Nota de entrega, Acta de asamblea
 
-### Phase 18 — CI Pipeline (completo en código)
-- [x] `.github/workflows/ci.yml` — typecheck + lint en cada PR
-- [x] Concurrency cancel, cache de `.yarn/cache` + `node_modules`
-- [ ] **Activar en GitHub**: Settings → Actions → General → "Allow all actions" ← **1 click pendiente**
-- [ ] Docker layer caching en Coolify
-- [ ] Resend email (`mail.aikalabs.cc`)
-- [ ] Wildcard domain `*.aika.com.ve`
+### Phase 18 — CI Pipeline (COMPLETO Y VERDE ✅ — PR #83)
+- [x] `.github/workflows/ci.yml` — 3 jobs paralelos: Lint + Typecheck + Unit Tests
+- [x] Lint verde: `typescript-eslint` en `src/modules` (patrón OM standalone)
+- [x] Typecheck verde: `tsc --noEmit` en TODO el código (incluye `.tsx` backend pages)
+- [x] Unit Tests verde: Jest con `jest-mikroorm-transformer.cjs` del repo oficial
+- [x] Fix 900+ errores TS con regex (PR #83) → limpiados correctamente con tipos reales en Phase 24.5
+- [x] Documentación CI completa en `docs/CI.md`
+- [x] `docs/OPEN_MERCATO_REFERENCE.md` actualizado con todos los breaking changes
 
 ### Phase 19 — Workflows de Aprobación (completo)
 - [x] Infraestructura: `WorkflowApprovalWidget`, `seed-workflow.ts`, `useWorkflowApproval.ts`
@@ -194,15 +195,6 @@ Spec completo en `.ai/specs/2026-05-26-agri-agroalimentario-vertical.md`.
 
 ---
 
-### Phase 18 — CI Pipeline (COMPLETO Y VERDE ✅ — PR #83)
-- [x] `.github/workflows/ci.yml` — 3 jobs paralelos: Lint + Typecheck + Unit Tests
-- [x] Lint verde: `typescript-eslint` en `src/modules` (patrón OM standalone)
-- [x] Typecheck verde: `tsc --noEmit` en TODO el código (incluye `.tsx` backend pages)
-- [x] Unit Tests verde: Jest con `jest-mikroorm-transformer.cjs` del repo oficial
-- [x] Fix 900+ errores TS preexistentes: módulos escritos con APIs antiguas de OM v0.5.x
-- [x] Documentación CI completa en `docs/CI.md`
-- [x] `docs/OPEN_MERCATO_REFERENCE.md` actualizado con todos los breaking changes
-
 ### Phase 24 — Manufactura Industrial (completo)
 
 Vertical para fábricas de producción discreta y por procesos en Venezuela.
@@ -242,6 +234,31 @@ Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
 
 ---
 
+### Phase 24.5 — Post-CI TypeScript Cleanup (COMPLETO ✅ — PRs #85-92)
+
+> **Contexto**: El PR #83 (CI verde) fijó los 900+ errores TS usando un script
+> de regex que introdujo `as any` masivos como workaround. Esta phase limpió
+> todos esos casteos reemplazándolos con los tipos correctos según la API real
+> de OM v0.6.1, sin tocar los patrones documentados como correctos
+> (`(em as any).getKysely()`, `em.create(Entity, {...} as any)` en seeds).
+
+- [x] **Sprint 1** — `fields={[] as any[]}` → `fields={[]}` en 42 páginas CrudForm (PR #85)
+- [x] **Sprint 2** — Tab casts, `result.result as any`, `apiCall<T>` generics en 16 archivos (PR #86)
+- [x] **Sprint 3** — `norm(r.field as string)` → `norm(r.field)` en 84 `search.ts` (371 reemplazos) (PR #87)
+- [x] **Sprint 4** — Kysely results `as any` → interfaces locales tipadas en `isp_billing` + `isp_subscribers` (PR #88)
+- [x] **Sprint 5** — CrudForm old API → v0.6.1 + Kysely interfaces en `agri_hr` + `const_progress` (PR #89)
+- [x] **Sprint 6** — CrudForm old API → v0.6.1 + tipo `MrpRunSummary` en `mfg_bom/mrp/orders` (PR #90)
+- [x] **Sprint 7** — CrudForm old API → v0.6.1 en 30 archivos restantes (agri/mfg) (PR #91)
+- [x] `jest.config.cjs` — `kysely`/`meilisearch` en `transformIgnorePatterns` + aliases `@/generated/*` y `@open-mercato/core/generated/*` (PR #92)
+
+**Patrones correctos preservados (documentados en `docs/PATTERNS.md`):**
+- `(em as any).getKysely()` — API no pública de MikroORM, correcto
+- `em.create(Entity, {...} as any)` en seeds/setup — necesario por strict types de MikroORM v7
+- `null as any` en `orgField`/`tenantField` de entidades sin tenant scope
+- `(ctx as any).resolve?.('em')` en search.ts — patrón DI documentado
+
+---
+
 ## Pendiente
 
 ### Phase 22-C — ISP Monitoring (bloqueado: cliente con NMS)
@@ -255,29 +272,37 @@ Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
 
 ### Phase 25 — Tests unitarios para módulos custom (PRIORIDAD ALTA)
 
-**Por qué ahora**: El CI tiene los 3 jobs verdes pero la cobertura de tests es baja.
-Solo tienen tests los módulos: `properties`, `ve_fiscal`, `matching`, `mfg_bom`,
-`mfg_orders`, `mfg_mrp`. El resto (95+ módulos) no tienen ningún test.
+> **Infraestructura lista**: `jest.config.cjs` alineado con OM oficial (PR #92).
+> Los 7 tests existentes son de alta calidad y sirven de referencia de patrón.
 
-**Objetivo**: Al menos 1 test de validators por vertical.
+**Por qué ahora**: El CI tiene los 3 jobs verdes y los tipos están limpios. El
+paso crítico siguiente es coverage de tests. Solo tienen tests los módulos:
+`properties`, `ve_fiscal`, `matching`, `mfg_bom`, `mfg_orders`, `mfg_mrp`.
+Los otros **105+ módulos no tienen ningún test**.
 
-**Cómo hacerlo** (patrón OM establecido):
+**Objetivo**: Al menos 1 `validators.spec.ts` por vertical con lógica de negocio.
+
+**Patrón establecido** (ver tests existentes como referencia):
 ```
 src/modules/<module>/__tests__/validators.spec.ts
 ```
 
 Cada test debe cubrir:
-- `createSchema.safeParse(validPayload)` → success
+- `createSchema.safeParse(validPayload)` → success con defaults correctos
 - Campos requeridos faltantes → failure
-- Valores de enum inválidos → failure
-- Reglas de negocio venezolanas (RIF, tasas, etc.)
+- Cada valor de enum inválido → failure
+- Reglas de negocio venezolanas (RIF, IVA, IGTF, LOTTT, tasas BCV, etc.)
+- `updateSchema.safeParse({})` → success (partial update acepta vacío)
 
-**Prioridad de módulos** (por impacto de negocio):
-1. `ve_fiscal` ← ya tiene tests, ampliar
-2. `agri_units`, `agri_feed`, `agri_quality` (validaciones de KPIs)
-3. `isp_billing`, `isp_subscribers` (lógica de facturación)
-4. `const_progress`, `const_budget` (cálculos financieros)
-5. Resto de verticales
+**Prioridad de módulos** (por riesgo de negocio):
+
+1. **Venezuela transversal** — `venezuela_rates`, `payment_methods` (7 métodos VE)
+2. **ISP** — `isp_billing`, `isp_subscribers` (facturación, estados de servicio)
+3. **Agro** — `agri_units`, `agri_feed`, `agri_hr` (FCA/IEP, LOTTT, liquidaciones)
+4. **Construcción** — `const_progress`, `const_budget` (valuaciones, partidas)
+5. **Distribución** — `dist_credit`, `dist_delivery` (límites de crédito, remisiones)
+6. **Educación** — `tuition`, `enrollment` (aranceles, inscripciones)
+7. **Resto** por vertical hasta completar los 112 módulos
 
 ---
 
@@ -313,12 +338,13 @@ La diferencia incluye parches de TypeScript 6 y correcciones de eslint-config-ne
 - `agency_projects`, `agency_billing`, `agency_time_tracking`, `agency_contracts`
 - Venezuela: facturación en USD/VES, retenciones ISLR
 
-**Proceso para cada vertical nueva** (aprendido en CI verde):
+**Proceso para cada vertical nueva** (workflow validado en CI verde + type cleanup):
 1. Leer repo OM antes de escribir código → `open-mercato/open-mercato apps/mercato/src/modules/example/`
-2. Escribir validators con tests PRIMERO
-3. Verificar `yarn generate && yarn typecheck` después de cada módulo
+2. Escribir `validators.ts` + `validators.spec.ts` PRIMERO (tests-first)
+3. Verificar `yarn generate && yarn typecheck && yarn test` después de cada módulo
 4. Usar API correcta v0.6.1: `id:` en campos, `title:` en grupos, etc.
 5. `acl.ts` siempre con `export default features`
+6. CrudForm solo con `fields/groups/initialValues/onSubmit/cancelHref` — nunca `entityId/apiPath/mode`
 
 ---
 
@@ -326,18 +352,17 @@ La diferencia incluye parches de TypeScript 6 y correcciones de eslint-config-ne
 
 **Objetivo**: Tests end-to-end para los flujos críticos.
 
-**Patrón OM**: `apps/mercato/src/modules/example/__integration__/`
-
-Los tests de integración en el repo oficial usan:
-- Playwright (`@playwright/test`)
-- `mercato test:integration:ephemeral` — boot efímero del app
-- PostgreSQL en memoria (Docker)
+**Infraestructura disponible**:
+- `test:integration:ephemeral` en `package.json` — Docker + app real
+- Playwright config en `.ai/qa/tests/playwright.config.ts`
+- Helpers en `@open-mercato/core/helpers/integration/*` (auth, apiRequest, fixtures)
+- 1 spec existente: `properties/__integration__/properties-crud.spec.ts` — **no corre en CI aún**
 
 **Candidatos prioritarios**:
-1. Creación de tenant → módulos base venezolanos auto-configurados
-2. Flujo completo inmobiliaria: propiedad → lead → transacción
-3. Flujo ISP: abonado → factura → pago → estado cuenta
-4. Flujo manufactura: BOM → orden → despacho → CoA
+1. Activar el spec existente (`properties`) en CI como smoke test inicial
+2. Flujo ISP: abonado → factura → pago → estado cuenta
+3. Flujo manufactura: BOM → orden → despacho → CoA
+4. Creación de tenant → módulos base venezolanos auto-configurados
 
 ---
 
@@ -365,11 +390,15 @@ coverageThreshold: {
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
-| Tests unitarios validators (95+ módulos sin tests) | **ALTA** | Phase 25 |
+| Tests unitarios validators (105+ módulos sin tests) | **ALTA** | Phase 25 — próxima prioridad |
+| Integration tests (properties spec no corre en CI) | **ALTA** | Phase 28 — activar spec existente |
 | Upgrade OM v0.6.2 + TypeScript 6 | **MEDIA** | Phase 26 |
+| `yarn build` validado en CI (next build completo) | **MEDIA** | Sin phase asignada |
+| Security audit en CI (`yarn npm audit --severity high`) | **MEDIA** | Sin phase asignada |
+| i18n sync en CI (226 archivos JSON, 4 locales) | **MEDIA** | Sin phase asignada |
 | Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
-| Integration tests (RE + Education + Retail) | Media | Phase 28 |
 | `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
 | Coverage threshold activado en CI | Baja | Phase 29 (requiere Phase 25) |
 | Docker layer caching en Coolify | Baja | Optimización de build |
+| Dependabot para actualizaciones automáticas | Baja | Sin phase asignada |
