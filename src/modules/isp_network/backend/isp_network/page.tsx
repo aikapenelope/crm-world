@@ -146,7 +146,7 @@ export default function IspNetworkPage() {
           data={nodes}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin nodos', description: 'Registra el primer nodo de tu red.' }}
+          emptyState='Sin nodos'
           stickyActionsColumn
         />
       </PageBody>

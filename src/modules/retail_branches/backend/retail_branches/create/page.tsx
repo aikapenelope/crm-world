@@ -13,7 +13,7 @@ export default function CreateBranchPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'basic',
-      label: 'Identificación',
+      title: 'Identificación',
       fields: [
         { id: 'name', label: 'Nombre', type: 'text', required: true, placeholder: 'Tienda Centro' },
         { id: 'code', label: 'Código', type: 'text', required: true, placeholder: 'CENTRO' },
@@ -30,7 +30,7 @@ export default function CreateBranchPage() {
     },
     {
       id: 'location',
-      label: 'Ubicación',
+      title: 'Ubicación',
       fields: [
         { id: 'address_line1', label: 'Dirección', type: 'text', placeholder: 'Av. Principal, Local 5' },
         { id: 'city', label: 'Ciudad', type: 'text', placeholder: 'Caracas' },
@@ -39,7 +39,7 @@ export default function CreateBranchPage() {
     },
     {
       id: 'contact',
-      label: 'Contacto',
+      title: 'Contacto',
       fields: [
         { id: 'phone', label: 'Teléfono', type: 'text', placeholder: '+58 412-000-0000' },
         { id: 'email', label: 'Email', type: 'text', placeholder: 'tienda@empresa.com' },

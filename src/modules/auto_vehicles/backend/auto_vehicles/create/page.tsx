@@ -16,7 +16,7 @@ export default function CreateVehiclePage() {
       {
         id: 'vehicle',
         column: 1,
-        label: 'Datos del vehículo',
+        title: 'Datos del vehículo',
         fields: [
           { id: 'plate', type: 'text', label: 'Placa', required: true, placeholder: 'ABC123 o AB123CD' },
           { id: 'brand', type: 'text', label: 'Marca', required: true, placeholder: 'Toyota, Chevrolet, Ford...' },
@@ -29,7 +29,7 @@ export default function CreateVehiclePage() {
       {
         id: 'specs',
         column: 2,
-        label: 'Especificaciones',
+        title: 'Especificaciones',
         fields: [
           {
             id: 'engine_type', type: 'select', label: 'Tipo de motor', defaultValue: 'gasoline',

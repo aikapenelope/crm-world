@@ -162,7 +162,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     {
       id: 'basic',
       column: 1,
-      label: 'Información básica',
+      title: 'Información básica',
       fields: [
         { id: 'title', type: 'text', label: 'Título', required: true, defaultValue: property.title },
         { id: 'description', type: 'textarea', label: 'Descripción', defaultValue: property.description },
@@ -202,7 +202,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     {
       id: 'pricing',
       column: 2,
-      label: 'Precio y comisión',
+      title: 'Precio y comisión',
       fields: [
         { id: 'price', type: 'text', label: 'Precio', required: true, defaultValue: property.price },
         {
@@ -219,7 +219,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     {
       id: 'specs',
       column: 2,
-      label: 'Características',
+      title: 'Características',
       fields: [
         { id: 'area_m2', type: 'text', label: 'Área (m²)', defaultValue: property.area_m2 },
         { id: 'bedrooms', type: 'number', label: 'Habitaciones', defaultValue: property.bedrooms },
@@ -230,7 +230,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     {
       id: 'location',
       column: 1,
-      label: 'Ubicación',
+      title: 'Ubicación',
       fields: [
         { id: 'address_line', type: 'text', label: 'Dirección', defaultValue: property.address_line },
         { id: 'city', type: 'text', label: 'Ciudad', required: true, defaultValue: property.city },
@@ -241,7 +241,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     {
       id: 'notes',
       column: 1,
-      label: 'Notas internas',
+      title: 'Notas internas',
       fields: [
         { id: 'notes', type: 'textarea', label: 'Notas', defaultValue: property.notes },
       ],

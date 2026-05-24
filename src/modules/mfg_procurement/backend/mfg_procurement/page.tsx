@@ -179,7 +179,7 @@ export default function MfgProcurementPage() {
         )}
 
         <DataTable entityId="mfg_procurement.po" extensionTableId="mfg-procurement-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState={{ label: 'Sin órdenes de compra', description: 'Crea la primera OC desde las requisiciones del MRP o manualmente.' }}
+          emptyState='Sin órdenes de compra'
           stickyActionsColumn />
       </PageBody>
     </Page>

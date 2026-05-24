@@ -26,7 +26,7 @@ export default function AcademyCourseCreatePage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'basic',
-      label: 'Información del curso',
+      title: 'Información del curso',
       fields: [
         { id: 'name', label: 'Nombre del curso', type: 'text', required: true,
           placeholder: 'Ej: Inglés B1, Cocina Italiana Avanzada' },
@@ -42,7 +42,7 @@ export default function AcademyCourseCreatePage() {
     },
     {
       id: 'logistics',
-      label: 'Logística',
+      title: 'Logística',
       fields: [
         { id: 'duration_hours', label: 'Duración total (horas)', type: 'number',
           required: true, placeholder: '40' },
@@ -58,7 +58,7 @@ export default function AcademyCourseCreatePage() {
     },
     {
       id: 'pricing',
-      label: 'Precio',
+      title: 'Precio',
       fields: [
         { id: 'price_usd', label: 'Precio (USD)', type: 'number', required: true,
           placeholder: '150.00' },
@@ -79,6 +79,7 @@ export default function AcademyCourseCreatePage() {
         <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo curso</h1>
 
         <CrudForm
+          fields={[]}
           groups={groups}
           onSubmit={async (values) => {
             const res = await createCrud('academy-courses/courses', {

@@ -208,10 +208,7 @@ export default function MfgQualityPage() {
           data={ncs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin no-conformidades',
-            description: 'Registra una NC cuando detectes una desviación de los estándares de calidad.',
-          }}
+          emptyState='Sin no-conformidades'
           stickyActionsColumn
         />
       </PageBody>

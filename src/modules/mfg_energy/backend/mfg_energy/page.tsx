@@ -229,12 +229,12 @@ export default function MfgEnergyPage() {
 
         {activeTab === 'outages' && (
           <DataTable entityId="mfg_energy.outage" extensionTableId="mfg-energy-outages" data={outages} columns={outageCols} isLoading={isLoading}
-            emptyState={{ label: 'Sin cortes registrados', description: 'Registra los cortes de CORPOELEC para analizar su impacto en producción.' }}
+            emptyState='Sin cortes registrados'
             stickyActionsColumn />
         )}
         {activeTab === 'consumption' && (
           <DataTable entityId="mfg_energy.consumption" extensionTableId="mfg-energy-consumption" data={consums} columns={consumCols} isLoading={isLoading}
-            emptyState={{ label: 'Sin registros de consumo', description: 'Registra el consumo eléctrico por turno para calcular el costo energético por unidad producida.' }} />
+            emptyState='Sin registros de consumo' />
         )}
       </PageBody>
     </Page>

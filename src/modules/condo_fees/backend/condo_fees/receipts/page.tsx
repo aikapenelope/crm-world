@@ -60,10 +60,10 @@ export default function CondoReceiptsPage() {
       }),
     })
     if (result.ok) {
-      flash({ type: 'success', message: 'Pago registrado' })
+      flash('Pago registrado', 'success')
       await loadReceipts()
     } else {
-      flash({ type: 'error', message: 'Error al registrar pago' })
+      flash('Error al registrar pago', 'error')
     }
     setPayingId(null)
   }

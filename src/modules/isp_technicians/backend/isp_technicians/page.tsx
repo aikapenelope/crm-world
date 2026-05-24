@@ -105,7 +105,7 @@ export default function IspTechniciansPage() {
           data={techs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin técnicos', description: 'Registra tu primer técnico de campo.' }}
+          emptyState='Sin técnicos'
           stickyActionsColumn
         />
       </PageBody>

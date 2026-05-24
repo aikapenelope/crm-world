@@ -198,7 +198,7 @@ export default function MfgSubcontractPage() {
         )}
 
         <DataTable entityId="mfg_subcontract.order" extensionTableId="mfg-subcontract-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState={{ label: 'Sin órdenes de maquila', description: 'Crea una SC cuando necesites subcontratar producción a un maquilador.' }}
+          emptyState='Sin órdenes de maquila'
           stickyActionsColumn />
 
         {/* Materials panel for selected order */}

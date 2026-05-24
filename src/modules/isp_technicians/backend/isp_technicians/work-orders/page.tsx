@@ -113,7 +113,7 @@ export default function WorkOrdersPage() {
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin órdenes', description: 'Crea la primera orden de trabajo.' }}
+          emptyState='Sin órdenes'
           stickyActionsColumn
         />
       </PageBody>

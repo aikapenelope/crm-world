@@ -226,7 +226,7 @@ export default function SlaughterBatchDetailPage() {
             data={lots}
             columns={lotsColumns}
             isLoading={false}
-            emptyState={{ label: 'Sin productos terminados', description: 'Aprueba el lote de beneficio y luego registra los productos terminados.' }}
+            emptyState='Sin productos terminados'
           />
         </div>
       </PageBody>

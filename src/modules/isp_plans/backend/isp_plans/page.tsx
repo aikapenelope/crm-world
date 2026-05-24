@@ -110,7 +110,7 @@ export default function IspPlansPage() {
           data={plans}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin planes', description: 'Crea tu primer plan de servicio.' }}
+          emptyState='Sin planes'
           stickyActionsColumn
         />
       </PageBody>

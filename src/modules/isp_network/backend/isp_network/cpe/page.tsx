@@ -109,7 +109,7 @@ export default function IspCpeInventoryPage() {
           data={items}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin equipos', description: 'Registra tu primer CPE.' }}
+          emptyState='Sin equipos'
           stickyActionsColumn
         />
       </PageBody>

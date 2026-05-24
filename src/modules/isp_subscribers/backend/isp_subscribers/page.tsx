@@ -134,7 +134,7 @@ export default function IspSubscribersPage() {
           data={subscribers}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin abonados', description: 'Registra tu primer abonado.' }}
+          emptyState='Sin abonados'
           stickyActionsColumn
         />
       </PageBody>

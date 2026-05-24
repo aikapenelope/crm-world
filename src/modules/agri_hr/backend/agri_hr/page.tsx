@@ -136,7 +136,7 @@ export default function AgriHrPage() {
           data={employees}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin personal registrado', description: 'Registra el personal fijo, jornaleros y destajeros del sector agropecuario.' }}
+          emptyState='Sin personal registrado'
           stickyActionsColumn
         />
       </PageBody>

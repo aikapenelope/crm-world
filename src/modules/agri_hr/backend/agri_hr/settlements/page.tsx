@@ -178,7 +178,7 @@ export default function SettlementsPage() {
           data={settlements}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin liquidaciones registradas', description: 'Las liquidaciones se crean al final de cada ciclo del productor integrado.' }}
+          emptyState='Sin liquidaciones registradas'
           stickyActionsColumn
         />
       </PageBody>

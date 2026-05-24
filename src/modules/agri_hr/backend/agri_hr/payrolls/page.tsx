@@ -366,10 +366,7 @@ export default function PayrollsPage() {
           data={payrolls}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin nóminas registradas',
-            description: 'Registra la primera nómina de jornaleros o destajeros para este período.',
-          }}
+          emptyState='Sin nóminas registradas'
           stickyActionsColumn
         />
       </PageBody>

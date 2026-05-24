@@ -234,7 +234,7 @@ export default function MfgPlanningPage() {
           <div className="mb-6">
             <h3 className="text-sm font-semibold mb-3">Carga de Capacidad — Semana</h3>
             <DataTable entityId="mfg_planning.capacity" extensionTableId="mfg-planning-capacity" data={capacity} columns={capCols} isLoading={isLoading}
-              emptyState={{ label: 'Sin datos de capacidad' }} />
+              emptyState='Sin datos de capacidad' />
           </div>
         )}
 
@@ -242,7 +242,7 @@ export default function MfgPlanningPage() {
         <div>
           <h3 className="text-sm font-semibold mb-3">Ítems del MPS ({items.length})</h3>
           <DataTable entityId="mfg_planning.schedule" extensionTableId="mfg-planning-mps" data={items} columns={mpsCols} isLoading={isLoading}
-            emptyState={{ label: 'Sin ítems en el MPS esta semana', description: 'Agrega órdenes al plan maestro o carga desde el MRP.' }}
+            emptyState='Sin ítems en el MPS esta semana'
             stickyActionsColumn />
         </div>
       </PageBody>

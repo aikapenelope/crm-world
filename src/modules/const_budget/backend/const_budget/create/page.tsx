@@ -104,7 +104,7 @@ export default function CreateBudgetItemPage() {
     })
 
     if (!itemResult.ok) {
-      flash({ type: 'error', message: 'Error al crear la partida' })
+      flash('Error al crear la partida', 'error')
       setIsSubmitting(false)
       return
     }
@@ -121,7 +121,7 @@ export default function CreateBudgetItemPage() {
       }
     }
 
-    flash({ type: 'success', message: 'Partida creada exitosamente' })
+    flash('Partida creada exitosamente', 'success')
     router.push('/backend/const_budget')
     setIsSubmitting(false)
   }

@@ -270,7 +270,7 @@ export default function AgriInputsPage() {
           data={items}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin insumos registrados', description: 'Registra medicamentos, vacunas y materiales para gestionar el inventario.' }}
+          emptyState='Sin insumos registrados'
           stickyActionsColumn
         />
       </PageBody>

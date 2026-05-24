@@ -114,7 +114,7 @@ export default function CreateValuationPage() {
     })
 
     if (!result.ok) {
-      flash({ type: 'error', message: 'Error al crear la valuación' })
+      flash('Error al crear la valuación', 'error')
       setIsSubmitting(false)
       return
     }
@@ -148,7 +148,7 @@ export default function CreateValuationPage() {
       })
     }
 
-    flash({ type: 'success', message: 'Valuación creada exitosamente' })
+    flash('Valuación creada exitosamente', 'success')
     router.push('/backend/const_progress')
     setIsSubmitting(false)
   }

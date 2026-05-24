@@ -16,7 +16,7 @@ export default function RegisterMovementPage() {
       {
         id: 'movement',
         column: 1,
-        label: 'Datos del movimiento',
+        title: 'Datos del movimiento',
         fields: [
           {
             id: 'type', type: 'select', label: 'Tipo de movimiento', required: true,
@@ -38,7 +38,7 @@ export default function RegisterMovementPage() {
       {
         id: 'reference',
         column: 2,
-        label: 'Referencia y costo',
+        title: 'Referencia y costo',
         fields: [
           {
             id: 'reference_type', type: 'select', label: 'Tipo de referencia', defaultValue: 'manual',

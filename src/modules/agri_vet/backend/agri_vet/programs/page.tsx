@@ -183,10 +183,7 @@ export default function VaccinationProgramsPage() {
           data={programs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin programas de vacunación',
-            description: 'Crea el primer programa de vacunación para Ross 308 o Cobb 500. Una vez activo, los nuevos flocks podrán asignarlo para generar el calendario automáticamente.',
-          }}
+          emptyState='Sin programas de vacunación'
           stickyActionsColumn
         />
       </PageBody>

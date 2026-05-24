@@ -16,7 +16,7 @@ export default function CreateInspectionPage() {
       {
         id: 'inspection',
         column: 1,
-        label: 'Datos de la inspección',
+        title: 'Datos de la inspección',
         fields: [
           { id: 'service_order_id', type: 'text', label: 'ID de Orden de Servicio', required: true, placeholder: 'UUID de la orden' },
           { id: 'vehicle_id', type: 'text', label: 'ID del Vehículo', required: true, placeholder: 'UUID del vehículo' },

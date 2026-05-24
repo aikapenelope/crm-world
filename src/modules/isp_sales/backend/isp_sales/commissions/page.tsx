@@ -102,7 +102,7 @@ export default function CommissionsPage() {
           data={commissions}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin comisiones', description: 'Las comisiones se generan cuando se activa un abonado.' }}
+          emptyState='Sin comisiones'
         />
       </PageBody>
     </Page>

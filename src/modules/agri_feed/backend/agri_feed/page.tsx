@@ -188,10 +188,7 @@ export default function AgriFeedPage() {
           data={formulas}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin fórmulas de alimento',
-            description: 'Crea la primera fórmula para comenzar a gestionar el alimento balanceado.',
-          }}
+          emptyState='Sin fórmulas de alimento'
           stickyActionsColumn
         />
       </PageBody>

@@ -200,10 +200,7 @@ export default function HaccpPlansPage() {
           data={plans}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin planes HACCP',
-            description: 'Crea el primer plan HACCP para tu proceso de beneficio. Un plan debe tener sus PCCs configurados antes de activarse.',
-          }}
+          emptyState='Sin planes HACCP'
           stickyActionsColumn
         />
       </PageBody>

@@ -15,7 +15,7 @@ export default function CreateIspPlanPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'basic',
-      label: 'Información básica',
+      title: 'Información básica',
       fields: [
         { id: 'name', label: 'Nombre del plan', type: 'text', required: true, placeholder: 'Ej: Fibra 100M Plus' },
         {
@@ -42,7 +42,7 @@ export default function CreateIspPlanPage() {
     },
     {
       id: 'speed',
-      label: 'Velocidad',
+      title: 'Velocidad',
       fields: [
         { id: 'download_mbps', label: 'Velocidad bajada (Mbps)', type: 'number', required: true },
         { id: 'upload_mbps', label: 'Velocidad subida (Mbps)', type: 'number', required: true },
@@ -51,7 +51,7 @@ export default function CreateIspPlanPage() {
     },
     {
       id: 'pricing',
-      label: 'Precios',
+      title: 'Precios',
       fields: [
         { id: 'monthly_price_usd', label: 'Precio mensual (USD)', type: 'text', required: true, placeholder: '25.00' },
         { id: 'installation_fee_usd', label: 'Cargo de instalación (USD)', type: 'text', placeholder: '0.00', defaultValue: '0.00' },
@@ -59,7 +59,7 @@ export default function CreateIspPlanPage() {
     },
     {
       id: 'network',
-      label: 'Configuración de red',
+      title: 'Configuración de red',
       fields: [
         { id: 'radius_profile', label: 'Perfil Radius', type: 'text', placeholder: 'plan-20mbps' },
         { id: 'olt_profile', label: 'Perfil OLT (GPON)', type: 'text', placeholder: 'gpon-100m' },
@@ -67,7 +67,7 @@ export default function CreateIspPlanPage() {
     },
     {
       id: 'settings',
-      label: 'Configuración',
+      title: 'Configuración',
       fields: [
         { id: 'is_active', label: 'Plan activo (disponible para venta)', type: 'checkbox', defaultValue: true },
         { id: 'is_promotional', label: 'Promoción temporal', type: 'checkbox', defaultValue: false },

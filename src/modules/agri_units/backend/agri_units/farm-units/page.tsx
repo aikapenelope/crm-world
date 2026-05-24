@@ -187,10 +187,7 @@ export default function FarmUnitsPage() {
           data={units}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin unidades productivas',
-            description: 'Registra tus granjas y galpones para comenzar.',
-          }}
+          emptyState='Sin unidades productivas'
           stickyActionsColumn
         />
       </PageBody>

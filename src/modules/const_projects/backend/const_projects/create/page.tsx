@@ -13,7 +13,7 @@ export default function CreateProjectPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'identity',
-      label: 'Identificación del proyecto',
+      title: 'Identificación del proyecto',
       fields: [
         { id: 'name', label: 'Nombre del proyecto', type: 'text', required: true },
         { id: 'code', label: 'Código', type: 'text', required: true, placeholder: 'PRO-001' },
@@ -40,7 +40,7 @@ export default function CreateProjectPage() {
     },
     {
       id: 'client',
-      label: 'Cliente',
+      title: 'Cliente',
       fields: [
         { id: 'client_name', label: 'Nombre del cliente', type: 'text', required: true },
         {
@@ -55,7 +55,7 @@ export default function CreateProjectPage() {
     },
     {
       id: 'location',
-      label: 'Ubicación',
+      title: 'Ubicación',
       fields: [
         { id: 'city', label: 'Ciudad', type: 'text' },
         { id: 'state', label: 'Estado', type: 'text' },
@@ -64,7 +64,7 @@ export default function CreateProjectPage() {
     },
     {
       id: 'contract',
-      label: 'Contrato',
+      title: 'Contrato',
       fields: [
         { id: 'contract_number', label: 'Número de contrato', type: 'text' },
         {
@@ -87,7 +87,7 @@ export default function CreateProjectPage() {
     },
     {
       id: 'schedule',
-      label: 'Cronograma y equipo',
+      title: 'Cronograma y equipo',
       fields: [
         { id: 'start_date', label: 'Fecha de inicio', type: 'date' },
         { id: 'planned_end_date', label: 'Fecha de fin planificada', type: 'date' },

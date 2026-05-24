@@ -304,7 +304,7 @@ export default function OrderDetailPage() {
             data={operations}
             columns={opColumns}
             isLoading={false}
-            emptyState={{ label: 'Sin operaciones', description: 'Agrega las operaciones del routing para ejecutar esta orden.' }}
+            emptyState='Sin operaciones'
             stickyActionsColumn
           />
         </div>
@@ -359,7 +359,7 @@ export default function OrderDetailPage() {
               data={downtimes}
               columns={dtColumns}
               isLoading={false}
-              emptyState={{ label: 'Sin paros registrados' }}
+              emptyState='Sin paros registrados'
               stickyActionsColumn
             />
           ) : (

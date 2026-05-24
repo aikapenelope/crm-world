@@ -32,7 +32,7 @@ export default function CreateFeeConfigPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'main',
-      label: 'Configuración de cuota',
+      title: 'Configuración de cuota',
       fields: [
         {
           id: 'building_id', label: 'Edificio', type: 'select', required: true,

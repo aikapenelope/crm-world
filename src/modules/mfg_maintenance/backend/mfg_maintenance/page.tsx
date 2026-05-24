@@ -211,17 +211,17 @@ export default function MfgMaintenancePage() {
 
         {activeTab === 'work_orders' && (
           <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maintenance-wos" data={workOrders} columns={woCols} isLoading={isLoading}
-            emptyState={{ label: 'Sin órdenes de trabajo abiertas', description: 'Ejecuta la verificación de mantenimientos para generar WOs automáticamente.' }}
+            emptyState='Sin órdenes de trabajo abiertas'
             stickyActionsColumn />
         )}
         {activeTab === 'equipment' && (
           <DataTable entityId="mfg_maintenance.equipment" extensionTableId="mfg-maintenance-equipment" data={equipment} columns={eqCols} isLoading={isLoading}
-            emptyState={{ label: 'Sin equipos registrados', description: 'Registra los equipos de la planta para gestionar su mantenimiento.' }}
+            emptyState='Sin equipos registrados'
             stickyActionsColumn />
         )}
         {activeTab === 'spare_parts' && (
           <DataTable entityId="mfg_maintenance.spare_part" extensionTableId="mfg-maintenance-spares" data={spareParts} columns={spCols} isLoading={isLoading}
-            emptyState={{ label: 'Sin repuestos registrados', description: 'Registra los repuestos críticos para que el sistema alerte antes de agotarse.' }} />
+            emptyState='Sin repuestos registrados' />
         )}
       </PageBody>
     </Page>

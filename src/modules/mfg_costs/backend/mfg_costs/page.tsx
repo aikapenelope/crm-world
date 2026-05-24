@@ -173,7 +173,7 @@ export default function MfgCostsPage() {
         )}
 
         <DataTable entityId="mfg_costs.variance" extensionTableId="mfg-costs-variances" data={variances} columns={columns} isLoading={isLoading}
-          emptyState={{ label: 'Sin variaciones calculadas', description: 'Cierra órdenes de producción y calcula las variaciones de costo.' }}
+          emptyState='Sin variaciones calculadas'
           stickyActionsColumn />
       </PageBody>
     </Page>

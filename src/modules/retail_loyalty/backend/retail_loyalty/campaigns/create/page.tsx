@@ -13,7 +13,7 @@ export default function CreateCampaignPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'main',
-      label: 'Datos de la campaña',
+      title: 'Datos de la campaña',
       fields: [
         { id: 'name', label: 'Nombre', type: 'text', required: true, placeholder: 'Promo Navidad 2026' },
         {
@@ -40,7 +40,7 @@ export default function CreateCampaignPage() {
     },
     {
       id: 'config',
-      label: 'Configuración de la recompensa (llenar según el tipo)',
+      title: 'Configuración de la recompensa (llenar según el tipo)',
       fields: [
         { id: 'bonus_points', label: 'Puntos bonus (tipo: bonus_points)', type: 'number', placeholder: '50' },
         { id: 'multiplier', label: 'Multiplicador (tipo: points_multiplier, ej: 2)', type: 'number', placeholder: '2' },

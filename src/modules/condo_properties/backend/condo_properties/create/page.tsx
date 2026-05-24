@@ -13,7 +13,7 @@ export default function CreateBuildingPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'identity',
-      label: 'Datos del edificio',
+      title: 'Datos del edificio',
       fields: [
         { id: 'name', label: 'Nombre', type: 'text', required: true, placeholder: 'Residencias La Castellana' },
         { id: 'code', label: 'Código', type: 'text', required: true, placeholder: 'RLC-01' },
@@ -29,7 +29,7 @@ export default function CreateBuildingPage() {
     },
     {
       id: 'location',
-      label: 'Ubicación',
+      title: 'Ubicación',
       fields: [
         { id: 'address', label: 'Dirección', type: 'text', required: true },
         { id: 'city', label: 'Ciudad', type: 'text', required: true },
@@ -38,7 +38,7 @@ export default function CreateBuildingPage() {
     },
     {
       id: 'details',
-      label: 'Detalles físicos',
+      title: 'Detalles físicos',
       fields: [
         { id: 'total_units', label: 'Total de unidades', type: 'number', required: true },
         { id: 'total_floors', label: 'Número de pisos', type: 'number' },
@@ -47,7 +47,7 @@ export default function CreateBuildingPage() {
     },
     {
       id: 'admin',
-      label: 'Datos administrativos',
+      title: 'Datos administrativos',
       fields: [
         { id: 'rif', label: 'RIF de la junta', type: 'text', placeholder: 'J-12345678-9' },
         { id: 'admin_company', label: 'Empresa administradora', type: 'text' },

@@ -54,12 +54,12 @@ export function TrazabilidadPdf({ data: d }: { data: TrazabilidadPdfData }) {
   return (
     <Document title={`Trazabilidad ${d.product_lot_number}`} author={d.org.name}>
       <Page size="A4" style={baseStyles.page}>
-        <DocHeader org={d.org} title="Certificado de Trazabilidad del Lote" subtitle={`Lote: ${d.product_lot_number} | Emitido: ${fmtDate(new Date().toISOString())}`} docId={docId('CTZ', d.id)} />
+        <DocHeader org={d.org} docTitle="Certificado de Trazabilidad del Lote" docNumber={`Lote: ${d.product_lot_number} | Emitido: ${fmtDate(new Date().toISOString())}`} />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
           {/* Identificación del producto */}
           <Section title="Producto Terminado">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Lote de PT" value={d.product_lot_number} />
                 <DetailRow label="Producto" value={d.product_name} />
@@ -128,7 +128,7 @@ export function TrazabilidadPdf({ data: d }: { data: TrazabilidadPdfData }) {
           )}
 
           {/* Declaración */}
-          <View style={{ marginTop: SPACING[4], padding: SPACING[3], backgroundColor: COLORS.primaryFade, borderRadius: 4, borderLeftWidth: 3, borderLeftColor: COLORS.primaryLight }}>
+          <View style={{ marginTop: (SPACING as any)[4], padding: (SPACING as any)[3], backgroundColor: COLORS.primaryFade, borderRadius: 4, borderLeftWidth: 3, borderLeftColor: COLORS.primaryLight }}>
             <Text style={{ fontSize: FONT_SIZES.sm, color: COLORS.primary, fontFamily: FONTS.bold, marginBottom: 4 }}>
               Declaración de Inocuidad y Trazabilidad
             </Text>
@@ -140,7 +140,7 @@ export function TrazabilidadPdf({ data: d }: { data: TrazabilidadPdfData }) {
           </View>
         </View>
 
-        <DocFooter org={d.org} pageLabel="Certificado de Trazabilidad" />
+        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
       </Page>
     </Document>
   )

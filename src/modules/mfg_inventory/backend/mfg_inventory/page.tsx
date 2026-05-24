@@ -259,10 +259,7 @@ export default function MfgInventoryPage() {
           data={lots}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin lotes de inventario',
-            description: 'Recibe el primer material para comenzar a gestionar el inventario de manufactura.',
-          }}
+          emptyState='Sin lotes de inventario'
           stickyActionsColumn
         />
       </PageBody>

@@ -297,10 +297,7 @@ export default function CcpMonitoringPage() {
             data={todayRecords}
             columns={columns}
             isLoading={isLoading}
-            emptyState={{
-              label: 'Sin registros hoy',
-              description: 'Registra la primera medición del turno actual.',
-            }}
+            emptyState='Sin registros hoy'
           />
         </div>
       </PageBody>

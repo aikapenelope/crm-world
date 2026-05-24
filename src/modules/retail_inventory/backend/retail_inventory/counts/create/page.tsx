@@ -13,7 +13,7 @@ export default function CreateCountPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'count',
-      label: 'Nuevo Conteo de Inventario',
+      title: 'Nuevo Conteo de Inventario',
       fields: [
         { id: 'branch_id', label: 'Sucursal (ID)', type: 'text', required: true, placeholder: 'UUID de la sucursal' },
         {

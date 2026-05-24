@@ -66,7 +66,7 @@ export default function CreateDailyReportPage() {
     })
 
     if (!reportResult.ok) {
-      flash({ type: 'error', message: 'Error al crear el reporte' })
+      flash('Error al crear el reporte', 'error')
       setIsSubmitting(false)
       return
     }
@@ -85,7 +85,7 @@ export default function CreateDailyReportPage() {
       })),
     ])
 
-    flash({ type: 'success', message: 'Reporte diario creado exitosamente' })
+    flash('Reporte diario creado exitosamente', 'success')
     router.push('/backend/const_daily')
     setIsSubmitting(false)
   }

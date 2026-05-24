@@ -85,7 +85,7 @@ export default function CreateMaterialOrderPage() {
     })
 
     if (!orderResult.ok) {
-      flash({ type: 'error', message: 'Error al crear la orden de compra' })
+      flash('Error al crear la orden de compra', 'error')
       setIsSubmitting(false)
       return
     }
@@ -99,7 +99,7 @@ export default function CreateMaterialOrderPage() {
       })
     }
 
-    flash({ type: 'success', message: 'Orden de compra creada exitosamente' })
+    flash('Orden de compra creada exitosamente', 'success')
     router.push('/backend/const_materials/orders')
     setIsSubmitting(false)
   }

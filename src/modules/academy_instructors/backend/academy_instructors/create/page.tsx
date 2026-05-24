@@ -15,7 +15,7 @@ export default function AcademyInstructorCreatePage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'personal',
-      label: 'Datos del instructor',
+      title: 'Datos del instructor',
       fields: [
         { id: 'name', label: 'Nombre completo', type: 'text', required: true },
         { id: 'email', label: 'Email', type: 'text', placeholder: 'instructor@email.com' },
@@ -28,7 +28,7 @@ export default function AcademyInstructorCreatePage() {
     },
     {
       id: 'work',
-      label: 'Condiciones de trabajo',
+      title: 'Condiciones de trabajo',
       fields: [
         { id: 'hourly_rate_usd', label: 'Tarifa por hora (USD)', type: 'number',
           placeholder: '15.00' },
@@ -54,6 +54,7 @@ export default function AcademyInstructorCreatePage() {
         <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo instructor</h1>
 
         <CrudForm
+          fields={[]}
           groups={groups}
           onSubmit={async (values) => {
             const res = await createCrud('academy-instructors/instructors', values)

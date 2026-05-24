@@ -63,9 +63,8 @@ export function CoaPdf({ data: d }: { data: CoaPdfData }) {
       <Page size="A4" style={baseStyles.page}>
         <DocHeader
           org={d.org}
-          title="Certificate of Analysis"
-          subtitle={`CoA N° ${d.coa_number} | Lote ${d.lot_number}`}
-          docId={docId('COA', d.id)}
+          docTitle="Certificate of Analysis"
+          docNumber={`CoA N° ${d.coa_number} | Lote ${d.lot_number}`}
         />
 
         <StatusBanner
@@ -73,10 +72,10 @@ export function CoaPdf({ data: d }: { data: CoaPdfData }) {
           color={allPass ? COLORS.success : COLORS.danger}
         />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
           {/* Identificación del lote */}
           <Section title="Identificación del Producto y Lote">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Código de producto" value={d.product_code} />
                 <DetailRow label="Nombre del producto" value={d.product_name} />
@@ -122,14 +121,14 @@ export function CoaPdf({ data: d }: { data: CoaPdfData }) {
             </Section>
           ) : (
             <Section title="Resultados de Análisis">
-              <Text style={{ fontSize: FONT_SIZES.sm, color: COLORS.neutral, padding: SPACING[2] }}>
+              <Text style={{ fontSize: FONT_SIZES.sm, color: COLORS.neutral, padding: (SPACING as any)[2] }}>
                 Resultados de análisis registrados en el sistema de calidad.
               </Text>
             </Section>
           )}
 
           {/* Sello de aprobación */}
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: SPACING[4], gap: SPACING[4], alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: (SPACING as any)[4], gap: (SPACING as any)[4], alignItems: 'center' }}>
             <View style={{ flex: 1 }}>
               <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.neutral, lineHeight: 1.5 }}>
                 Este certificado ha sido emitido de acuerdo con los estándares internos de calidad y las normativas venezolanas vigentes (COVENIN, SENCAMER). Los resultados aplican exclusivamente al lote identificado.
@@ -147,7 +146,7 @@ export function CoaPdf({ data: d }: { data: CoaPdfData }) {
           </View>
         </View>
 
-        <DocFooter org={d.org} pageLabel="Certificate of Analysis" />
+        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
       </Page>
     </Document>
   )

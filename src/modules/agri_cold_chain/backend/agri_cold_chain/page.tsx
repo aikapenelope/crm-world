@@ -190,10 +190,7 @@ export default function AgriColdChainPage() {
           data={units}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin unidades de frío registradas',
-            description: 'Registra los cuartos fríos para monitorear la cadena de temperatura.',
-          }}
+          emptyState='Sin unidades de frío registradas'
           stickyActionsColumn
         />
       </PageBody>

@@ -209,10 +209,7 @@ export default function FeedBatchesPage() {
           data={batches}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin lotes de alimento',
-            description: 'Registra el primer lote de alimento balanceado.',
-          }}
+          emptyState='Sin lotes de alimento'
           stickyActionsColumn
         />
       </PageBody>

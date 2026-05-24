@@ -280,10 +280,7 @@ export default function BomDetailPage() {
             data={lines}
             columns={lineColumns}
             isLoading={false}
-            emptyState={{
-              label: 'Sin componentes',
-              description: 'Agrega los materiales necesarios para fabricar este producto.',
-            }}
+            emptyState='Sin componentes'
             stickyActionsColumn
           />
         </div>

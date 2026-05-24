@@ -121,7 +121,7 @@ export default function AgriSalesPage() {
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ label: 'Sin órdenes de venta', description: 'Registra la primera venta a un cliente industrial.' }}
+          emptyState='Sin órdenes de venta'
           stickyActionsColumn
         />
       </PageBody>

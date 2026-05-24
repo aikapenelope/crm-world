@@ -32,7 +32,7 @@ export default function CreateUnitPage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'main',
-      label: 'Unidad',
+      title: 'Unidad',
       fields: [
         {
           id: 'building_id', label: 'Edificio', type: 'select', required: true,

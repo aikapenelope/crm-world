@@ -78,12 +78,12 @@ export function InformeSemanalPdf({ data: d }: { data: InformeSemanalData }) {
   return (
     <Document title={`Informe Semanal — ${d.flock_number}`} author={d.org.name}>
       <Page size="A4" style={baseStyles.page}>
-        <DocHeader org={d.org} title="Informe Semanal del Lote" subtitle={`Semana ${d.current_week} | ${fmtDate(d.report_date)}`} docId={docId('ISL', d.id)} />
+        <DocHeader org={d.org} docTitle="Informe Semanal del Lote" docNumber={`Semana ${d.current_week} | ${fmtDate(d.report_date)}`} />
 
         {/* Identificación del lote */}
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[4] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[4] }}>
           <Section title="Identificación del Lote">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Lote" value={d.flock_number} />
                 <DetailRow label="Especie" value={d.species} />
@@ -145,7 +145,7 @@ export function InformeSemanalPdf({ data: d }: { data: InformeSemanalData }) {
           )}
         </View>
 
-        <DocFooter org={d.org} pageLabel="Informe Semanal" />
+        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
       </Page>
     </Document>
   )

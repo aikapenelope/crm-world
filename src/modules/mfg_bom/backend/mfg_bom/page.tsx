@@ -191,10 +191,7 @@ export default function MfgBomPage() {
           data={boms}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            label: 'Sin BOMs registrados',
-            description: 'Crea el primer BOM para comenzar a planificar la producción.',
-          }}
+          emptyState='Sin BOMs registrados'
           stickyActionsColumn
         />
       </PageBody>

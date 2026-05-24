@@ -36,7 +36,7 @@ export type ReporteTurnoData = {
 const SHIFT_LABEL: Record<string, string> = { morning: 'Mañana', afternoon: 'Tarde', night: 'Noche' }
 
 const s = StyleSheet.create({
-  kpiRow: { flexDirection: 'row', gap: 8, marginBottom: SPACING[3] },
+  kpiRow: { flexDirection: 'row', gap: 8, marginBottom: (SPACING as any)[3] },
   kpiCard: { flex: 1, padding: 10, borderRadius: 4, borderWidth: 0.5, alignItems: 'center' },
   kpiLabel: { fontSize: FONT_SIZES.xs, color: COLORS.neutral, marginBottom: 2, textAlign: 'center' },
   kpiValue: { fontSize: FONT_SIZES['2xl'], fontFamily: FONTS.bold, textAlign: 'center' },
@@ -71,15 +71,14 @@ export function ReporteTurnoPdf({ data: d }: { data: ReporteTurnoData }) {
       <Page size="A4" style={baseStyles.page}>
         <DocHeader
           org={d.org}
-          title="Reporte de Turno"
-          subtitle={`${SHIFT_LABEL[d.shift_type] ?? d.shift_type} | ${fmtDate(d.shift_date)} | ${d.work_center_name ?? 'Planta General'}`}
-          docId={docId('RT', d.id)}
+          docTitle="Reporte de Turno"
+          docNumber={`${SHIFT_LABEL[d.shift_type] ?? d.shift_type} | ${fmtDate(d.shift_date)} | ${d.work_center_name ?? 'Planta General'}`}
         />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
           {/* Datos del turno */}
           <Section title="Datos del Turno">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Reporte N°" value={d.report_number} />
                 <DetailRow label="Turno" value={SHIFT_LABEL[d.shift_type] ?? d.shift_type} />
@@ -98,7 +97,7 @@ export function ReporteTurnoPdf({ data: d }: { data: ReporteTurnoData }) {
               <OeeCard label="OEE Total" value={d.oee_total_pct} benchmark={85} />
               <OeeCard label="OEE Interno (sin CORPOELEC)" value={d.oee_internal_pct} benchmark={85} />
             </View>
-            <View style={{ padding: SPACING[2], backgroundColor: '#EFF6FF', borderRadius: 3, borderLeftWidth: 3, borderLeftColor: COLORS.primaryLight }}>
+            <View style={{ padding: (SPACING as any)[2], backgroundColor: '#EFF6FF', borderRadius: 3, borderLeftWidth: 3, borderLeftColor: COLORS.primaryLight }}>
               <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.primaryLight }}>
                 OEE Total incluye paros por CORPOELEC. OEE Interno excluye fuerza mayor — mide eficiencia real del equipo y del equipo de producción.
               </Text>
@@ -123,7 +122,7 @@ export function ReporteTurnoPdf({ data: d }: { data: ReporteTurnoData }) {
 
           {/* Paros */}
           <Section title="Registro de Paros">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Paros totales" value={`${d.total_downtime_hrs.toFixed(2)} horas`} />
                 <DetailRow label="Paros internos (controlables)" value={`${d.internal_downtime_hrs.toFixed(2)} horas`} />
@@ -138,7 +137,7 @@ export function ReporteTurnoPdf({ data: d }: { data: ReporteTurnoData }) {
           {/* Observaciones */}
           {d.observations && (
             <Section title="Observaciones del Supervisor">
-              <View style={{ padding: SPACING[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
+              <View style={{ padding: (SPACING as any)[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
                 <Text style={{ fontSize: FONT_SIZES.sm, color: COLORS.text, lineHeight: 1.5 }}>{d.observations}</Text>
               </View>
             </Section>
@@ -150,7 +149,7 @@ export function ReporteTurnoPdf({ data: d }: { data: ReporteTurnoData }) {
           ]} />
         </View>
 
-        <DocFooter org={d.org} pageLabel="Reporte de Turno" />
+        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
       </Page>
     </Document>
   )
