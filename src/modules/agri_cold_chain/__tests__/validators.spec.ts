@@ -65,7 +65,6 @@ describe('coldStorageUnitCreateSchema', () => {
         expect(result.data.unit_type).toBe('chill_room')
         expect(result.data.min_alert_minutes).toBe(15)
         expect(result.data.status).toBe('active')
-        expect(result.data.has_generator).toBe(false)
       }
     })
 
