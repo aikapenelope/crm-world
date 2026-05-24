@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@open-mercato/ui/primitives/select'
@@ -214,11 +215,8 @@ export default function MfgInventoryPage() {
         {showReceive && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Recibir Material en Almacén (GR)</h3>
-            <CrudForm{...({} as any)}
-              entityId="mfg_inventory.lot"
-              apiPath="/api/mfg-inventory/stock-lots"
-              mode="create"
-              initial={{ status: 'quarantine', entry_date: new Date().toISOString().split('T')[0] }}
+            <CrudForm
+              initialValues={{ status: 'quarantine', entry_date: new Date().toISOString().split('T')[0] }}
               fields={[
                 { type: 'text' as const,   id: 'material_code',       label: 'Código del Material', required: true },
                 { type: 'text' as const,   id: 'material_name',       label: 'Nombre del Material', required: true },
@@ -243,7 +241,9 @@ export default function MfgInventoryPage() {
                 { id: 'lot',      title: 'Lote',         fields: ['lot_number', 'supplier_lot_number', 'quantity', 'uom', 'unit_cost_usd'] },
                 { id: 'storage',  title: 'Almacenamiento', fields: ['expiry_date', 'location_id', 'notes'] },
               ]}
-              onSuccess={() => {
+              cancelHref="/backend/mfg_inventory"
+              onSubmit={async (values) => {
+                await createCrud('mfg-inventory/stock-lots', values)
                 flash('Material recibido en cuarentena — pendiente de inspección QC', 'info')
                 setReceive(false)
                 load()

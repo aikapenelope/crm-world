@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -104,10 +105,7 @@ export default function AgriFieldPage() {
         {showPlotForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Parcela Agrícola</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_field.plot"
-              apiPath="/api/agri-field/field-plots"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'name',              label: 'Nombre de la Parcela', required: true },
                 { type: 'text' as const,   id: 'area_hectares',     label: 'Área (hectáreas)',      required: true },
@@ -120,7 +118,13 @@ export default function AgriFieldPage() {
                 { type: 'text' as const,   id: 'location_gps',      label: 'GPS (lat,lng)' },
               ]}
               groups={[{ id: 'general', title: 'General', fields: ['name', 'area_hectares', 'irrigation_system', 'soil_type', 'location_gps'] }]}
-              onSuccess={() => { flash('Parcela registrada', 'success'); setPlotForm(false); load() }}
+              cancelHref="/backend/agri_field"
+              onSubmit={async (values) => {
+                await createCrud('agri-field/field-plots', values)
+                flash('Parcela registrada', 'success')
+                setPlotForm(false)
+                load()
+              }}
             />
           </div>
         )}
@@ -128,10 +132,7 @@ export default function AgriFieldPage() {
         {showCycleForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Ciclo de Cultivo</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_field.cycle"
-              apiPath="/api/agri-field/crop-cycles"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'select' as const, id: 'field_plot_id',         label: 'Parcela',             required: true, options: plots },
                 { type: 'select' as const, id: 'crop_type',             label: 'Cultivo',             required: true,
@@ -156,7 +157,13 @@ export default function AgriFieldPage() {
                 { id: 'schedule', title: 'Fechas',    fields: ['planting_date', 'expected_harvest_date'] },
                 { id: 'yield',    title: 'Producción', fields: ['expected_yield_tons_ha', 'destination', 'notes'] },
               ]}
-              onSuccess={() => { flash('Ciclo de cultivo creado', 'success'); setCycleForm(false); load() }}
+              cancelHref="/backend/agri_field"
+              onSubmit={async (values) => {
+                await createCrud('agri-field/crop-cycles', values)
+                flash('Ciclo de cultivo creado', 'success')
+                setCycleForm(false)
+                load()
+              }}
             />
           </div>
         )}

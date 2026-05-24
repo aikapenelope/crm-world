@@ -249,23 +249,21 @@ export default function FlockDetailPage() {
         {showForm && flock.status === 'active' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registro Semana {nextWeek}</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_units.flock_weekly_record"
-              mode="create"
-              initial={{ week_number: nextWeek }}
+            <CrudForm
+              initialValues={{ week_number: nextWeek }}
               fields={[
-                { type: 'number',   name: 'week_number',              label: 'Semana',                  required: true },
-                { type: 'date',     name: 'record_date',              label: 'Fecha de registro',        required: true },
-                { type: 'number',   name: 'live_count',               label: 'Aves vivas',               required: true },
-                { type: 'number',   name: 'weekly_mortality',         label: 'Muertes esta semana',      required: true },
-                { type: 'number',   name: 'cumulative_mortality',     label: 'Mortalidad acumulada',     required: true },
-                { type: 'number',   name: 'avg_body_weight_g',        label: 'Peso promedio (g)',         required: true },
-                { type: 'text',     name: 'weekly_feed_kg',           label: 'Alimento semanal (kg)',     required: true },
-                { type: 'text',     name: 'cumulative_feed_kg',       label: 'Alimento acumulado (kg)',   required: true },
-                { type: 'text',     name: 'house_temp_avg_c',         label: 'Temp. galpón prom. (°C)' },
-                { type: 'text',     name: 'house_humidity_avg_pct',   label: 'Humedad relativa (%)' },
-                { type: 'text',     name: 'water_consumption_liters', label: 'Consumo agua (L)' },
-                { type: 'textarea', name: 'health_observations',      label: 'Observaciones sanitarias' },
+                { type: 'number' as const,   id: 'week_number',              label: 'Semana',                  required: true },
+                { type: 'date' as const,     id: 'record_date',              label: 'Fecha de registro',        required: true },
+                { type: 'number' as const,   id: 'live_count',               label: 'Aves vivas',               required: true },
+                { type: 'number' as const,   id: 'weekly_mortality',         label: 'Muertes esta semana',      required: true },
+                { type: 'number' as const,   id: 'cumulative_mortality',     label: 'Mortalidad acumulada',     required: true },
+                { type: 'number' as const,   id: 'avg_body_weight_g',        label: 'Peso promedio (g)',         required: true },
+                { type: 'text' as const,     id: 'weekly_feed_kg',           label: 'Alimento semanal (kg)',     required: true },
+                { type: 'text' as const,     id: 'cumulative_feed_kg',       label: 'Alimento acumulado (kg)',   required: true },
+                { type: 'text' as const,     id: 'house_temp_avg_c',         label: 'Temp. galpón prom. (°C)' },
+                { type: 'text' as const,     id: 'house_humidity_avg_pct',   label: 'Humedad relativa (%)' },
+                { type: 'text' as const,     id: 'water_consumption_liters', label: 'Consumo agua (L)' },
+                { type: 'textarea' as const, id: 'health_observations',      label: 'Observaciones sanitarias' },
               ]}
               groups={[
                 { id: 'counts',      title: 'Conteos',        fields: ['week_number', 'record_date', 'live_count', 'weekly_mortality', 'cumulative_mortality'] },
@@ -281,6 +279,7 @@ export default function FlockDetailPage() {
                 setShowForm(false)
                 load()
               }}
+              cancelHref={`/backend/agri_units/${flockId}`}
             />
           </div>
         )}

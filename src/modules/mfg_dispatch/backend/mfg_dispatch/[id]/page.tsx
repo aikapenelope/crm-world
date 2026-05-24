@@ -4,6 +4,7 @@ import * as React from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Page, PageBody } from '@open-mercato/ui/backend/Page'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { LoadingMessage, ErrorMessage } from '@open-mercato/ui/backend/detail'
@@ -127,8 +128,8 @@ export default function DispatchDetailPage() {
             </div>
             {showLineForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm{...({} as any)} entityId="mfg_dispatch.sale_order_line" apiPath="/api/mfg-dispatch/sale-order-lines" mode="create"
-                  initial={{ sale_order_id: params.id, line_number: lines.length + 1 }}
+                <CrudForm
+                  initialValues={{ sale_order_id: params.id, line_number: lines.length + 1 }}
                   fields={[
                     { type: 'text' as const, id: 'product_code',   label: 'Código producto', required: true },
                     { type: 'text' as const, id: 'product_name',   label: 'Nombre producto', required: true },
@@ -142,6 +143,7 @@ export default function DispatchDetailPage() {
                     await apiCallOrThrow('/api/mfg-dispatch/sale-order-lines', { method: 'POST', body: JSON.stringify({ ...v, sale_order_id: params.id }) })
                     flash('Línea agregada', 'success'); setLF(false); load()
                   }}
+                  cancelHref={`/backend/mfg_dispatch/${params.id}`}
                 />
               </div>
             )}
@@ -192,8 +194,8 @@ export default function DispatchDetailPage() {
             </div>
             {showDispForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm{...({} as any)} entityId="mfg_dispatch.dispatch_order" apiPath="/api/mfg-dispatch/dispatch-orders" mode="create"
-                  initial={{ sale_order_id: params.id, sale_order_number: so.order_number, customer_name: so.customer_name, dispatch_date: new Date().toISOString().split('T')[0], requires_temperature_control: so.requires_temperature_control }}
+                <CrudForm
+                  initialValues={{ sale_order_id: params.id, sale_order_number: so.order_number, customer_name: so.customer_name, dispatch_date: new Date().toISOString().split('T')[0], requires_temperature_control: so.requires_temperature_control }}
                   fields={[
                     { type: 'text' as const,   id: 'dispatch_number',  label: 'Número guía (DISP-2026-XXX)', required: true },
                     { type: 'text' as const,   id: 'carrier_name',     label: 'Transporte / Empresa de carga' },
@@ -202,7 +204,11 @@ export default function DispatchDetailPage() {
                     { type: 'date' as const,   id: 'dispatch_date',    label: 'Fecha de despacho' },
                     { type: 'text' as const,   id: 'temperature_range', label: 'Rango de temperatura (si aplica)' },
                   ]}
-                  onSuccess={() => { flash('Guía de despacho emitida', 'success'); setDF(false); load() }}
+                  cancelHref={`/backend/mfg_dispatch/${params.id}`}
+                  onSubmit={async (values) => {
+                    await createCrud('mfg-dispatch/dispatch-orders', { ...values, sale_order_id: params.id })
+                    flash('Guía de despacho emitida', 'success'); setDF(false); load()
+                  }}
                 />
               </div>
             )}

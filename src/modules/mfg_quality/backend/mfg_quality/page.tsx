@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -159,11 +160,8 @@ export default function MfgQualityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar No-Conformidad</h3>
-            <CrudForm{...({} as any)}
-              entityId="mfg_quality.nc"
-              apiPath="/api/mfg-quality/nonconformances"
-              mode="create"
-              initial={{ status: 'open' }}
+            <CrudForm
+              initialValues={{ status: 'open' }}
               fields={[
                 { type: 'text' as const,   id: 'nc_number',    label: 'Número de NC (NC-MFG-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'source',       label: 'Origen de la detección', required: true,
@@ -193,7 +191,9 @@ export default function MfgQualityPage() {
                 { id: 'desc',     title: 'Descripción',    fields: ['description', 'severity', 'quantity_affected', 'uom'] },
                 { id: 'cost',     title: 'Costo / Notas',  fields: ['cost_nc_usd', 'notes'] },
               ]}
-              onSuccess={() => {
+              cancelHref="/backend/mfg_quality"
+              onSubmit={async (values) => {
+                await createCrud('mfg-quality/nonconformances', values)
                 flash('No-Conformidad registrada', 'success')
                 setShowForm(false)
                 load()

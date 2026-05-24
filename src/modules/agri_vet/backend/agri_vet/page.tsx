@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -163,10 +164,7 @@ export default function AgriVetPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Tratamiento Medicamentoso</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_vet.medication"
-              apiPath="/api/agri-vet/medication-records"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'select' as const,   id: 'flock_id',                label: 'Lote de Aves',      required: true, options: flockOptions },
                 { type: 'text' as const,     id: 'diagnosis',               label: 'Diagnóstico',       required: true },
@@ -198,7 +196,13 @@ export default function AgriVetPage() {
                 { id: 'withdrawal',   title: 'Período de Retiro',  fields: ['withdrawal_days', 'withdrawal_end_date'] },
                 { id: 'responsible',  title: 'Responsable',        fields: ['veterinarian_name', 'medication_lot_number', 'notes'] },
               ]}
-              onSuccess={() => { flash('Tratamiento registrado', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_vet"
+              onSubmit={async (values) => {
+                await createCrud('agri-vet/medication-records', values)
+                flash('Tratamiento registrado', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}

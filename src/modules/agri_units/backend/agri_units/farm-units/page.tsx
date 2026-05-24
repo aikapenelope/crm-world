@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud, updateCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -165,11 +166,8 @@ export default function FarmUnitsPage() {
             <h3 className="text-sm font-semibold mb-4">
               {editing ? `Editar — ${editing.name}` : 'Nueva Unidad Productiva'}
             </h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_units.farm_unit"
-              apiPath="/api/agri-units/farm-units"
-              mode={editing ? 'edit' : 'create'}
-              initial={editing ?? undefined}
+            <CrudForm
+              initialValues={editing ?? undefined}
               fields={formFields}
               groups={[
                 { id: 'general',  title: 'General',   fields: ['name', 'unit_type', 'ownership_type', 'technical_manager'] },
@@ -177,7 +175,15 @@ export default function FarmUnitsPage() {
                 { id: 'location', title: 'Ubicación',  fields: ['location_address', 'location_gps'] },
                 { id: 'notes',    title: 'Notas',      fields: ['notes'] },
               ]}
-              onSuccess={handleSuccess}
+              cancelHref="/backend/agri_units/farm-units"
+              onSubmit={async (values) => {
+                if (editing) {
+                  await updateCrud('agri-units/farm-units', { ...values, id: editing.id })
+                } else {
+                  await createCrud('agri-units/farm-units', values)
+                }
+                handleSuccess()
+              }}
             />
           </div>
         )}

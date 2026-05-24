@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@open-mercato/ui/primitives/select'
@@ -160,7 +161,7 @@ export default function MfgProcurementPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Ship className="size-4" /> Crear Orden de Compra</h3>
-            <CrudForm{...({} as any)} entityId="mfg_procurement.po" apiPath="/api/mfg-procurement/purchase-orders" mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'po_number',          label: 'Número OC (PO-IMP-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'supplier_id',        label: 'Proveedor', required: true, options: supplierOptions },
@@ -173,7 +174,13 @@ export default function MfgProcurementPage() {
                 { type: 'date' as const,   id: 'estimated_warehouse_arrival', label: 'ETA almacén estimada' },
                 { type: 'text' as const,   id: 'bcv_rate_at_order',  label: 'Tasa BCV al hacer la OC (Bs/USD)' },
               ]}
-              onSuccess={() => { flash('OC creada', 'success'); setForm(false); load() }}
+              cancelHref="/backend/mfg_procurement"
+              onSubmit={async (values) => {
+                await createCrud('mfg-procurement/purchase-orders', values)
+                flash('OC creada', 'success')
+                setForm(false)
+                load()
+              }}
             />
           </div>
         )}

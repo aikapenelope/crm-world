@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud, updateCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -245,11 +246,8 @@ export default function AgriInputsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.name}` : 'Nuevo Insumo'}</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_inputs.item"
-              apiPath="/api/agri-inputs/items"
-              mode={editing ? 'edit' : 'create'}
-              initial={editing ?? undefined}
+            <CrudForm
+              initialValues={editing ?? undefined}
               fields={formFields}
               groups={[
                 { id: 'general',     title: 'General',          fields: ['name', 'input_type', 'category', 'unit'] },
@@ -258,7 +256,19 @@ export default function AgriInputsPage() {
                 { id: 'stock',       title: 'Stock',            fields: ['min_stock', 'reorder_quantity', 'unit_cost_usd'] },
                 { id: 'notes',       title: 'Notas',            fields: ['notes'] },
               ]}
-              onSuccess={() => { flash(editing ? 'Insumo actualizado' : 'Insumo registrado', 'success'); setShowForm(false); setEditing(null); load() }}
+              cancelHref="/backend/agri_inputs"
+              onSubmit={async (values) => {
+                if (editing) {
+                  await updateCrud('agri-inputs/items', { ...values, id: editing.id })
+                  flash('Insumo actualizado', 'success')
+                } else {
+                  await createCrud('agri-inputs/items', values)
+                  flash('Insumo registrado', 'success')
+                }
+                setShowForm(false)
+                setEditing(null)
+                load()
+              }}
             />
           </div>
         )}

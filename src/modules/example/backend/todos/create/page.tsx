@@ -41,15 +41,12 @@ export default function CreateTodoPage() {
   return (
     <Page>
       <PageBody>
-        <CrudForm{...({} as any)}
+        <CrudForm
           title={t('example.todos.form.create.title')}
-          backHref="/backend/todos"
-          entityId="example:todo"
           fields={fields}
           groups={groups}
           submitLabel={t('example.todos.form.create.submit')}
           cancelHref="/backend/todos"
-          successRedirect={successRedirect}
           onSubmit={async (vals) => { await createCrud('example/todos', vals) }}
         />
       </PageBody>

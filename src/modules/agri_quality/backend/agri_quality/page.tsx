@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -173,10 +174,7 @@ export default function AgriQualityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nueva No-Conformidad</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_quality.non_conformity"
-              apiPath="/api/agri-quality/non-conformities"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'nc_number',      label: 'N° NC (NC-YYYYMM-XXX)',   required: true },
                 { type: 'select' as const, id: 'source',         label: 'Origen',                   required: true,
@@ -204,7 +202,13 @@ export default function AgriQualityPage() {
                 { id: 'info',  title: 'Información', fields: ['nc_number', 'source', 'severity', 'detection_date'] },
                 { id: 'desc',  title: 'Descripción', fields: ['description', 'notes'] },
               ]}
-              onSuccess={() => { flash('No-conformidad registrada', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_quality"
+              onSubmit={async (values) => {
+                await createCrud('agri-quality/non-conformities', values)
+                flash('No-conformidad registrada', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}

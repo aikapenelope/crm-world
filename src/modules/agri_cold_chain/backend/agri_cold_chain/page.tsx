@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud, updateCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -168,18 +169,27 @@ export default function AgriColdChainPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.name}` : 'Nueva Unidad de Frío'}</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_cold_chain.storage_unit"
-              apiPath="/api/agri-cold-chain/cold-storage-units"
-              mode={editing ? 'edit' : 'create'}
-              initial={editing ?? undefined}
+            <CrudForm
+              initialValues={editing ?? undefined}
               fields={formFields}
               groups={[
                 { id: 'general',  title: 'General',        fields: ['name', 'unit_type', 'target_temp_min', 'target_temp_max', 'capacity_tons'] },
                 { id: 'iot',      title: 'Sensor / IoT',   fields: ['sensor_id', 'min_alert_minutes', 'alert_phone'] },
                 { id: 'location', title: 'Ubicación',      fields: ['location_description'] },
               ]}
-              onSuccess={() => { flash(editing ? 'Unidad actualizada' : 'Unidad registrada', 'success'); setShowForm(false); setEditing(null); load() }}
+              cancelHref="/backend/agri_cold_chain"
+              onSubmit={async (values) => {
+                if (editing) {
+                  await updateCrud('agri-cold-chain/cold-storage-units', { ...values, id: editing.id })
+                  flash('Unidad actualizada', 'success')
+                } else {
+                  await createCrud('agri-cold-chain/cold-storage-units', values)
+                  flash('Unidad registrada', 'success')
+                }
+                setShowForm(false)
+                setEditing(null)
+                load()
+              }}
             />
           </div>
         )}

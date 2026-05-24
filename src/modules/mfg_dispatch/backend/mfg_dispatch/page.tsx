@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -132,8 +133,8 @@ export default function MfgDispatchPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Truck className="size-4" /> Nuevo Pedido Industrial</h3>
-            <CrudForm{...({} as any)} entityId="mfg_dispatch.sale_order" apiPath="/api/mfg-dispatch/sale-orders" mode="create"
-              initial={{ currency: 'USD', iva_pct: '16.00' }}
+            <CrudForm
+              initialValues={{ currency: 'USD', iva_pct: '16.00' }}
               fields={[
                 { type: 'text' as const,   id: 'order_number',           label: 'Número de Pedido (SO-MFG-2026-XXX)', required: true },
                 { type: 'text' as const,   id: 'customer_name',          label: 'Nombre del Cliente', required: true },
@@ -144,7 +145,13 @@ export default function MfgDispatchPage() {
                 { type: 'text' as const,   id: 'delivery_address',       label: 'Dirección de entrega' },
                 { type: 'textarea' as const, id: 'notes',                label: 'Notas' },
               ]}
-              onSuccess={() => { flash('Pedido creado', 'success'); setForm(false); load() }}
+              cancelHref="/backend/mfg_dispatch"
+              onSubmit={async (values) => {
+                await createCrud('mfg-dispatch/sale-orders', values)
+                flash('Pedido creado', 'success')
+                setForm(false)
+                load()
+              }}
             />
           </div>
         )}

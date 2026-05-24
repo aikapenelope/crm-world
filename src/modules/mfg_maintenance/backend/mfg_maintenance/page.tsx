@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -182,7 +183,7 @@ export default function MfgMaintenancePage() {
         {showWoForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Crear Orden de Trabajo de Mantenimiento</h3>
-            <CrudForm{...({} as any)} entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'wo_number',       label: 'Número WO (WO-MAINT-2026-XXX)', required: true },
                 { type: 'text' as const,   id: 'equipment_code',  label: 'Código de Equipo', required: true },
@@ -197,7 +198,13 @@ export default function MfgMaintenancePage() {
                 { id: 'basic', title: 'Identificación', fields: ['wo_number', 'equipment_code', 'equipment_name', 'work_type', 'priority'] },
                 { id: 'desc',  title: 'Descripción',    fields: ['description', 'fault_description', 'scheduled_date'] },
               ]}
-              onSuccess={() => { flash('Orden de trabajo creada', 'success'); setWoForm(false); load() }}
+              cancelHref="/backend/mfg_maintenance"
+              onSubmit={async (values) => {
+                await createCrud('mfg-maintenance/work-orders-maint', values)
+                flash('Orden de trabajo creada', 'success')
+                setWoForm(false)
+                load()
+              }}
             />
           </div>
         )}

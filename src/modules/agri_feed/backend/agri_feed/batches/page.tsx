@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -164,10 +165,7 @@ export default function FeedBatchesPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Alimento</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_feed.batch"
-              apiPath="/api/agri-feed/batches"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'batch_number',        label: 'Número de Lote',         required: true },
                 { type: 'select' as const, id: 'formula_id',          label: 'Fórmula',                required: true, options: formulas },
@@ -192,7 +190,9 @@ export default function FeedBatchesPage() {
                 { id: 'analysis',  title: 'Análisis QC', fields: ['protein_result_pct', 'moisture_result_pct', 'aflatoxin_ppb'] },
                 { id: 'cost',      title: 'Costo',       fields: ['cost_per_ton_usd', 'notes'] },
               ]}
-              onSuccess={() => {
+              cancelHref="/backend/agri_feed/batches"
+              onSubmit={async (values) => {
+                await createCrud('agri-feed/batches', values)
                 flash('Lote registrado', 'success')
                 setShowForm(false)
                 load()

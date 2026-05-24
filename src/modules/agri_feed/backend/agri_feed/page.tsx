@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud, updateCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -165,11 +166,8 @@ export default function AgriFeedPage() {
             <h3 className="text-sm font-semibold mb-4">
               {editing ? `Editar — ${editing.name}` : 'Nueva Fórmula'}
             </h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_feed.formula"
-              apiPath="/api/agri-feed/formulas"
-              mode={editing ? 'edit' : 'create'}
-              initial={editing ?? undefined}
+            <CrudForm
+              initialValues={editing ?? undefined}
               fields={formulaFields}
               groups={[
                 { id: 'general',     title: 'General',          fields: ['name', 'formula_type', 'species'] },
@@ -177,7 +175,15 @@ export default function AgriFeedPage() {
                 { id: 'cost',        title: 'Costo',            fields: ['cost_per_ton_usd'] },
                 { id: 'notes',       title: 'Notas',            fields: ['notes'] },
               ]}
-              onSuccess={handleSuccess}
+              cancelHref="/backend/agri_feed"
+              onSubmit={async (values) => {
+                if (editing) {
+                  await updateCrud('agri-feed/formulas', { ...values, id: editing.id })
+                } else {
+                  await createCrud('agri-feed/formulas', values)
+                }
+                handleSuccess()
+              }}
             />
           </div>
         )}

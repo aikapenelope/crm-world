@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -155,7 +156,7 @@ export default function MfgHrPage() {
         {showWorkerForm && activeTab === 'workers' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Registrar Operario</h3>
-            <CrudForm{...({} as any)} entityId="mfg_hr.worker" apiPath="/api/mfg-hr/workers" mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'employee_code',       label: 'Código de empleado (OP-001)', required: true },
                 { type: 'text' as const,   id: 'full_name',           label: 'Nombre completo', required: true },
@@ -165,7 +166,13 @@ export default function MfgHrPage() {
                 { type: 'text' as const,   id: 'hourly_rate_bs',      label: 'Tarifa por hora (Bs)' },
                 { type: 'date' as const,   id: 'hire_date',           label: 'Fecha de ingreso' },
               ]}
-              onSuccess={() => { flash('Operario registrado', 'success'); setWF(false); load() }}
+              cancelHref="/backend/mfg_hr"
+              onSubmit={async (values) => {
+                await createCrud('mfg-hr/workers', values)
+                flash('Operario registrado', 'success')
+                setWF(false)
+                load()
+              }}
             />
           </div>
         )}
@@ -174,8 +181,8 @@ export default function MfgHrPage() {
         {showBonusForm && activeTab === 'bonuses' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Award className="size-4" /> Calcular Bono de Producción</h3>
-            <CrudForm{...({} as any)} entityId="mfg_hr.bonus" apiPath="/api/mfg-hr/production-bonuses" mode="create"
-              initial={{ status: 'calculated' }}
+            <CrudForm
+              initialValues={{ status: 'calculated' }}
               fields={[
                 { type: 'text' as const,   id: 'bonus_number',       label: 'Número de bono (BONUS-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'work_center_id',     label: 'Línea / Centro', options: wcOptions },
@@ -191,7 +198,13 @@ export default function MfgHrPage() {
                 { type: 'text' as const,   id: 'bonus_per_worker_bs', label: 'Bono por operario (Bs)', required: true },
                 { type: 'textarea' as const, id: 'notes',            label: 'Notas / criterio del bono' },
               ]}
-              onSuccess={() => { flash('Bono calculado — pendiente de aprobación', 'success'); setBF(false); load() }}
+              cancelHref="/backend/mfg_hr"
+              onSubmit={async (values) => {
+                await createCrud('mfg-hr/production-bonuses', values)
+                flash('Bono calculado — pendiente de aprobación', 'success')
+                setBF(false)
+                load()
+              }}
             />
           </div>
         )}

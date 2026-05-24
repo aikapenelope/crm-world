@@ -130,9 +130,7 @@ export default function SaleOrderDetailPage() {
         {showDispForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Guía de Despacho</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_sales.dispatch"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,    id: 'dispatch_number',  label: 'N° Guía (GD-2026-XXX)', required: true },
                 { type: 'date' as const,    id: 'dispatch_date',    label: 'Fecha de Despacho',     required: true },
@@ -155,6 +153,7 @@ export default function SaleOrderDetailPage() {
                 setDispForm(false)
                 load()
               }}
+              cancelHref={`/backend/agri_sales/${orderId}`}
             />
           </div>
         )}
@@ -163,9 +162,7 @@ export default function SaleOrderDetailPage() {
         {showInvForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Generar Factura</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_sales.invoice"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,  id: 'invoice_number',  label: 'N° Factura (FAC-2026-XXXX)', required: true },
                 { type: 'text' as const,  id: 'control_number',  label: 'N° Control SENIAT' },
@@ -190,6 +187,7 @@ export default function SaleOrderDetailPage() {
                 setInvForm(false)
                 load()
               }}
+              cancelHref={`/backend/agri_sales/${orderId}`}
             />
           </div>
         )}
