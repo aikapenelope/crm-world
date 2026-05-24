@@ -26,7 +26,7 @@ export const searchConfig: SearchModuleConfig = {
         const statusLabel = NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
           text: [norm(r.nc_number as string) ?? '', norm(r.description as string) ?? ''].filter(Boolean),
-          presenter: { title: (norm(r.nc_number as string) as string | undefined) ?? 'No-conformidad', subtitle: (norm(r.description) as string | undefined)?.slice(0, 80) ?? undefined, icon: 'file-warning', badge: statusLabel },
+          presenter: { title: (norm(r.nc_number as string) as string | undefined) ?? 'No-conformidad', subtitle: (norm(r. as string | undefined)?.slice(0, 80) ?? undefined, icon: 'file-warning', badge: statusLabel },
           links: [{ href: `/backend/agri-quality/non-conformities/${r.id}`, label: 'Ver NC', kind: 'primary' }],
           checksumSource: { nc_number: r.nc_number, status: r.status, updated_at: r.updated_at },
         }

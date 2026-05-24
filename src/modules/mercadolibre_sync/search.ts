@@ -35,7 +35,7 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: lines,
         presenter: {
-          title: (norm(r.title) as string | undefined)?.slice(0, 60) ?? 'Listado ML',
+          title: (norm(r. as string | undefined)?.slice(0, 60) ?? 'Listado ML',
           subtitle: subtitle || undefined,
           icon: 'home',
           badge: (norm(r.operation as string) as string | undefined) ?? undefined,
@@ -47,7 +47,7 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: (norm(r.title) as string | undefined)?.slice(0, 60) ?? 'Listado ML',
+        title: (norm(r. as string | undefined)?.slice(0, 60) ?? 'Listado ML',
         subtitle: [norm(r.city as string), norm(r.operation as string)].filter(Boolean).join(' · ') || undefined,
         icon: 'home',
         badge: (norm(r.operation as string) as string | undefined) ?? undefined,

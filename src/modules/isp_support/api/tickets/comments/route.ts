@@ -1,6 +1,6 @@
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
-import { IspTicketCommentEntity } from '../../data/entities'
-import { addCommentSchema } from '../../data/validators'
+import { IspTicketCommentEntity } from '../../../data/entities'
+import { addCommentSchema } from '../../../data/validators'
 import { z } from 'zod'
 
 const listSchema = z.object({

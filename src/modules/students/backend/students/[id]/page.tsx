@@ -151,7 +151,7 @@ export default function StudentDetailPage() {
                   }`}
                 >
                   <Icon className="h-4 w-4" />
-                  {tab.label}
+                  {tab.title}
                 </Button>
               )
             })}

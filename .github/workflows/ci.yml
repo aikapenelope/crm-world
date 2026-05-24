@@ -1,25 +1,47 @@
-# CI — Aika Platform (crm-world)
+# CI — crm-world (Standalone Open Mercato Application)
 #
-# Tres jobs en paralelo sobre cada PR hacia main y cada push a main:
+# Three parallel jobs on every PR to main and every push to main.
 #
-#   lint      → eslint .   (flat config ESLint v10)
-#   typecheck → yarn generate + tsc --noEmit
-#   test      → jest unit tests (src/modules/**/__tests__/**/*.spec.ts)
+# ┌─────────────┬──────────────────────────────────────────────────────────┐
+# │ Job         │ What it validates                                         │
+# ├─────────────┼──────────────────────────────────────────────────────────┤
+# │ lint        │ ESLint on src/modules (pure TypeScript business logic)    │
+# │ typecheck   │ tsc --noEmit on all production code (*.ts + *.tsx)       │
+# │ test        │ Jest unit tests (src/modules/**/__tests__/**/*.spec.ts)   │
+# └─────────────┴──────────────────────────────────────────────────────────┘
 #
-# Diseño:
-#   - Todos los jobs comparten la misma clave de caché de node_modules.
-#     El primer job que instala guarda el caché; el resto lo reutiliza.
-#   - `yarn install` sin --immutable: Yarn 4 activa hardened mode (≡
-#     --immutable) automáticamente en PRs de repos públicos; no es necesario
-#     duplicarlo y permite que los peer-dep warnings (YN0086) sean advertencias,
-#     no errores fatales.
-#   - El audit de seguridad (yarn npm audit) se excluye del CI de PR para no
-#     bloquear trabajo por CVEs en dependencias transitivas que no controlamos.
-#     Correr manualmente: yarn npm audit --severity high
+# Design notes
+# ────────────
+# • All three jobs share the same yarn/node_modules cache key.
+#   The first runner to install saves the cache; subsequent runners reuse it.
 #
-# Referencias:
-#   open-mercato/open-mercato .github/workflows/ci.yml (patrón oficial)
-#   https://docs.github.com/actions/using-workflows
+# • yarn install runs without --immutable.
+#   Yarn 4 auto-enables "hardened mode" (≡ --immutable) for public-repo PRs.
+#   YN0086 peer-dep warnings are non-fatal without the flag; the lockfile is
+#   still fully respected (Yarn never changes it without explicit install).
+#
+# • typecheck uses NODE_OPTIONS=--max-old-space-size=6144.
+#   The project has 111+ modules; tsc exhausts the default Node heap (~1.5 GB)
+#   on ubuntu-latest (7 GB total RAM). 6 GB gives headroom without OOM.
+#
+# • yarn generate runs before typecheck.
+#   mercato generate writes .mercato/generated/*.ts files that tsconfig.json
+#   includes. Without them, tsc reports "Cannot find module '#generated/...'".
+#
+# • lint scope: src/modules only (not the full Next.js app).
+#   The Open Mercato monorepo CI does the same: it excludes @open-mercato/app
+#   from the lint turbo filter. Reason: eslint-config-next + ESLint v10 flat
+#   config triggers scopeManager.addGlobals errors on React component files.
+#   App-layer lint runs locally via IDE / pre-commit hooks.
+#
+# • Security audit (yarn npm audit) is intentionally excluded from PR CI to
+#   avoid blocking work on CVEs in transitive dependencies we do not control.
+#   Run manually: yarn npm audit --severity high
+#
+# References
+# ──────────
+# open-mercato/open-mercato .github/workflows/ci.yml
+# open-mercato/open-mercato apps/mercato/jest.config.cjs
 
 name: CI
 
@@ -34,13 +56,14 @@ on:
     branches:
       - main
 
-# Cancela runs en curso del mismo ref cuando llega un push nuevo.
+# Cancel in-progress runs on the same ref when a new push arrives.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# ── Reutilizable: instalación + caché ─────────────────────────────────────────
-# Extraído como defaults para no repetir los 5 pasos de install en cada job.
+# ─── Shared setup ─────────────────────────────────────────────────────────────
+# All three jobs use the same Node version and Yarn cache strategy.
+# Extracted as workflow-level defaults to avoid repetition.
 
 defaults:
   run:
@@ -48,26 +71,25 @@ defaults:
 
 jobs:
 
-  # ── ESLint ──────────────────────────────────────────────────────────────────
-  # Job más rápido — no necesita yarn generate. Falla antes si hay errores de
-  # estilo, evitando que typecheck/test consuman minutos innecesariamente.
+  # ── Lint ────────────────────────────────────────────────────────────────────
+  # Fast static analysis on pure TypeScript module code.
+  # Does NOT need yarn generate — eslint does not type-check, only lints.
+  # Fails fast before the heavier typecheck and test jobs consume minutes.
   lint:
     name: Lint
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
 
       - name: Enable Corepack (Yarn 4)
         run: corepack enable
 
-      - name: Cache .yarn/cache
+      - name: Cache Yarn packages
         uses: actions/cache@v4
         with:
           path: .yarn/cache
@@ -88,31 +110,32 @@ jobs:
       - name: Lint
         run: yarn lint
 
-  # ── TypeScript ──────────────────────────────────────────────────────────────
-  # `yarn generate` descubre todos los módulos y escribe los archivos en
-  # .mercato/generated/ que el tsconfig incluye. Debe correr antes de tsc.
+  # ── Typecheck ───────────────────────────────────────────────────────────────
+  # Full tsc --noEmit on all production code (*.ts + *.tsx).
+  # Test files (__tests__/**/*.spec.ts) are excluded via tsconfig.json so
+  # ts-jest compiles them independently with CJS-compatible settings.
+  #
+  # yarn generate runs first — it writes .mercato/generated/*.ts which
+  # tsconfig.json includes. Skipping it causes spurious "module not found" errors.
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
-    # NODE_OPTIONS al nivel del job para que lo hereden yarn generate Y
-    # yarn typecheck. Con 111 módulos, tsc puede superar el heap por defecto
-    # del runner de GHA (ubuntu-latest tiene ~7 GB de RAM total).
+    # Raise the Node heap to 6 GB so tsc can analyse 111+ modules without OOM.
+    # ubuntu-latest has 7 GB RAM; 6 GB leaves enough for the runner itself.
     env:
       NODE_OPTIONS: --max-old-space-size=6144
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
 
       - name: Enable Corepack (Yarn 4)
         run: corepack enable
 
-      - name: Cache .yarn/cache
+      - name: Cache Yarn packages
         uses: actions/cache@v4
         with:
           path: .yarn/cache
@@ -131,36 +154,39 @@ jobs:
         run: yarn install
 
       - name: Generate module glue
-        # mercato generate escanea src/modules/ y escribe los archivos de tipo
-        # en .mercato/generated/. Sin este paso, tsc falla con "Cannot find module
-        # '#generated/entities.ids.generated'".
+        # Writes .mercato/generated/modules.generated.ts and related type files.
+        # Required before tsc so all #generated/* imports resolve.
         run: yarn generate
 
       - name: Typecheck
         run: yarn typecheck
 
-  # ── Unit Tests (Jest) ────────────────────────────────────────────────────────
-  # Scope: src/modules/**/__tests__/**/*.spec.ts
-  # Runner: ts-jest (CJS mode) — no requiere yarn generate ni DB.
-  # Coverage: se recolecta y publica en el Step Summary como información;
-  #           no bloquea el job por umbrales mientras la suite crece.
+  # ── Unit Tests ──────────────────────────────────────────────────────────────
+  # Jest unit tests: src/modules/**/__tests__/**/*.spec.ts
+  #
+  # Tests are pure — no database, no HTTP, no framework dependencies.
+  # Each module's data/validators.ts is tested with Zod safeParse assertions.
+  # MikroORM entities in test context are handled by jest-mikroorm-transformer
+  # (sanitises import.meta.* → CJS stubs, then delegates to ts-jest).
+  #
+  # --ci        disables watch mode and fails on snapshots that need updating.
+  # --forceExit closes Jest after all tests finish (guards against open handles
+  #             from MikroORM optional-dep discovery at import time).
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
 
       - name: Enable Corepack (Yarn 4)
         run: corepack enable
 
-      - name: Cache .yarn/cache
+      - name: Cache Yarn packages
         uses: actions/cache@v4
         with:
           path: .yarn/cache
@@ -178,52 +204,35 @@ jobs:
         if: steps.nm-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - name: Run unit tests
-        # --forceExit cierra Jest limpiamente si algún test deja handles abiertos.
-        # --ci activa modo CI: sin watch mode, falla rápido en snapshots obsoletos.
+      - name: Unit Tests
         run: yarn test --ci --forceExit
 
-      - name: Run tests with coverage (informational)
-        # Recolecta cobertura pero no falla el build por umbrales todavía —
-        # la suite crece con cada nueva vertical y los umbrales se activarán
-        # cuando haya cobertura suficiente en todos los módulos.
-        # Refs: jest.config.cjs collectCoverageFrom + coverageThresholds
+      - name: Coverage summary (informational)
+        # Produces a coverage report but does NOT fail on thresholds.
+        # The suite grows incrementally alongside modules — thresholds activate
+        # once there is sufficient coverage across all verticals.
         if: always()
         run: |
-          yarn test --ci --forceExit --coverage --coverageReporters=json-summary \
-            || true
+          yarn test --ci --forceExit --coverage \
+            --coverageReporters=json-summary 2>/dev/null || true
         continue-on-error: true
 
-      - name: Publish coverage summary
+      - name: Publish coverage to Step Summary
         if: always()
         run: |
           SUMMARY="coverage/coverage-summary.json"
-          if [ ! -f "$SUMMARY" ]; then
-            echo "## Unit Test Coverage" >> "$GITHUB_STEP_SUMMARY"
-            echo "Coverage summary not generated (no tests ran with --coverage)." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
+          [ -f "$SUMMARY" ] || exit 0
           node -e "
-          const fs = require('fs');
-          const summary = JSON.parse(fs.readFileSync('$SUMMARY', 'utf8'));
-          const t = summary.total || {};
-          const row = (name) => {
-            const m = t[name] || {};
-            return \`| \${name} | \${m.covered ?? 0}/\${m.total ?? 0} | \${m.pct ?? 0}% |\`;
-          };
-          const md = [
-            '## Unit Test Coverage',
-            '',
+          const fs = require('fs')
+          const s = JSON.parse(fs.readFileSync('$SUMMARY', 'utf8')).total || {}
+          const row = (k) => {
+            const m = s[k] || {}
+            return '| ' + k + ' | ' + (m.covered??0) + '/' + (m.total??0) + ' | ' + (m.pct??0) + '% |'
+          }
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
+            '## Unit Test Coverage', '',
             '| Metric | Covered/Total | % |',
             '|---|---:|---:|',
-            row('lines'),
-            row('statements'),
-            row('functions'),
-            row('branches'),
-            '',
-            '_Source: coverage/coverage-summary.json_',
-            '',
-          ].join('\n');
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
-          console.log('[coverage] Summary written to step summary.');
+            row('lines'), row('statements'), row('functions'), row('branches'), '',
+          ].join('\n'))
           "
