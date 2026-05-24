@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -86,6 +86,7 @@ export class MfgWorkCenterEntity {
  * que se genera al completar la orden. Se conecta con mfg_inventory
  * para crear el lote de PT y con la trazabilidad hacia la MP consumida.
  */
+@Index({ name: 'idx_mfg_orders_status_schedule', properties: ['tenant_id', 'status', 'scheduled_start'] })
 @Entity({ tableName: 'mfg_production_orders' })
 export class MfgProductionOrderEntity {
   @PrimaryKey({ type: 'uuid' })
@@ -200,6 +201,7 @@ export class MfgProductionOrderEntity {
  *   - El costeo de mano de obra directa por orden
  *   - El OEE de cada centro de trabajo
  */
+@Index({ name: 'idx_mfg_operations_order', properties: ['tenant_id', 'order_id'] })
 @Entity({ tableName: 'mfg_order_operations' })
 export class MfgOrderOperationEntity {
   @PrimaryKey({ type: 'uuid' })
@@ -348,6 +350,7 @@ export class MfgOrderMaterialIssueEntity {
  * Cuando se registra un paro, el dashboard de planta se actualiza
  * en tiempo real via clientBroadcast.
  */
+@Index({ name: 'idx_mfg_downtimes_wc_time', properties: ['tenant_id', 'work_center_id', 'started_at'] })
 @Entity({ tableName: 'mfg_production_downtimes' })
 export class MfgProductionDowntimeEntity {
   @PrimaryKey({ type: 'uuid' })

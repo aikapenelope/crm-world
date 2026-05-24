@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -183,6 +183,8 @@ export class AgriFlockEntity {
  * el rendimiento al final del ciclo. La frecuencia es semanal
  * (aunque se puede registrar más frecuente si el usuario lo desea).
  */
+/** Índice crítico: todas las queries de KPI (FCA, IEP) filtran por tenant + flock */
+@Index({ name: 'idx_agri_weekly_flock', properties: ['tenant_id', 'flock_id'] })
 @Entity({ tableName: 'agri_flock_weekly_records' })
 export class AgriFlockWeeklyRecordEntity {
   @PrimaryKey({ type: 'uuid' })

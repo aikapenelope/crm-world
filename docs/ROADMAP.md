@@ -20,7 +20,8 @@
 | Construcción / Constructoras | 13 | 8 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | **Academias y Formación** | 20 | 9 módulos | ✅ | ✅ | — | **COMPLETO** |
 | **ISP / Telecomunicaciones** | 22 | 9 módulos | — | ✅ | — | **COMPLETO** |
-| **Agroalimentario con Procesamiento** | 23 | 12 módulos | ✅ | ✅ | — | **COMPLETO** |
+| **Agroalimentario con Procesamiento** | 23 | 12 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
+| **Manufactura Industrial** | 24 | 16 módulos | ✅ | ✅ | ✅ | **COMPLETO** |
 | Fitness / Gym | — | — | — | — | — | Candidata |
 | Beauty / Salones | — | — | — | — | — | Candidata |
 | Services / Agencias | — | — | — | — | — | Candidata |
@@ -184,23 +185,62 @@ Spec completo en `.ai/specs/2026-05-26-agri-agroalimentario-vertical.md`.
 - [x] `recall_v1` — `agri_traceability/recalls/[id]`
 - [x] `liquidacion_productor_v1` — `agri_hr/settlements/[id]`
 
+**PDFs (4 documentos):**
+- [x] Liquidación del productor integrado (ciclo + KPIs + desglose de pago)
+- [x] Guía de despacho sanitaria (lote de beneficio + resultados QC + vehículo)
+- [x] Certificado de trazabilidad del lote (flock → alimentos → medicamentos → PT)
+- [x] Informe semanal del lote (FCA, IEP, mortalidad, peso, proyecciones)
+
+---
+
+### Phase 18 — CI Pipeline (completo y operativo)
+- [x] `.github/workflows/ci.yml` — typecheck + lint en cada PR/push a main
+- [x] Fix: eliminado `--immutable` de `yarn install` (Yarn 4 + YN0086 peer dep warnings)
+- [x] CI corre en cada PR — resultados visibles en la pestaña Actions de GitHub
+
+### Phase 24 — Manufactura Industrial (completo)
+
+Vertical para fábricas de producción discreta y por procesos en Venezuela.
+Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
+
+**16 módulos en 4 sprints:**
+
+#### Sprint A — Núcleo productivo
+- [x] `mfg_bom` — BOM multinivel (process/discrete), versiones, materiales alternativos para escasez. Workflow `bom_approval_v1`.
+- [x] `mfg_inventory` — Almacén 4-tier (MP/empaque/WIP/PT), lotes FEFO, cuarentena QC, conteo cíclico.
+- [x] `mfg_orders` — Órdenes con routing, reserva de materiales, OEE separado (CORPOELEC vs. interno). AI Agent + workflow `downtime_escalation_v1`.
+- [x] `mfg_quality` — Planes de muestreo, SPC con cartas X-R, NCs automáticas en PCCs. Workflow `nc_disposition_v1`.
+
+#### Sprint B — Inteligencia productiva
+- [x] `mfg_mrp` — Motor MRP completo: BOM explosion, necesidades netas, lead times 60d importación venezolana, requisiciones automáticas.
+- [x] `mfg_floor` — MES simplificado: OEE total vs. interno, worker cierre de turno, reportes automáticos.
+- [x] `mfg_planning` — MPS semanal + heatmap eléctrico CORPOELEC, carga de capacidad por línea.
+- [x] `mfg_costs` — Costeo bimoneda + variaciones de precio/cantidad/MO al cierre de cada orden.
+
+#### Sprint C — Operaciones completas
+- [x] `mfg_maintenance` — GMAO: preventivo/correctivo, repuestos críticos con stock de seguridad = ceil(lead_time/MTBF).
+- [x] `mfg_procurement` — OCs con tracking completo de importación + cálculo CIF real en almacén. Workflow `purchase_authorization_v1`.
+- [x] `mfg_subcontract` — Maquila con almacén virtual en instalaciones del maquilador, merma real vs. contractual.
+- [x] `mfg_energy` — Consumo kWh, cortes CORPOELEC, sobrecosto generador (`generator_premium_usd`).
+
+#### Sprint D — Capa comercial e inteligencia
+- [x] `mfg_dispatch` — Pedidos industriales (IVA 16% + IGTF 3% bimoneda), guías de despacho, CoA obligatorio.
+- [x] `mfg_hr` — Operarios con LOTTT (+30% noche, +25% extra día), bonos de producción por cuota.
+- [x] `mfg_reports` — KPI dashboard ejecutivo + AI Agent "Gerente de Fábrica" (6 tools cross-module).
+- [x] `mfg_portal` — Portal cliente industrial: estado de pedidos + certificados de análisis.
+
+**PDFs (4 documentos):**
+- [x] Guía de Despacho PT (cliente, lotes, cantidades, vehículo, firma de recepción)
+- [x] Certificate of Analysis (CoA) — resultados de QC del lote para clientes industriales
+- [x] Reporte de Turno — OEE total/interno, producción real vs. plan, paros por categoría
+- [x] Orden de Trabajo de Mantenimiento — instructivo para técnicos con repuestos requeridos
+
 ---
 
 ## Pendiente
 
-### Phase 18 — Infraestructura (acción manual)
-- [ ] **Activar CI**: Settings → Actions → General → "Allow all actions and reusable workflows" (1 click)
-- [ ] Docker layer caching en Coolify (~15 min)
-- [ ] Resend email (`mail.aikalabs.cc`) — API key por tenant
-- [ ] Wildcard domain `*.aika.com.ve` — DNS challenge
-
-### Phase 22-C — ISP Monitoring (bloqueado)
-- [ ] `isp_monitoring` — webhooks Zabbix/PRTG + comandos Radius/OLT — **esperando cliente ISP con NMS**
-
-### Phase 23 — Deuda técnica residual
-- [ ] PDFs del agri: liquidación productor, guía de despacho sanitaria, certificado de trazabilidad, informe semanal del lote
-- [ ] Índices de DB en entidades agri críticas (tenant_id + organization_id, flock_id)
-- [ ] Porcicultura y bovino: lógica específica (reproductores, ciclos reproductivos)
+### Phase 22-C — ISP Monitoring (bloqueado: cliente con NMS)
+- [ ] `isp_monitoring` — webhooks Zabbix/PRTG + comandos Radius/OLT
 
 ---
 
@@ -208,12 +248,8 @@ Spec completo en `.ai/specs/2026-05-26-agri-agroalimentario-vertical.md`.
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
-| Activar GitHub Actions (settings) | Alta | 1 click — yml ya está en main |
 | Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
 | Integration tests (RE + Education + Retail) | Media | Pendiente |
 | `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
 | Docker layer caching en Coolify | Baja | Optimización de build |
-| `<form>` con line items → CrudForm repeatable groups | Baja | 11 excepciones documentadas |
-| Índices DB en módulos agri | Media | Pendiente — fase 23 específico |
-| PDFs vertical agri (4 documentos) | Media | Pendiente |

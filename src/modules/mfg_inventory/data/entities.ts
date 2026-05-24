@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -90,6 +90,8 @@ export class MfgWarehouseLocationEntity {
  * El campo qc_inspection_id conecta el lote con el resultado de QC
  * que lo liberó de cuarentena o lo rechazó.
  */
+/** Índice compuesto crítico: todas las queries de FEFO y MRP filtran por tenant + material + status */
+@Index({ name: 'idx_mfg_stock_lots_material_status', properties: ['tenant_id', 'material_id', 'status'] })
 @Entity({ tableName: 'mfg_stock_lots' })
 export class MfgStockLotEntity {
   @PrimaryKey({ type: 'uuid' })
