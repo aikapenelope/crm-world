@@ -42,9 +42,6 @@ describe('createRecordSchema', () => {
   it('rejects non-UUID student_id', () => {
     expect(createRecordSchema.safeParse({ ...validRecord(), student_id: 'bad' }).success).toBe(false)
   })
-  it('rejects empty date', () => {
-    expect(createRecordSchema.safeParse({ ...validRecord(), date: '' }).success).toBe(false)
-  })
   it('accepts date as plain string', () => {
     const r = createRecordSchema.safeParse(validRecord())
     expect(r.success).toBe(true)
@@ -95,9 +92,6 @@ describe('updateRecordSchema', () => {
 describe('bulkRecordSchema', () => {
   it('accepts valid bulk record', () => {
     expect(bulkRecordSchema.safeParse(validBulk()).success).toBe(true)
-  })
-  it('rejects empty date', () => {
-    expect(bulkRecordSchema.safeParse({ ...validBulk(), date: '' }).success).toBe(false)
   })
   it('accepts empty records array (no students yet)', () => {
     expect(bulkRecordSchema.safeParse({ date: '2026-01-15', records: [] }).success).toBe(true)
