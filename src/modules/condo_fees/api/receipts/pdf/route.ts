@@ -74,9 +74,7 @@ export async function GET(request: Request, ctx: any) {
   }
 
   // Generate PDF stream
-  const stream = await renderToStream(
-    React.createElement(ReciboCondo, { data })
-  )
+  const stream = await renderToStream(React.createElement(ReciboCondo, { data }) as any)
 
   // Collect stream to buffer
   const chunks: Buffer[] = []

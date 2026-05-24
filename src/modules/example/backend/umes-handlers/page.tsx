@@ -77,7 +77,7 @@ export default function UmesHandlersPage() {
   const [serverEmitStatus, setServerEmitStatus] = React.useState<'idle' | 'pending' | 'ok' | 'error'>('idle')
   const [serverEmitError, setServerEmitError] = React.useState<string | null>(null)
   const [draftTitle, setDraftTitle] = React.useState('display me')
-  const [formSeed, setFormSeed] = React.useState({ nonce: 0, label: 'display me', note: '  draft note  ' })
+  const [formSeed, setFormSeed] = React.useState({ nonce: 0, title: 'display me', note: '  draft note  ' })
   const [personId, setPersonId] = React.useState('')
   const personIdInputRef = React.useRef<HTMLInputElement | null>(null)
   const [probeTodoTitle, setProbeTodoTitle] = React.useState('UMES enricher probe')
@@ -299,12 +299,12 @@ export default function UmesHandlersPage() {
   }, [appEventResult, dispatchMockEvent, draftTitle, emitServerTodoCreated, runEnricherProbe, submittedData, t])
   const loadBlockedSaveExample = React.useCallback(() => {
     const title = '[block] save demo'
-    setFormSeed((prev) => ({ nonce: prev.nonce + 1, title, note: 'Should be blocked by onBeforeSave rule' }))
+    setFormSeed((prev) => ({ nonce: prev.nonce + 1, label: title, note: 'Should be blocked by onBeforeSave rule' }))
     setDraftTitle(title)
   }, [])
   const loadTransformSaveExample = React.useCallback(() => {
     const title = '[confirm][transform] transform demo'
-    setFormSeed((prev) => ({ nonce: prev.nonce + 1, title, note: 'transform: make me uppercase' }))
+    setFormSeed((prev) => ({ nonce: prev.nonce + 1, label: title, note: 'transform: make me uppercase' }))
     setDraftTitle(title)
   }, [])
 
@@ -438,7 +438,7 @@ export default function UmesHandlersPage() {
           fields={fields}
           groups={groups}
           injectionSpotId="example:phase-c-handlers"
-          initialValues={{ title: formSeed.title, note: formSeed.note }}
+          initialValues={{ title: (formSeed as any).title ?? formSeed.label, note: formSeed.note }}
           contentHeader={contentHeader}
           cancelHref="/backend/blocked"
           onSubmit={async (values) => {

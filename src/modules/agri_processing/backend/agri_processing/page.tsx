@@ -145,7 +145,7 @@ export default function AgriProcessingPage() {
         return (
           <RowActions items={[
             { id: 'open', label: 'Ver detalle', onSelect: () => router.push(`/backend/agri-processing/${row.original.id}`) },
-            ...(next[row.original.status] ? [{ id: 'advance', title: nextLabel[row.original.status] ?? 'Avanzar estado', onSelect: () => handleAdvanceStatus(row.original) }] : []),
+            ...(next[row.original.status] ? [{ id: 'advance', label: nextLabel[row.original.status] ?? 'Avanzar estado', onSelect: () => handleAdvanceStatus(row.original) }] : []),
           ]} />
         )
       },

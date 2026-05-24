@@ -233,7 +233,7 @@ export default function AcademyGroupDetailPage() {
                 className={`px-4 py-2.5 text-sm border-b-2 rounded-none h-auto font-normal transition-colors
                   ${tab === t.id ? 'border-primary text-primary font-medium' : 'border-transparent text-muted-foreground'}`}
               >
-                {t.label}
+                {t.title}
               </Button>
             ))}
           </div>

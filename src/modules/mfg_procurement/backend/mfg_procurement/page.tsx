@@ -125,7 +125,7 @@ export default function MfgProcurementPage() {
       <RowActions items={[
         { id: 'view',   label: 'Ver detalle / CIF',    onSelect: () => router.push(`/backend/mfg-procurement/${row.original.id}`) },
         ...(PO_STATUS_FLOW.includes(row.original.status) && row.original.status !== 'delivered' ? [
-          { id: 'advance', title: `→ ${PO_STATUS_LABEL[PO_STATUS_FLOW[PO_STATUS_FLOW.indexOf(row.original.status) + 1]] ?? 'Siguiente'}`, onSelect: () => handleAdvance(row.original) },
+          { id: 'advance', label: `→ ${PO_STATUS_LABEL[PO_STATUS_FLOW[PO_STATUS_FLOW.indexOf(row.original.status) + 1]] ?? 'Siguiente'}`, onSelect: () => handleAdvance(row.original) },
         ] : []),
       ]} />
     )},

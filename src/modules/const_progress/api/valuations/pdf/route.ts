@@ -83,9 +83,7 @@ export async function GET(request: Request, ctx: any) {
     id: v.id,
   }
 
-  const stream = await renderToStream(
-    React.createElement(ValuacionObra, { data })
-  )
+  const stream = await renderToStream(React.createElement(ValuacionObra, { data }) as any)
 
   const chunks: Buffer[] = []
   for await (const chunk of stream) {

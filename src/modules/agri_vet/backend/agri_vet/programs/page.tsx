@@ -113,7 +113,7 @@ export default function VaccinationProgramsPage() {
             },
             {
               id: 'toggle',
-              title: row.original.is_active ? 'Desactivar' : 'Activar',
+              label: row.original.is_active ? 'Desactivar' : 'Activar',
               onSelect: () => handleToggle(row.original),
             },
           ]}

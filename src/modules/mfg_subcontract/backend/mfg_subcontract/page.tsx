@@ -129,7 +129,7 @@ export default function MfgSubcontractPage() {
       <RowActions items={[
         { id: 'materials', label: 'Ver materiales', onSelect: () => { setSelected(row.original); loadMaterials(row.original.id) } },
         ...(SC_STATUS_FLOW.includes(row.original.status) && row.original.status !== 'completed' ? [
-          { id: 'advance', title: `→ ${SC_STATUS_LABEL[SC_STATUS_FLOW[SC_STATUS_FLOW.indexOf(row.original.status) + 1]] ?? 'Siguiente'}`, onSelect: () => handleAdvance(row.original) },
+          { id: 'advance', label: `→ ${SC_STATUS_LABEL[SC_STATUS_FLOW[SC_STATUS_FLOW.indexOf(row.original.status) + 1]] ?? 'Siguiente'}`, onSelect: () => handleAdvance(row.original) },
         ] : []),
       ]} />
     )},

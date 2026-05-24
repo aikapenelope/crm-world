@@ -234,7 +234,7 @@ export default function MfgMrpPage() {
               </div>
             </div>
             <DataTable entityId="mfg_mrp.requirement" data={filteredReqs} columns={reqmtColumns} isLoading={isLoading}
-              emptyState={{ title: reqFilter === 'risk' ? 'Sin materiales en riesgo' : 'Sin necesidades', description: 'Ejecuta el MRP para calcular las necesidades.' }} />
+              emptyState=reqFilter === 'risk' ? 'Sin materiales en riesgo' : 'Sin necesidades' />
           </div>
         )}
 
