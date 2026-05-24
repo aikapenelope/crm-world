@@ -67,7 +67,7 @@ export const coaCreateSchema = z.object({
   uom:               z.string().max(20),
   dispatch_order_id: z.string().uuid().optional().nullable(),
   customer_name:     z.string().max(255).optional().nullable(),
-  qa_results:        z.record(z.union([z.string(), z.number(), z.boolean()])).optional().nullable(),
+  qa_results:        z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional().nullable(),
   approved_by:       z.string().max(255).optional().nullable(),
   approved_at:       z.coerce.date().optional().nullable(),
   is_released:       z.boolean().default(false),

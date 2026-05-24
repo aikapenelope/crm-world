@@ -68,7 +68,7 @@ export async function GET(request: Request, ctx: any) {
     id: settlementId,
   }
 
-  const stream = await renderToStream(React.createElement(LiquidacionProducerPdf, { data }))
+  const stream = await renderToStream(React.createElement(LiquidacionProducerPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

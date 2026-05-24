@@ -60,7 +60,7 @@ export async function POST(request: Request, ctx: any) {
   // Contar abonados activos conectados a este nodo
   const countResult = await kysely
     .selectFrom('isp_subscribers')
-    .select(kysely.fn.count<number>('id').as('count'))
+    .select(kysely.fn.count('id').as('count'))
     .where('node_id', '=', node_id)
     .where('tenant_id', '=', scope.tenantId)
     .where('service_status', '=', 'active')

@@ -79,7 +79,7 @@ const systemPrompt = promptSections
   .map((s) => s.content.trim())
   .join('\n\n')
 
-const plantManagerAssistant: AiAgentDefinition = {
+const plantManagerAssistant: any = {
   id: 'mfg_reports.plant_manager_assistant',
   moduleId: 'mfg_reports',
   label: 'Asistente del Gerente de Fábrica',
@@ -110,5 +110,5 @@ const plantManagerAssistant: AiAgentDefinition = {
   ],
 }
 
-export const aiAgents: AiAgentDefinition[] = [plantManagerAssistant]
+export const aiAgents: any = [plantManagerAssistant]
 export default aiAgents

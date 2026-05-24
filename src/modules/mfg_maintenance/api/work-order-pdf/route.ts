@@ -55,7 +55,7 @@ export async function GET(request: Request, ctx: any) {
     id: woId,
   }
 
-  const stream = await renderToStream(React.createElement(WorkOrderMaintPdf, { data }))
+  const stream = await renderToStream(React.createElement(WorkOrderMaintPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

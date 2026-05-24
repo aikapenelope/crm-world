@@ -13,20 +13,20 @@ export async function GET(_request: Request, ctx: any) {
 
   const [byStatus, bySrc, converted] = await Promise.all([
     kysely.selectFrom('isp_leads')
-      .select(['status', kysely.fn.count<number>('id').as('count')])
+      .select(['status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .groupBy('status').execute(),
 
     kysely.selectFrom('isp_leads')
-      .select(['source', kysely.fn.count<number>('id').as('count')])
+      .select(['source', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .where('created_at', '>=', firstDayOfMonth.toISOString())
       .groupBy('source').execute(),
 
     kysely.selectFrom('isp_leads')
-      .select(kysely.fn.count<number>('id').as('count'))
+      .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .where('status', '=', 'installed')
       .where('created_at', '>=', firstDayOfMonth.toISOString())

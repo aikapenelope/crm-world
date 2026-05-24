@@ -6,7 +6,7 @@
 import { MfgPowerOutageEntity } from '../../data/entities'
 import { powerOutageCreateSchema, powerOutageUpdateSchema } from '../../data/validators'
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../../events'
+import { eventsConfig } from '../../events'
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { z } from 'zod'
 import { v4 } from 'uuid'

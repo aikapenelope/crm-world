@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { AgriCcpMonitoringRecordEntity, AgriNonConformityEntity } from '../../data/entities'
 import { ccpMonitoringRecordCreateSchema, ccpMonitoringRecordUpdateSchema } from '../../data/validators'
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../../events'
+import { eventsConfig } from '../../events'
 
 const listSchema = z.object({
   page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(200).default(50),

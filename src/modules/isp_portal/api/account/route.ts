@@ -46,7 +46,7 @@ export async function GET(request: Request, ctx: any) {
   // Balance: facturas pendientes
   const balanceResult = await kysely
     .selectFrom('isp_invoices')
-    .select(kysely.fn.sum<string>('balance_usd').as('total'))
+    .select(kysely.fn.sum('balance_usd').as('total'))
     .where('subscriber_id', '=', s.id)
     .where('tenant_id', '=', scope.tenantId)
     .where('status', 'in', ['pending', 'partial', 'overdue'])
@@ -56,7 +56,7 @@ export async function GET(request: Request, ctx: any) {
   // Tickets abiertos
   const openTicketsResult = await kysely
     .selectFrom('isp_support_tickets')
-    .select(kysely.fn.count<number>('id').as('count'))
+    .select(kysely.fn.count('id').as('count'))
     .where('subscriber_id', '=', s.id)
     .where('tenant_id', '=', scope.tenantId)
     .where('status', 'not in', ['resolved', 'closed'])

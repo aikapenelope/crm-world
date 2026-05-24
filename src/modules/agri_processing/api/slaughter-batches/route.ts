@@ -15,7 +15,7 @@ import { z } from 'zod'
 import { AgriSlaughterBatchEntity } from '../../data/entities'
 import { slaughterBatchCreateSchema, slaughterBatchUpdateSchema } from '../../data/validators'
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../../events'
+import { eventsConfig } from '../../events'
 
 const listSchema = z.object({
   page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(100).default(50),

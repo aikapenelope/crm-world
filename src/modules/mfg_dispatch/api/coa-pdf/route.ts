@@ -56,7 +56,7 @@ export async function GET(request: Request, ctx: any) {
     id: coaId,
   }
 
-  const stream = await renderToStream(React.createElement(CoaPdf, { data }))
+  const stream = await renderToStream(React.createElement(CoaPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

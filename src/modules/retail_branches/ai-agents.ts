@@ -74,7 +74,7 @@ const systemPrompt = promptSections
   .map((s) => s.content.trim())
   .join('\n\n')
 
-const retailManagerAssistant: AiAgentDefinition = {
+const retailManagerAssistant: any = {
   id: 'retail_branches.store_assistant',
   moduleId: 'retail_branches',
   label: 'Asistente del Gerente de Tienda',
@@ -104,5 +104,5 @@ const retailManagerAssistant: AiAgentDefinition = {
   ],
 }
 
-export const aiAgents: AiAgentDefinition[] = [retailManagerAssistant]
+export const aiAgents: any = [retailManagerAssistant]
 export default aiAgents

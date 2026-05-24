@@ -13,7 +13,7 @@
  * Si no está disponible, usa el último tipo registrado en standard_costs.
  */
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../../events'
+import { eventsConfig } from '../../events'
 import { v4 } from 'uuid'
 
 export const metadata = {

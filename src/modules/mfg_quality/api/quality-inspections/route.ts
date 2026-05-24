@@ -7,7 +7,7 @@
 import { MfgQualityInspectionEntity, MfgNonconformanceEntity } from '../../data/entities'
 import { inspectionCreateSchema } from '../../data/validators'
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../../events'
+import { eventsConfig } from '../../events'
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { z } from 'zod'
 import { v4 } from 'uuid'

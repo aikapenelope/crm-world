@@ -1,3 +1,3 @@
 import type { ModuleInfo } from '@open-mercato/shared/modules/registry'
-export const metadata: ModuleInfo = { name: 'academy_groups', name: 'academy_groups', title: 'Grupos', version: '1.0.0', description: 'Grupos y cohortes — instancias de cursos con horario e instructor.' }
+export const metadata: ModuleInfo = { name: 'academy_groups', title: 'Grupos', version: '1.0.0', description: 'Grupos y cohortes — instancias de cursos con horario e instructor.' }
 export default metadata

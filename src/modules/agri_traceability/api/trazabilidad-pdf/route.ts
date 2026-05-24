@@ -103,7 +103,7 @@ export async function GET(request: Request, ctx: any) {
     id: p.lot_id ?? lotNumber,
   }
 
-  const stream = await renderToStream(React.createElement(TrazabilidadPdf, { data }))
+  const stream = await renderToStream(React.createElement(TrazabilidadPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

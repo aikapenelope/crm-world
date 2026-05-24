@@ -68,7 +68,7 @@ export async function GET(request: Request, ctx: any) {
     id: dispatchId,
   }
 
-  const stream = await renderToStream(React.createElement(GuiaDespachoMfgPdf, { data }))
+  const stream = await renderToStream(React.createElement(GuiaDespachoMfgPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

@@ -59,7 +59,7 @@ export async function GET(request: Request, ctx: any) {
     id: batchId,
   }
 
-  const stream = await renderToStream(React.createElement(DespachoPdf, { data }))
+  const stream = await renderToStream(React.createElement(DespachoPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

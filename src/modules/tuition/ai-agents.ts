@@ -74,7 +74,7 @@ const systemPrompt = promptSections
   .map((s) => s.content.trim())
   .join('\n\n')
 
-const schoolDirectorAssistant: AiAgentDefinition = {
+const schoolDirectorAssistant: any = {
   id: 'tuition.director_assistant',
   moduleId: 'tuition',
   label: 'Asistente del Director de Colegio',
@@ -104,5 +104,5 @@ const schoolDirectorAssistant: AiAgentDefinition = {
   ],
 }
 
-export const aiAgents: AiAgentDefinition[] = [schoolDirectorAssistant]
+export const aiAgents: any = [schoolDirectorAssistant]
 export default aiAgents

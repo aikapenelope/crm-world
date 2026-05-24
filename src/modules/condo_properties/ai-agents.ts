@@ -96,7 +96,7 @@ const systemPrompt = promptSections
 // Agent Definition
 // =============================================================================
 
-const condoAdminAssistant: AiAgentDefinition = {
+const condoAdminAssistant: any = {
   id: 'condo_properties.admin_assistant',
   moduleId: 'condo_properties',
   label: 'Asistente de Administración',
@@ -128,5 +128,5 @@ const condoAdminAssistant: AiAgentDefinition = {
   ],
 }
 
-export const aiAgents: AiAgentDefinition[] = [condoAdminAssistant]
+export const aiAgents: any = [condoAdminAssistant]
 export default aiAgents

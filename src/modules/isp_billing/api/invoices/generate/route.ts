@@ -99,7 +99,7 @@ export async function POST(request: Request, ctx: any) {
     // Generar número de factura: FAC-{YYYYMM}-{seq}
     const countResult = await kysely
       .selectFrom('isp_invoices')
-      .select(kysely.fn.count<number>('id').as('count'))
+      .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .executeTakeFirst()
     const seq = String(Number((countResult as any)?.count ?? 0) + 1).padStart(5, '0')

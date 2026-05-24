@@ -18,7 +18,7 @@ export async function GET(_request: Request, ctx: any) {
   const [byStatus, byType, newThisMonth] = await Promise.all([
     kysely
       .selectFrom('isp_subscribers')
-      .select(['service_status', kysely.fn.count<number>('id').as('count')])
+      .select(['service_status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .groupBy('service_status')
@@ -26,7 +26,7 @@ export async function GET(_request: Request, ctx: any) {
 
     kysely
       .selectFrom('isp_subscribers')
-      .select(['subscriber_type', kysely.fn.count<number>('id').as('count')])
+      .select(['subscriber_type', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .groupBy('subscriber_type')
@@ -34,7 +34,7 @@ export async function GET(_request: Request, ctx: any) {
 
     kysely
       .selectFrom('isp_subscribers')
-      .select(kysely.fn.count<number>('id').as('count'))
+      .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .where('created_at', '>=', firstDayOfMonth.toISOString())

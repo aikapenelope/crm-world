@@ -148,7 +148,7 @@ export async function GET(request: Request, ctx: any) {
     id: studentId,
   }
 
-  const stream = await renderToStream(React.createElement(BoletinEscolar, { data }))
+  const stream = await renderToStream(React.createElement(BoletinEscolar, { data }) as any)
   const chunks: Buffer[] = []
   for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
   const pdfBuffer = Buffer.concat(chunks)
