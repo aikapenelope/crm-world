@@ -1,54 +1,52 @@
 // ESLint flat config (ESLint v10+)
 //
-// Source pattern: open-mercato/open-mercato eslint.config.mjs
-// Docs: https://eslint.org/docs/latest/use/configure/configuration-files
+// Scope: src/modules only (pure TypeScript business logic — no React components).
 //
-// Uses eslint-config-next flat-config export (Next.js 16+).
-// Run: yarn lint  →  eslint .
+// Uses typescript-eslint (already a transitive dep of eslint-config-next@16.2.6)
+// instead of nextCoreWebVitals for module linting. This avoids the
+// scopeManager.addGlobals TypeError that occurs when eslint-config-next
+// declares React/browser globals on a standalone app setup (the same reason
+// open-mercato/open-mercato CI excludes @open-mercato/app from linting).
+//
+// Pattern: open-mercato/open-mercato eslint.config.mjs (packages, not app)
+// Docs: https://typescript-eslint.io/getting-started/
 
-import nextCoreWebVitals from 'eslint-config-next/core-web-vitals'
+import tseslint from 'typescript-eslint'
 
-const ignores = [
-  'node_modules/**',
-  '.next/**',
-  '**/.next/**',
-  '.mercato/**',
-  '**/.mercato/**',
-  'dist/**',
-  '**/dist/**',
-  'out/**',
-  'build/**',
-  'generated/**',
-  '**/generated/**',
-  'next-env.d.ts',
-  // Generated SDK dirs from `pulumi package add`
-  'sdks/**',
-]
+export default tseslint.config(
+  // Recommended TypeScript rules (no React/browser globals → no addGlobals call)
+  ...tseslint.configs.recommended,
 
-const ruleOverrides = {
-  // Display names are redundant in a server-components-first codebase
-  'react/display-name': 'off',
+  // Only lint the pure TypeScript module layer.
+  {
+    name: 'project/files',
+    files: ['src/modules/**/*.ts'],
+  },
 
-  // React Hooks experimental rules not yet stable — keep off
-  'react-hooks/immutability': 'off',
-  'react-hooks/preserve-manual-memoization': 'off',
-  'react-hooks/purity': 'off',
-  'react-hooks/refs': 'off',
-  'react-hooks/set-state-in-effect': 'off',
-  'react-hooks/static-components': 'off',
-}
+  // Always-ignored paths (mirrors open-mercato/open-mercato eslint.config.mjs).
+  {
+    name: 'project/ignores',
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      '.mercato/**',
+      'dist/**',
+      'generated/**',
+      'next-env.d.ts',
+    ],
+  },
 
-// eslint-plugin-react calls context.getFilename() (removed in ESLint v10 flat
-// config) during React version auto-detection. Pinning the version here prevents
-// detectReactVersion() from running and avoids the TypeError at lint time.
-// See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3878
-const reactSettings = {
-  react: { version: '19' },
-}
-
-export default [
-  ...nextCoreWebVitals,
-  { ignores },
-  { name: 'project/react-settings', settings: reactSettings },
-  { name: 'project/rule-overrides', rules: ruleOverrides },
-]
+  // Project-specific rule overrides.
+  {
+    name: 'project/rule-overrides',
+    rules: {
+      // Allow intentionally unused variables prefixed with _ (common TS pattern)
+      '@typescript-eslint/no-unused-vars': ['warn', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
+      // Entity files use `any` for MikroORM compatibility — acceptable
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
+)
