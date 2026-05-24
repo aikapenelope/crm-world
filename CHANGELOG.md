@@ -1,6 +1,84 @@
 # Changelog — Aika Platform (CRM World)
 
-## 2026-05-26 — Phase 23: Vertical Agroalimentario con Procesamiento
+## 2026-05-26 — Phase 23 + 24 completas: PDFs, índices DB y CI fix (PR #81)
+
+### CI Pipeline — fix definitivo
+`yarn install --immutable` reemplazado por `yarn install` en `.github/workflows/ci.yml`.
+Causa raíz: Yarn 4 promueve `YN0086` (peer dep warnings de `@open-mercato/*`) a error fatal
+cuando `--immutable` está activo. El CI corría desde el primer día pero fallaba en el install.
+Yarn 4 sin `--immutable` sigue respetando el lockfile en CI — solo evita el check de peer deps
+estricto que no controlamos.
+
+### 8 PDFs nuevos — cierre de Phase 23 y Phase 24
+
+**Phase 23 — Agri (4 documentos):**
+- `GET /api/agri-units/informe-semanal-pdf?flock_id=` — Informe semanal del lote con tabla de KPIs por semana (FCA, IEP, mortalidad, peso), gráficas de progreso y proyección a cosecha
+- `GET /api/agri-hr/liquidacion-pdf?settlement_id=` — Liquidación del productor integrado: ciclo completo, desglose de pago (base + bonus FCA/peso + penalizaciones), sección de firmas
+- `GET /api/agri-processing/despacho-sanitario-pdf?batch_id=` — Guía de despacho sanitaria con resultados microbiológicos, datos de transporte y sello veterinario
+- `GET /api/agri-traceability/trazabilidad-pdf?lot_number=` — Cadena de trazabilidad completa PT→beneficio→flock→granja→alimentos→medicamentos, declaración de inocuidad INSAI
+
+**Phase 24 — Manufactura (4 documentos):**
+- `GET /api/mfg-dispatch/despacho-pdf?dispatch_id=` — Guía de despacho PT industrial con líneas de productos, lotes asignados, IVA 16% + IGTF 3% bimoneda, firmas de recepción
+- `GET /api/mfg-dispatch/coa-pdf?coa_id=` — Certificate of Analysis con tabla de resultados de QC, sello APROBADO/RECHAZADO, firma del gerente de calidad
+- `GET /api/mfg-floor/shift-report-pdf?report_id=` — Reporte de turno: OEE total vs. interno (sin CORPOELEC), producción real vs. plan, paros por categoría, firmas
+- `GET /api/mfg-maintenance/work-order-pdf?wo_id=` — Orden de trabajo de mantenimiento: descripción técnica, lista de repuestos con checkbox, checklist de cierre, firmas técnico/supervisor
+
+### 8 Índices DB compuestos
+Añadidos con `@Index` de MikroORM en entidades críticas de agri y mfg.
+Los más importantes: `mfg_stock_lots(tenant_id, material_id, status)` para FEFO+MRP,
+`agri_flock_weekly_records(tenant_id, flock_id)` para cálculo de FCA/IEP,
+`mfg_production_downtimes(tenant_id, work_center_id, started_at)` para OEE.
+
+---
+
+## 2026-05-26 — Phase 24: Vertical Manufactura Industrial
+
+Vertical para fábricas de producción discreta y por procesos en Venezuela.
+16 módulos, 4 AI Agents (Director de Producción + Gerente de Fábrica), 4 workflows, 4 PDFs.
+
+**Diferenciadores venezolanos implementados:**
+- OEE bipartido: total vs. interno (excluye cortes CORPOELEC) en `mfg_orders` y `mfg_floor`
+- Lead times de importación reales en MRP: 60 días nacional→importado (divisas+flete+aduana)
+- Costo bimoneda en órdenes: MP importada USD al tipo factura + MO en Bs al BCV del cierre
+- LOTTT documentado en `mfg_hr`: +30% recargo nocturno, +25% extra diurno, +75% extra nocturno
+- IVA 16% + IGTF 3% en `mfg_dispatch` para pagos en divisas (Ley IGTF 2022)
+- Generador eléctrico: `generator_premium_usd` en `mfg_energy` cuantifica el costo de CORPOELEC
+
+### Sprint A — Núcleo productivo (PRs #77)
+- `mfg_bom` — BOM multinivel (process=receta con rendimiento, discrete=lista de componentes), versiones con historial, materiales alternativos para escasez. Explosión recursiva vía Kysely. Workflow `bom_approval_v1`.
+- `mfg_inventory` — 4 tipos de stock (MP/empaque/WIP/PT), lotes FEFO con cuarentena QC, movimientos atómicos, conteo cíclico.
+- `mfg_orders` — Órdenes con routing multinivel, reserva automática de materiales al liberar, paros con `is_force_majeure` para separar CORPOELEC. AI Agent Director de Producción (6 tools). Workflow `downtime_escalation_v1`.
+- `mfg_quality` — Planes de muestreo con LSL/USL/LCL/UCL, SPC con carta X-R SVG, auto-NC en desviación de PCC, costos de no-calidad. Workflow `nc_disposition_v1`.
+
+### Sprint B — Inteligencia productiva (PR #78)
+- `mfg_mrp` — Motor MRP completo: BOM explosion vía Kysely, necesidades netas, lead times 60d importación VE, auto-generación de requisiciones.
+- `mfg_floor` — MES simplificado: worker close-shift calcula OEE por turno, heatmap eléctrico, worker automático.
+- `mfg_planning` — MPS semanal con heatmap visual de disponibilidad CORPOELEC (SVG 24h×7d), detección de sobrecargas de capacidad.
+- `mfg_costs` — Costeo bimoneda con endpoint `calculate-variances`: 3 variaciones (precio/cantidad/MO) al cierre, integración con BCV de `venezuela_rates`.
+
+### Sprint C — Operaciones completas (PR #79)
+- `mfg_maintenance` — GMAO con stock de seguridad calculado `ceil(lead_time/MTBF)`. Worker `check-maintenance-due` genera WOs automáticamente. Alertas para repuestos importados.
+- `mfg_procurement` — OCs con pipeline de importación 6 etapas, cálculo CIF real (FOB+flete+seguro+arancel+IVA+agente+flete interno), tracking DAU. Workflow `purchase_authorization_v1`.
+- `mfg_subcontract` — Almacén virtual en maquilador, merma real vs. contractual con flag `scrap_exceeded`.
+- `mfg_energy` — Consumo kWh por turno/línea, registro de cortes CORPOELEC, `generator_premium_usd` = sobrecosto vs. tarifa red.
+
+### Sprint D — Capa comercial e inteligencia (PR #80)
+- `mfg_dispatch` — Pedidos industriales con IVA 16% + IGTF 3%, guías de despacho, CoA obligatorio para clientes industriales.
+- `mfg_hr` — Operarios con LOTTT documentado, bonos de producción por cuota divididos por turno.
+- `mfg_reports` — KPI dashboard ejecutivo (8 cards semaforizados) + AI Agent Gerente de Fábrica (6 tools cross-module: producción, calidad, inventario, mantenimiento, importaciones, costos).
+- `mfg_portal` — Portal cliente industrial: estado de pedidos + certificados de análisis descargables.
+
+### Workflows activados (4 workflows)
+| Workflow | Trigger | Página |
+|---|---|---|
+| `bom_approval_v1` | Cambio de versión BOM → aprobación ingeniería | `mfg_bom/[id]` |
+| `nc_disposition_v1` | NC crítica → causa raíz + disposición gerente QC | `mfg_quality/[id]` |
+| `purchase_authorization_v1` | OC importación → aprobación gerente general | `mfg_procurement/[id]` |
+| `downtime_escalation_v1` | Paro activo → escalación a gerente mantenimiento | `mfg_orders/[id]` |
+
+---
+
+
 
 Vertical completa para empresas del sector agropecuario venezolano con integración vertical: campo → planta → distribución. Avicultura industrial (broilers Ross 308/Cobb 500), porcicultura, producción agrícola propia y gestión de productores integrados bajo contrato.
 
