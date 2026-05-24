@@ -260,6 +260,7 @@ Si el deploy falla con `Error response from daemon: No such container`, simpleme
 
 ## 10. Checklist antes de crear un módulo
 
+**Backend/módulos:**
 - [ ] Todos los `@Property()` tienen `type:` explícito
 - [ ] `em.getKysely()` usa cast `(em as any).getKysely()`
 - [ ] `makeCrudRoute` tiene `mapToEntity` y `applyToEntity`
@@ -267,6 +268,29 @@ Si el deploy falla con `Error response from daemon: No such container`, simpleme
 - [ ] `em.create()` y `em.find()` en seeds usan `as any`
 - [ ] Dependencias directas declaradas en package.json
 - [ ] Componentes UI verificados contra la interfaz actual
+- [ ] `acl.ts` tiene `export default features`
+
+**UI v0.6.1 (crítico para CI typecheck):**
+- [ ] `CrudForm`: campos usan `id:` (no `name:`), grupos usan `title:` (no `label:`)
+- [ ] `CrudForm`: props son `fields/groups/initialValues/onSubmit/cancelHref` — NO `entityId/apiPath/mode`
+- [ ] `DataTable`: NO pasar `extensionTableId` — NO pasar `apiPath` — `emptyState` es string/ReactNode
+- [ ] `RowActionItem`: usa `label:` (no `title:`)
+- [ ] `useGuardedMutation({ contextId: 'module.page' })` — contextId requerido
+- [ ] `runMutation({ operation: async () => {...}, context })` — operation es función
+- [ ] `flash('msg', 'type')` — mensaje primero, tipo segundo
+- [ ] `PageMetadata.navHidden` (no `hidden`)
+- [ ] `PortalNavMetadata.group`: solo `'main' | 'account'`
+
+**Zod v4:**
+- [ ] `z.record(z.string(), valueSchema)` — 2 argumentos requeridos
+
+**Events:**
+- [ ] `EventCategory`: solo `'crud' | 'lifecycle' | 'system' | 'custom'`
+
+**CI:**
+- [ ] `yarn generate && yarn typecheck` pasa sin errores
+- [ ] `yarn lint` pasa sin errores
+- [ ] `yarn test --ci --forceExit` pasa (todos los `.spec.ts` en `__tests__/`)
 - [ ] `NODE_ENV` NO está como buildtime en Coolify
 
 ---
@@ -318,6 +342,12 @@ Esperar 10-15 segundos después del deploy y reintentar. Si persiste, verificar 
 | 2026-05-20 | Builds no-deterministas | yarn.lock vacío (12 líneas) desde commit inicial | PR #31 (regenerar lockfile) |
 | 2026-05-20 | 504 Gateway Timeout post-deploy | Cold start de Next.js (normal) | Esperar 10-15s y reintentar |
 | 2026-05-20 | **Build falla: "Export register doesn't exist"** | **di.ts sin export function register** | **PR #33 — agregar export** |
+| 2026-05-24 | CI Typecheck OOM (exit 129) | 111 módulos agotan heap de Node | `NODE_OPTIONS=--max-old-space-size=6144` a nivel de JOB en CI |
+| 2026-05-24 | CI Lint: `scopeManager.addGlobals` TypeError | `eslint-config-next@16.2.4` + ESLint v10 flat config | Actualizar a `16.2.6` + limitar lint a `src/modules` |
+| 2026-05-24 | CI Tests: `SyntaxError: Unexpected token 'export'` | `@mikro-orm` no en `transformIgnorePatterns` de Jest | Añadir `@mikro-orm` al patrón + usar `jest-mikroorm-transformer.cjs` |
+| 2026-05-24 | CI Tests: `TypeError: Cannot read .errors.map` | Zod v4 renombró `.errors` a `.issues` | Cambiar a `.issues` en tests |
+| 2026-05-24 | CI Tests: `TS5103: ignoreDeprecations` | Flag solo válido en TypeScript 6.x | Remover de jest.config.cjs (proyecto usa TS 5.x) |
+| 2026-05-24 | 900+ errores TS al activar CI | Módulos escritos con APIs antiguas (nunca validados) | Corrección sistemática de APIs: ver PR #83 |
 
 ---
 
