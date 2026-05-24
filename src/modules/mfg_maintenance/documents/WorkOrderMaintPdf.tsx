@@ -164,7 +164,7 @@ export function WorkOrderMaintPdf({ data: d }: { data: WorkOrderMaintPdfData }) 
           ]} />
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
       </Page>
     </Document>
   )

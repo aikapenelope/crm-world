@@ -171,7 +171,7 @@ export function LiquidacionProducerPdf({ data: d }: { data: LiquidacionProducerD
           ]} />
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
       </Page>
     </Document>
   )

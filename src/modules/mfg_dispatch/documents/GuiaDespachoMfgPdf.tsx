@@ -161,7 +161,7 @@ export function GuiaDespachoMfgPdf({ data: d }: { data: GuiaDespachoMfgData }) {
           ]} />
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
       </Page>
     </Document>
   )

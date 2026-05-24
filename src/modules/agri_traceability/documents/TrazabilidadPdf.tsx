@@ -140,7 +140,7 @@ export function TrazabilidadPdf({ data: d }: { data: TrazabilidadPdfData }) {
           </View>
         </View>
 
-        <DocFooter generatedAt={new Date().toLocaleDateString(\'es-VE\')} />
+        <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />
       </Page>
     </Document>
   )
