@@ -97,7 +97,7 @@ export default function EditIspPlanPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Editar: {plan.name}</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           initialValues={plan}
           cancelHref="/backend/isp-plans"

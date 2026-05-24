@@ -60,7 +60,7 @@ export default function CreateBuildingPage() {
       <PageBody>
         <h1 className="text-2xl font-bold mb-6">Nuevo Edificio</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           cancelHref="/backend/condo_properties"
           onSubmit={async (values) => {

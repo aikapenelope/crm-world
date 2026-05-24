@@ -101,7 +101,7 @@ export default function CreateStudentPage() {
         <CrudForm
           title="Registrar Estudiante"
           backHref="/backend/students"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Registrar"
           cancelHref="/backend/students"

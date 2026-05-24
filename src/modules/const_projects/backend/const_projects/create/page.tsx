@@ -103,7 +103,7 @@ export default function CreateProjectPage() {
       <PageBody>
         <h1 className="text-2xl font-bold mb-6">Nuevo Proyecto</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           cancelHref="/backend/const_projects"
           onSubmit={async (values) => {

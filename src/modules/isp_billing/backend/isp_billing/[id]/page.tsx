@@ -119,7 +119,7 @@ export default function InvoiceDetailPage() {
           <div className="mb-6 p-4 border border-border rounded-lg bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar cobro</h3>
             <CrudForm
-              fields={[] as any[]}
+              fields={[]}
               groups={paymentGroups}
               onSubmit={async (values) => {
                 if (submitting) return

@@ -252,7 +252,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     <CrudForm
       title=""
       backHref=""
-      fields={[] as any[]}
+      fields={[]}
       groups={groups}
       submitLabel="Guardar cambios"
       cancelHref="/backend/properties"

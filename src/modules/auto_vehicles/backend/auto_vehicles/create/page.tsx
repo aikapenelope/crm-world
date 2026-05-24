@@ -72,7 +72,7 @@ export default function CreateVehiclePage() {
 
         <CrudForm
           backHref="/backend/auto_vehicles"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Registrar Vehículo"
           cancelHref="/backend/auto_vehicles"

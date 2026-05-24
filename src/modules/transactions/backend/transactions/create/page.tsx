@@ -109,7 +109,7 @@ export default function CreateTransactionPage() {
         <CrudForm
           title="Registrar Cierre"
           backHref="/backend/transactions"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Registrar Transacción"
           cancelHref="/backend/transactions"

@@ -79,7 +79,7 @@ export default function EditCpePage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">{cpe.brand} {cpe.model}</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           initialValues={cpe}
           cancelHref="/backend/isp-network/cpe"
