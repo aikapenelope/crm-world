@@ -140,6 +140,9 @@ export default function MfgQualityPage() {
             <Button type="button" onClick={() => setShowForm(!showForm)}>
               <Plus className="size-4 mr-2" /> Nueva NC
             </Button>
+            <Button type="button" variant="outline" onClick={() => router.push('/backend/mfg-quality/spc')}>
+              Cartas SPC
+            </Button>
           </div>
         }
       />

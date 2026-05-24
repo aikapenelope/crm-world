@@ -1,0 +1,13 @@
+{
+  "mfg_hr.nav.title": "RRHH Manufactura",
+  "mfg_hr.lottt.night": "Turno nocturno LOTTT: +30% recargo (Art. 118)",
+  "mfg_hr.lottt.overtime_day": "Hora extra diurna LOTTT: +25% (Art. 118)",
+  "mfg_hr.lottt.overtime_night": "Hora extra nocturna LOTTT: +75% (Art. 118)",
+  "mfg_hr.shift.morning": "Turno Mañana",
+  "mfg_hr.shift.afternoon": "Turno Tarde",
+  "mfg_hr.shift.night": "Turno Noche",
+  "mfg_hr.bonus_note": "Bono de producción: se activa cuando el equipo supera el umbral de cuota (típicamente 90%). Se reparte entre todos los operarios del turno.",
+  "mfg_hr.labor_note": "Las horas-hombre por orden alimentan el cálculo de variación de mano de obra en mfg_costs.",
+  "mfg_hr.notif.bonus_approved.title": "Bono de producción aprobado",
+  "mfg_hr.notif.bonus_approved.body": "El bono de producción fue aprobado. Listo para procesar el pago."
+}

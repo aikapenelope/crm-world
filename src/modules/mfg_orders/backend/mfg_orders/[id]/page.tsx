@@ -13,6 +13,7 @@ import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, Zap } from 'lucide-react'
+import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'ready'
@@ -365,6 +366,32 @@ export default function OrderDetailPage() {
             <p className="text-sm text-muted-foreground p-4 bg-muted/10 rounded-lg">Sin paros registrados para esta orden.</p>
           )}
         </div>
+
+        {/* Workflow escalación de paro — aparece si hay un paro activo (sin ended_at) */}
+        {activeDowntime && (
+          <WorkflowApprovalWidget
+            workflowId="downtime_escalation_v1"
+            entityId={activeDowntime.id}
+            entityType="MfgProductionDowntime"
+            title="Escalación de Paro Prolongado"
+            startLabel="Escalar a gerencia — paro activo sin resolución"
+            startContext={{
+              downtime_id:       activeDowntime.id,
+              order_number:      order.order_number,
+              product_code:      order.product_code,
+              cause_category:    activeDowntime.cause_category,
+              cause_description: activeDowntime.cause_description,
+              started_at:        activeDowntime.started_at,
+              is_force_majeure:  activeDowntime.is_force_majeure,
+            }}
+            decisions={[
+              { value: 'resolved_fully',    label: 'Resuelto — producción reiniciada',        variant: 'default' },
+              { value: 'resolved_partial',  label: 'Resuelto parcialmente — capacidad reducida', variant: 'outline' },
+              { value: 'escalated_external', label: 'Escalado a servicio técnico externo',    variant: 'destructive' },
+            ]}
+            onCompleted={() => load()}
+          />
+        )}
       </PageBody>
     </Page>
   )

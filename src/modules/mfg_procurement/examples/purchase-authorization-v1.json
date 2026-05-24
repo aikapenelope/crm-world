@@ -1,0 +1,73 @@
+{
+  "workflowId": "purchase_authorization_v1",
+  "workflowName": "Autorización de Orden de Compra de Importación",
+  "description": "Flujo de aprobación para órdenes de compra de importación que superan el umbral de autorización. El comprador propone la OC con el cálculo CIF completo; el gerente general o director financiero revisa el monto total, los términos y el proveedor, y aprueba o rechaza. Sin aprobación, la OC no puede enviarse al proveedor extranjero.",
+  "version": 1,
+  "enabled": true,
+  "metadata": {
+    "category": "Compras",
+    "icon": "shopping-cart",
+    "entityType": "MfgPurchaseOrder",
+    "tags": ["compras", "importacion", "autorizacion", "manufactura", "divisas"]
+  },
+  "definition": {
+    "steps": [
+      {
+        "stepId": "start",
+        "stepName": "OC Propuesta",
+        "stepType": "START",
+        "description": "Comprador completó la OC con cotización FOB, flete, seguro, aranceles y cálculo CIF total. Solicita autorización para comprometer divisas."
+      },
+      {
+        "stepId": "revision_gerencia",
+        "stepName": "Revisión Gerencia General",
+        "stepType": "USER_TASK",
+        "description": "El gerente general o director financiero revisa: proveedor, monto CIF total, incoterm, país de origen y disponibilidad de divisas para este compromiso.",
+        "config": {
+          "taskName": "Revisar y autorizar OC de importación",
+          "description": "Verificar: ¿el proveedor está homologado? ¿El precio CIF es competitivo vs. cotizaciones anteriores? ¿Hay disponibilidad de divisas para comprometer este monto? ¿El incoterm y las condiciones de pago son aceptables?",
+          "formFields": [
+            {
+              "id": "decision",
+              "label": "Decisión",
+              "type": "select",
+              "required": true,
+              "options": [
+                { "value": "approve", "label": "Aprobado — emitir OC al proveedor" },
+                { "value": "approve_with_conditions", "label": "Aprobado con condiciones" },
+                { "value": "reject", "label": "Rechazado — no procede" }
+              ]
+            },
+            { "id": "forex_available", "label": "¿Divisas disponibles para este compromiso?", "type": "checkbox", "required": true },
+            { "id": "conditions", "label": "Condiciones o instrucciones al comprador (si aplica)", "type": "textarea", "required": false },
+            { "id": "rejection_reason", "label": "Motivo del rechazo (si aplica)", "type": "textarea", "required": false }
+          ]
+        }
+      },
+      {
+        "stepId": "end_approved",
+        "stepName": "Aprobada",
+        "stepType": "END",
+        "description": "OC autorizada — el comprador puede enviarla al proveedor e iniciar el proceso de divisas."
+      },
+      {
+        "stepId": "end_conditional",
+        "stepName": "Aprobada con Condiciones",
+        "stepType": "END",
+        "description": "OC aprobada con condiciones específicas documentadas."
+      },
+      {
+        "stepId": "end_rejected",
+        "stepName": "Rechazada",
+        "stepType": "END",
+        "description": "OC rechazada — requiere revisión del comprador antes de resubmitir."
+      }
+    ],
+    "transitions": [
+      { "from": "start",              "to": "revision_gerencia" },
+      { "from": "revision_gerencia",  "to": "end_approved",     "condition": "decision === 'approve'" },
+      { "from": "revision_gerencia",  "to": "end_conditional",  "condition": "decision === 'approve_with_conditions'" },
+      { "from": "revision_gerencia",  "to": "end_rejected",     "condition": "decision === 'reject'" }
+    ]
+  }
+}

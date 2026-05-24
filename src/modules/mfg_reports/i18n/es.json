@@ -1,0 +1,12 @@
+{
+  "mfg_reports.nav.title": "KPIs Manufactura",
+  "mfg_reports.nav.dashboard": "Dashboard Ejecutivo",
+  "mfg_reports.ai_agent": "Asistente del Gerente de Fábrica",
+  "mfg_reports.kpi.production": "Producción",
+  "mfg_reports.kpi.quality": "Calidad",
+  "mfg_reports.kpi.inventory": "Inventario",
+  "mfg_reports.kpi.maintenance": "Mantenimiento",
+  "mfg_reports.kpi.procurement": "Compras",
+  "mfg_reports.kpi.costs": "Costos",
+  "mfg_reports.scope": "Vista consolidada de los 16 módulos de manufactura: producción, calidad, inventario, mantenimiento, compras, costos, maquila y despacho"
+}
