@@ -314,7 +314,7 @@ export default function OrderDetailPage() {
           {showDtForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
               <CrudForm
-                initialValues={{ order_id: params.id, started_at: new Date().toISOString().slice(0, 16) }}
+                initialValues={{ order_id: params.id, started_at: new Date().toISOString().slice(0, 16), cause_category: '' }}
                 fields={[
                   { type: 'select' as const, id: 'cause_category', label: 'Categoría del paro', required: true,
                     options: [
