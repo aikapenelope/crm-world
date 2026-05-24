@@ -72,7 +72,7 @@ export default function EditTechnicianPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">{tech.name}</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           initialValues={tech}
           cancelHref="/backend/isp-technicians"

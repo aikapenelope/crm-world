@@ -96,7 +96,7 @@ export default function EditIspNetworkNodePage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nodo: {node.name}</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           initialValues={node}
           cancelHref="/backend/isp-network"

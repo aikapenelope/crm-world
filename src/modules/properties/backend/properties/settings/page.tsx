@@ -73,7 +73,7 @@ export default function SettingsPage() {
         <CrudForm
           title="Configuración de Real Estate"
           backHref="/backend/properties"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Guardar configuración"
           cancelHref="/backend/properties"

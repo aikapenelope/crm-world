@@ -55,7 +55,7 @@ export default function CreateCampaignPage() {
       <PageBody>
         <h1 className="text-2xl font-bold mb-6">Nueva Campaña de Fidelización</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           cancelHref="/backend/retail_loyalty/campaigns"
           onSubmit={async (values) => {

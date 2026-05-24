@@ -54,7 +54,7 @@ export default function AcademyInstructorCreatePage() {
         <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo instructor</h1>
 
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           onSubmit={async (values) => {
             const res = await createCrud('academy-instructors/instructors', values)

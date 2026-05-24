@@ -73,7 +73,7 @@ export default function RegisterMovementPage() {
 
         <CrudForm
           backHref="/backend/dist_inventory"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Registrar Movimiento"
           cancelHref="/backend/dist_inventory"

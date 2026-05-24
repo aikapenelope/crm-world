@@ -69,7 +69,7 @@ export default function CreateIspNetworkNodePage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nuevo Nodo de Red</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           cancelHref="/backend/isp-network"
           onSubmit={async (values) => {

@@ -79,7 +79,7 @@ export default function CreateServiceOrderPage() {
 
         <CrudForm
           backHref="/backend/auto_service_orders"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Crear Orden"
           cancelHref="/backend/auto_service_orders"

@@ -147,7 +147,7 @@ export default function IspSubscriberDetailPage() {
 
         {activeTab === 'info' && (
           <CrudForm
-            fields={[] as any[]}
+            fields={[]}
             groups={infoGroups}
             initialValues={subscriber}
             cancelHref="/backend/isp-subscribers"

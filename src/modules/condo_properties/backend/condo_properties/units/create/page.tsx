@@ -70,7 +70,7 @@ export default function CreateUnitPage() {
       <PageBody>
         <h1 className="text-2xl font-bold mb-6">Nueva Unidad</h1>
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           cancelHref="/backend/condo_properties"
           onSubmit={async (values) => {

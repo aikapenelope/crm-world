@@ -135,7 +135,7 @@ export default function LeadDetailPage() {
         )}
 
         <CrudForm
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           initialValues={lead}
           cancelHref="/backend/isp-sales"

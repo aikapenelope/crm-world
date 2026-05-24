@@ -45,7 +45,7 @@ export default function CreateDeliveryOrderPage() {
 
         <CrudForm
           backHref="/backend/dist_delivery"
-          fields={[] as any[]}
+          fields={[]}
           groups={groups}
           submitLabel="Crear Despacho"
           cancelHref="/backend/dist_delivery"

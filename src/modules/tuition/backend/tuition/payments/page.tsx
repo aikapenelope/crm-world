@@ -200,7 +200,7 @@ export default function RegisterPaymentPage() {
           <CrudForm
             title="3. Datos del pago"
             backHref="/backend/tuition"
-            fields={[] as any[]}
+            fields={[]}
             groups={groups}
             submitLabel="Registrar Pago"
             cancelHref="/backend/tuition"
