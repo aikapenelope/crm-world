@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -93,10 +94,7 @@ export default function MortalityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Mortalidad Diaria</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_vet.mortality"
-              apiPath="/api/agri-vet/mortality-records"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'select' as const,   id: 'flock_id',    label: 'Lote de Aves', required: true, options: flockOptions },
                 { type: 'date' as const,     id: 'record_date', label: 'Fecha',        required: true },
@@ -115,7 +113,13 @@ export default function MortalityPage() {
               groups={[
                 { id: 'record', title: 'Registro', fields: ['flock_id', 'record_date', 'count', 'cause', 'cause_detail', 'notes'] },
               ]}
-              onSuccess={() => { flash('Mortalidad registrada', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_vet/mortality"
+              onSubmit={async (values) => {
+                await createCrud('agri-vet/mortality-records', values)
+                flash('Mortalidad registrada', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}

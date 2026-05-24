@@ -155,11 +155,8 @@ export default function SlaughterBatchDetailPage() {
         {showLotForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Producto Terminado</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_processing.lot"
-              apiPath="/api/agri-processing/processing-lots"
-              mode="create"
-              initial={{ slaughter_batch_id: batchId }}
+            <CrudForm
+              initialValues={{ slaughter_batch_id: batchId }}
               fields={[
                 { type: 'text' as const,   id: 'lot_number',         label: 'N° Lote Producto (PROD-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'formula_id',         label: 'Fórmula de Procesamiento',        required: true, options: formulaOptions },
@@ -185,6 +182,7 @@ export default function SlaughterBatchDetailPage() {
                 setLotForm(false)
                 load()
               }}
+              cancelHref={`/backend/agri_processing/${params.id}`}
             />
           </div>
         )}

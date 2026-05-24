@@ -189,8 +189,8 @@ export default function ProcurementDetailPage() {
             </div>
             {showLineForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm{...({} as any)} entityId="mfg_procurement.po_line" apiPath="/api/mfg-procurement/po-lines" mode="create"
-                  initial={{ po_id: params.id, line_number: lines.length + 1 }}
+                <CrudForm
+                  initialValues={{ po_id: params.id, line_number: lines.length + 1 }}
                   fields={[
                     { type: 'text' as const, id: 'material_code', label: 'Código material', required: true },
                     { type: 'text' as const, id: 'material_name', label: 'Nombre material', required: true },
@@ -205,6 +205,7 @@ export default function ProcurementDetailPage() {
                     setLF(false)
                     load()
                   }}
+                  cancelHref={`/backend/mfg_procurement/${params.id}`}
                 />
               </div>
             )}

@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -194,10 +195,7 @@ export default function AgriProcessingPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Beneficio</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_processing.slaughter_batch"
-              apiPath="/api/agri-processing/slaughter-batches"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'batch_number',    label: 'N° Lote (BENEF-2026-XXX)', required: true },
                 { type: 'select' as const, id: 'flock_id',        label: 'Lote de Aves',             required: true, options: flockOptions },
@@ -213,7 +211,13 @@ export default function AgriProcessingPage() {
                 { id: 'counts', title: 'Conteos',   fields: ['batch_number', 'flock_id', 'slaughter_date', 'birds_in', 'live_weight_kg', 'birds_processed'] },
                 { id: 'quality', title: 'Calidad',  fields: ['condemned_count', 'condemned_reason', 'notes'] },
               ]}
-              onSuccess={() => { flash('Lote de beneficio registrado', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_processing"
+              onSubmit={async (values) => {
+                await createCrud('agri-processing/slaughter-batches', values)
+                flash('Lote de beneficio registrado', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}

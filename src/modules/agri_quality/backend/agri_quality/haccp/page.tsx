@@ -6,6 +6,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -163,10 +164,7 @@ export default function HaccpPlansPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Plan HACCP</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_quality.haccp_plan"
-              apiPath="/api/agri-quality/haccp-plans"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,   id: 'name',       label: 'Nombre del Plan',  required: true },
                 { type: 'select' as const, id: 'process',    label: 'Proceso Productivo', required: true,
@@ -184,7 +182,9 @@ export default function HaccpPlansPage() {
               groups={[
                 { id: 'general', title: 'Identificación', fields: ['name', 'process', 'version', 'approved_by', 'notes'] },
               ]}
-              onSuccess={() => {
+              cancelHref="/backend/agri_quality/haccp"
+              onSubmit={async (values) => {
+                await createCrud('agri-quality/haccp-plans', values)
                 flash('Plan HACCP creado — ahora agrega los PCCs en el detalle del plan', 'success')
                 setShowForm(false)
                 load()

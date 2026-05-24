@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -165,10 +166,7 @@ export default function VaccinationsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Vacunación</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_vet.vaccination"
-              apiPath="/api/agri-vet/vaccination-records"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'select' as const,   id: 'flock_id',             label: 'Lote de Aves',           required: true, options: flockOptions },
                 { type: 'text' as const,     id: 'vaccine_name',         label: 'Nombre de la Vacuna',    required: true },
@@ -195,7 +193,13 @@ export default function VaccinationsPage() {
                 { id: 'application', title: 'Aplicación',  fields: ['scheduled_date', 'applied_date', 'birds_treated', 'vaccine_lot_number', 'withdrawal_days'] },
                 { id: 'notes',       title: 'Notas',       fields: ['notes'] },
               ]}
-              onSuccess={() => { flash('Vacunación registrada', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_vet/vaccinations"
+              onSubmit={async (values) => {
+                await createCrud('agri-vet/vaccination-records', values)
+                flash('Vacunación registrada', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}

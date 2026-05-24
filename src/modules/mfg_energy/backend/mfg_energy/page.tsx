@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -177,8 +178,8 @@ export default function MfgEnergyPage() {
         {showOutageForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><ZapOff className="size-4" /> Registrar Corte Eléctrico</h3>
-            <CrudForm{...({} as any)} entityId="mfg_energy.outage" apiPath="/api/mfg-energy/power-outages" mode="create"
-              initial={{ started_at: new Date().toISOString().slice(0, 16) }}
+            <CrudForm
+              initialValues={{ started_at: new Date().toISOString().slice(0, 16) }}
               fields={[
                 { type: 'select' as const, id: 'outage_type', label: 'Tipo de corte', required: true, options: [
                   { value: 'unscheduled_cut', label: 'Corte no programado (CORPOELEC)' },
@@ -194,7 +195,13 @@ export default function MfgEnergyPage() {
                 { type: 'text' as const, id: 'generator_fuel_liters', label: 'Litros de combustible en generador' },
                 { type: 'text' as const, id: 'fuel_cost_usd', label: 'Costo del combustible (USD)' },
               ]}
-              onSuccess={() => { flash('Corte registrado', 'info'); setOF(false); load() }}
+              cancelHref="/backend/mfg_energy"
+              onSubmit={async (values) => {
+                await createCrud('mfg-energy/power-outages', values)
+                flash('Corte registrado', 'info')
+                setOF(false)
+                load()
+              }}
             />
           </div>
         )}
@@ -203,8 +210,8 @@ export default function MfgEnergyPage() {
         {showConsumForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Zap className="size-4" /> Registrar Consumo Eléctrico</h3>
-            <CrudForm{...({} as any)} entityId="mfg_energy.consumption" apiPath="/api/mfg-energy/energy-consumption" mode="create"
-              initial={{ record_date: new Date().toISOString().split('T')[0], shift_type: 'morning', energy_source: 'grid' }}
+            <CrudForm
+              initialValues={{ record_date: new Date().toISOString().split('T')[0], shift_type: 'morning', energy_source: 'grid' }}
               fields={[
                 { type: 'date' as const,   id: 'record_date',           label: 'Fecha', required: true },
                 { type: 'select' as const, id: 'shift_type',            label: 'Turno', required: true, options: [{ value: 'morning', label: 'Mañana' }, { value: 'afternoon', label: 'Tarde' }, { value: 'night', label: 'Noche' }] },
@@ -216,7 +223,13 @@ export default function MfgEnergyPage() {
                 { type: 'text' as const,   id: 'cost_per_kwh_usd',      label: 'Tarifa USD/kWh' },
                 { type: 'text' as const,   id: 'generator_fuel_cost_usd', label: 'Costo combustible generador (USD)' },
               ]}
-              onSuccess={() => { flash('Consumo registrado', 'success'); setCF(false); load() }}
+              cancelHref="/backend/mfg_energy"
+              onSubmit={async (values) => {
+                await createCrud('mfg-energy/energy-consumption', values)
+                flash('Consumo registrado', 'success')
+                setCF(false)
+                load()
+              }}
             />
           </div>
         )}

@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
@@ -114,10 +115,7 @@ export default function BpmChecklistsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Checklist BPM</h3>
-            <CrudForm{...({} as any)}
-              entityId="agri_quality.bpm_checklist"
-              apiPath="/api/agri-quality/bpm-checklists"
-              mode="create"
+            <CrudForm
               fields={[
                 { type: 'select' as const, id: 'checklist_type',  label: 'Tipo de Checklist',  required: true,
                   options: [
@@ -148,7 +146,13 @@ export default function BpmChecklistsPage() {
                 { id: 'general', title: 'General',      fields: ['checklist_type', 'area', 'check_date', 'shift'] },
                 { id: 'result',  title: 'Resultado',    fields: ['overall_result', 'findings', 'corrective_actions'] },
               ]}
-              onSuccess={() => { flash('Checklist BPM registrado', 'success'); setShowForm(false); load() }}
+              cancelHref="/backend/agri_quality/bpm"
+              onSubmit={async (values) => {
+                await createCrud('agri-quality/bpm-checklists', values)
+                flash('Checklist BPM registrado', 'success')
+                setShowForm(false)
+                load()
+              }}
             />
           </div>
         )}
