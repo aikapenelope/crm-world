@@ -54,13 +54,13 @@ export const searchConfig: SearchModuleConfig = {
         const typeLabel = UNIT_TYPE_LABELS[String(r.unit_type ?? '')] ?? String(r.unit_type ?? '')
         return {
           text: [
-            norm(r.name as string) ?? '',
+            norm(r.name) ?? '',
             typeLabel,
-            norm(r.technical_manager as string) ?? '',
-            norm(r.location_address as string) ?? '',
+            norm(r.technical_manager) ?? '',
+            norm(r.location_address) ?? '',
           ].filter(Boolean),
           presenter: {
-            title: (norm(r.name as string) as string | undefined) ?? 'Unidad productiva',
+            title: (norm(r.name) ?? undefined) ?? 'Unidad productiva',
             subtitle: typeLabel,
             icon: 'warehouse',
             badge: r.status as string | undefined === 'active' ? 'Activo' : r.status === 'maintenance' ? 'Mantenimiento' : 'Inactivo',
@@ -74,7 +74,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const typeLabel = UNIT_TYPE_LABELS[String(r.unit_type ?? '')] ?? String(r.unit_type ?? '')
         return {
-          title: (norm(r.name as string) as string | undefined) ?? 'Unidad productiva',
+          title: (norm(r.name) ?? undefined) ?? 'Unidad productiva',
           subtitle: typeLabel,
           icon: 'warehouse',
           badge: r.status as string | undefined === 'active' ? 'Activo' : 'Inactivo',
@@ -106,14 +106,14 @@ export const searchConfig: SearchModuleConfig = {
         const statusLabel = FLOCK_STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
           text: [
-            norm(r.flock_number as string) ?? '',
+            norm(r.flock_number) ?? '',
             speciesLabel,
-            norm(r.genetic_line as string) ?? '',
-            norm(r.supplier_lot_number as string) ?? '',
+            norm(r.genetic_line) ?? '',
+            norm(r.supplier_lot_number) ?? '',
           ].filter(Boolean),
           presenter: {
-            title: (norm(r.flock_number as string) as string | undefined) ?? 'Lote',
-            subtitle: [speciesLabel, norm(r.genetic_line as string)].filter(Boolean).join(' · ') || undefined,
+            title: (norm(r.flock_number) ?? undefined) ?? 'Lote',
+            subtitle: [speciesLabel, norm(r.genetic_line)].filter(Boolean).join(' · ') || undefined,
             icon: 'bird',
             badge: statusLabel,
           },
@@ -127,7 +127,7 @@ export const searchConfig: SearchModuleConfig = {
         const speciesLabel = SPECIES_LABELS[String(r.species ?? '')] ?? String(r.species ?? '')
         const statusLabel = FLOCK_STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.flock_number as string) as string | undefined) ?? 'Lote',
+          title: (norm(r.flock_number) ?? undefined) ?? 'Lote',
           subtitle: speciesLabel,
           icon: 'bird',
           badge: statusLabel,

@@ -20,7 +20,7 @@ export const searchConfig: SearchModuleConfig = {
         if (r.invoice_number) lines.push(`Factura: ${r.invoice_number}`)
         if (r.period_month) lines.push(`Período: ${r.period_month}`)
         if (!lines.length) return null
-        return { text: lines, presenter: { title: (norm(r.supplier_name as string) as string | undefined) ?? 'Retención', subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined, icon: 'file-text', badge: (norm(r.period_month as string) as string | undefined) ?? undefined }, links: [{ href: '/backend/ve_withholdings', label: 'Ver retenciones', kind: 'primary' }], checksumSource: { supplier_name: r.supplier_name, invoice_number: r.invoice_number, period_month: r.period_month } }
+        return { text: lines, presenter: { title: (norm(r.supplier_name) ?? undefined) ?? 'Retención', subtitle: (norm(r.period_month) ?? undefined) ?? undefined, icon: 'file-text', badge: (norm(r.period_month) ?? undefined) ?? undefined }, links: [{ href: '/backend/ve_withholdings', label: 'Ver retenciones', kind: 'primary' }], checksumSource: { supplier_name: r.supplier_name, invoice_number: r.invoice_number, period_month: r.period_month } }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => ({ title: norm(ctx.record.supplier_name) ?? 'Retención', subtitle: norm(ctx.record.invoice_number) ?? undefined, icon: 'file-text' }),
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => '/backend/ve_withholdings',

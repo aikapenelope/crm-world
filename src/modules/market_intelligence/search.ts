@@ -45,9 +45,9 @@ export const searchConfig: SearchModuleConfig = {
         if (!lines.length) return null
 
         const subtitle = [
-          norm(r.city as string),
-          OPERATION_LABELS[String(r.operation ?? '')] ?? norm(r.operation as string),
-          TYPE_LABELS[String(r.property_type ?? '')] ?? norm(r.property_type as string),
+          norm(r.city),
+          OPERATION_LABELS[String(r.operation ?? '')] ?? norm(r.operation),
+          TYPE_LABELS[String(r.property_type ?? '')] ?? norm(r.property_type),
         ].filter(Boolean).join(' · ')
 
         return {
@@ -71,7 +71,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return {
           title: 'Análisis de mercado',
-          subtitle: [norm(r.city as string), norm(r.operation as string)].filter(Boolean).join(' · ') || undefined,
+          subtitle: [norm(r.city), norm(r.operation)].filter(Boolean).join(' · ') || undefined,
           icon: 'bar-chart-2',
         }
       },

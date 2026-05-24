@@ -36,8 +36,8 @@ export const searchConfig: SearchModuleConfig = {
         }
 
         const presenter: SearchResultPresenter = {
-          title: (norm(r.student_name as string) as string | undefined) ?? `Cargo ${r.period_month}`,
-          subtitle: [norm(r.period_month as string), r.amount ? `${r.currency} ${r.amount}` : null].filter(Boolean).join(' · ') || undefined,
+          title: (norm(r.student_name) ?? undefined) ?? `Cargo ${r.period_month}`,
+          subtitle: [norm(r.period_month), r.amount ? `${r.currency} ${r.amount}` : null].filter(Boolean).join(' · ') || undefined,
           icon: 'credit-card',
           badge: STATUS_LABELS[String(r.status)] ?? undefined,
         }
@@ -53,10 +53,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.student_name as string) as string | undefined) ?? `Cargo ${r.period_month}`,
-          subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined,
+          title: (norm(r.student_name) ?? undefined) ?? `Cargo ${r.period_month}`,
+          subtitle: (norm(r.period_month) ?? undefined) ?? undefined,
           icon: 'credit-card',
-          badge: (norm(r.status as string) as string | undefined) ?? undefined,
+          badge: (norm(r.status) ?? undefined) ?? undefined,
         }
       },
 

@@ -70,7 +70,7 @@ export const searchConfig: SearchModuleConfig = {
 
         const statusLabel = AGREEMENT_STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         const presenter: SearchResultPresenter = {
-          title: (norm(r.agreement_number as string) as string | undefined) ?? 'Acuerdo de pago',
+          title: (norm(r.agreement_number) ?? undefined) ?? 'Acuerdo de pago',
           subtitle: ownerName ? `${ownerName} · ${statusLabel}` : statusLabel || undefined,
           icon: 'handshake',
           badge: statusLabel,
@@ -93,7 +93,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = AGREEMENT_STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.agreement_number as string) as string | undefined) ?? 'Acuerdo de pago',
+          title: (norm(r.agreement_number) ?? undefined) ?? 'Acuerdo de pago',
           subtitle: statusLabel || undefined,
           icon: 'handshake',
           badge: statusLabel,

@@ -28,10 +28,10 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.order_number) return null
         const statusLabel = ORDER_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.order_number as string) ?? '', norm(r.product_code as string) ?? '', norm(r.product_name as string) ?? ''].filter(Boolean),
+          text: [norm(r.order_number) ?? '', norm(r.product_code) ?? '', norm(r.product_name) ?? ''].filter(Boolean),
           presenter: {
-            title: (norm(r.order_number as string) as string | undefined) ?? 'Orden',
-            subtitle: `${norm(r.product_code as string)} — ${norm(r.product_name as string) ?? ''} · ${r.planned_quantity} ${r.uom}`,
+            title: (norm(r.order_number) ?? undefined) ?? 'Orden',
+            subtitle: `${norm(r.product_code)} — ${norm(r.product_name) ?? ''} · ${r.planned_quantity} ${r.uom}`,
             icon: 'factory',
             badge: statusLabel,
           },
@@ -42,8 +42,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.order_number as string) as string | undefined) ?? 'Orden',
-          subtitle: (norm(r.product_code as string) as string | undefined) ?? undefined,
+          title: (norm(r.order_number) ?? undefined) ?? 'Orden',
+          subtitle: (norm(r.product_code) ?? undefined) ?? undefined,
           icon: 'factory',
           badge: ORDER_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''),
         }

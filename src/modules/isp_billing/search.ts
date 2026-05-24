@@ -45,8 +45,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: (norm(r.invoice_number as string) as string | undefined) ?? 'Factura',
-            subtitle: [norm(r.period_month as string), `USD ${r.total_usd}`].filter(Boolean).join(' · ') || undefined,
+            title: (norm(r.invoice_number) ?? undefined) ?? 'Factura',
+            subtitle: [norm(r.period_month), `USD ${r.total_usd}`].filter(Boolean).join(' · ') || undefined,
             icon: 'file-text',
             badge: statusLabel,
           },
@@ -59,8 +59,8 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.invoice_number as string) as string | undefined) ?? 'Factura',
-          subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined,
+          title: (norm(r.invoice_number) ?? undefined) ?? 'Factura',
+          subtitle: (norm(r.period_month) ?? undefined) ?? undefined,
           icon: 'file-text',
           badge: statusLabel,
         }

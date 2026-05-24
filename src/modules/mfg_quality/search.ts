@@ -28,9 +28,9 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.nc_number) return null
         const statusLabel = NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.nc_number as string) ?? '', norm(r.product_code as string) ?? '', norm(r.description as string) ?? ''].filter(Boolean),
+          text: [norm(r.nc_number) ?? '', norm(r.product_code) ?? '', norm(r.description) ?? ''].filter(Boolean),
           presenter: {
-            title: `${norm(r.nc_number as string)} — ${norm(r.product_code as string) ?? 'Sin producto'}`,
+            title: `${norm(r.nc_number)} — ${norm(r.product_code) ?? 'Sin producto'}`,
             subtitle: `${r.severity} · ${r.source}`,
             icon: 'x-octagon',
             badge: statusLabel,
@@ -42,8 +42,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.nc_number as string) as string | undefined) ?? 'NC',
-          subtitle: (norm(r.product_code as string) as string | undefined) ?? undefined,
+          title: (norm(r.nc_number) ?? undefined) ?? 'NC',
+          subtitle: (norm(r.product_code) ?? undefined) ?? undefined,
           icon: 'x-octagon',
           badge: NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''),
         }

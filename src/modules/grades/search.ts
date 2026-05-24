@@ -31,8 +31,8 @@ export const searchConfig: SearchModuleConfig = {
         if (r.code) lines.push(String(r.code))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: (norm(r.name as string) as string | undefined) ?? 'Name',
-          subtitle: ((norm(r.code as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.name) ?? undefined) ?? 'Name',
+          subtitle: ((norm(r.code) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'award',
         }
         return {
@@ -46,8 +46,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.name as string) as string | undefined) ?? 'Name',
-          subtitle: (norm(r.code as string) as string | undefined) ?? undefined,
+          title: (norm(r.name) ?? undefined) ?? 'Name',
+          subtitle: (norm(r.code) ?? undefined) ?? undefined,
           icon: 'award',
         }
       },

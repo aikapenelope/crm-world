@@ -30,7 +30,7 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: [String(r.title)],
         presenter: {
-          title: (norm(r.title as string) as string | undefined) ?? 'Comunicado',
+          title: (norm(r.title) ?? undefined) ?? 'Comunicado',
           subtitle: r.created_at ? new Date(String(r.created_at)).toLocaleDateString() : undefined,
           icon: 'megaphone',
         },
@@ -41,7 +41,7 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: (norm(r.title as string) as string | undefined) ?? 'Comunicado',
+        title: (norm(r.title) ?? undefined) ?? 'Comunicado',
         icon: 'megaphone',
       }
     },

@@ -33,10 +33,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.status) lines.push(String(r.status))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: (norm(r.delivery_number as string) as string | undefined) ?? 'Delivery Number',
-          subtitle: ((norm(r.customer_name as string) ?? '') + ' · ' + (norm(r.status as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.delivery_number) ?? undefined) ?? 'Delivery Number',
+          subtitle: ((norm(r.customer_name) ?? '') + ' · ' + (norm(r.status) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'truck',
-          badge: (norm(r.status as string) as string | undefined) ?? undefined,
+          badge: (norm(r.status) ?? undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -49,10 +49,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.delivery_number as string) as string | undefined) ?? 'Delivery Number',
-          subtitle: (norm(r.customer_name as string) as string | undefined) ?? undefined,
+          title: (norm(r.delivery_number) ?? undefined) ?? 'Delivery Number',
+          subtitle: (norm(r.customer_name) ?? undefined) ?? undefined,
           icon: 'truck',
-          badge: (norm(r.status as string) as string | undefined) ?? undefined,
+          badge: (norm(r.status) ?? undefined) ?? undefined,
         }
       },
 

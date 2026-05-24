@@ -30,9 +30,9 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.product_code) return null
         const statusLabel = STATUS_LABEL[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.product_code as string) ?? '', norm(r.product_name as string) ?? ''].filter(Boolean),
+          text: [norm(r.product_code) ?? '', norm(r.product_name) ?? ''].filter(Boolean),
           presenter: {
-            title: `${norm(r.product_code as string)} — ${norm(r.product_name as string) ?? ''}`,
+            title: `${norm(r.product_code)} — ${norm(r.product_name) ?? ''}`,
             subtitle: `${TYPE_LABEL[String(r.bom_type ?? '')] ?? String(r.bom_type ?? '')} · v${r.version}`,
             icon: 'layers',
             badge: statusLabel,
@@ -44,7 +44,7 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: `${norm(r.product_code as string)} — ${norm(r.product_name as string) ?? ''}`,
+          title: `${norm(r.product_code)} — ${norm(r.product_name) ?? ''}`,
           subtitle: `v${r.version}`,
           icon: 'layers',
           badge: STATUS_LABEL[String(r.status ?? '')] ?? String(r.status ?? ''),

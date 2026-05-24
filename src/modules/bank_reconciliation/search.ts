@@ -38,10 +38,10 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: (norm(r.bank_name as string) as string | undefined) ?? 'Extracto bancario',
-            subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined,
+            title: (norm(r.bank_name) ?? undefined) ?? 'Extracto bancario',
+            subtitle: (norm(r.period_month) ?? undefined) ?? undefined,
             icon: 'landmark',
-            badge: (norm(r.period_month as string) as string | undefined) ?? undefined,
+            badge: (norm(r.period_month) ?? undefined) ?? undefined,
           },
           links: [{ href: '/backend/bank-reconciliation', label: 'Ver conciliación', kind: 'primary' }],
           checksumSource: {
@@ -55,10 +55,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.bank_name as string) as string | undefined) ?? 'Extracto bancario',
-          subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined,
+          title: (norm(r.bank_name) ?? undefined) ?? 'Extracto bancario',
+          subtitle: (norm(r.period_month) ?? undefined) ?? undefined,
           icon: 'landmark',
-          badge: (norm(r.period_month as string) as string | undefined) ?? undefined,
+          badge: (norm(r.period_month) ?? undefined) ?? undefined,
         }
       },
 

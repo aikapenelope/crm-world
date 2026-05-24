@@ -46,7 +46,7 @@ export const searchConfig: SearchModuleConfig = {
         if (!lines.length) return null
 
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
-        const typeLabel = TYPE_LABELS[String(r.session_type ?? '')] ?? norm(r.session_type as string) ?? undefined
+        const typeLabel = TYPE_LABELS[String(r.session_type ?? '')] ?? norm(r.session_type) ?? undefined
 
         return {
           text: lines,
