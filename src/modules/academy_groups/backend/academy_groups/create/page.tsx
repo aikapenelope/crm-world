@@ -102,8 +102,9 @@ export default function AcademyGroupCreatePage() {
       max_students: maxStudents,
       notes: notes || null,
     })
-    if (res.ok && (res.result as any)?.id) {
-      const groupId = (res.result as any).id
+    const created = res.result as { id?: string } | undefined
+    if (res.ok && created?.id) {
+      const groupId = created.id
       // Auto-generate sessions
       await apiCall('/api/academy-groups/groups/generate-sessions', {
         method: 'POST',

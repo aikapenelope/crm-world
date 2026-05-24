@@ -55,7 +55,7 @@ export default function PortalMaintenanceCreatePage({ params }: Props) {
     setSubmitting(true)
     setError(null)
 
-    const res = await apiCall('/api/condo-portal/maintenance-request', {
+    const res = await apiCall<{ request_number?: string }>('/api/condo-portal/maintenance-request', {
       method: 'POST',
       body: JSON.stringify({
         building_id: buildingId ?? null,
@@ -67,8 +67,8 @@ export default function PortalMaintenanceCreatePage({ params }: Props) {
       }),
     })
 
-    if (res.ok && (res.result as any)?.request_number) {
-      setSubmitted((res.result as any).request_number)
+    if (res.ok && res.result?.request_number) {
+      setSubmitted(res.result.request_number)
     } else {
       setError('Error al enviar la solicitud. Intenta nuevamente.')
     }

@@ -109,7 +109,7 @@ export default function CreateBudgetItemPage() {
       return
     }
 
-    const itemId = (itemResult.result as any)?.id
+    const itemId = itemResult.result?.id
 
     // Create APU resources
     if (resources.length > 0 && itemId) {

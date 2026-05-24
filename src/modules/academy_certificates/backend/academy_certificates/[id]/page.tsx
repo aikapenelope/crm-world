@@ -39,7 +39,7 @@ export default function AcademyCertificateDetailPage() {
 
   async function handleIssue() {
     setIssuing(true)
-    const res = await apiCall('/api/academy-certificates/certificates/issue', {
+    const res = await apiCall<{ error?: string }>('/api/academy-certificates/certificates/issue', {
       method: 'POST',
       body: JSON.stringify({ certificate_id: certId, issued_by: issuedBy || null }),
     })
@@ -47,7 +47,7 @@ export default function AcademyCertificateDetailPage() {
       flash('Certificado emitido exitosamente', 'success')
       await load()
     } else {
-      flash((res.result as any)?.error ?? 'Error al emitir', 'error')
+      flash(res.result?.error ?? 'Error al emitir', 'error')
     }
     setIssuing(false)
   }

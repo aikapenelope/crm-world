@@ -119,7 +119,7 @@ export default function CreateValuationPage() {
       return
     }
 
-    const valuationId = (result.result as any)?.id
+    const valuationId = result.result?.id
 
     // Create lines
     const activeLines = lines.filter((l) => Number(l.curr_qty) > 0)

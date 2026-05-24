@@ -72,14 +72,14 @@ export default function PortalVoteDetailPage(_props: Props) {
     if (!selectedChoice || !unitId || !voteId) return
     setSubmitting(true)
     setError(null)
-    const res = await apiCall('/api/condo-portal/votes/cast', {
+    const res = await apiCall<{ error?: string }>('/api/condo-portal/votes/cast', {
       method: 'POST',
       body: JSON.stringify({ vote_id: voteId, unit_id: unitId, choice: selectedChoice }),
     })
     if (res.ok) {
       setVoted(true)
     } else {
-      setError((res.result as any)?.error ?? 'Error al registrar el voto.')
+      setError(res.result?.error ?? 'Error al registrar el voto.')
     }
     setSubmitting(false)
   }

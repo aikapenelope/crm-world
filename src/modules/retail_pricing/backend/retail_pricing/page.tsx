@@ -56,7 +56,7 @@ export default function RetailPricingPage() {
   async function executeBulkUpdate() {
     if (!oldRate || !newRate) return
     setIsUpdating(true)
-    const call = await apiCall('/api/retail-pricing/bulk-update', {
+    const call = await apiCall<{ products_affected?: number }>('/api/retail-pricing/bulk-update', {
       method: 'POST',
       body: JSON.stringify({
         update_type: 'exchange_rate',
@@ -65,8 +65,7 @@ export default function RetailPricingPage() {
       }),
     })
     if (call.ok) {
-      const result = call.result as any
-      flash(`Precios actualizados: ${result.products_affected} productos afectados`, 'success')
+      flash(`Precios actualizados: ${call.result?.products_affected ?? 0} productos afectados`, 'success')
       setShowBulkUpdate(false)
       setOldRate('')
       setNewRate('')

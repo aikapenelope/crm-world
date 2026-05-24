@@ -92,9 +92,10 @@ export default function AcademyEnrollmentCreatePage() {
       status,
       notes: notes || null,
     })
-    if (res.ok && (res.result as any)?.id) {
+    const created = res.result as { id?: string } | undefined
+    if (res.ok && created?.id) {
       flash('Alumno inscrito', 'success')
-      router.push(`/backend/academy_enrollments/${(res.result as any).id}`)
+      router.push(`/backend/academy_enrollments/${created.id}`)
     } else {
       flash('Error al inscribir el alumno', 'error')
     }
