@@ -41,7 +41,7 @@ export const searchConfig: SearchModuleConfig = {
 
         const presenter: SearchResultPresenter = {
           title: String(r.subject ?? r.rfi_number ?? 'RFI'),
-          subtitle: [norm(r.rfi_number as string), norm(r.discipline as string)].filter(Boolean).join(' · ') || undefined,
+          subtitle: [norm(r.rfi_number), norm(r.discipline)].filter(Boolean).join(' · ') || undefined,
           icon: 'help-circle',
           badge: RFI_STATUS[String(r.status)] ?? undefined,
         }
@@ -58,7 +58,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return {
           title: String(r.subject ?? r.rfi_number ?? 'RFI'),
-          subtitle: [norm(r.rfi_number as string), norm(r.discipline as string)].filter(Boolean).join(' · ') || undefined,
+          subtitle: [norm(r.rfi_number), norm(r.discipline)].filter(Boolean).join(' · ') || undefined,
           icon: 'help-circle',
           badge: RFI_STATUS[String(r.status)] ?? undefined,
         }

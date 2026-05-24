@@ -32,10 +32,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.schedule_time) lines.push(String(r.schedule_time))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: (norm(r.group_code as string) as string | undefined) ?? 'Group Code',
-          subtitle: ((norm(r.status as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.group_code) ?? undefined) ?? 'Group Code',
+          subtitle: ((norm(r.status) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'calendar',
-          badge: (norm(r.status as string) as string | undefined) ?? undefined,
+          badge: (norm(r.status) ?? undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -48,10 +48,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.group_code as string) as string | undefined) ?? 'Group Code',
-          subtitle: (norm(r.status as string) as string | undefined) ?? undefined,
+          title: (norm(r.group_code) ?? undefined) ?? 'Group Code',
+          subtitle: (norm(r.status) ?? undefined) ?? undefined,
           icon: 'calendar',
-          badge: (norm(r.status as string) as string | undefined) ?? undefined,
+          badge: (norm(r.status) ?? undefined) ?? undefined,
         }
       },
 

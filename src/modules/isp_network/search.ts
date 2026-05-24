@@ -43,8 +43,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: `${statusIcon} ${norm(r.name as string) ?? 'Nodo'}`,
-            subtitle: [norm(r.city as string), norm(r.node_type as string)].filter(Boolean).join(' · ') || undefined,
+            title: `${statusIcon} ${norm(r.name) ?? 'Nodo'}`,
+            subtitle: [norm(r.city), norm(r.node_type)].filter(Boolean).join(' · ') || undefined,
             icon: 'wifi',
             badge: String(r.status ?? ''),
           },
@@ -56,8 +56,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.name as string) as string | undefined) ?? 'Nodo',
-          subtitle: [norm(r.city as string), norm(r.node_type as string)].filter(Boolean).join(' · ') || undefined,
+          title: (norm(r.name) ?? undefined) ?? 'Nodo',
+          subtitle: [norm(r.city), norm(r.node_type)].filter(Boolean).join(' · ') || undefined,
           icon: 'wifi',
           badge: String(r.status ?? ''),
         }
@@ -94,8 +94,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: `${norm(r.brand as string) ?? ''} ${norm(r.model as string) ?? ''}`.trim() || 'CPE',
-            subtitle: (norm(r.serial_number as string) as string | undefined) ?? undefined,
+            title: `${norm(r.brand) ?? ''} ${norm(r.model) ?? ''}`.trim() || 'CPE',
+            subtitle: (norm(r.serial_number) ?? undefined) ?? undefined,
             icon: 'router',
             badge: String(r.status ?? ''),
           },
@@ -107,8 +107,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: `${norm(r.brand as string) ?? ''} ${norm(r.model as string) ?? ''}`.trim() || 'CPE',
-          subtitle: (norm(r.serial_number as string) as string | undefined) ?? undefined,
+          title: `${norm(r.brand) ?? ''} ${norm(r.model) ?? ''}`.trim() || 'CPE',
+          subtitle: (norm(r.serial_number) ?? undefined) ?? undefined,
           icon: 'router',
           badge: String(r.status ?? ''),
         }

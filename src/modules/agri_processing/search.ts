@@ -27,15 +27,15 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         if (!r.batch_number) return null
         return {
-          text: [norm(r.batch_number as string) ?? ''],
-          presenter: { title: (norm(r.batch_number as string) as string | undefined) ?? 'Beneficio', subtitle: new Date(r.slaughter_date as string).toLocaleDateString(), icon: 'factory', badge: BATCH_STATUS[String(r.status)] ?? String(r.status) },
+          text: [norm(r.batch_number) ?? ''],
+          presenter: { title: (norm(r.batch_number) ?? undefined) ?? 'Beneficio', subtitle: new Date(r.slaughter_date as string).toLocaleDateString(), icon: 'factory', badge: BATCH_STATUS[String(r.status)] ?? String(r.status) },
           links: [{ href: `/backend/agri-processing/${r.id}`, label: 'Ver lote', kind: 'primary' }],
           checksumSource: { batch_number: r.batch_number, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: (norm(r.batch_number as string) as string | undefined) ?? 'Beneficio', subtitle: BATCH_STATUS[String(r.status)] ?? String(r.status), icon: 'factory', badge: BATCH_STATUS[String(r.status)] ?? String(r.status) }
+        return { title: (norm(r.batch_number) ?? undefined) ?? 'Beneficio', subtitle: BATCH_STATUS[String(r.status)] ?? String(r.status), icon: 'factory', badge: BATCH_STATUS[String(r.status)] ?? String(r.status) }
       },
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-processing/${ctx.record.id}`,
     },
@@ -47,15 +47,15 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         if (!r.lot_number) return null
         return {
-          text: [norm(r.lot_number as string) ?? '', norm(r.barcode as string) ?? ''].filter(Boolean),
-          presenter: { title: (norm(r.lot_number as string) as string | undefined) ?? 'Producto', subtitle: (norm(r.barcode as string) as string | undefined) ?? undefined, icon: 'package', badge: LOT_STATUS[String(r.status)] ?? String(r.status) },
+          text: [norm(r.lot_number) ?? '', norm(r.barcode) ?? ''].filter(Boolean),
+          presenter: { title: (norm(r.lot_number) ?? undefined) ?? 'Producto', subtitle: (norm(r.barcode) ?? undefined) ?? undefined, icon: 'package', badge: LOT_STATUS[String(r.status)] ?? String(r.status) },
           links: [{ href: `/backend/agri-processing/lots/${r.id}`, label: 'Ver lote', kind: 'primary' }],
           checksumSource: { lot_number: r.lot_number, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: (norm(r.lot_number as string) as string | undefined) ?? 'Producto', icon: 'package', badge: LOT_STATUS[String(r.status)] ?? String(r.status) }
+        return { title: (norm(r.lot_number) ?? undefined) ?? 'Producto', icon: 'package', badge: LOT_STATUS[String(r.status)] ?? String(r.status) }
       },
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-processing/lots/${ctx.record.id}`,
     },

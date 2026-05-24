@@ -60,7 +60,7 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: (norm(r.student_name as string) as string | undefined) ?? 'Alumno',
+            title: (norm(r.student_name) ?? undefined) ?? 'Alumno',
             subtitle: [groupInfo, statusLabel].filter(Boolean).join(' · ') || undefined,
             icon: 'user-check',
             badge: statusLabel,
@@ -74,8 +74,8 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.student_name as string) as string | undefined) ?? 'Alumno',
-          subtitle: (norm(r.enrollment_number as string) as string | undefined) ?? undefined,
+          title: (norm(r.student_name) ?? undefined) ?? 'Alumno',
+          subtitle: (norm(r.enrollment_number) ?? undefined) ?? undefined,
           icon: 'user-check',
           badge: statusLabel,
         }

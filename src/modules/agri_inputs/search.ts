@@ -37,14 +37,14 @@ export const searchConfig: SearchModuleConfig = {
         const badge = isExpiring ? 'Por vencer' : isLow ? 'Stock bajo' : r.is_active ? 'Activo' : 'Inactivo'
         return {
           text: [
-            norm(r.name as string) ?? '',
-            norm(r.active_ingredient as string) ?? '',
-            norm(r.insai_registry as string) ?? '',
-            norm(r.lot_number as string) ?? '',
+            norm(r.name) ?? '',
+            norm(r.active_ingredient) ?? '',
+            norm(r.insai_registry) ?? '',
+            norm(r.lot_number) ?? '',
           ].filter(Boolean),
           presenter: {
-            title: (norm(r.name as string) as string | undefined) ?? 'Insumo',
-            subtitle: [typeLabel, norm(r.category as string)].filter(Boolean).join(' · ') || undefined,
+            title: (norm(r.name) ?? undefined) ?? 'Insumo',
+            subtitle: [typeLabel, norm(r.category)].filter(Boolean).join(' · ') || undefined,
             icon: r.input_type as string | undefined === 'vaccine' ? 'syringe' : r.input_type === 'medication' ? 'pill' : 'package',
             badge,
           },
@@ -57,7 +57,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const typeLabel = TYPE_LABEL[String(r.input_type ?? '')] ?? String(r.input_type ?? '')
         return {
-          title: (norm(r.name as string) as string | undefined) ?? 'Insumo',
+          title: (norm(r.name) ?? undefined) ?? 'Insumo',
           subtitle: typeLabel,
           icon: r.input_type as string | undefined === 'vaccine' ? 'syringe' : 'pill',
           badge: r.is_active ? 'Activo' : 'Inactivo',

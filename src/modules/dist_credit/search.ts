@@ -138,7 +138,7 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: (norm(r.description as string) as string | undefined) ?? 'Transacción',
+            title: (norm(r.description) ?? undefined) ?? 'Transacción',
             subtitle: typeLabel || undefined,
             icon: 'arrow-right-left',
             badge: typeLabel,
@@ -152,7 +152,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const typeLabel = TYPE_LABELS[String(r.type ?? '')] ?? String(r.type ?? '')
         return {
-          title: (norm(r.description as string) as string | undefined) ?? 'Transacción',
+          title: (norm(r.description) ?? undefined) ?? 'Transacción',
           subtitle: typeLabel || undefined,
           icon: 'arrow-right-left',
         }

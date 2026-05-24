@@ -38,8 +38,8 @@ export const searchConfig: SearchModuleConfig = {
         if (!lines.length) return null
 
         const subtitle = [
-          norm(r.item_number as string),
-          r.unit ? `${norm(r.quantity as string)} ${r.unit}` : null,
+          norm(r.item_number),
+          r.unit ? `${norm(r.quantity)} ${r.unit}` : null,
           r.total_cost ? `${r.currency} ${Number(r.total_cost).toLocaleString('es-VE')}` : null,
         ].filter(Boolean).join(' · ')
 
@@ -47,7 +47,7 @@ export const searchConfig: SearchModuleConfig = {
           title: String(r.name ?? `Ítem ${r.item_number}`),
           subtitle: subtitle || undefined,
           icon: 'list',
-          badge: CATEGORY_LABELS[String(r.category)] ?? norm(r.category as string) ?? undefined,
+          badge: CATEGORY_LABELS[String(r.category)] ?? norm(r.category) ?? undefined,
         }
 
         return {
@@ -62,7 +62,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return {
           title: String(r.name ?? `Ítem ${r.item_number}`),
-          subtitle: [norm(r.item_number as string), norm(r.category as string) ? CATEGORY_LABELS[String(r.category)] : null]
+          subtitle: [norm(r.item_number), norm(r.category) ? CATEGORY_LABELS[String(r.category)] : null]
             .filter(Boolean).join(' · ') || undefined,
           icon: 'list',
           badge: CATEGORY_LABELS[String(r.category)] ?? undefined,

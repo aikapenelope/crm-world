@@ -36,10 +36,10 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: lines,
         presenter: {
-          title: (norm(r.document_number as string) as string | undefined) ?? 'Entrada fiscal',
-          subtitle: [norm(r.counterpart_name as string), norm(r.period_month as string)].filter(Boolean).join(' · ') || undefined,
+          title: (norm(r.document_number) ?? undefined) ?? 'Entrada fiscal',
+          subtitle: [norm(r.counterpart_name), norm(r.period_month)].filter(Boolean).join(' · ') || undefined,
           icon: 'book-open',
-          badge: (norm(r.book_type as string) as string | undefined) ?? undefined,
+          badge: (norm(r.book_type) ?? undefined) ?? undefined,
         },
         links: [{ href: '/backend/ve-tax-books', label: 'Ver libro fiscal', kind: 'primary' }],
         checksumSource: {
@@ -53,8 +53,8 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: (norm(r.document_number as string) as string | undefined) ?? 'Entrada fiscal',
-        subtitle: (norm(r.counterpart_name as string) as string | undefined) ?? undefined,
+        title: (norm(r.document_number) ?? undefined) ?? 'Entrada fiscal',
+        subtitle: (norm(r.counterpart_name) ?? undefined) ?? undefined,
         icon: 'book-open',
       }
     },

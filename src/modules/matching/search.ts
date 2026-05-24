@@ -32,10 +32,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.preferred_city) lines.push(String(r.preferred_city))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: (norm(r.preferred_city as string) as string | undefined) ?? 'Preferred City',
-          subtitle: ((norm(r.preferred_type as string) ?? '') + ' · ' + (norm(r.preferred_operation as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.preferred_city) ?? undefined) ?? 'Preferred City',
+          subtitle: ((norm(r.preferred_type) ?? '') + ' · ' + (norm(r.preferred_operation) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'search',
-          badge: (norm(r.preferred_operation as string) as string | undefined) ?? undefined,
+          badge: (norm(r.preferred_operation) ?? undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -48,10 +48,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.preferred_city as string) as string | undefined) ?? 'Preferred City',
-          subtitle: (norm(r.preferred_type as string) as string | undefined) ?? undefined,
+          title: (norm(r.preferred_city) ?? undefined) ?? 'Preferred City',
+          subtitle: (norm(r.preferred_type) ?? undefined) ?? undefined,
           icon: 'search',
-          badge: (norm(r.preferred_operation as string) as string | undefined) ?? undefined,
+          badge: (norm(r.preferred_operation) ?? undefined) ?? undefined,
         }
       },
 

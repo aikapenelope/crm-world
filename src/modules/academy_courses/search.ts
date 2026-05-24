@@ -37,14 +37,14 @@ export const searchConfig: SearchModuleConfig = {
         if (r.description) lines.push(String(r.description).slice(0, 200))
         if (!lines.length) return null
 
-        const subtitle = [norm(r.category as string), norm(r.level as string), MODALITY_LABELS[String(r.modality ?? '')] ?? null].filter(Boolean).join(' · ')
+        const subtitle = [norm(r.category), norm(r.level), MODALITY_LABELS[String(r.modality ?? '')] ?? null].filter(Boolean).join(' · ')
         return {
           text: lines,
           presenter: {
-            title: (norm(r.name as string) as string | undefined) ?? 'Curso',
+            title: (norm(r.name) ?? undefined) ?? 'Curso',
             subtitle: subtitle || undefined,
             icon: 'book-open',
-            badge: (norm(r.level as string) as string | undefined) ?? undefined,
+            badge: (norm(r.level) ?? undefined) ?? undefined,
           },
           links: [{ href: `/backend/academy_courses/${r.id}`, label: 'Ver curso', kind: 'primary' }],
           checksumSource: { name: r.name, category: r.category, level: r.level, is_active: r.is_active, updated_at: r.updated_at },
@@ -54,10 +54,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.name as string) as string | undefined) ?? 'Curso',
-          subtitle: (norm(r.category as string) as string | undefined) ?? undefined,
+          title: (norm(r.name) ?? undefined) ?? 'Curso',
+          subtitle: (norm(r.category) ?? undefined) ?? undefined,
           icon: 'book-open',
-          badge: (norm(r.level as string) as string | undefined) ?? undefined,
+          badge: (norm(r.level) ?? undefined) ?? undefined,
         }
       },
 
