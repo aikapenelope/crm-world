@@ -164,6 +164,23 @@ export const enabledModules: ModuleEntry[] = [
   { id: 'isp_sales', from: '@app' },       // Pipeline comercial + cobertura + comisiones
   { id: 'isp_portal', from: '@app' },      // Portal de autogestión del abonado
 
+  // Aika: Agroalimentario con Procesamiento vertical (Phase 23)
+  // Sprint A — Producción primaria
+  { id: 'agri_units',       from: '@app' }, // Fincas, galpones, flocks — FCA/IEP/viabilidad
+  { id: 'agri_feed',        from: '@app' }, // Fórmulas de alimento + costo BCV en tiempo real
+  { id: 'agri_vet',         from: '@app' }, // Vacunación, medicación, mortalidad diaria
+  { id: 'agri_inputs',      from: '@app' }, // Inventario insumos (medicamentos, vacunas, agroquímicos)
+  // Sprint B — Capa industrial
+  { id: 'agri_processing',  from: '@app' }, // Planta de beneficio + workflow despacho sanitario
+  { id: 'agri_cold_chain',  from: '@app' }, // Cadena de frío IoT + excursiones + micro-cortes CORPOELEC
+  { id: 'agri_quality',     from: '@app' }, // HACCP + PCCs + BPM + workflow NC
+  { id: 'agri_traceability',from: '@app' }, // Trazabilidad completa flock → PT + recall
+  // Sprint C — Capa comercial
+  { id: 'agri_sales',       from: '@app' }, // Ventas cadenas/distribuidores — IVA 16% + IGTF 3%
+  { id: 'agri_field',       from: '@app' }, // Operaciones de campo (maíz, soya, sorgo)
+  { id: 'agri_hr',          from: '@app' }, // Nómina jornaleros LOTTT + liquidación productor
+  { id: 'agri_portal',      from: '@app' }, // Portal del productor integrado
+
   // Aika: Manufactura Industrial vertical (Phase 24)
   // Sprint A — Núcleo productivo
   { id: 'mfg_bom', from: '@app' },         // Bill of Materials multinivel + versiones + alternativos
