@@ -39,7 +39,7 @@ const ROUTE_LABEL: Record<string, string> = {
 }
 
 export default function VaccinationsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_vet.page' })
   const [records, setRecords]    = React.useState<VacRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)

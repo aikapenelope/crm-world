@@ -39,7 +39,7 @@ const STATUS_LABEL: Record<string, string> = { draft: 'Borrador', active: 'Activ
 
 export default function HaccpPlansPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_quality.page' })
   const [plans, setPlans]       = React.useState<PlanRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)

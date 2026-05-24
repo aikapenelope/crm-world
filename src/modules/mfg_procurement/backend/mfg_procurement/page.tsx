@@ -44,7 +44,7 @@ function StatusPipeline({ status }: { status: string }) {
 
 export default function MfgProcurementPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_procurement.page' })
   const [orders, setOrders]      = React.useState<PoRow[]>([])
   const [isLoading, setLoad]     = React.useState(true)
   const [statusFilter, setSF]    = React.useState('in_transit')

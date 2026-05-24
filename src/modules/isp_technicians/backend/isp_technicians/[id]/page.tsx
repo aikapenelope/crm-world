@@ -36,7 +36,7 @@ export default function EditTechnicianPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', label: 'Datos del técnico',
+      id: 'basic', title: 'Datos del técnico',
       fields: [
         { id: 'name', label: 'Nombre completo', type: 'text', required: true },
         { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true },
@@ -52,14 +52,14 @@ export default function EditTechnicianPage() {
       ],
     },
     {
-      id: 'compensation', label: 'Compensación',
+      id: 'compensation', title: 'Compensación',
       fields: [
         { id: 'fuel_allowance_usd', label: 'Asignación mensual gasolina (USD)', type: 'text' },
         { id: 'commission_per_install', label: 'Comisión por instalación (USD)', type: 'text' },
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]

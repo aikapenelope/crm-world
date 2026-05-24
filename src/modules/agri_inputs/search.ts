@@ -43,7 +43,7 @@ export const searchConfig: SearchModuleConfig = {
             norm(r.lot_number) ?? '',
           ].filter(Boolean),
           presenter: {
-            title: norm(r.name) ?? 'Insumo',
+            title: (norm(r.name) as string | undefined) ?? 'Insumo',
             subtitle: [typeLabel, norm(r.category)].filter(Boolean).join(' · ') || undefined,
             icon: r.input_type === 'vaccine' ? 'syringe' : r.input_type === 'medication' ? 'pill' : 'package',
             badge,
@@ -57,7 +57,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const typeLabel = TYPE_LABEL[String(r.input_type ?? '')] ?? String(r.input_type ?? '')
         return {
-          title: norm(r.name) ?? 'Insumo',
+          title: (norm(r.name) as string | undefined) ?? 'Insumo',
           subtitle: typeLabel,
           icon: r.input_type === 'vaccine' ? 'syringe' : 'pill',
           badge: r.is_active ? 'Activo' : 'Inactivo',

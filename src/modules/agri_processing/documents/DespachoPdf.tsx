@@ -126,7 +126,7 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
             { label: 'Inspector Sanitario', name: d.approved_by ?? '' },
             { label: 'Responsable de Despacho', name: '' },
             { label: 'Conductor / Transportista', name: d.driver_name ?? '' },
-          ]} />
+          ] as any} />
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

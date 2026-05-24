@@ -26,14 +26,14 @@ export const searchConfig: SearchModuleConfig = {
         const typeLabel = UNIT_TYPE[String(r.unit_type ?? '')] ?? String(r.unit_type ?? '')
         return {
           text: [norm(r.name) ?? '', typeLabel].filter(Boolean),
-          presenter: { title: norm(r.name) ?? 'Cuarto frío', subtitle: `${typeLabel} · ${r.target_temp_min}°C a ${r.target_temp_max}°C`, icon: 'thermometer', badge: r.status === 'active' ? 'Activo' : 'Inactivo' },
+          presenter: { title: (norm(r.name) as string | undefined) ?? 'Cuarto frío', subtitle: `${typeLabel} · ${r.target_temp_min}°C a ${r.target_temp_max}°C`, icon: 'thermometer', badge: r.status === 'active' ? 'Activo' : 'Inactivo' },
           links: [{ href: `/backend/agri-cold-chain`, label: 'Ver cadena de frío', kind: 'primary' }],
           checksumSource: { name: r.name, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: norm(r.name) ?? 'Cuarto frío', subtitle: UNIT_TYPE[String(r.unit_type ?? '')] ?? String(r.unit_type ?? ''), icon: 'thermometer', badge: r.status === 'active' ? 'Activo' : 'Inactivo' }
+        return { title: (norm(r.name) as string | undefined) ?? 'Cuarto frío', subtitle: UNIT_TYPE[String(r.unit_type ?? '')] ?? String(r.unit_type ?? ''), icon: 'thermometer', badge: r.status === 'active' ? 'Activo' : 'Inactivo' }
       },
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-cold-chain`,
     },

@@ -40,7 +40,7 @@ export const searchConfig: SearchModuleConfig = {
           title: title || 'Vehículo',
           subtitle: subtitle || undefined,
           icon: 'car',
-          badge: norm(r.plate) ?? undefined,
+          badge: (norm(r.plate) as string | undefined) ?? undefined,
         }
 
         return {
@@ -58,7 +58,7 @@ export const searchConfig: SearchModuleConfig = {
           title: title || 'Vehículo',
           subtitle: [norm(r.plate), norm(r.owner_name)].filter(Boolean).join(' · ') || undefined,
           icon: 'car',
-          badge: norm(r.plate) ?? undefined,
+          badge: (norm(r.plate) as string | undefined) ?? undefined,
         }
       },
 

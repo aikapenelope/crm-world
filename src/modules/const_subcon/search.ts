@@ -34,10 +34,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.city) lines.push(String(r.city))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.name) ?? 'Name',
+          title: (norm(r.name) as string | undefined) ?? 'Name',
           subtitle: ((norm(r.specialty) ?? '') + ' · ' + (norm(r.city) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'hard-hat',
-          badge: norm(r.specialty) ?? undefined,
+          badge: (norm(r.specialty) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -50,10 +50,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.name) ?? 'Name',
-          subtitle: norm(r.specialty) ?? undefined,
+          title: (norm(r.name) as string | undefined) ?? 'Name',
+          subtitle: (norm(r.specialty) as string | undefined) ?? undefined,
           icon: 'hard-hat',
-          badge: norm(r.specialty) ?? undefined,
+          badge: (norm(r.specialty) as string | undefined) ?? undefined,
         }
       },
 

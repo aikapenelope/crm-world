@@ -31,10 +31,10 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: [String(r.title), dateRange].filter(Boolean),
         presenter: {
-          title: norm(r.title) ?? 'Evento',
+          title: (norm(r.title) as string | undefined) ?? 'Evento',
           subtitle: dateRange || undefined,
           icon: 'calendar',
-          badge: norm(r.event_type) ?? undefined,
+          badge: (norm(r.event_type) as string | undefined) ?? undefined,
         },
         links: [{ href: '/backend/school-calendar', label: 'Ver calendario', kind: 'primary' }],
         checksumSource: { title: r.title, start_date: r.start_date, end_date: r.end_date },
@@ -43,7 +43,7 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: norm(r.title) ?? 'Evento',
+        title: (norm(r.title) as string | undefined) ?? 'Evento',
         subtitle: r.start_date ? String(r.start_date).slice(0, 10) : undefined,
         icon: 'calendar',
       }

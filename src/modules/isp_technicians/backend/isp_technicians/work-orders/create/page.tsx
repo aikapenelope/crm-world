@@ -23,7 +23,7 @@ export default function CreateWorkOrderPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', label: 'Orden de trabajo',
+      id: 'basic', title: 'Orden de trabajo',
       fields: [
         {
           id: 'type', label: 'Tipo de visita', type: 'select', required: true,
@@ -48,14 +48,14 @@ export default function CreateWorkOrderPage() {
       ],
     },
     {
-      id: 'schedule', label: 'Programación',
+      id: 'schedule', title: 'Programación',
       fields: [
         { id: 'scheduled_date', label: 'Fecha de visita', type: 'date' },
         { id: 'scheduled_time', label: 'Ventana horaria', type: 'text', placeholder: '08:00-10:00' },
       ],
     },
     {
-      id: 'location', label: 'Ubicación',
+      id: 'location', title: 'Ubicación',
       fields: [
         { id: 'address', label: 'Dirección de la visita', type: 'text', required: true },
         { id: 'instructions', label: 'Instrucciones para el técnico', type: 'textarea',
@@ -63,7 +63,7 @@ export default function CreateWorkOrderPage() {
       ],
     },
     {
-      id: 'links', label: 'Vínculos',
+      id: 'links', title: 'Vínculos',
       fields: [
         { id: 'subscriber_id', label: 'ID del abonado (UUID)', type: 'text' },
         { id: 'ticket_id', label: 'ID del ticket (UUID)', type: 'text' },

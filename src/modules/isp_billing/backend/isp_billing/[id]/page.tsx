@@ -47,7 +47,7 @@ export default function InvoiceDetailPage() {
 
   const paymentGroups: CrudFormGroup[] = [
     {
-      id: 'payment', label: 'Cobro',
+      id: 'payment', title: 'Cobro',
       fields: [
         { id: 'payment_date', label: 'Fecha del pago', type: 'date', required: true },
         { id: 'amount_usd', label: 'Monto (USD)', type: 'text', required: true, placeholder: invoice.balance_usd },

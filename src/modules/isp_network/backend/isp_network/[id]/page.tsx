@@ -36,7 +36,7 @@ export default function EditIspNetworkNodePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', label: 'Básico',
+      id: 'basic', title: 'Básico',
       fields: [
         { id: 'name', label: 'Nombre del nodo', type: 'text', required: true },
         {
@@ -58,7 +58,7 @@ export default function EditIspNetworkNodePage() {
       ],
     },
     {
-      id: 'equip', label: 'Equipo',
+      id: 'equip', title: 'Equipo',
       fields: [
         { id: 'equipment_model', label: 'Equipo instalado', type: 'text' },
         { id: 'equipment_serial', label: 'Serie del equipo', type: 'text' },
@@ -67,7 +67,7 @@ export default function EditIspNetworkNodePage() {
       ],
     },
     {
-      id: 'power', label: 'Energía',
+      id: 'power', title: 'Energía',
       fields: [
         { id: 'power_provider', label: 'Fuente de energía', type: 'text' },
         { id: 'has_generator', label: 'Tiene generador', type: 'checkbox' },
@@ -75,7 +75,7 @@ export default function EditIspNetworkNodePage() {
       ],
     },
     {
-      id: 'monitor', label: 'Monitoreo',
+      id: 'monitor', title: 'Monitoreo',
       fields: [
         { id: 'monitoring_host', label: 'Host en Zabbix/PRTG', type: 'text' },
         { id: 'coordinates_lat', label: 'Latitud GPS', type: 'text' },
@@ -83,7 +83,7 @@ export default function EditIspNetworkNodePage() {
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

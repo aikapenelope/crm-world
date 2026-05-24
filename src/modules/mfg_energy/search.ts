@@ -11,7 +11,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return { text: [OUTAGE_TYPE[String(r.outage_type ?? '')] ?? String(r.outage_type ?? ''), norm(r.zone) ?? ''].filter(Boolean), presenter: { title: `Corte ${new Date(r.started_at).toLocaleDateString('es-VE')}`, subtitle: `${OUTAGE_TYPE[String(r.outage_type ?? '')] ?? ''} · ${r.duration_hrs ? `${r.duration_hrs}h` : 'en curso'}`, icon: 'zap-off', badge: r.ended_at ? 'Terminado' : 'Activo' }, links: [{ href: '/backend/mfg-energy', label: 'Ver energía', kind: 'primary' }], checksumSource: { started_at: r.started_at, ended_at: r.ended_at, updated_at: r.updated_at } }
       },
-      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: `Corte ${new Date(r.started_at).toLocaleDateString('es-VE')}`, subtitle: norm(r.zone) ?? undefined, icon: 'zap-off', badge: r.ended_at ? 'Terminado' : 'Activo' } },
+      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: `Corte ${new Date(r.started_at).toLocaleDateString('es-VE')}`, subtitle: (norm(r.zone) as string | undefined) ?? undefined, icon: 'zap-off', badge: r.ended_at ? 'Terminado' : 'Activo' } },
       resolveUrl: async (): Promise<string | null> => '/backend/mfg-energy',
     },
   ],

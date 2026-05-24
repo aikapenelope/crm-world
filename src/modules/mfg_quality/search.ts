@@ -42,8 +42,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.nc_number) ?? 'NC',
-          subtitle: norm(r.product_code) ?? undefined,
+          title: (norm(r.nc_number) as string | undefined) ?? 'NC',
+          subtitle: (norm(r.product_code) as string | undefined) ?? undefined,
           icon: 'x-octagon',
           badge: NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''),
         }

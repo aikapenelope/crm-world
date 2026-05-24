@@ -52,7 +52,7 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: norm(r.account_number) ?? 'Abonado',
+            title: (norm(r.account_number) as string | undefined) ?? 'Abonado',
             subtitle: [norm(r.installation_city), norm(r.subscriber_type)].filter(Boolean).join(' · ') || undefined,
             icon: 'users',
             badge: statusLabel,
@@ -71,7 +71,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.service_status ?? '')] ?? String(r.service_status ?? '')
         return {
-          title: norm(r.account_number) ?? 'Abonado',
+          title: (norm(r.account_number) as string | undefined) ?? 'Abonado',
           subtitle: [norm(r.installation_city), norm(r.subscriber_type)].filter(Boolean).join(' · ') || undefined,
           icon: 'users',
           badge: statusLabel,

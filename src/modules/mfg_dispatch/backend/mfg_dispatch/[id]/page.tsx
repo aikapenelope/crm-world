@@ -21,7 +21,7 @@ const DISP_STATUS_VARIANT: Record<string, 'neutral' | 'warning' | 'success'> = {
 export default function DispatchDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_dispatch.page' })
 
   const [state, setState]     = React.useState<PageState>('loading')
   const [so, setSo]           = React.useState<any>(null)

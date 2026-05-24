@@ -26,7 +26,7 @@ const WO_TYPE_LABEL: Record<string, string> = { preventive: 'Preventivo', correc
 
 export default function MfgMaintenancePage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_maintenance.page' })
   const [equipment, setEq]    = React.useState<EqRow[]>([])
   const [workOrders, setWos]  = React.useState<WoRow[]>([])
   const [spareParts, setSps]  = React.useState<SpRow[]>([])
@@ -113,7 +113,7 @@ export default function MfgMaintenancePage() {
     { accessorKey: 'scheduled_date', header: 'Fecha plan', cell: ({ row }) => row.original.scheduled_date ? new Date(row.original.scheduled_date).toLocaleDateString('es-VE') : '—' },
     { id: 'actions', cell: ({ row }) => <RowActions items={[
       { id: 'start', label: 'Iniciar WO', onSelect: () => handleStartWo(row.original) },
-      { id: 'view', label: 'Ver equipo', onSelect: () => router.push(`/backend/mfg-maintenance/${row.original.equipment_id ?? ''}`) },
+      { id: 'view', label: 'Ver equipo', onSelect: () => router.push(`/backend/mfg-maintenance/${row.original.equipment_code ?? ''}`) },
     ]} /> },
   ]
 

@@ -39,7 +39,7 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: norm(r.name) ?? 'Plan',
+            title: (norm(r.name) as string | undefined) ?? 'Plan',
             subtitle: `${r.download_mbps}/${r.upload_mbps} Mbps · USD ${r.monthly_price_usd}`,
             icon: 'zap',
             badge: String(r.technology ?? ''),
@@ -52,7 +52,7 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.name) ?? 'Plan',
+          title: (norm(r.name) as string | undefined) ?? 'Plan',
           subtitle: `${r.download_mbps}/${r.upload_mbps} Mbps · USD ${r.monthly_price_usd}`,
           icon: 'zap',
           badge: String(r.technology ?? ''),

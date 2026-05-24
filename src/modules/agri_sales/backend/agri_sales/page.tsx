@@ -29,7 +29,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 export default function AgriSalesPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_sales.page' })
   const [orders, setOrders]     = React.useState<OrderRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('')

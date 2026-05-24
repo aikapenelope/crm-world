@@ -56,7 +56,7 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.name) ?? 'Nodo',
+          title: (norm(r.name) as string | undefined) ?? 'Nodo',
           subtitle: [norm(r.city), norm(r.node_type)].filter(Boolean).join(' · ') || undefined,
           icon: 'wifi',
           badge: String(r.status ?? ''),
@@ -95,7 +95,7 @@ export const searchConfig: SearchModuleConfig = {
           text: lines,
           presenter: {
             title: `${norm(r.brand) ?? ''} ${norm(r.model) ?? ''}`.trim() || 'CPE',
-            subtitle: norm(r.serial_number) ?? undefined,
+            subtitle: (norm(r.serial_number) as string | undefined) ?? undefined,
             icon: 'router',
             badge: String(r.status ?? ''),
           },
@@ -108,7 +108,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return {
           title: `${norm(r.brand) ?? ''} ${norm(r.model) ?? ''}`.trim() || 'CPE',
-          subtitle: norm(r.serial_number) ?? undefined,
+          subtitle: (norm(r.serial_number) as string | undefined) ?? undefined,
           icon: 'router',
           badge: String(r.status ?? ''),
         }

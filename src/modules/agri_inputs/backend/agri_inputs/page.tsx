@@ -35,7 +35,7 @@ const TYPE_LABEL: Record<string, string> = {
 }
 
 export default function AgriInputsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_inputs.page' })
   const [items, setItems]        = React.useState<InputRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)

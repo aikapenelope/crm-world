@@ -38,7 +38,7 @@ export default function EditIspPlanPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', label: 'Información básica',
+      id: 'basic', title: 'Información básica',
       fields: [
         { id: 'name', label: 'Nombre del plan', type: 'text', required: true },
         {
@@ -58,7 +58,7 @@ export default function EditIspPlanPage() {
       ],
     },
     {
-      id: 'speed', label: 'Velocidad',
+      id: 'speed', title: 'Velocidad',
       fields: [
         { id: 'download_mbps', label: 'Velocidad bajada (Mbps)', type: 'number', required: true },
         { id: 'upload_mbps', label: 'Velocidad subida (Mbps)', type: 'number', required: true },
@@ -66,21 +66,21 @@ export default function EditIspPlanPage() {
       ],
     },
     {
-      id: 'pricing', label: 'Precios',
+      id: 'pricing', title: 'Precios',
       fields: [
         { id: 'monthly_price_usd', label: 'Precio mensual (USD)', type: 'text', required: true },
         { id: 'installation_fee_usd', label: 'Cargo instalación (USD)', type: 'text' },
       ],
     },
     {
-      id: 'network', label: 'Configuración de red',
+      id: 'network', title: 'Configuración de red',
       fields: [
         { id: 'radius_profile', label: 'Perfil Radius', type: 'text' },
         { id: 'olt_profile', label: 'Perfil OLT (GPON)', type: 'text' },
       ],
     },
     {
-      id: 'settings', label: 'Configuración',
+      id: 'settings', title: 'Configuración',
       fields: [
         { id: 'is_active', label: 'Plan activo', type: 'checkbox' },
         { id: 'is_promotional', label: 'Promoción temporal', type: 'checkbox' },

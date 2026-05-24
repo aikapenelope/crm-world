@@ -24,7 +24,7 @@ const STATUS_LABEL: Record<string, string> = {
 }
 
 export default function SaleInvoicesPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_sales.page' })
   const [invoices, setInvoices] = React.useState<InvoiceRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('')

@@ -21,7 +21,7 @@ const BONUS_STATUS_VARIANT: Record<string, 'neutral' | 'warning' | 'success'> = 
 const BONUS_STATUS_LABEL: Record<string, string> = { calculated: 'Calculado', approved: 'Aprobado', paid: 'Pagado' }
 
 export default function MfgHrPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_hr.page' })
   const [workers, setWorkers]  = React.useState<WorkerRow[]>([])
   const [bonuses, setBonuses]  = React.useState<BonusRow[]>([])
   const [isLoading, setLoad]   = React.useState(true)

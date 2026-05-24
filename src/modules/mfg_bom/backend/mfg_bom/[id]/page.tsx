@@ -41,7 +41,7 @@ const COMP_TYPE_VARIANT: Record<string, 'neutral' | 'info' | 'warning' | 'succes
 export default function BomDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_bom.page' })
 
   const [state, setState]         = React.useState<PageState>('loading')
   const [bom, setBom]             = React.useState<any>(null)

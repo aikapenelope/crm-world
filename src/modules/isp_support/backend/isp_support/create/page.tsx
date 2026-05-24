@@ -14,7 +14,7 @@ export default function CreateTicketPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', label: 'Ticket',
+      id: 'basic', title: 'Ticket',
       fields: [
         {
           id: 'type', label: 'Tipo de solicitud', type: 'select', required: true,
@@ -49,7 +49,7 @@ export default function CreateTicketPage() {
       ],
     },
     {
-      id: 'assignment', label: 'Asignación',
+      id: 'assignment', title: 'Asignación',
       fields: [
         { id: 'subscriber_id', label: 'ID del abonado (UUID)', type: 'text', placeholder: 'Dejar vacío si es avería masiva' },
         { id: 'node_id', label: 'ID del nodo afectado (UUID)', type: 'text', placeholder: 'Si aplica' },

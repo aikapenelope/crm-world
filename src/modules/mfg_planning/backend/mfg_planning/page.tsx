@@ -33,7 +33,7 @@ function getWeekStart(d: Date) {
 }
 
 export default function MfgPlanningPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_planning.page' })
   const [items, setItems]        = React.useState<MpsRow[]>([])
   const [capacity, setCapacity]  = React.useState<CapRow[]>([])
   const [energy, setEnergy]      = React.useState<EnergyRow[]>([])

@@ -26,7 +26,7 @@ const STATUS_LABEL: Record<string, string> = { calculated: 'Calculada', approved
 
 export default function SettlementsPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_hr.page' })
   const [settlements, setSettlements] = React.useState<SettlementRow[]>([])
   const [isLoading, setLoading]       = React.useState(true)
   const [showForm, setShowForm]       = React.useState(false)

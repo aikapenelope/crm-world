@@ -32,7 +32,7 @@ const TYPE_LABEL: Record<string, string> = {
 
 export default function MfgBomPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_bom.page' })
   const [boms, setBoms]          = React.useState<BomRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)

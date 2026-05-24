@@ -36,7 +36,7 @@ export default function EditCpePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'equip', label: 'Equipo',
+      id: 'equip', title: 'Equipo',
       fields: [
         {
           id: 'cpe_type', label: 'Tipo', type: 'select', required: true,
@@ -53,7 +53,7 @@ export default function EditCpePage() {
       ],
     },
     {
-      id: 'status_group', label: 'Estado',
+      id: 'status_group', title: 'Estado',
       fields: [
         {
           id: 'status', label: 'Estado', type: 'select', required: true,
@@ -66,7 +66,7 @@ export default function EditCpePage() {
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]

@@ -30,7 +30,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 export default function MfgOrdersPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_orders.page' })
   const [orders, setOrders]     = React.useState<OrderRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('in_progress')

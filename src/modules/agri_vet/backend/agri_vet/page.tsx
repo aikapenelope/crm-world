@@ -29,7 +29,7 @@ type MedRow = {
 type FlockOption = { value: string; label: string }
 
 export default function AgriVetPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_vet.page' })
   const [meds, setMeds]          = React.useState<MedRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)

@@ -30,7 +30,7 @@ const CHOICE_OPTIONS = [
   { value: 'abstain', label: 'Abstención', description: 'Me abstengo de votar' },
 ]
 
-export default function PortalVoteDetailPage({ params }: Props) {
+export default function PortalVoteDetailPage(_props: Props) {
   const params = useParams()
   const router = useRouter()
   const voteId = params?.id as string

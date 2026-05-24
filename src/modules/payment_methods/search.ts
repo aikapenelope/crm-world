@@ -33,7 +33,7 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: lines,
         presenter: {
-          title: norm(r.name) ?? 'Método de pago',
+          title: (norm(r.name) as string | undefined) ?? 'Método de pago',
           subtitle: [norm(r.code), norm(r.currency)].filter(Boolean).join(' · ') || undefined,
           icon: 'credit-card',
         },
@@ -44,8 +44,8 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: norm(r.name) ?? 'Método de pago',
-        subtitle: norm(r.code) ?? undefined,
+        title: (norm(r.name) as string | undefined) ?? 'Método de pago',
+        subtitle: (norm(r.code) as string | undefined) ?? undefined,
         icon: 'credit-card',
       }
     },

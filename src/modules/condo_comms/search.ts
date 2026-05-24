@@ -32,10 +32,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.status) lines.push(String(r.status))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.title) ?? 'Title',
+          title: (norm(r.title) as string | undefined) ?? 'Title',
           subtitle: ((norm(r.category) ?? '') + ' · ' + (norm(r.status) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'mail',
-          badge: norm(r.category) ?? undefined,
+          badge: (norm(r.category) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -48,10 +48,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.title) ?? 'Title',
-          subtitle: norm(r.category) ?? undefined,
+          title: (norm(r.title) as string | undefined) ?? 'Title',
+          subtitle: (norm(r.category) as string | undefined) ?? undefined,
           icon: 'mail',
-          badge: norm(r.category) ?? undefined,
+          badge: (norm(r.category) as string | undefined) ?? undefined,
         }
       },
 

@@ -10,7 +10,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record; if (!r.full_name) return null
         return { text: [norm(r.full_name) ?? '', norm(r.employee_code) ?? ''].filter(Boolean), presenter: { title: `${norm(r.employee_code)} — ${norm(r.full_name) ?? ''}`, subtitle: `${r.shift_type} · ${r.work_center_name ?? ''}`, icon: 'user', badge: r.is_active ? 'Activo' : 'Inactivo' }, links: [{ href: '/backend/mfg-hr', label: 'Ver RRHH', kind: 'primary' }], checksumSource: { full_name: r.full_name, shift_type: r.shift_type, updated_at: r.updated_at } }
       },
-      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: norm(r.full_name) ?? 'Operario', subtitle: norm(r.employee_code) ?? undefined, icon: 'user', badge: r.shift_type } },
+      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: (norm(r.full_name) as string | undefined) ?? 'Operario', subtitle: (norm(r.employee_code) as string | undefined) ?? undefined, icon: 'user', badge: r.shift_type } },
       resolveUrl: async (): Promise<string | null> => '/backend/mfg-hr',
     },
   ],

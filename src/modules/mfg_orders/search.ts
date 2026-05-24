@@ -30,7 +30,7 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: [norm(r.order_number) ?? '', norm(r.product_code) ?? '', norm(r.product_name) ?? ''].filter(Boolean),
           presenter: {
-            title: norm(r.order_number) ?? 'Orden',
+            title: (norm(r.order_number) as string | undefined) ?? 'Orden',
             subtitle: `${norm(r.product_code)} — ${norm(r.product_name) ?? ''} · ${r.planned_quantity} ${r.uom}`,
             icon: 'factory',
             badge: statusLabel,
@@ -42,8 +42,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.order_number) ?? 'Orden',
-          subtitle: norm(r.product_code) ?? undefined,
+          title: (norm(r.order_number) as string | undefined) ?? 'Orden',
+          subtitle: (norm(r.product_code) as string | undefined) ?? undefined,
           icon: 'factory',
           badge: ORDER_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''),
         }

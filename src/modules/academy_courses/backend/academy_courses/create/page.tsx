@@ -93,7 +93,7 @@ export default function AcademyCourseCreatePage() {
               flash('Error al crear el curso', 'error')
             }
           }}
-          onCancel={() => router.push('/backend/academy_courses')}
+          cancelHref='/backend/academy_courses'
         />
       </PageBody>
     </Page>

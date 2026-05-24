@@ -37,7 +37,7 @@ function VarianceCell({ value, label }: { value: number; label: string }) {
 }
 
 export default function MfgCostsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_costs.page' })
   const [variances, setVars]  = React.useState<VarRow[]>([])
   const [isLoading, setLoad]  = React.useState(true)
   const [statusFilter, setSF] = React.useState('calculated')

@@ -83,7 +83,7 @@ export const searchConfig: SearchModuleConfig = {
         ].filter(Boolean).join(' · ')
 
         const presenter: SearchResultPresenter = {
-          title: norm(r.valuation_number) ?? 'Valuación',
+          title: (norm(r.valuation_number) as string | undefined) ?? 'Valuación',
           subtitle: subtitle || undefined,
           icon: 'file-text',
           badge: statusLabel,
@@ -107,7 +107,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: norm(r.valuation_number) ?? 'Valuación',
+          title: (norm(r.valuation_number) as string | undefined) ?? 'Valuación',
           subtitle: statusLabel || undefined,
           icon: 'file-text',
           badge: statusLabel,

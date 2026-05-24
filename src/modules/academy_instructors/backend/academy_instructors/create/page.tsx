@@ -65,7 +65,7 @@ export default function AcademyInstructorCreatePage() {
               flash('Error al crear el instructor', 'error')
             }
           }}
-          onCancel={() => router.push('/backend/academy_instructors')}
+          cancelHref='/backend/academy_instructors'
         />
       </PageBody>
     </Page>

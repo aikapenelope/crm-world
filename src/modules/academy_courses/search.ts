@@ -41,10 +41,10 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: norm(r.name) ?? 'Curso',
+            title: (norm(r.name) as string | undefined) ?? 'Curso',
             subtitle: subtitle || undefined,
             icon: 'book-open',
-            badge: norm(r.level) ?? undefined,
+            badge: (norm(r.level) as string | undefined) ?? undefined,
           },
           links: [{ href: `/backend/academy_courses/${r.id}`, label: 'Ver curso', kind: 'primary' }],
           checksumSource: { name: r.name, category: r.category, level: r.level, is_active: r.is_active, updated_at: r.updated_at },
@@ -54,10 +54,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.name) ?? 'Curso',
-          subtitle: norm(r.category) ?? undefined,
+          title: (norm(r.name) as string | undefined) ?? 'Curso',
+          subtitle: (norm(r.category) as string | undefined) ?? undefined,
           icon: 'book-open',
-          badge: norm(r.level) ?? undefined,
+          badge: (norm(r.level) as string | undefined) ?? undefined,
         }
       },
 

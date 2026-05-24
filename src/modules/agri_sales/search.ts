@@ -27,14 +27,14 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.order_number) return null
         return {
           text: [norm(r.order_number) ?? ''],
-          presenter: { title: norm(r.order_number) ?? 'Orden', subtitle: `USD ${r.total_usd}`, icon: 'shopping-cart', badge: ORDER_STATUS[String(r.status)] ?? String(r.status) },
+          presenter: { title: (norm(r.order_number) as string | undefined) ?? 'Orden', subtitle: `USD ${r.total_usd}`, icon: 'shopping-cart', badge: ORDER_STATUS[String(r.status)] ?? String(r.status) },
           links: [{ href: `/backend/agri-sales/${r.id}`, label: 'Ver orden', kind: 'primary' }],
           checksumSource: { order_number: r.order_number, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: norm(r.order_number) ?? 'Orden', subtitle: `USD ${r.total_usd}`, icon: 'shopping-cart', badge: ORDER_STATUS[String(r.status)] ?? String(r.status) }
+        return { title: (norm(r.order_number) as string | undefined) ?? 'Orden', subtitle: `USD ${r.total_usd}`, icon: 'shopping-cart', badge: ORDER_STATUS[String(r.status)] ?? String(r.status) }
       },
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-sales/${ctx.record.id}`,
     },
@@ -47,14 +47,14 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.invoice_number) return null
         return {
           text: [norm(r.invoice_number) ?? '', norm(r.control_number) ?? ''].filter(Boolean),
-          presenter: { title: norm(r.invoice_number) ?? 'Factura', subtitle: `USD ${r.total_usd}`, icon: 'file-text', badge: INVOICE_STATUS[String(r.status)] ?? String(r.status) },
+          presenter: { title: (norm(r.invoice_number) as string | undefined) ?? 'Factura', subtitle: `USD ${r.total_usd}`, icon: 'file-text', badge: INVOICE_STATUS[String(r.status)] ?? String(r.status) },
           links: [{ href: `/backend/agri-sales/invoices/${r.id}`, label: 'Ver factura', kind: 'primary' }],
           checksumSource: { invoice_number: r.invoice_number, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: norm(r.invoice_number) ?? 'Factura', subtitle: INVOICE_STATUS[String(r.status)] ?? String(r.status), icon: 'file-text', badge: INVOICE_STATUS[String(r.status)] ?? String(r.status) }
+        return { title: (norm(r.invoice_number) as string | undefined) ?? 'Factura', subtitle: INVOICE_STATUS[String(r.status)] ?? String(r.status), icon: 'file-text', badge: INVOICE_STATUS[String(r.status)] ?? String(r.status) }
       },
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-sales/invoices/${ctx.record.id}`,
     },

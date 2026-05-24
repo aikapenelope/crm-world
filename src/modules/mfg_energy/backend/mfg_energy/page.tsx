@@ -21,7 +21,7 @@ const SOURCE_LABEL: Record<string, string> = { grid: '⚡ Red CORPOELEC', genera
 const SHIFT_LABEL: Record<string, string> = { morning: 'Mañana', afternoon: 'Tarde', night: 'Noche' }
 
 export default function MfgEnergyPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_energy.page' })
   const [outages, setOutages]  = React.useState<OutageRow[]>([])
   const [consums, setConsums]  = React.useState<ConsumRow[]>([])
   const [isLoading, setLoad]   = React.useState(true)

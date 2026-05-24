@@ -33,7 +33,7 @@ const MATERIAL_TYPE_LABEL: Record<string, string> = {
 }
 
 export default function MfgInventoryPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_inventory.page' })
   const [lots, setLots]          = React.useState<LotRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [statusFilter, setFilter] = React.useState('available')

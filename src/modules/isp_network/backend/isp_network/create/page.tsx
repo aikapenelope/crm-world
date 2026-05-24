@@ -14,7 +14,7 @@ export default function CreateIspNetworkNodePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'basic', label: 'Información básica',
+      id: 'basic', title: 'Información básica',
       fields: [
         { id: 'name', label: 'Nombre del nodo', type: 'text', required: true, placeholder: 'Ej: Nodo-BQ-Norte' },
         {
@@ -32,7 +32,7 @@ export default function CreateIspNetworkNodePage() {
       ],
     },
     {
-      id: 'equip', label: 'Equipamiento',
+      id: 'equip', title: 'Equipamiento',
       fields: [
         { id: 'equipment_model', label: 'Equipo instalado', type: 'text', placeholder: 'Huawei MA5800-X17, MikroTik CCR2004' },
         { id: 'equipment_serial', label: 'Serie del equipo', type: 'text' },
@@ -40,7 +40,7 @@ export default function CreateIspNetworkNodePage() {
       ],
     },
     {
-      id: 'power', label: 'Energía eléctrica',
+      id: 'power', title: 'Energía eléctrica',
       fields: [
         { id: 'power_provider', label: 'Fuente de energía', type: 'text', placeholder: 'CORPOELEC + UPS 4h + Planta propia' },
         { id: 'has_generator', label: 'Tiene planta eléctrica (generador)', type: 'checkbox', defaultValue: false },
@@ -48,7 +48,7 @@ export default function CreateIspNetworkNodePage() {
       ],
     },
     {
-      id: 'monitor', label: 'Monitoreo y GPS',
+      id: 'monitor', title: 'Monitoreo y GPS',
       fields: [
         { id: 'monitoring_host', label: 'Host en Zabbix/PRTG', type: 'text', placeholder: 'Nodo-BQ-Norte' },
         { id: 'coordinates_lat', label: 'Latitud GPS', type: 'text', placeholder: '10.4806' },
@@ -56,7 +56,7 @@ export default function CreateIspNetworkNodePage() {
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

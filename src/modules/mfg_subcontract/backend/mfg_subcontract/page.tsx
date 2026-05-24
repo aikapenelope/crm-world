@@ -31,7 +31,7 @@ const SC_STATUS_LABEL: Record<string, string> = {
 const SC_STATUS_FLOW = ['draft', 'materials_sent', 'in_production', 'completed']
 
 export default function MfgSubcontractPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_subcontract.page' })
   const [orders, setOrders]   = React.useState<ScRow[]>([])
   const [isLoading, setLoad]  = React.useState(true)
   const [statusFilter, setSF] = React.useState('in_production')

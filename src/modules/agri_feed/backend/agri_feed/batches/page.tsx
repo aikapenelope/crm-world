@@ -36,7 +36,7 @@ const STATUS_LABEL: Record<string, string> = {
 }
 
 export default function FeedBatchesPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_feed.page' })
   const [batches, setBatches]   = React.useState<BatchRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)

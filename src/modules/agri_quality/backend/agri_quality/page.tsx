@@ -38,7 +38,7 @@ const SOURCE_LABEL: Record<string, string> = {
 
 export default function AgriQualityPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_quality.page' })
   const [ncs, setNcs]           = React.useState<NcRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)

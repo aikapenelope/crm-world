@@ -62,7 +62,7 @@ export default function IspSubscriberDetailPage() {
 
   const infoGroups: CrudFormGroup[] = [
     {
-      id: 'account', label: 'Plan y precio',
+      id: 'account', title: 'Plan y precio',
       fields: [
         {
           id: 'subscriber_type', label: 'Tipo', type: 'select', required: true,
@@ -75,7 +75,7 @@ export default function IspSubscriberDetailPage() {
       ],
     },
     {
-      id: 'location', label: 'Instalación',
+      id: 'location', title: 'Instalación',
       fields: [
         { id: 'installation_address', label: 'Dirección', type: 'text', required: true },
         { id: 'installation_city', label: 'Ciudad', type: 'text', required: true },
@@ -83,21 +83,21 @@ export default function IspSubscriberDetailPage() {
       ],
     },
     {
-      id: 'network', label: 'Red',
+      id: 'network', title: 'Red',
       fields: [
         { id: 'ip_address', label: 'IP asignada', type: 'text' },
         { id: 'pppoe_username', label: 'Usuario PPPoE/Radius', type: 'text' },
       ],
     },
     {
-      id: 'billing', label: 'Cobranza',
+      id: 'billing', title: 'Cobranza',
       fields: [
         { id: 'billing_cycle_day', label: 'Día de vencimiento', type: 'number' },
         { id: 'cut_policy_days', label: 'Días de gracia', type: 'number' },
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

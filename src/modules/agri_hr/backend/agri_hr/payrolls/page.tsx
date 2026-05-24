@@ -32,7 +32,7 @@ const STATUS_VARIANT: Record<string, 'neutral' | 'warning' | 'success'> = {
 const STATUS_LABEL: Record<string, string> = { draft: 'Borrador', approved: 'Aprobada', paid: 'Pagada' }
 
 export default function PayrollsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_hr.page' })
   const [payrolls, setPayrolls]    = React.useState<PayrollRow[]>([])
   const [employees, setEmployees]  = React.useState<Employee[]>([])
   const [isLoading, setLoading]    = React.useState(true)

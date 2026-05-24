@@ -63,7 +63,7 @@ export const searchConfig: SearchModuleConfig = {
           title: String(r.name ?? 'Edificio'),
           subtitle: subtitle || undefined,
           icon: 'building-2',
-          badge: norm(r.building_type) ?? undefined,
+          badge: (norm(r.building_type) as string | undefined) ?? undefined,
         }
       },
 
@@ -103,7 +103,7 @@ export const searchConfig: SearchModuleConfig = {
           title: `Unidad ${r.unit_number}`,
           subtitle: [norm(r.owner_name), norm(r.unit_type)].filter(Boolean).join(' · ') || undefined,
           icon: 'home',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status) as string | undefined) ?? undefined,
         }
 
         return {
@@ -118,9 +118,9 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return {
           title: `Unidad ${r.unit_number}`,
-          subtitle: norm(r.owner_name) ?? undefined,
+          subtitle: (norm(r.owner_name) as string | undefined) ?? undefined,
           icon: 'home',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status) as string | undefined) ?? undefined,
         }
       },
 

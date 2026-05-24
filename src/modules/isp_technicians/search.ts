@@ -42,7 +42,7 @@ export const searchConfig: SearchModuleConfig = {
           text: lines,
           presenter: {
             title: `${icon} ${norm(r.work_order_number) ?? 'OT'}`.trim(),
-            subtitle: norm(r.address) ?? undefined,
+            subtitle: (norm(r.address) as string | undefined) ?? undefined,
             icon: 'tool',
             badge: String(r.status ?? ''),
           },
@@ -54,8 +54,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.work_order_number) ?? 'OT',
-          subtitle: norm(r.address) ?? undefined,
+          title: (norm(r.work_order_number) as string | undefined) ?? 'OT',
+          subtitle: (norm(r.address) as string | undefined) ?? undefined,
           icon: 'tool',
           badge: String(r.status ?? ''),
         }
@@ -89,8 +89,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: norm(r.name) ?? 'Técnico',
-            subtitle: norm(r.coverage_zone) ?? undefined,
+            title: (norm(r.name) as string | undefined) ?? 'Técnico',
+            subtitle: (norm(r.coverage_zone) as string | undefined) ?? undefined,
             icon: 'user',
             badge: String(r.status ?? ''),
           },
@@ -102,8 +102,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.name) ?? 'Técnico',
-          subtitle: norm(r.coverage_zone) ?? undefined,
+          title: (norm(r.name) as string | undefined) ?? 'Técnico',
+          subtitle: (norm(r.coverage_zone) as string | undefined) ?? undefined,
           icon: 'user',
           badge: String(r.status ?? ''),
         }

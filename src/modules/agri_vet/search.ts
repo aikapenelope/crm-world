@@ -41,8 +41,8 @@ export const searchConfig: SearchModuleConfig = {
             norm(r.active_ingredient) ?? '',
           ].filter(Boolean),
           presenter: {
-            title: norm(r.medication_name) ?? 'Medicamento',
-            subtitle: norm(r.diagnosis) ?? undefined,
+            title: (norm(r.medication_name) as string | undefined) ?? 'Medicamento',
+            subtitle: (norm(r.diagnosis) as string | undefined) ?? undefined,
             icon: 'pill',
             badge: statusLabel,
           },
@@ -54,8 +54,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.medication_name) ?? 'Medicamento',
-          subtitle: norm(r.diagnosis) ?? undefined,
+          title: (norm(r.medication_name) as string | undefined) ?? 'Medicamento',
+          subtitle: (norm(r.diagnosis) as string | undefined) ?? undefined,
           icon: 'pill',
           badge: r.resolved ? 'Resuelto' : 'En tratamiento',
         }
@@ -85,8 +85,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: [norm(r.vaccine_name) ?? '', norm(r.active_ingredient) ?? ''].filter(Boolean),
           presenter: {
-            title: norm(r.vaccine_name) ?? 'Vacuna',
-            subtitle: norm(r.manufacturer) ?? undefined,
+            title: (norm(r.vaccine_name) as string | undefined) ?? 'Vacuna',
+            subtitle: (norm(r.manufacturer) as string | undefined) ?? undefined,
             icon: 'syringe',
             badge: statusLabel,
           },
@@ -99,7 +99,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = VAC_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: norm(r.vaccine_name) ?? 'Vacuna',
+          title: (norm(r.vaccine_name) as string | undefined) ?? 'Vacuna',
           subtitle: statusLabel,
           icon: 'syringe',
           badge: statusLabel,

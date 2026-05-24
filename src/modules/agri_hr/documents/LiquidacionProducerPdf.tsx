@@ -168,7 +168,7 @@ export function LiquidacionProducerPdf({ data: d }: { data: LiquidacionProducerD
             { label: 'Técnico de Campo', name: '' },
             { label: 'Gerente de Producción', name: '' },
             { label: 'Productor Integrado', name: d.producer_name },
-          ]} />
+          ] as any} />
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

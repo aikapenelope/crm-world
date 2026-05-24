@@ -33,7 +33,7 @@ export default function CreateIspSubscriberPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'account', label: 'Cuenta',
+      id: 'account', title: 'Cuenta',
       fields: [
         { id: 'account_number', label: 'Número de cuenta', type: 'text', required: true, placeholder: 'NETBQ-00001' },
         {
@@ -49,7 +49,7 @@ export default function CreateIspSubscriberPage() {
       ],
     },
     {
-      id: 'location', label: 'Instalación',
+      id: 'location', title: 'Instalación',
       fields: [
         { id: 'node_id', label: 'Nodo de red', type: 'select', options: nodeOptions },
         { id: 'installation_address', label: 'Dirección de instalación', type: 'text', required: true },
@@ -59,28 +59,28 @@ export default function CreateIspSubscriberPage() {
       ],
     },
     {
-      id: 'network', label: 'Configuración de red',
+      id: 'network', title: 'Configuración de red',
       fields: [
         { id: 'ip_address', label: 'IP asignada', type: 'text', placeholder: '192.168.1.50' },
         { id: 'pppoe_username', label: 'Usuario PPPoE/Radius', type: 'text' },
       ],
     },
     {
-      id: 'billing', label: 'Cobranza',
+      id: 'billing', title: 'Cobranza',
       fields: [
         { id: 'billing_cycle_day', label: 'Día de vencimiento (1-28)', type: 'number', defaultValue: 1 },
         { id: 'cut_policy_days', label: 'Días de gracia antes del corte', type: 'number', defaultValue: 7 },
       ],
     },
     {
-      id: 'contact', label: 'Contacto técnico',
+      id: 'contact', title: 'Contacto técnico',
       fields: [
         { id: 'technical_contact_name', label: 'Nombre del contacto técnico', type: 'text' },
         { id: 'technical_contact_phone', label: 'Teléfono contacto técnico', type: 'text' },
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]

@@ -24,7 +24,7 @@ const REQ_STATUS_VARIANT:  Record<string, 'warning' | 'success' | 'info' | 'neut
 const REQ_STATUS_LABEL:    Record<string, string> = { pending: 'Pendiente', approved: 'Aprobada', po_created: 'OC creada', cancelled: 'Cancelada' }
 
 export default function MfgMrpPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_mrp.page' })
   const [plans, setPlans]            = React.useState<PlanRow[]>([])
   const [activePlan, setActivePlan]  = React.useState<PlanRow | null>(null)
   const [requirements, setReqs]      = React.useState<ReqmtRow[]>([])

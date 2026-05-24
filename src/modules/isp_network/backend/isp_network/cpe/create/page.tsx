@@ -14,7 +14,7 @@ export default function CreateCpePage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'equip', label: 'Equipo',
+      id: 'equip', title: 'Equipo',
       fields: [
         {
           id: 'cpe_type', label: 'Tipo de equipo', type: 'select', required: true,
@@ -32,14 +32,14 @@ export default function CreateCpePage() {
       ],
     },
     {
-      id: 'purchase', label: 'Compra',
+      id: 'purchase', title: 'Compra',
       fields: [
         { id: 'purchase_price_usd', label: 'Precio de compra (USD)', type: 'text', placeholder: '45.00' },
         { id: 'purchase_date', label: 'Fecha de compra', type: 'date' },
       ],
     },
     {
-      id: 'notes', label: 'Notas',
+      id: 'notes', title: 'Notas',
       fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]

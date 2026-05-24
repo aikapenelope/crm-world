@@ -9,9 +9,9 @@ export const searchConfig: SearchModuleConfig = {
       fieldPolicy: { searchable: ['order_number', 'customer_name', 'customer_rif', 'status'], excluded: ['tenant_id', 'organization_id', 'customer_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
         const r = ctx.record; if (!r.order_number) return null
-        return { text: [norm(r.order_number) ?? '', norm(r.customer_name) ?? ''].filter(Boolean), presenter: { title: norm(r.order_number) ?? 'SO', subtitle: `${norm(r.customer_name) ?? ''} · USD ${r.total_usd}`, icon: 'truck', badge: SO_STATUS[String(r.status ?? '')] ?? '' }, links: [{ href: `/backend/mfg-dispatch/${r.id}`, label: 'Ver pedido', kind: 'primary' }], checksumSource: { order_number: r.order_number, status: r.status, updated_at: r.updated_at } }
+        return { text: [norm(r.order_number) ?? '', norm(r.customer_name) ?? ''].filter(Boolean), presenter: { title: (norm(r.order_number) as string | undefined) ?? 'SO', subtitle: `${norm(r.customer_name) ?? ''} · USD ${r.total_usd}`, icon: 'truck', badge: SO_STATUS[String(r.status ?? '')] ?? '' }, links: [{ href: `/backend/mfg-dispatch/${r.id}`, label: 'Ver pedido', kind: 'primary' }], checksumSource: { order_number: r.order_number, status: r.status, updated_at: r.updated_at } }
       },
-      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: norm(r.order_number) ?? 'SO', subtitle: norm(r.customer_name) ?? undefined, icon: 'truck', badge: SO_STATUS[String(r.status ?? '')] ?? '' } },
+      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: (norm(r.order_number) as string | undefined) ?? 'SO', subtitle: (norm(r.customer_name) as string | undefined) ?? undefined, icon: 'truck', badge: SO_STATUS[String(r.status ?? '')] ?? '' } },
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/mfg-dispatch/${ctx.record.id}`,
     },
   ],

@@ -52,7 +52,7 @@ export const searchConfig: SearchModuleConfig = {
           text: lines,
           presenter: {
             title: `${priorityIcon} ${norm(r.ticket_number) ?? 'Ticket'}`.trim(),
-            subtitle: norm(r.subject) ?? undefined,
+            subtitle: (norm(r.subject) as string | undefined) ?? undefined,
             icon: 'message-circle',
             badge: statusLabel,
           },
@@ -65,8 +65,8 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: norm(r.ticket_number) ?? 'Ticket',
-          subtitle: norm(r.subject) ?? undefined,
+          title: (norm(r.ticket_number) as string | undefined) ?? 'Ticket',
+          subtitle: (norm(r.subject) as string | undefined) ?? undefined,
           icon: 'message-circle',
           badge: statusLabel,
         }

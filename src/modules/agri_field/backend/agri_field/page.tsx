@@ -21,7 +21,7 @@ const STATUS_LABEL: Record<string, string> = { planned: 'Planificado', active: '
 const DEST_LABEL: Record<string, string> = { own_feed: 'Alimento propio', sale: 'Venta', storage: 'Almacenamiento' }
 
 export default function AgriFieldPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_field.page' })
   const [cycles, setCycles]       = React.useState<CycleRow[]>([])
   const [plots, setPlots]         = React.useState<{ value: string; label: string }[]>([])
   const [isLoading, setLoading]   = React.useState(true)

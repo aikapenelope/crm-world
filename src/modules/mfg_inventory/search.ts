@@ -42,8 +42,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.lot_number) ?? 'Lote',
-          subtitle: norm(r.material_name) ?? undefined,
+          title: (norm(r.lot_number) as string | undefined) ?? 'Lote',
+          subtitle: (norm(r.material_name) as string | undefined) ?? undefined,
           icon: 'package',
           badge: LOT_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''),
         }

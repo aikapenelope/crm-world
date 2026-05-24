@@ -23,7 +23,7 @@ export default function CreateLeadPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'contact', label: 'Datos del prospecto',
+      id: 'contact', title: 'Datos del prospecto',
       fields: [
         { id: 'name', label: 'Nombre completo', type: 'text', required: true },
         { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true, placeholder: '+58 412-555-0100' },
@@ -31,14 +31,14 @@ export default function CreateLeadPage() {
       ],
     },
     {
-      id: 'location', label: 'Ubicación del servicio',
+      id: 'location', title: 'Ubicación del servicio',
       fields: [
         { id: 'address', label: 'Dirección de instalación', type: 'text', required: true },
         { id: 'city', label: 'Ciudad', type: 'text', required: true },
       ],
     },
     {
-      id: 'sales', label: 'Información comercial',
+      id: 'sales', title: 'Información comercial',
       fields: [
         {
           id: 'source', label: 'Canal de entrada', type: 'select', required: true,

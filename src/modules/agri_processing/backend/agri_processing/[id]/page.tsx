@@ -45,7 +45,7 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 export default function SlaughterBatchDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_processing.page' })
   const batchId = params.id
 
   const [state, setState]      = React.useState<PageState>('loading')

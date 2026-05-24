@@ -47,7 +47,7 @@ const DOWNTIME_LABEL: Record<string, string> = {
 export default function OrderDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_orders.page' })
 
   const [state, setState]       = React.useState<PageState>('loading')
   const [order, setOrder]       = React.useState<any>(null)

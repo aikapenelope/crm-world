@@ -42,7 +42,7 @@ const SOURCE_LABEL: Record<string, string> = {
 
 export default function MfgQualityPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_quality.page' })
   const [ncs, setNcs]           = React.useState<NcRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('open')

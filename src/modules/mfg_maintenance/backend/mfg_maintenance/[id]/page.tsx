@@ -29,7 +29,7 @@ const TRIGGER_LABEL: Record<string, string> = { hours: 'horas', days: 'días', c
 export default function EquipmentDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_maintenance.page' })
 
   const [state, setState]   = React.useState<PageState>('loading')
   const [eq, setEq]         = React.useState<any>(null)

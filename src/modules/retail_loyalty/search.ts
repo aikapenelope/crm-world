@@ -31,7 +31,7 @@ export const searchConfig: SearchModuleConfig = {
         if (r.description) lines.push(String(r.description))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.name) ?? 'Name',
+          title: (norm(r.name) as string | undefined) ?? 'Name',
           subtitle: ((norm(r.description) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'star',
         }
@@ -46,8 +46,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.name) ?? 'Name',
-          subtitle: norm(r.description) ?? undefined,
+          title: (norm(r.name) as string | undefined) ?? 'Name',
+          subtitle: (norm(r.description) as string | undefined) ?? undefined,
           icon: 'star',
         }
       },

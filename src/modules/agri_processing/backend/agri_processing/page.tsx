@@ -36,7 +36,7 @@ const MICROBIO_LABEL: Record<string, string> = { pending: 'Pendiente', approved:
 
 export default function AgriProcessingPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_processing.page' })
   const [batches, setBatches]   = React.useState<BatchRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)

@@ -65,7 +65,7 @@ export default function LeadDetailPage() {
 
   const groups: CrudFormGroup[] = [
     {
-      id: 'contact', label: 'Datos del prospecto',
+      id: 'contact', title: 'Datos del prospecto',
       fields: [
         { id: 'name', label: 'Nombre', type: 'text', required: true },
         { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true },
@@ -73,14 +73,14 @@ export default function LeadDetailPage() {
       ],
     },
     {
-      id: 'location', label: 'Ubicación',
+      id: 'location', title: 'Ubicación',
       fields: [
         { id: 'address', label: 'Dirección', type: 'text', required: true },
         { id: 'city', label: 'Ciudad', type: 'text', required: true },
       ],
     },
     {
-      id: 'pipeline', label: 'Pipeline',
+      id: 'pipeline', title: 'Pipeline',
       fields: [
         {
           id: 'status', label: 'Estado', type: 'select', required: true,

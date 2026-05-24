@@ -31,7 +31,7 @@ const SO_STATUS_LABEL: Record<string, string> = {
 
 export default function MfgDispatchPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_dispatch.page' })
   const [orders, setOrders]    = React.useState<SoRow[]>([])
   const [isLoading, setLoad]   = React.useState(true)
   const [statusFilter, setSF]  = React.useState('confirmed')
