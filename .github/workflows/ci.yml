@@ -6,12 +6,14 @@
 # typecheck: yarn generate (descubre módulos) → yarn typecheck (tsc --noEmit)
 # lint:      yarn lint (ESLint)
 #
+# NOTA: --immutable eliminado. En Yarn 4, --immutable trata YN0086 (peer dep
+# warnings) como error fatal, lo que bloquea el install aunque las dependencias
+# estén correctamente instaladas. Yarn 4 sin --immutable sigue respetando
+# el lockfile en CI (no modifica yarn.lock si no hay cambios).
+#
 # El audit de seguridad (yarn npm audit) está deliberadamente excluido del CI
 # de PR para no bloquear trabajo por CVEs en dependencias transitivas que no
 # controlamos. Se puede correr manualmente con: yarn npm audit --severity high
-#
-# Patrón basado en Open Mercato CI:
-# packages/core/.github/workflows/ci.yml (corepack + yarn immutable + generate + tsc)
 
 name: CI
 
@@ -27,7 +29,6 @@ on:
       - main
 
 # Cancela runs en curso del mismo ref al hacer push nuevo.
-# Evita que se acumulen runs de la misma branch.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -35,8 +36,6 @@ concurrency:
 jobs:
 
   # ── TypeScript ─────────────────────────────────────────────────────────────
-  # Gate principal. yarn generate descubre módulos y genera el glue de DI/rutas.
-  # DEBE correr antes de tsc para que los archivos generados existan al resolver tipos.
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
@@ -69,7 +68,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Generate module glue
         run: yarn generate
@@ -78,7 +77,6 @@ jobs:
         run: yarn typecheck
 
   # ── ESLint ─────────────────────────────────────────────────────────────────
-  # Análisis estático en paralelo con typecheck.
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -111,7 +109,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Lint
         run: yarn lint
