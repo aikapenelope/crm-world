@@ -20,8 +20,8 @@ export const createBranchSchema = z.object({
   email: z.string().email().nullable().optional(),
   manager_user_id: z.string().uuid().nullable().optional(),
   is_active: z.boolean().default(true),
-  operating_hours: z.record(z.string(), z.object({ open: z.string(), close: z.string() })).nullable().optional(),
-  metadata: z.record(z.string(), z.unknown()).nullable().optional(),
+  operating_hours: z.record(z.string(), z.object({ open: z.string(), close: z.string() })).nullable().optional()),
+  metadata: z.record(z.string(), z.unknown()).nullable().optional()),
 })
 
 export const updateBranchSchema = createBranchSchema.partial()
