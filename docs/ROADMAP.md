@@ -249,127 +249,189 @@ Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
 
 ---
 
-## Próximas Fases — Roadmap
+## Próximas Fases — Camino a Producción
 
-> Orden sugerido basado en impacto y dependencias técnicas.
+> Objetivo: calidad de código, cobertura de tests, sistema estable.
+> No se prevén verticales nuevas hasta completar este proceso.
 
-### Phase 25 — Tests unitarios para módulos custom (PRIORIDAD ALTA)
+---
 
-**Por qué ahora**: El CI tiene los 3 jobs verdes pero la cobertura de tests es baja.
-Solo tienen tests los módulos: `properties`, `ve_fiscal`, `matching`, `mfg_bom`,
-`mfg_orders`, `mfg_mrp`. El resto (95+ módulos) no tienen ningún test.
+### Phase 25 — Revisión y limpieza de código (PRIMERA PRIORIDAD)
 
-**Objetivo**: Al menos 1 test de validators por vertical.
+**Por qué antes de los tests**: PR #83 corrigió 900+ errores TypeScript con regex masivo.
+El código CI-verde no significa código limpio. Existen:
+- Casteos `as any` introducidos para hacer pasar el CI que ocultan bugs reales
+- Patrones fragmentados por las correcciones automatizadas
+- Lógica de negocio sin validar contra el comportamiento esperado
 
-**Cómo hacerlo** (patrón OM establecido):
+**Qué revisar módulo por módulo**:
+
+1. **Reemplazar `as any` por tipos reales** — especialmente en:
+   - `(em as any).getKysely()` → correcto, dejar
+   - `em.create(Entity, {...} as any)` → correcto en seeds, dejar
+   - Casteos introducidos por el CI fix que no son semánticos → reemplazar
+
+2. **Verificar la lógica de negocio** en `data/validators.ts`:
+   - ¿Los schemas Zod reflejan las reglas reales del negocio?
+   - ¿Las validaciones venezolanas (IVA, IGTF, RIF) son correctas?
+   - ¿Los enums tienen todos los valores válidos?
+
+3. **Revisar `events.ts`** — EventCategory post-fix:
+   - Módulos con `category: 'custom'` que eran `'alert'` → ¿el comportamiento es el correcto?
+
+4. **Revisar páginas backend** modificadas por regex:
+   - `CrudForm` props — ¿`initialValues` tiene los campos correctos?
+   - `runMutation` — ¿el `operation` contiene la lógica completa?
+   - `useGuardedMutation({ contextId })` — ¿el contextId es único y descriptivo?
+
+**Herramienta**: El CI es el guardián. Cualquier cambio de limpieza que rompa CI es una regresión.
+
+**Orden sugerido** (por impacto de negocio):
+1. Módulos Venezuela transversales: `ve_fiscal`, `venezuela_rates`, `payment_methods`
+2. Verticales con lógica financiera: `isp_billing`, `const_progress`, `agri_hr`
+3. Módulos con PDFs: `agri_hr`, `agri_processing`, `const_progress`, `mfg_dispatch`
+4. Resto por vertical
+
+---
+
+### Phase 26 — Tests unitarios por vertical
+
+**Prerrequisito**: Phase 25 completada (código limpio antes de testear).
+
+**Módulos con tests existentes** (referencia para el patrón):
+- `properties/__tests__/validators.spec.ts` + `csv-import.spec.ts`
+- `ve_fiscal/__tests__/validators.spec.ts`
+- `matching/__tests__/scoring.spec.ts`
+- `mfg_bom/__tests__/validators.spec.ts`
+- `mfg_orders/__tests__/validators.spec.ts`
+- `mfg_mrp/__tests__/validators.spec.ts`
+
+**Patrón** (fuente: `apps/mercato/src/modules/example/commands/__tests__/`):
 ```
 src/modules/<module>/__tests__/validators.spec.ts
 ```
 
-Cada test debe cubrir:
-- `createSchema.safeParse(validPayload)` → success
-- Campos requeridos faltantes → failure
-- Valores de enum inválidos → failure
-- Reglas de negocio venezolanas (RIF, tasas, etc.)
+**Qué testear en cada módulo**:
+```typescript
+describe('createSchema', () => {
+  it('acepta payload mínimo válido con defaults aplicados', () => {
+    const result = createSchema.safeParse(validPayload)
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.status).toBe('default_value')
+    }
+  })
 
-**Prioridad de módulos** (por impacto de negocio):
-1. `ve_fiscal` ← ya tiene tests, ampliar
-2. `agri_units`, `agri_feed`, `agri_quality` (validaciones de KPIs)
-3. `isp_billing`, `isp_subscribers` (lógica de facturación)
-4. `const_progress`, `const_budget` (cálculos financieros)
-5. Resto de verticales
+  it('rechaza cuando campo requerido falta', () => {
+    const { required_field: _omit, ...rest } = validPayload
+    expect(createSchema.safeParse(rest).success).toBe(false)
+  })
+
+  it('rechaza enum inválido', () => {
+    expect(createSchema.safeParse({ ...validPayload, status: 'invalid' }).success).toBe(false)
+  })
+
+  // Reglas venezolanas específicas del módulo
+  it('valida RIF format', () => { ... })
+  it('rechaza IGTF negativo', () => { ... })
+})
+```
+
+**Prioridad** (por riesgo de bug en producción):
+1. `ve_fiscal` — ampliar tests existentes (lógica fiscal crítica)
+2. `isp_billing` — facturación con múltiples monedas
+3. `agri_hr` — nómina LOTTT (cálculos provisiones, liquidación)
+4. `const_progress` — valuaciones de obra (cálculos financieros)
+5. `mfg_mrp` — ampliar tests existentes (motor de cálculo)
+6. Un módulo representativo por vertical restante
 
 ---
 
-### Phase 26 — Upgrade Open Mercato v0.6.2
+### Phase 27 — Upgrade Open Mercato v0.6.2
 
-**Por qué**: La versión actual del repo oficial es `0.6.2`. El proyecto usa `0.6.1`.
-La diferencia incluye parches de TypeScript 6 y correcciones de eslint-config-next.
+**Impacto real para nuestro código**: Ninguno.
 
-**Qué cambiaría**:
-- `"typescript": "^5.9.3"` → `"typescript": "^6.0.3"`
-- `"eslint-config-next": "16.2.6"` (ya está en 16.2.6)
-- `@open-mercato/*`: `"0.6.1"` → `"0.6.2"`
-- `"jest": "^30.3.0"` → `"^30.4.2"` (ya disponible)
+`UPGRADE_NOTES.md` del repo oficial dice explícitamente:
+> "No actionable dependency upgrades for downstream user code."
 
-**Riesgo**: TypeScript 6 es un major bump. Revisar breaking changes antes.
-**Cómo**: Leer `UPGRADE_NOTES.md` del repo oficial antes de proceder.
+**Qué añade v0.6.2** (relevante para nosotros):
+- **AI agents**: loop controls (`loop.stopWhen/prepareStep/budget`), task plan visible, conversación en servidor
+- **modules.ts unified overrides**: ahora se puede desactivar/reemplazar cualquier contrato (routes, pages, workers, widgets, setup, ACL, DI) desde `modules.ts`
+- **`defineWorkflow()`**: definición de workflows en código (hoy se definen via UI/seed)
+- **DS**: Breadcrumb + Sheet primitives + topbar rediseñado
+- **Storage hub**: módulos pueden gestionar archivos propios
+- **Seguridad**: hardening de Super Admin, validaciones regex
 
----
+**Qué NO cambia en 0.6.2**:
+- TypeScript — el OM usa TS6 internamente, pero no lo impone. Nuestra app sigue con TS5.9 sin problema.
+- Breaking changes — ninguno para código downstream
+- APIs de CrudForm, DataTable, useGuardedMutation — sin cambios
 
-### Phase 27 — Nuevas Verticales
+**Cómo ejecutar el upgrade**:
+```bash
+# Cambiar en package.json:
+"@open-mercato/ai-assistant": "0.6.2",
+"@open-mercato/cache": "0.6.2",
+# ... todos los @open-mercato/* → 0.6.2
 
-**Candidatas prioritarias:**
-
-#### Fitness / Gym
-- `gym_members`, `gym_plans`, `gym_attendance`, `gym_payments`, `gym_classes`, `gym_portal`
-- Venezuela: planes en USD, múltiples métodos de pago, control de acceso
-
-#### Beauty / Salones / Spas
-- `beauty_services`, `beauty_appointments`, `beauty_inventory`, `beauty_staff`, `beauty_portal`
-- Venezuela: citas online, comisiones, productos de belleza
-
-#### Agencias de Servicios Profesionales
-- `agency_projects`, `agency_billing`, `agency_time_tracking`, `agency_contracts`
-- Venezuela: facturación en USD/VES, retenciones ISLR
-
-**Proceso para cada vertical nueva** (aprendido en CI verde):
-1. Leer repo OM antes de escribir código → `open-mercato/open-mercato apps/mercato/src/modules/example/`
-2. Escribir validators con tests PRIMERO
-3. Verificar `yarn generate && yarn typecheck` después de cada módulo
-4. Usar API correcta v0.6.1: `id:` en campos, `title:` en grupos, etc.
-5. `acl.ts` siempre con `export default features`
+yarn install  # actualiza yarn.lock
+yarn generate && yarn typecheck  # verificar que CI sigue verde
+```
 
 ---
 
 ### Phase 28 — Integration Tests
 
-**Objetivo**: Tests end-to-end para los flujos críticos.
+**Objetivo**: Verificar los flujos críticos de negocio end-to-end.
 
-**Patrón OM**: `apps/mercato/src/modules/example/__integration__/`
+**Patrón OM** (`apps/mercato/src/modules/example/__integration__/`):
+```typescript
+// TC-UMES-001.spec.ts — patrón del repo oficial
+import { createEphemeralApp } from '@open-mercato/cli/test'
 
-Los tests de integración en el repo oficial usan:
-- Playwright (`@playwright/test`)
-- `mercato test:integration:ephemeral` — boot efímero del app
-- PostgreSQL en memoria (Docker)
+test('crear tenant → módulos venezolanos auto-configurados', async ({ page }) => {
+  const app = await createEphemeralApp()
+  // ... flujo completo
+})
+```
 
-**Candidatos prioritarios**:
-1. Creación de tenant → módulos base venezolanos auto-configurados
-2. Flujo completo inmobiliaria: propiedad → lead → transacción
-3. Flujo ISP: abonado → factura → pago → estado cuenta
-4. Flujo manufactura: BOM → orden → despacho → CoA
+**Candidatos prioritarios** (por riesgo de regresión en prod):
+1. Tenant setup → `ve_fiscal`, `venezuela_rates`, `payment_methods` auto-activos
+2. Flujo ISP: crear abonado → generar factura → registrar pago
+3. Flujo manufactura: BOM → orden → MRP → requisición
+4. Flujo fiscal: emisión RIF → libro de ventas → reporte
 
 ---
 
-### Phase 29 — Actualización CI con coverage threshold
+### Phase 29 — Activar coverage threshold en CI
 
-Una vez que haya tests en todos los módulos, activar el threshold de coverage:
+Una vez que Phase 26 esté completa, activar el threshold en `jest.config.cjs`:
 
 ```js
-// jest.config.cjs — activar cuando coverage sea suficiente
 coverageThreshold: {
   global: {
-    branches: 70,   // Empezar conservador
-    functions: 80,
-    lines: 80,
-    statements: 80,
+    branches: 60,   // Conservador al inicio
+    functions: 70,
+    lines: 70,
+    statements: 70,
   },
 },
 ```
 
-**Condición**: Al menos 1 test por módulo con validators (Phase 25 completada).
+El CI fallará si algún PR baja la cobertura por debajo de este umbral, protegiendo la calidad en avanzar.
 
 ---
 
-## Deuda técnica general
+## Deuda técnica — estado actual
 
-| Item | Prioridad | Estado |
-|------|-----------|--------|
-| Tests unitarios validators (95+ módulos sin tests) | **ALTA** | Phase 25 |
-| Upgrade OM v0.6.2 + TypeScript 6 | **MEDIA** | Phase 26 |
-| Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
-| Integration tests (RE + Education + Retail) | Media | Phase 28 |
-| `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
+| Item | Prioridad | Fase |
+|------|-----------|------|
+| Limpieza de `as any` post-CI fix | **ALTA** | Phase 25 |
+| Tests unitarios validators (95+ módulos sin tests) | **ALTA** | Phase 26 |
+| Upgrade OM v0.6.2 (sin breaking changes) | **MEDIA** | Phase 27 |
+| Integration tests flujos críticos | **MEDIA** | Phase 28 |
+| Coverage threshold activado en CI | **MEDIA** | Phase 29 (requiere Phase 26) |
+| Migrations formales por módulo | Baja | Al cambiar entidades en producción |
+| `portalBroadcast` en portales | Baja | Pendiente PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
-| Coverage threshold activado en CI | Baja | Phase 29 (requiere Phase 25) |
 | Docker layer caching en Coolify | Baja | Optimización de build |
