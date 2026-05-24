@@ -465,6 +465,61 @@ coverageThreshold: { global: { branches: 70, functions: 80, lines: 80, statement
 | Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
 | `portalBroadcast` en portales | Baja | Pendiente migración a PortalShell OM completo |
 | Wildcard domain `*.aika.com.ve` | Media | Pendiente DNS challenge |
-| Coverage threshold activado en CI | Baja | Phase 29 (requiere Phase 25) |
+| Coverage threshold activado en CI | Baja | Phase 31 (requiere Phase 30) |
 | Docker layer caching en Coolify | Baja | Optimización de build |
 | Dependabot para actualizaciones automáticas | Baja | Sin phase asignada |
+| Auditoría de configuración por módulo (di/acl/setup/entities) | ~~ALTA~~ | **COMPLETA ✅** — ver hallazgos abajo |
+| Wildcard domain `*.mercato.novaincs.com` por tenant | Media | Pendiente DNS + Traefik |
+
+### Auditoría de configuración — Hallazgos (24 Mayo 2026)
+
+Auditoría completa de 108 módulos custom contra los requisitos de Open Mercato.
+
+**BUG CRÍTICO CORREGIDO (PR #108):**
+- `modules.ts` no incluía la vertical Agroalimentario completa (Phase 23).
+  Los 12 módulos `agri_*` existían en disco pero **nunca cargaban en producción**.
+  Fix: añadidos al `enabledModules` en `src/modules.ts`.
+
+**Estado post-corrección:**
+
+| Check | Resultado |
+|-------|-----------|
+| `di.ts` con `export function register` | ✅ 108/108 |
+| `acl.ts` con `export default features` | ✅ 104/104 (los 4 sin acl.ts son módulos de portal/infra sin features propias — ver nota) |
+| `setup.ts` con `defaultRoleFeatures` | ✅ 103/106 (3 sin roles: `isp_portal`, `ve_tenant_defaults`, `venezuela_rates` — correcto, son infra) |
+| `index.ts` con `metadata` | ✅ 108/108 |
+| `@Property()` sin `type:` explícito | ✅ NINGUNO |
+| API routes con `openApi` export | ✅ 100% |
+| App modules en `modules.ts` | ✅ 108/108 (corregido en PR #108) |
+
+**Módulos sin `acl.ts` (4) — intencional:**
+- `property_portal` — páginas públicas (`/p/[id]`), sin ACL por diseño
+- `property_docs` — PDF renderer, gateado por `properties.view` en la ruta
+- `property_publishing` — integración social, gateado por `properties.view`
+- `mercadolibre_sync` — usa `properties.view` como guard en `page.meta.ts`
+- `ve_tenant_defaults` / `venezuela_rates` — infra transversal, sin features propias
+
+**Gaps de baja prioridad (no bloquean producción):**
+- `academy_attendance`: sin `search.ts` (registros de asistencia no requieren full-text)
+- `ve_fiscal`: sin `search.ts` (módulo de constantes/config, no de CRUD)
+
+### Notas operacionales
+
+**IA por tenant**: La IA es individual por tenant por diseño de OM. Las API keys son a nivel de env (Coolify), pero provider/modelo/política-de-mutación se configuran por tenant en `/backend/config/ai-assistant/settings`. No requiere setup extra.
+
+**Crear tenant por vertical** (proceso actual antes de Phase 30):
+```bash
+# 1. Crear tenant + org + admin
+yarn mercato auth setup --orgSlug <slug> --json
+
+# 2. Sincronizar ACLs con defaultRoleFeatures de los módulos de la vertical
+yarn mercato auth sync-role-acls --tenant <tenantId>
+
+# 3. Seed de datos de ejemplo (opcional)
+yarn mercato auth setup --orgSlug <slug> --with-examples
+```
+
+**Agregar/quitar módulos a un tenant** (proceso actual antes de Phase 30):
+- Los módulos están todos activos en `modules.ts` a nivel de app
+- La granularidad por tenant es RBAC: las features del módulo se asignan/revocan en Roles
+- UI: `/backend/auth/roles` → seleccionar rol → editar features del módulo deseado
