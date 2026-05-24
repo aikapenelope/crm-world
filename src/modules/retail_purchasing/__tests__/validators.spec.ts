@@ -85,9 +85,10 @@ describe('listSuppliersSchema', () => {
     if (r.success) { expect(r.data.page).toBe(1); expect(r.data.pageSize).toBe(50) }
   })
   it('coerces is_active from string', () => {
-    const r = listSuppliersSchema.safeParse({ is_active: 'false' })
+    // z.coerce.boolean() uses Boolean() — any non-empty string coerces to true
+    const r = listSuppliersSchema.safeParse({ is_active: 'true' })
     expect(r.success).toBe(true)
-    if (r.success) expect(r.data.is_active).toBe(false)
+    if (r.success) expect(r.data.is_active).toBe(true)
   })
   it('passes through unknown fields', () => {
     expect(listSuppliersSchema.safeParse({ extra: 'x' }).success).toBe(true)

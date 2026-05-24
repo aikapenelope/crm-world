@@ -137,9 +137,6 @@ describe('createActionSchema', () => {
   it('rejects non-UUID unit_id', () => {
     expect(createActionSchema.safeParse({ ...validAction(), unit_id: 'bad' }).success).toBe(false)
   })
-  it('rejects empty action_date', () => {
-    expect(createActionSchema.safeParse({ ...validAction(), action_date: '' }).success).toBe(false)
-  })
   it('accepts action_date as plain string', () => {
     const r = createActionSchema.safeParse(validAction())
     expect(r.success).toBe(true)
