@@ -29,7 +29,7 @@ type MedRow = {
 type FlockOption = { value: string; label: string }
 
 export default function AgriVetPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_vet.page' })
   const [meds, setMeds]          = React.useState<MedRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)
@@ -56,9 +56,8 @@ export default function AgriVetPage() {
 
   const handleResolve = (row: MedRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_vet.medication', recordId: row.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-vet/medication-records', {
           method: 'PUT',
           body: JSON.stringify({ id: row.id, resolved: true }),
@@ -164,17 +163,17 @@ export default function AgriVetPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Tratamiento Medicamentoso</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_vet.medication"
               apiPath="/api/agri-vet/medication-records"
               mode="create"
               fields={[
-                { type: 'select' as const,   name: 'flock_id',                label: 'Lote de Aves',      required: true, options: flockOptions },
-                { type: 'text' as const,     name: 'diagnosis',               label: 'Diagnóstico',       required: true },
-                { type: 'text' as const,     name: 'medication_name',         label: 'Medicamento',       required: true },
-                { type: 'text' as const,     name: 'active_ingredient',       label: 'Principio Activo' },
-                { type: 'text' as const,     name: 'manufacturer',            label: 'Fabricante' },
-                { type: 'select' as const,   name: 'administration_route',    label: 'Vía de Admin.',
+                { type: 'select' as const,   id: 'flock_id',                label: 'Lote de Aves',      required: true, options: flockOptions },
+                { type: 'text' as const,     id: 'diagnosis',               label: 'Diagnóstico',       required: true },
+                { type: 'text' as const,     id: 'medication_name',         label: 'Medicamento',       required: true },
+                { type: 'text' as const,     id: 'active_ingredient',       label: 'Principio Activo' },
+                { type: 'text' as const,     id: 'manufacturer',            label: 'Fabricante' },
+                { type: 'select' as const,   id: 'administration_route',    label: 'Vía de Admin.',
                   options: [
                     { value: 'drinking_water', label: 'Agua de bebida' },
                     { value: 'injectable',     label: 'Inyectable' },
@@ -182,22 +181,22 @@ export default function AgriVetPage() {
                     { value: 'topical',        label: 'Tópico' },
                     { value: 'other',          label: 'Otro' },
                   ]},
-                { type: 'text' as const,     name: 'dose_description',        label: 'Descripción de Dosis' },
-                { type: 'date' as const,     name: 'treatment_start_date',    label: 'Inicio del Tratamiento', required: true },
-                { type: 'number' as const,   name: 'treatment_duration_days', label: 'Duración (días)',     required: true },
-                { type: 'date' as const,     name: 'treatment_end_date',      label: 'Fin del Tratamiento', required: true },
-                { type: 'number' as const,   name: 'withdrawal_days',         label: 'Días de Retiro',     required: true },
-                { type: 'date' as const,     name: 'withdrawal_end_date',     label: 'Fecha Fin de Retiro (= Fin + Retiro)', required: true },
-                { type: 'text' as const,     name: 'veterinarian_name',       label: 'Veterinario Responsable', required: true },
-                { type: 'text' as const,     name: 'medication_lot_number',   label: 'Lote del Medicamento' },
-                { type: 'textarea' as const, name: 'notes',                   label: 'Notas' },
+                { type: 'text' as const,     id: 'dose_description',        label: 'Descripción de Dosis' },
+                { type: 'date' as const,     id: 'treatment_start_date',    label: 'Inicio del Tratamiento', required: true },
+                { type: 'number' as const,   id: 'treatment_duration_days', label: 'Duración (días)',     required: true },
+                { type: 'date' as const,     id: 'treatment_end_date',      label: 'Fin del Tratamiento', required: true },
+                { type: 'number' as const,   id: 'withdrawal_days',         label: 'Días de Retiro',     required: true },
+                { type: 'date' as const,     id: 'withdrawal_end_date',     label: 'Fecha Fin de Retiro (= Fin + Retiro)', required: true },
+                { type: 'text' as const,     id: 'veterinarian_name',       label: 'Veterinario Responsable', required: true },
+                { type: 'text' as const,     id: 'medication_lot_number',   label: 'Lote del Medicamento' },
+                { type: 'textarea' as const, id: 'notes',                   label: 'Notas' },
               ]}
               groups={[
-                { id: 'diagnosis',    label: 'Diagnóstico',        fields: ['flock_id', 'diagnosis'] },
-                { id: 'medication',   label: 'Medicamento',        fields: ['medication_name', 'active_ingredient', 'manufacturer', 'administration_route', 'dose_description'] },
-                { id: 'treatment',    label: 'Tratamiento',        fields: ['treatment_start_date', 'treatment_duration_days', 'treatment_end_date'] },
-                { id: 'withdrawal',   label: 'Período de Retiro',  fields: ['withdrawal_days', 'withdrawal_end_date'] },
-                { id: 'responsible',  label: 'Responsable',        fields: ['veterinarian_name', 'medication_lot_number', 'notes'] },
+                { id: 'diagnosis',    title: 'Diagnóstico',        fields: ['flock_id', 'diagnosis'] },
+                { id: 'medication',   title: 'Medicamento',        fields: ['medication_name', 'active_ingredient', 'manufacturer', 'administration_route', 'dose_description'] },
+                { id: 'treatment',    title: 'Tratamiento',        fields: ['treatment_start_date', 'treatment_duration_days', 'treatment_end_date'] },
+                { id: 'withdrawal',   title: 'Período de Retiro',  fields: ['withdrawal_days', 'withdrawal_end_date'] },
+                { id: 'responsible',  title: 'Responsable',        fields: ['veterinarian_name', 'medication_lot_number', 'notes'] },
               ]}
               onSuccess={() => { flash('Tratamiento registrado', 'success'); setShowForm(false); load() }}
             />
@@ -206,11 +205,10 @@ export default function AgriVetPage() {
 
         <DataTable
           entityId="agri_vet.medication"
-          extensionTableId="agri-vet-medications-list"
           data={meds}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin tratamientos registrados', description: 'Registra el primer tratamiento medicamentoso.' }}
+          emptyState="Sin tratamientos registrados"
           stickyActionsColumn
         />
       </PageBody>

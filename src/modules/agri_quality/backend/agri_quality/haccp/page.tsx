@@ -39,7 +39,7 @@ const STATUS_LABEL: Record<string, string> = { draft: 'Borrador', active: 'Activ
 
 export default function HaccpPlansPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_quality.page' })
   const [plans, setPlans]       = React.useState<PlanRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)
@@ -59,9 +59,8 @@ export default function HaccpPlansPage() {
 
   const handleActivate = (plan: PlanRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_quality.haccp_plan', recordId: plan.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-quality/haccp-plans', {
           method: 'PUT',
           body: JSON.stringify({
@@ -164,13 +163,13 @@ export default function HaccpPlansPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Plan HACCP</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_quality.haccp_plan"
               apiPath="/api/agri-quality/haccp-plans"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'name',       label: 'Nombre del Plan',  required: true },
-                { type: 'select' as const, name: 'process',    label: 'Proceso Productivo', required: true,
+                { type: 'text' as const,   id: 'name',       label: 'Nombre del Plan',  required: true },
+                { type: 'select' as const, id: 'process',    label: 'Proceso Productivo', required: true,
                   options: [
                     { value: 'beneficio',     label: 'Beneficio avícola' },
                     { value: 'procesamiento', label: 'Procesamiento / cortes' },
@@ -178,12 +177,12 @@ export default function HaccpPlansPage() {
                     { value: 'despacho',      label: 'Despacho / distribución' },
                     { value: 'general',       label: 'General (toda la planta)' },
                   ]},
-                { type: 'text' as const,   name: 'version',    label: 'Versión', },
-                { type: 'text' as const,   name: 'approved_by', label: 'Aprobado por (nombre/cargo)' },
-                { type: 'textarea' as const, name: 'notes',    label: 'Alcance y descripción' },
+                { type: 'text' as const,   id: 'version',    label: 'Versión', },
+                { type: 'text' as const,   id: 'approved_by', label: 'Aprobado por (nombre/cargo)' },
+                { type: 'textarea' as const, id: 'notes',    label: 'Alcance y descripción' },
               ]}
               groups={[
-                { id: 'general', label: 'Identificación', fields: ['name', 'process', 'version', 'approved_by', 'notes'] },
+                { id: 'general', title: 'Identificación', fields: ['name', 'process', 'version', 'approved_by', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Plan HACCP creado — ahora agrega los PCCs en el detalle del plan', 'success')
@@ -196,14 +195,10 @@ export default function HaccpPlansPage() {
 
         <DataTable
           entityId="agri_quality.haccp_plan"
-          extensionTableId="agri-quality-haccp-list"
           data={plans}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin planes HACCP',
-            description: 'Crea el primer plan HACCP para tu proceso de beneficio. Un plan debe tener sus PCCs configurados antes de activarse.',
-          }}
+          emptyState="Sin planes HACCP"
           stickyActionsColumn
         />
       </PageBody>

@@ -6,7 +6,7 @@
  */
 import { MfgStockMovementEntity } from '../../data/entities'
 import { stockMovementCreateSchema } from '../../data/validators'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { z } from 'zod'
@@ -78,7 +78,7 @@ export async function POST(request: Request, ctx: any) {
   if (data.movement_type === 'quarantine_hold') updates.status = 'quarantine'
   if (data.movement_type === 'GI_scrap') updates.status = newQty <= 0 ? 'consumed' : (lot as any).status
   if (data.movement_type === 'GI_production' && newQty <= 0) updates.status = 'consumed'
-  if (data.movement_type === 'to_location_id' && data.to_location_id) updates.location_id = data.to_location_id
+  if (data.movement_type === ('to_location_id' as string) && data.to_location_id) updates.location_id = data.to_location_id
 
   await kysely.updateTable('mfg_stock_lots')
     .set(updates)

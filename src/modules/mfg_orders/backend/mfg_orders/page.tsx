@@ -30,7 +30,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 export default function MfgOrdersPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_orders.page' })
   const [orders, setOrders]     = React.useState<OrderRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('in_progress')
@@ -57,9 +57,8 @@ export default function MfgOrdersPage() {
 
   const handleRelease = (order: OrderRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.production_order', recordId: order.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/production-orders', {
           method: 'PUT',
           body: JSON.stringify({ id: order.id, status: 'released' }),
@@ -182,27 +181,27 @@ export default function MfgOrdersPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Orden de Producción</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_orders.production_order"
               apiPath="/api/mfg-orders/production-orders"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'order_number',     label: 'Número de Orden (PO-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'bom_id',           label: 'BOM / Fórmula del Producto', required: true, options: bomOptions },
-                { type: 'text' as const,   name: 'product_code',     label: 'Código del Producto', required: true },
-                { type: 'text' as const,   name: 'product_name',     label: 'Nombre del Producto', required: true },
-                { type: 'text' as const,   name: 'planned_quantity', label: 'Cantidad a Producir', required: true },
-                { type: 'text' as const,   name: 'uom',              label: 'Unidad de Medida', required: true },
-                { type: 'select' as const, name: 'work_center_id',   label: 'Línea / Centro de Trabajo', options: wcOptions },
-                { type: 'datetime-local' as const, name: 'scheduled_start', label: 'Inicio Planificado' },
-                { type: 'datetime-local' as const, name: 'scheduled_end',   label: 'Fin Planificado' },
-                { type: 'text' as const,   name: 'planned_cost_usd', label: 'Costo Estándar Planificado (USD)' },
-                { type: 'textarea' as const, name: 'notes',          label: 'Notas' },
+                { type: 'text' as const,   id: 'order_number',     label: 'Número de Orden (PO-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'bom_id',           label: 'BOM / Fórmula del Producto', required: true, options: bomOptions },
+                { type: 'text' as const,   id: 'product_code',     label: 'Código del Producto', required: true },
+                { type: 'text' as const,   id: 'product_name',     label: 'Nombre del Producto', required: true },
+                { type: 'text' as const,   id: 'planned_quantity', label: 'Cantidad a Producir', required: true },
+                { type: 'text' as const,   id: 'uom',              label: 'Unidad de Medida', required: true },
+                { type: 'select' as const, id: 'work_center_id',   label: 'Línea / Centro de Trabajo', options: wcOptions },
+                { type: 'datetime-local' as const, id: 'scheduled_start', label: 'Inicio Planificado' },
+                { type: 'datetime-local' as const, id: 'scheduled_end',   label: 'Fin Planificado' },
+                { type: 'text' as const,   id: 'planned_cost_usd', label: 'Costo Estándar Planificado (USD)' },
+                { type: 'textarea' as const, id: 'notes',          label: 'Notas' },
               ]}
               groups={[
-                { id: 'product',   label: 'Producto',    fields: ['order_number', 'bom_id', 'product_code', 'product_name'] },
-                { id: 'qty',       label: 'Producción',  fields: ['planned_quantity', 'uom', 'work_center_id'] },
-                { id: 'schedule',  label: 'Cronograma',  fields: ['scheduled_start', 'scheduled_end', 'planned_cost_usd', 'notes'] },
+                { id: 'product',   title: 'Producto',    fields: ['order_number', 'bom_id', 'product_code', 'product_name'] },
+                { id: 'qty',       title: 'Producción',  fields: ['planned_quantity', 'uom', 'work_center_id'] },
+                { id: 'schedule',  title: 'Cronograma',  fields: ['scheduled_start', 'scheduled_end', 'planned_cost_usd', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Orden de producción creada', 'success')
@@ -215,14 +214,10 @@ export default function MfgOrdersPage() {
 
         <DataTable
           entityId="mfg_orders.production_order"
-          extensionTableId="mfg-orders-list"
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin órdenes de producción',
-            description: 'Crea la primera orden para iniciar la planificación de manufactura.',
-          }}
+          emptyState="Sin órdenes de producción"
           stickyActionsColumn
         />
       </PageBody>

@@ -8,7 +8,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { ReciboCondo, type ReciboPDFData } from '../../../documents/ReciboCondo'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['condo_fees.view'] },
@@ -74,9 +74,7 @@ export async function GET(request: Request, ctx: any) {
   }
 
   // Generate PDF stream
-  const stream = await renderToStream(
-    React.createElement(ReciboCondo, { data })
-  )
+  const stream = await renderToStream(React.createElement(ReciboCondo, { data }) as any)
 
   // Collect stream to buffer
   const chunks: Buffer[] = []

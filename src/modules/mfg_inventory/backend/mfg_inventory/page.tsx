@@ -33,7 +33,7 @@ const MATERIAL_TYPE_LABEL: Record<string, string> = {
 }
 
 export default function MfgInventoryPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_inventory.page' })
   const [lots, setLots]          = React.useState<LotRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [statusFilter, setFilter] = React.useState('available')
@@ -59,9 +59,8 @@ export default function MfgInventoryPage() {
 
   const handleRelease = (lot: LotRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_inventory.lot', recordId: lot.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-inventory/stock-movements', {
           method: 'POST',
           body: JSON.stringify({ lot_id: lot.id, movement_type: 'quarantine_release', quantity: '0', reference_type: 'manual', reason: 'Liberado manualmente de cuarentena' }),
@@ -215,34 +214,34 @@ export default function MfgInventoryPage() {
         {showReceive && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Recibir Material en Almacén (GR)</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_inventory.lot"
               apiPath="/api/mfg-inventory/stock-lots"
               mode="create"
               initial={{ status: 'quarantine', entry_date: new Date().toISOString().split('T')[0] }}
               fields={[
-                { type: 'text' as const,   name: 'material_code',       label: 'Código del Material', required: true },
-                { type: 'text' as const,   name: 'material_name',       label: 'Nombre del Material', required: true },
-                { type: 'select' as const, name: 'material_type',       label: 'Tipo', required: true,
+                { type: 'text' as const,   id: 'material_code',       label: 'Código del Material', required: true },
+                { type: 'text' as const,   id: 'material_name',       label: 'Nombre del Material', required: true },
+                { type: 'select' as const, id: 'material_type',       label: 'Tipo', required: true,
                   options: [
                     { value: 'raw_material', label: 'Materia Prima' },
                     { value: 'packaging',    label: 'Material de Empaque' },
                     { value: 'finished_goods', label: 'Producto Terminado' },
                   ]},
-                { type: 'text' as const,   name: 'lot_number',          label: 'Número de Lote Interno', required: true },
-                { type: 'text' as const,   name: 'supplier_lot_number', label: 'Lote del Proveedor (trazabilidad)' },
-                { type: 'text' as const,   name: 'quantity',            label: 'Cantidad recibida', required: true },
-                { type: 'text' as const,   name: 'uom',                 label: 'Unidad de Medida', required: true },
-                { type: 'text' as const,   name: 'unit_cost_usd',       label: 'Costo Unitario (USD)' },
-                { type: 'date' as const,   name: 'expiry_date',         label: 'Fecha de Vencimiento' },
-                { type: 'select' as const, name: 'location_id',        label: 'Ubicación en Almacén',
+                { type: 'text' as const,   id: 'lot_number',          label: 'Número de Lote Interno', required: true },
+                { type: 'text' as const,   id: 'supplier_lot_number', label: 'Lote del Proveedor (trazabilidad)' },
+                { type: 'text' as const,   id: 'quantity',            label: 'Cantidad recibida', required: true },
+                { type: 'text' as const,   id: 'uom',                 label: 'Unidad de Medida', required: true },
+                { type: 'text' as const,   id: 'unit_cost_usd',       label: 'Costo Unitario (USD)' },
+                { type: 'date' as const,   id: 'expiry_date',         label: 'Fecha de Vencimiento' },
+                { type: 'select' as const, id: 'location_id',        label: 'Ubicación en Almacén',
                   options: locationOptions },
-                { type: 'textarea' as const, name: 'notes',            label: 'Notas de recepción' },
+                { type: 'textarea' as const, id: 'notes',            label: 'Notas de recepción' },
               ]}
               groups={[
-                { id: 'material', label: 'Material',     fields: ['material_code', 'material_name', 'material_type'] },
-                { id: 'lot',      label: 'Lote',         fields: ['lot_number', 'supplier_lot_number', 'quantity', 'uom', 'unit_cost_usd'] },
-                { id: 'storage',  label: 'Almacenamiento', fields: ['expiry_date', 'location_id', 'notes'] },
+                { id: 'material', title: 'Material',     fields: ['material_code', 'material_name', 'material_type'] },
+                { id: 'lot',      title: 'Lote',         fields: ['lot_number', 'supplier_lot_number', 'quantity', 'uom', 'unit_cost_usd'] },
+                { id: 'storage',  title: 'Almacenamiento', fields: ['expiry_date', 'location_id', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Material recibido en cuarentena — pendiente de inspección QC', 'info')
@@ -255,14 +254,10 @@ export default function MfgInventoryPage() {
 
         <DataTable
           entityId="mfg_inventory.lot"
-          extensionTableId="mfg-inventory-lots-list"
           data={lots}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin lotes de inventario',
-            description: 'Recibe el primer material para comenzar a gestionar el inventario de manufactura.',
-          }}
+          emptyState="Sin lotes de inventario"
           stickyActionsColumn
         />
       </PageBody>

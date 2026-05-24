@@ -3,11 +3,11 @@ import { z } from 'zod'
 export const createStorefrontSchema = z.object({
   name: z.string().min(1).max(100),
   slug: z.string().min(1).max(50).regex(/^[a-z0-9-]+$/),
-  config: z.record(z.unknown()).nullable().optional(),
-  branding: z.record(z.unknown()).nullable().optional(),
+  config: z.record(z.string(), z.unknown()).nullable().optional(),
+  branding: z.record(z.string(), z.unknown()).nullable().optional(),
   payment_methods: z.array(z.string()).nullable().optional(),
-  delivery_zones: z.array(z.record(z.unknown())).nullable().optional(),
-  social_links: z.record(z.string()).nullable().optional(),
+  delivery_zones: z.array(z.record(z.string(), z.unknown())).nullable().optional(),
+  social_links: z.record(z.string(), z.string()).nullable().optional(),
 })
 
 export const createOnlineOrderSchema = z.object({
@@ -16,7 +16,7 @@ export const createOnlineOrderSchema = z.object({
   guest_phone: z.string().max(30).nullable().optional(),
   guest_email: z.string().email().nullable().optional(),
   delivery_type: z.enum(['pickup', 'delivery']).default('delivery'),
-  delivery_address: z.record(z.string()).nullable().optional(),
+  delivery_address: z.record(z.string(), z.string()).nullable().optional(),
   payment_method: z.string().max(30).nullable().optional(),
   notes: z.string().max(500).nullable().optional(),
   source: z.enum(['web', 'whatsapp', 'instagram']).default('web'),

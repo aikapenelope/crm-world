@@ -18,7 +18,7 @@ export const createBuildingSchema = z.object({
   admin_company: z.string().max(255).optional().nullable(),
   document_number: z.string().max(100).optional().nullable(),
   common_areas: z.array(z.string()).optional().nullable(),
-  metadata: z.record(z.unknown()).optional().nullable(),
+  metadata: z.record(z.string(), z.unknown()).optional().nullable(),
   is_active: z.boolean().default(true),
 })
 

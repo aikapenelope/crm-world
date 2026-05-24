@@ -2,8 +2,8 @@
  * Issue a certificate — changes status from 'pending' to 'issued'.
  * Sets issued_at and issued_by.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
-import { eventsConfig } from '../../events'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
+import { eventsConfig } from '../../../events'
 
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['academy_certificates.manage'] },

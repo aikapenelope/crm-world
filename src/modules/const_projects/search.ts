@@ -39,8 +39,8 @@ export const searchConfig: SearchModuleConfig = {
         if (!lines.length) return null
 
         const subtitle = [
-          norm(r.client_name),
-          norm(r.city),
+          norm(r.client_name as string),
+          norm(r.city as string),
           r.contract_amount ? `${r.currency} ${Number(r.contract_amount).toLocaleString('es-VE')}` : null,
         ].filter(Boolean).join(' · ')
 
@@ -48,7 +48,7 @@ export const searchConfig: SearchModuleConfig = {
           title: String(r.name ?? 'Proyecto'),
           subtitle: subtitle || undefined,
           icon: 'hard-hat',
-          badge: STATUS_LABELS[String(r.status)] ?? norm(r.status) ?? undefined,
+          badge: STATUS_LABELS[String(r.status)] ?? norm(r.status as string) ?? undefined,
         }
 
         const links: SearchResultLink[] = r.id
@@ -68,7 +68,7 @@ export const searchConfig: SearchModuleConfig = {
 
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        const subtitle = [norm(r.client_name), norm(r.city)].filter(Boolean).join(' · ')
+        const subtitle = [norm(r.client_name as string), norm(r.city as string)].filter(Boolean).join(' · ')
         return {
           title: String(r.name ?? 'Proyecto'),
           subtitle: subtitle || undefined,

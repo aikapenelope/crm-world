@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { LiquidacionProducerPdf, type LiquidacionProducerData } from '../../documents/LiquidacionProducerPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['agri_hr.view'] },
@@ -68,7 +68,7 @@ export async function GET(request: Request, ctx: any) {
     id: settlementId,
   }
 
-  const stream = await renderToStream(React.createElement(LiquidacionProducerPdf, { data }))
+  const stream = await renderToStream(React.createElement(LiquidacionProducerPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

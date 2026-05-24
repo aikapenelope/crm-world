@@ -170,16 +170,16 @@ export default function MfgFloorPage() {
         {/* Active orders */}
         <div className="mb-6">
           <h3 className="text-sm font-semibold mb-3">Órdenes Activas en Planta ({activeOrders.length})</h3>
-          <DataTable entityId="mfg_floor.active_order" extensionTableId="mfg-floor-active-orders" data={activeOrders} columns={orderCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin órdenes en proceso', description: 'No hay órdenes de producción activas en este momento.' }} />
+          <DataTable entityId="mfg_floor.active_order" data={activeOrders} columns={orderCols} isLoading={isLoading}
+            emptyState="Sin órdenes en proceso" />
         </div>
 
         {/* Recent shift reports */}
         {shiftReports.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold mb-3">Últimos Reportes de Turno</h3>
-            <DataTable entityId="mfg_floor.shift_report" extensionTableId="mfg-floor-shifts" data={shiftReports} columns={shiftCols} isLoading={isLoading}
-              emptyState={{ title: 'Sin reportes de turno' }} />
+            <DataTable entityId="mfg_floor.shift_report" data={shiftReports} columns={shiftCols} isLoading={isLoading}
+              emptyState="Sin reportes de turno" />
           </div>
         )}
       </PageBody>

@@ -114,12 +114,12 @@ export default function BpmChecklistsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Checklist BPM</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_quality.bpm_checklist"
               apiPath="/api/agri-quality/bpm-checklists"
               mode="create"
               fields={[
-                { type: 'select' as const, name: 'checklist_type',  label: 'Tipo de Checklist',  required: true,
+                { type: 'select' as const, id: 'checklist_type',  label: 'Tipo de Checklist',  required: true,
                   options: [
                     { value: 'cleaning_disinfection', label: 'Limpieza y Desinfección' },
                     { value: 'personal_hygiene',      label: 'Higiene del Personal' },
@@ -127,26 +127,26 @@ export default function BpmChecklistsPage() {
                     { value: 'equipment_calibration', label: 'Calibración de Equipos' },
                     { value: 'general_bpm',           label: 'BPM General' },
                   ]},
-                { type: 'text' as const,   name: 'area',            label: 'Área',                required: true },
-                { type: 'date' as const,   name: 'check_date',      label: 'Fecha',               required: true },
-                { type: 'select' as const, name: 'shift',           label: 'Turno',
+                { type: 'text' as const,   id: 'area',            label: 'Área',                required: true },
+                { type: 'date' as const,   id: 'check_date',      label: 'Fecha',               required: true },
+                { type: 'select' as const, id: 'shift',           label: 'Turno',
                   options: [
                     { value: 'morning',   label: 'Mañana' },
                     { value: 'afternoon', label: 'Tarde' },
                     { value: 'night',     label: 'Noche' },
                   ]},
-                { type: 'select' as const, name: 'overall_result',  label: 'Resultado General',  required: true,
+                { type: 'select' as const, id: 'overall_result',  label: 'Resultado General',  required: true,
                   options: [
                     { value: 'pass',        label: 'Conforme' },
                     { value: 'conditional', label: 'Condicional' },
                     { value: 'fail',        label: 'No Conforme' },
                   ]},
-                { type: 'textarea' as const, name: 'findings',          label: 'Hallazgos' },
-                { type: 'textarea' as const, name: 'corrective_actions', label: 'Acciones Correctivas' },
+                { type: 'textarea' as const, id: 'findings',          label: 'Hallazgos' },
+                { type: 'textarea' as const, id: 'corrective_actions', label: 'Acciones Correctivas' },
               ]}
               groups={[
-                { id: 'general', label: 'General',      fields: ['checklist_type', 'area', 'check_date', 'shift'] },
-                { id: 'result',  label: 'Resultado',    fields: ['overall_result', 'findings', 'corrective_actions'] },
+                { id: 'general', title: 'General',      fields: ['checklist_type', 'area', 'check_date', 'shift'] },
+                { id: 'result',  title: 'Resultado',    fields: ['overall_result', 'findings', 'corrective_actions'] },
               ]}
               onSuccess={() => { flash('Checklist BPM registrado', 'success'); setShowForm(false); load() }}
             />
@@ -154,11 +154,10 @@ export default function BpmChecklistsPage() {
         )}
         <DataTable
           entityId="agri_quality.bpm_checklist"
-          extensionTableId="agri-quality-bpm-list"
           data={checklists}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin checklists BPM', description: 'Registra los checklists diarios de Buenas Prácticas de Manufactura.' }}
+          emptyState="Sin checklists BPM"
         />
       </PageBody>
     </Page>

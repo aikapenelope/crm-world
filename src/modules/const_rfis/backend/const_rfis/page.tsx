@@ -85,12 +85,12 @@ export default function ConstRFIsPage() {
       body: JSON.stringify({ rfi_id: showAnswerModal, answer }),
     })
     if (result.ok) {
-      flash({ type: 'success', message: 'RFI respondido exitosamente' })
+      flash('RFI respondido exitosamente', 'success')
       setShowAnswerModal(null)
       setAnswer('')
       await loadData()
     } else {
-      flash({ type: 'error', message: 'Error al responder el RFI' })
+      flash('Error al responder el RFI', 'error')
     }
     setIsAnswering(false)
   }

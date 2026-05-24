@@ -15,7 +15,7 @@ export async function GET(_request: Request, ctx: any) {
     // Nodos por estado
     kysely
       .selectFrom('isp_network_nodes')
-      .select(['status', kysely.fn.count<number>('id').as('count')])
+      .select(['status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .groupBy('status')
@@ -24,7 +24,7 @@ export async function GET(_request: Request, ctx: any) {
     // CPE por estado
     kysely
       .selectFrom('isp_cpe_inventory')
-      .select(['status', kysely.fn.count<number>('id').as('count')])
+      .select(['status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .groupBy('status')

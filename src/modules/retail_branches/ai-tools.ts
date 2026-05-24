@@ -15,7 +15,7 @@ const getBranchOverview = defineAiTool({
   inputSchema: z.object({
     is_active: z.boolean().optional().describe('Filter by active status'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -53,7 +53,7 @@ const getDeadStockAlerts = defineAiTool({
     days_without_movement: z.number().int().min(30).default(90).describe('Days without sales to flag as dead stock'),
     limit: z.number().int().min(1).max(20).default(15),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -94,7 +94,7 @@ const getLoyaltyStats = defineAiTool({
   isMutation: false,
   requiredFeatures: ['retail_loyalty.view'],
   inputSchema: z.object({}),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -134,7 +134,7 @@ const getOnlineOrdersPending = defineAiTool({
   inputSchema: z.object({
     status: z.enum(['pending', 'confirmed', 'preparing', 'shipped']).optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -174,7 +174,7 @@ const getPriceAlerts = defineAiTool({
   inputSchema: z.object({
     alert_type: z.enum(['below_cost', 'low_margin', 'price_drop']).optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 

@@ -33,10 +33,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.category) lines.push(String(r.category))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.product_name) ?? 'Product Name',
-          subtitle: ((norm(r.sku) ?? '') + ' · ' + (norm(r.category) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.product_name as string) as string | undefined) ?? 'Product Name',
+          subtitle: ((norm(r.sku as string) ?? '') + ' · ' + (norm(r.category as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'package',
-          badge: norm(r.category) ?? undefined,
+          badge: (norm(r.category as string) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -49,10 +49,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.product_name) ?? 'Product Name',
-          subtitle: norm(r.sku) ?? undefined,
+          title: (norm(r.product_name as string) as string | undefined) ?? 'Product Name',
+          subtitle: (norm(r.sku as string) as string | undefined) ?? undefined,
           icon: 'package',
-          badge: norm(r.category) ?? undefined,
+          badge: (norm(r.category as string) as string | undefined) ?? undefined,
         }
       },
 

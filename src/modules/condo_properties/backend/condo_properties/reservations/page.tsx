@@ -85,20 +85,20 @@ export default function ReservationsPage() {
       body: JSON.stringify(form),
     })
     if (result.ok) {
-      flash({ type: 'success', message: 'Reserva confirmada' })
+      flash('Reserva confirmada', 'success')
       setShowForm(false)
       // Reload
       const res = await apiCall<{ items: Reservation[] }>('/api/condo-properties/reservations', undefined, { fallback: { items: [] } })
       if (res.ok) setReservations(res.result?.items ?? [])
     } else {
-      flash({ type: 'error', message: (result as any).result?.error ?? 'Error al reservar' })
+      flash((result as any).result?.error ?? 'Error al reservar' , 'error')
     }
   }
 
   async function handleCancel(id: string) {
     const result = await apiCall(`/api/condo-properties/reservations?id=${id}`, { method: 'DELETE' })
     if (result.ok) {
-      flash({ type: 'success', message: 'Reserva cancelada' })
+      flash('Reserva cancelada', 'success')
       setReservations((prev) => prev.map((r) => r.id === id ? { ...r, status: 'cancelled' } : r))
     }
   }

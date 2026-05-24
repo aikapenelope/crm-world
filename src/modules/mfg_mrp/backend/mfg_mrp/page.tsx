@@ -24,7 +24,7 @@ const REQ_STATUS_VARIANT:  Record<string, 'warning' | 'success' | 'info' | 'neut
 const REQ_STATUS_LABEL:    Record<string, string> = { pending: 'Pendiente', approved: 'Aprobada', po_created: 'OC creada', cancelled: 'Cancelada' }
 
 export default function MfgMrpPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_mrp.page' })
   const [plans, setPlans]            = React.useState<PlanRow[]>([])
   const [activePlan, setActivePlan]  = React.useState<PlanRow | null>(null)
   const [requirements, setReqs]      = React.useState<ReqmtRow[]>([])
@@ -70,8 +70,8 @@ export default function MfgMrpPage() {
 
   const handleApproveReq = (req: ReqRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_mrp.requisition', recordId: req.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_mrp.requisition', recordId: req.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-mrp/purchase-requisitions', { method: 'PUT', body: JSON.stringify({ id: req.id, status: 'approved' }) })
         flash(`Requisición ${req.requisition_number} aprobada`, 'success')
         load(activePlan?.id)
@@ -199,12 +199,12 @@ export default function MfgMrpPage() {
         {showPlanForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Crear Plan de Producción</h3>
-            <CrudForm entityId="mfg_mrp.plan" apiPath="/api/mfg-mrp/production-plans" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_mrp.plan" apiPath="/api/mfg-mrp/production-plans" mode="create"
               fields={[
-                { type: 'text' as const,  name: 'plan_number',  label: 'Número de Plan (PLAN-2026-XX)', required: true },
-                { type: 'date' as const,  name: 'period_start', label: 'Inicio del período', required: true },
-                { type: 'date' as const,  name: 'period_end',   label: 'Fin del período', required: true },
-                { type: 'textarea' as const, name: 'notes',     label: 'Notas' },
+                { type: 'text' as const,  id: 'plan_number',  label: 'Número de Plan (PLAN-2026-XX)', required: true },
+                { type: 'date' as const,  id: 'period_start', label: 'Inicio del período', required: true },
+                { type: 'date' as const,  id: 'period_end',   label: 'Fin del período', required: true },
+                { type: 'textarea' as const, id: 'notes',     label: 'Notas' },
               ]}
               onSuccess={() => { flash('Plan creado — ejecuta el MRP para calcular necesidades', 'success'); setPlanForm(false); load() }}
             />
@@ -233,8 +233,8 @@ export default function MfgMrpPage() {
                 ))}
               </div>
             </div>
-            <DataTable entityId="mfg_mrp.requirement" extensionTableId="mfg-mrp-requirements" data={filteredReqs} columns={reqmtColumns} isLoading={isLoading}
-              emptyState={{ title: reqFilter === 'risk' ? 'Sin materiales en riesgo' : 'Sin necesidades', description: 'Ejecuta el MRP para calcular las necesidades.' }} />
+            <DataTable entityId="mfg_mrp.requirement" data={filteredReqs} columns={reqmtColumns} isLoading={isLoading}
+              emptyState={reqFilter === 'risk' ? 'Sin materiales en riesgo' : 'Sin necesidades'} />
           </div>
         )}
 
@@ -242,8 +242,8 @@ export default function MfgMrpPage() {
         {requisitions.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold mb-3">Requisiciones de Compra ({requisitions.length})</h3>
-            <DataTable entityId="mfg_mrp.requisition" extensionTableId="mfg-mrp-requisitions" data={requisitions} columns={reqnColumns} isLoading={isLoading}
-              emptyState={{ title: 'Sin requisiciones' }} stickyActionsColumn />
+            <DataTable entityId="mfg_mrp.requisition" data={requisitions} columns={reqnColumns} isLoading={isLoading}
+              emptyState="Sin requisiciones" stickyActionsColumn />
           </div>
         )}
       </PageBody>

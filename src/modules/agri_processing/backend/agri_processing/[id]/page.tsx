@@ -12,7 +12,7 @@ import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, CheckCircle } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'error' | 'ready'
@@ -45,7 +45,7 @@ function StatCard({ label, value, sub }: { label: string; value: string | number
 export default function SlaughterBatchDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_processing.page' })
   const batchId = params.id
 
   const [state, setState]      = React.useState<PageState>('loading')
@@ -73,9 +73,8 @@ export default function SlaughterBatchDetailPage() {
 
   const handleApproveDispatch = () => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_processing.batch', recordId: batchId },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-processing/slaughter-batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batchId, status: 'approved', dispatch_approved_at: new Date().toISOString() }),
@@ -109,7 +108,7 @@ export default function SlaughterBatchDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-processing')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Beneficios
       </Button>
-      <ErrorMessage message="Lote de beneficio no encontrado." />
+      <ErrorMessage label="Lote de beneficio no encontrado." />
     </PageBody></Page>
   )
 
@@ -156,26 +155,26 @@ export default function SlaughterBatchDetailPage() {
         {showLotForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Producto Terminado</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_processing.lot"
               apiPath="/api/agri-processing/processing-lots"
               mode="create"
               initial={{ slaughter_batch_id: batchId }}
               fields={[
-                { type: 'text' as const,   name: 'lot_number',         label: 'N° Lote Producto (PROD-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'formula_id',         label: 'Fórmula de Procesamiento',        required: true, options: formulaOptions },
-                { type: 'date' as const,   name: 'processing_date',    label: 'Fecha de Procesamiento',          required: true },
-                { type: 'text' as const,   name: 'quantity_kg',        label: 'Cantidad producida (kg)',         required: true },
-                { type: 'number' as const, name: 'unit_count',         label: 'Número de Unidades' },
-                { type: 'number' as const, name: 'package_weight_g',   label: 'Peso por Unidad (g)' },
-                { type: 'text' as const,   name: 'barcode',            label: 'Código de Barras (EAN-13)' },
-                { type: 'date' as const,   name: 'expiry_date',        label: 'Fecha de Vencimiento' },
-                { type: 'textarea' as const, name: 'notes',            label: 'Observaciones' },
+                { type: 'text' as const,   id: 'lot_number',         label: 'N° Lote Producto (PROD-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'formula_id',         label: 'Fórmula de Procesamiento',        required: true, options: formulaOptions },
+                { type: 'date' as const,   id: 'processing_date',    label: 'Fecha de Procesamiento',          required: true },
+                { type: 'text' as const,   id: 'quantity_kg',        label: 'Cantidad producida (kg)',         required: true },
+                { type: 'number' as const, id: 'unit_count',         label: 'Número de Unidades' },
+                { type: 'number' as const, id: 'package_weight_g',   label: 'Peso por Unidad (g)' },
+                { type: 'text' as const,   id: 'barcode',            label: 'Código de Barras (EAN-13)' },
+                { type: 'date' as const,   id: 'expiry_date',        label: 'Fecha de Vencimiento' },
+                { type: 'textarea' as const, id: 'notes',            label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'product',  label: 'Producto',     fields: ['lot_number', 'formula_id', 'processing_date', 'quantity_kg'] },
-                { id: 'packing',  label: 'Empaque',      fields: ['unit_count', 'package_weight_g', 'barcode', 'expiry_date'] },
-                { id: 'notes',    label: 'Notas',        fields: ['notes'] },
+                { id: 'product',  title: 'Producto',     fields: ['lot_number', 'formula_id', 'processing_date', 'quantity_kg'] },
+                { id: 'packing',  title: 'Empaque',      fields: ['unit_count', 'package_weight_g', 'barcode', 'expiry_date'] },
+                { id: 'notes',    title: 'Notas',        fields: ['notes'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/agri-processing/processing-lots', {
@@ -222,11 +221,10 @@ export default function SlaughterBatchDetailPage() {
           <h3 className="text-sm font-semibold mb-3">Lotes de Producto Terminado ({lots.length})</h3>
           <DataTable
             entityId="agri_processing.lot"
-            extensionTableId="agri-processing-lots-by-batch"
             data={lots}
             columns={lotsColumns}
             isLoading={false}
-            emptyState={{ title: 'Sin productos terminados', description: 'Aprueba el lote de beneficio y luego registra los productos terminados.' }}
+            emptyState="Sin productos terminados"
           />
         </div>
       </PageBody>

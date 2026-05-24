@@ -8,7 +8,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { LoadingMessage, ErrorMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 
 type PageState = 'loading' | 'notFound' | 'ready'
 
@@ -62,7 +62,7 @@ export default function NonConformityDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-quality')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> No-Conformidades
       </Button>
-      <ErrorMessage message="No-Conformidad no encontrada." />
+      <ErrorMessage label="No-Conformidad no encontrada." />
     </PageBody></Page>
   )
 

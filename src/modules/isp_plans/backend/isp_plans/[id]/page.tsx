@@ -33,7 +33,7 @@ export default function EditIspPlanPage() {
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando plan..." /></PageBody></Page>
   if (state === 'notFound') return (
-    <Page><PageBody><ErrorMessage message="El plan no existe o fue eliminado." /></PageBody></Page>
+    <Page><PageBody><ErrorMessage label="El plan no existe o fue eliminado." /></PageBody></Page>
   )
 
   const groups: CrudFormGroup[] = [
@@ -97,7 +97,7 @@ export default function EditIspPlanPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Editar: {plan.name}</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           initialValues={plan}
           cancelHref="/backend/isp-plans"

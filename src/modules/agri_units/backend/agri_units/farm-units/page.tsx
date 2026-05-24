@@ -55,8 +55,8 @@ export default function FarmUnitsPage() {
   React.useEffect(() => { load() }, [load])
 
   const formFields = [
-    { type: 'text' as const,   name: 'name',             label: 'Nombre',                      required: true },
-    { type: 'select' as const, name: 'unit_type',        label: 'Tipo de Unidad',               required: true,
+    { type: 'text' as const,   id: 'name',             label: 'Nombre',                      required: true },
+    { type: 'select' as const, id: 'unit_type',        label: 'Tipo de Unidad',               required: true,
       options: [
         { value: 'poultry',      label: 'Avícola' },
         { value: 'swine',        label: 'Porcícola' },
@@ -64,22 +64,22 @@ export default function FarmUnitsPage() {
         { value: 'agricultural', label: 'Agrícola' },
         { value: 'mixed',        label: 'Mixto' },
       ]},
-    { type: 'select' as const, name: 'ownership_type',   label: 'Tipo de Tenencia',
+    { type: 'select' as const, id: 'ownership_type',   label: 'Tipo de Tenencia',
       options: [
         { value: 'own',        label: 'Propio' },
         { value: 'integrated', label: 'Productor Integrado' },
       ]},
-    { type: 'text' as const,   name: 'technical_manager', label: 'Técnico Responsable' },
-    { type: 'number' as const, name: 'capacity_heads',    label: 'Capacidad (cabezas)' },
-    { type: 'text' as const,   name: 'location_address',  label: 'Dirección / Ubicación' },
-    { type: 'text' as const,   name: 'location_gps',      label: 'GPS (lat,lng)' },
-    { type: 'select' as const, name: 'status',            label: 'Estado',
+    { type: 'text' as const,   id: 'technical_manager', label: 'Técnico Responsable' },
+    { type: 'number' as const, id: 'capacity_heads',    label: 'Capacidad (cabezas)' },
+    { type: 'text' as const,   id: 'location_address',  label: 'Dirección / Ubicación' },
+    { type: 'text' as const,   id: 'location_gps',      label: 'GPS (lat,lng)' },
+    { type: 'select' as const, id: 'status',            label: 'Estado',
       options: [
         { value: 'active',      label: 'Activo' },
         { value: 'maintenance', label: 'En Mantenimiento' },
         { value: 'inactive',    label: 'Inactivo' },
       ]},
-    { type: 'textarea' as const, name: 'notes', label: 'Observaciones' },
+    { type: 'textarea' as const, id: 'notes', label: 'Observaciones' },
   ]
 
   const columns: ColumnDef<FarmUnitRow>[] = [
@@ -165,17 +165,17 @@ export default function FarmUnitsPage() {
             <h3 className="text-sm font-semibold mb-4">
               {editing ? `Editar — ${editing.name}` : 'Nueva Unidad Productiva'}
             </h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_units.farm_unit"
               apiPath="/api/agri-units/farm-units"
               mode={editing ? 'edit' : 'create'}
               initial={editing ?? undefined}
               fields={formFields}
               groups={[
-                { id: 'general',  label: 'General',   fields: ['name', 'unit_type', 'ownership_type', 'technical_manager'] },
-                { id: 'capacity', label: 'Capacidad',  fields: ['capacity_heads', 'status'] },
-                { id: 'location', label: 'Ubicación',  fields: ['location_address', 'location_gps'] },
-                { id: 'notes',    label: 'Notas',      fields: ['notes'] },
+                { id: 'general',  title: 'General',   fields: ['name', 'unit_type', 'ownership_type', 'technical_manager'] },
+                { id: 'capacity', title: 'Capacidad',  fields: ['capacity_heads', 'status'] },
+                { id: 'location', title: 'Ubicación',  fields: ['location_address', 'location_gps'] },
+                { id: 'notes',    title: 'Notas',      fields: ['notes'] },
               ]}
               onSuccess={handleSuccess}
             />
@@ -183,14 +183,10 @@ export default function FarmUnitsPage() {
         )}
         <DataTable
           entityId="agri_units.farm_unit"
-          extensionTableId="agri-farm-units-list"
           data={units}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin unidades productivas',
-            description: 'Registra tus granjas y galpones para comenzar.',
-          }}
+          emptyState="Sin unidades productivas"
           stickyActionsColumn
         />
       </PageBody>

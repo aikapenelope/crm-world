@@ -35,7 +35,7 @@ export const interceptors: ApiInterceptor[] = [
         // Contar abonados existentes en este tenant para generar el secuencial
         const result = await kysely
           .selectFrom('isp_subscribers')
-          .select(kysely.fn.count<number>('id').as('count'))
+          .select(kysely.fn.count('id').as('count'))
           .where('tenant_id', '=', context.tenantId)
           .executeTakeFirst()
 

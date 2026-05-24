@@ -15,7 +15,7 @@
  * agri_temperature_logs via Kysely.
  */
 import { AgriNonConformityEntity } from '../data/entities'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

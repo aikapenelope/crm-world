@@ -133,7 +133,7 @@ export default function FlockDetailPage() {
         <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-units')} className="mb-4">
           <ArrowLeft className="mr-2 size-4" /> Lotes
         </Button>
-        <ErrorMessage message="Lote no encontrado o sin acceso." />
+        <ErrorMessage label="Lote no encontrado o sin acceso." />
       </PageBody>
     </Page>
   )
@@ -249,7 +249,7 @@ export default function FlockDetailPage() {
         {showForm && flock.status === 'active' && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registro Semana {nextWeek}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_units.flock_weekly_record"
               mode="create"
               initial={{ week_number: nextWeek }}
@@ -268,9 +268,9 @@ export default function FlockDetailPage() {
                 { type: 'textarea', name: 'health_observations',      label: 'Observaciones sanitarias' },
               ]}
               groups={[
-                { id: 'counts',      label: 'Conteos',        fields: ['week_number', 'record_date', 'live_count', 'weekly_mortality', 'cumulative_mortality'] },
-                { id: 'production',  label: 'Producción',     fields: ['avg_body_weight_g', 'weekly_feed_kg', 'cumulative_feed_kg'] },
-                { id: 'environment', label: 'Ambiente',       fields: ['house_temp_avg_c', 'house_humidity_avg_pct', 'water_consumption_liters', 'health_observations'] },
+                { id: 'counts',      title: 'Conteos',        fields: ['week_number', 'record_date', 'live_count', 'weekly_mortality', 'cumulative_mortality'] },
+                { id: 'production',  title: 'Producción',     fields: ['avg_body_weight_g', 'weekly_feed_kg', 'cumulative_feed_kg'] },
+                { id: 'environment', title: 'Ambiente',       fields: ['house_temp_avg_c', 'house_humidity_avg_pct', 'water_consumption_liters', 'health_observations'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/agri-units/flock-weekly-records', {
@@ -359,14 +359,10 @@ export default function FlockDetailPage() {
           <h3 className="text-sm font-semibold mb-3">Registros Semanales ({records.length})</h3>
           <DataTable
             entityId="agri_units.flock_weekly_record"
-            extensionTableId="agri-flock-weekly-records"
             data={records}
             columns={weeklyColumns}
             isLoading={false}
-            emptyState={{
-              title: 'Sin registros semanales',
-              description: `Haz clic en "Sem. 1" para ingresar el primer registro.`,
-            }}
+            emptyState="Sin registros semanales"
           />
         </div>
       </PageBody>

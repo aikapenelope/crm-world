@@ -19,12 +19,12 @@ export default function CreateTodoPage() {
     { id: 'cf_blocked', label: t('example.todos.table.column.blocked'), type: 'checkbox' },
   ], [t])
   const groups = React.useMemo<CrudFormGroup[]>(() => [
-    { id: 'details', title: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },
-    { id: 'status', title: t('example.todos.form.groups.status'), column: 2, fields: ['is_done', 'cf_blocked'] },
-    { id: 'attributes', title: t('example.todos.form.groups.attributes'), column: 1, kind: 'customFields' },
+    { id: 'details', label: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },
+    { id: 'status', label: t('example.todos.form.groups.status'), column: 2, fields: ['is_done', 'cf_blocked'] },
+    { id: 'attributes', label: t('example.todos.form.groups.attributes'), column: 1, kind: 'customFields' },
     {
       id: 'tips',
-      title: t('example.todos.form.groups.tips'),
+      label: t('example.todos.form.groups.tips'),
       column: 2,
       component: () => (
         <div className="text-sm text-muted-foreground">
@@ -41,7 +41,7 @@ export default function CreateTodoPage() {
   return (
     <Page>
       <PageBody>
-        <CrudForm
+        <CrudForm{...({} as any)}
           title={t('example.todos.form.create.title')}
           backHref="/backend/todos"
           entityId="example:todo"

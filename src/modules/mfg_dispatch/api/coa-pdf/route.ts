@@ -5,7 +5,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { CoaPdf, type CoaPdfData, type QaResult } from '../../documents/CoaPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['mfg_dispatch.view'] },
@@ -56,7 +56,7 @@ export async function GET(request: Request, ctx: any) {
     id: coaId,
   }
 
-  const stream = await renderToStream(React.createElement(CoaPdf, { data }))
+  const stream = await renderToStream(React.createElement(CoaPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

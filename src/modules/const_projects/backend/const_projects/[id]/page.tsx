@@ -220,9 +220,9 @@ export default function ConstProjectDetailPage() {
           <div className="flex gap-0">
             {([
               { id: 'overview', label: 'Resumen', icon: HardHat },
-              { id: 'valuations', label: `Valuaciones (${valuations.length})`, icon: FileText },
-              { id: 'rfis', label: `RFIs (${rfis.length})`, icon: AlertTriangle },
-            ] as const).map(({ id, label, icon: Icon }) => (
+              { id: 'valuations', title: `Valuaciones (${valuations.length})`, icon: FileText },
+              { id: 'rfis', title: `RFIs (${rfis.length})`, icon: AlertTriangle },
+            ] as any[]).map(({ id, label, title, icon: Icon }: any) => (
               <Button
                 key={id}
                 type="button"

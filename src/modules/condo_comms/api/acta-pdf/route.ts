@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { ActaAsamblea, type ActaAsambleaPDFData, type VoteResult } from '../../documents/ActaAsamblea'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['condo_comms.view'] },
@@ -96,7 +96,7 @@ export async function GET(request: Request, ctx: any) {
     id: a.id,
   }
 
-  const stream = await renderToStream(React.createElement(ActaAsamblea, { data }))
+  const stream = await renderToStream(React.createElement(ActaAsamblea, { data }) as any)
   const chunks: Buffer[] = []
   for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
   const pdfBuffer = Buffer.concat(chunks)

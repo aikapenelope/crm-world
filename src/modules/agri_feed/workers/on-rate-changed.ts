@@ -14,7 +14,7 @@
  *
  * Cross-module event subscription — uses DI event bus pattern (AGM §9.2).
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

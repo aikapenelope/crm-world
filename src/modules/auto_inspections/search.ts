@@ -32,10 +32,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.inspector_name) lines.push(String(r.inspector_name))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.inspection_number) ?? 'Inspection Number',
-          subtitle: ((norm(r.overall_condition) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.inspection_number as string) as string | undefined) ?? 'Inspection Number',
+          subtitle: ((norm(r.overall_condition as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'clipboard-check',
-          badge: norm(r.overall_condition) ?? undefined,
+          badge: (norm(r.overall_condition as string) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -48,10 +48,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.inspection_number) ?? 'Inspection Number',
-          subtitle: norm(r.overall_condition) ?? undefined,
+          title: (norm(r.inspection_number as string) as string | undefined) ?? 'Inspection Number',
+          subtitle: (norm(r.overall_condition as string) as string | undefined) ?? undefined,
           icon: 'clipboard-check',
-          badge: norm(r.overall_condition) ?? undefined,
+          badge: (norm(r.overall_condition as string) as string | undefined) ?? undefined,
         }
       },
 

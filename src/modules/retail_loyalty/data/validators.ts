@@ -17,7 +17,7 @@ export const createTierSchema = z.object({
   min_points_lifetime: z.number().int().min(0),
   discount_percent: z.string().default('0.00'),
   multiplier: z.string().default('1.00'),
-  benefits: z.record(z.unknown()).nullable().optional(),
+  benefits: z.record(z.string(), z.unknown()).nullable().optional(),
   sort_order: z.number().int().default(0),
 })
 
@@ -50,7 +50,7 @@ export const createCampaignSchema = z.object({
   target_segment: z.enum(['all', 'tier', 'inactive', 'birthday', 'custom']).default('all'),
   target_tier_id: z.string().uuid().nullable().optional(),
   target_days_inactive: z.number().int().min(1).nullable().optional(),
-  config: z.record(z.unknown()).nullable().optional(),
+  config: z.record(z.string(), z.unknown()).nullable().optional(),
   starts_at: z.string().min(1),
   ends_at: z.string().nullable().optional(),
 })

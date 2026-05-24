@@ -17,5 +17,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/auto-inspections',
   },
+]
 
 export default notificationTypes

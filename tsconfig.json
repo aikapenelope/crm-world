@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,39 +16,28 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "verbatimModuleSyntax": false,
+    "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/.mercato/generated/entities/*": [
-        "./.mercato/generated/entities/*/index.ts"
-      ],
-      "@/.mercato/*": [
-        "./.mercato/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/.mercato/generated/entities/*": ["./.mercato/generated/entities/*/index.ts"],
+      "@/.mercato/*": ["./.mercato/*"]
     },
-    "typeRoots": [
-      "./types",
-      "./node_modules/@types"
-    ],
-    "verbatimModuleSyntax": false,
-    "target": "ES2022"
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".mercato/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".mercato/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "**/__tests__/**",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ]
 }

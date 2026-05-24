@@ -79,7 +79,7 @@ export default function CreateWorkOrderPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nueva Orden de Trabajo</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           cancelHref="/backend/isp-technicians/work-orders"
           onSubmit={async (values) => {

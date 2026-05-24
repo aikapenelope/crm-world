@@ -29,7 +29,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 export default function AgriSalesPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_sales.page' })
   const [orders, setOrders]     = React.useState<OrderRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('')
@@ -47,9 +47,8 @@ export default function AgriSalesPage() {
 
   const handleConfirm = (order: OrderRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_sales.order', recordId: order.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-sales/sale-orders', { method: 'PUT', body: JSON.stringify({ id: order.id, status: 'confirmed' }) })
         flash('Orden confirmada', 'success')
         load()
@@ -117,11 +116,10 @@ export default function AgriSalesPage() {
       <PageBody>
         <DataTable
           entityId="agri_sales.order"
-          extensionTableId="agri-sales-orders-list"
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin órdenes de venta', description: 'Registra la primera venta a un cliente industrial.' }}
+          emptyState="Sin órdenes de venta"
           stickyActionsColumn
         />
       </PageBody>

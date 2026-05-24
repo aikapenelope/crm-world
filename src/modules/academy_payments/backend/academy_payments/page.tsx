@@ -130,8 +130,8 @@ export default function AcademyPaymentsPage() {
         <div className="border-b mb-6">
           <div className="flex gap-0">
             {[
-              { id: 'payments', label: `Historial (${payments.length})` },
-              { id: 'cobro', label: `WhatsApp Cobro (${debtors.length})` },
+              { id: 'payments', title: `Historial (${payments.length})` },
+              { id: 'cobro', title: `WhatsApp Cobro (${debtors.length})` },
             ].map(t => (
               <Button
                 key={t.id}
@@ -141,7 +141,7 @@ export default function AcademyPaymentsPage() {
                 className={`px-4 py-2.5 text-sm border-b-2 rounded-none h-auto font-normal
                   ${tab === t.id ? 'border-primary text-primary font-medium' : 'border-transparent text-muted-foreground'}`}
               >
-                {t.label}
+                {t.title}
               </Button>
             ))}
           </div>

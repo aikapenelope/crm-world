@@ -36,7 +36,7 @@ export type DespachoPdfData = {
 }
 
 const s = StyleSheet.create({
-  statsGrid: { flexDirection: 'row', gap: 8, marginBottom: SPACING[3] },
+  statsGrid: { flexDirection: 'row', gap: 8, marginBottom: (SPACING as any)[3] },
   statCard: { flex: 1, padding: 10, borderRadius: 4, backgroundColor: COLORS.gray50, borderWidth: 0.5, borderColor: COLORS.gray200, alignItems: 'center' },
   statLabel: { fontSize: FONT_SIZES.xs, color: COLORS.neutral, marginBottom: 2, textAlign: 'center' },
   statValue: { fontSize: FONT_SIZES.lg, fontFamily: FONTS.bold, color: COLORS.primary, textAlign: 'center' },
@@ -48,14 +48,14 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
   return (
     <Document title={`Guía Despacho ${d.batch_number}`} author={d.org.name}>
       <Page size="A4" style={baseStyles.page}>
-        <DocHeader org={d.org} title="Guía de Despacho Sanitaria" subtitle={`Lote de Beneficio ${d.batch_number} | ${fmtDate(d.dispatch_date)}`} docId={docId('GDS', d.id)} />
+        <DocHeader org={d.org} docTitle="Guía de Despacho Sanitaria" docNumber={`Lote de Beneficio ${d.batch_number} | ${fmtDate(d.dispatch_date)}`} />
 
         <StatusBanner label="APTO PARA DESPACHO" color={COLORS.success} />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
           {/* Origen */}
           <Section title="Identificación del Lote">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Lote de beneficio" value={d.batch_number} />
                 <DetailRow label="Lote de aves origen" value={d.flock_number} />
@@ -92,7 +92,7 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
 
           {/* Inspección sanitaria */}
           <Section title="Inspección Sanitaria">
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING[3], marginBottom: SPACING[2] }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: (SPACING as any)[3], marginBottom: (SPACING as any)[2] }}>
               <Text style={{ fontSize: FONT_SIZES.sm, color: COLORS.neutral }}>Resultado microbiológico:</Text>
               <View style={[s.qcBadge, { backgroundColor: microOk ? '#DCFCE7' : '#FEF2F2' }]}>
                 <Text style={{ fontSize: FONT_SIZES.sm, fontFamily: FONTS.bold, color: microOk ? COLORS.success : COLORS.danger }}>
@@ -102,7 +102,7 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
             </View>
             {d.approved_by && <DetailRow label="Aprobado por (Médico Veterinario)" value={d.approved_by} />}
             {d.notes && (
-              <View style={{ marginTop: SPACING[2], padding: SPACING[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
+              <View style={{ marginTop: (SPACING as any)[2], padding: (SPACING as any)[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
                 <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.neutral }}>{d.notes}</Text>
               </View>
             )}
@@ -110,7 +110,7 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
 
           {/* Transporte */}
           <Section title="Condiciones de Transporte">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Transportista" value={d.carrier_name ?? '—'} />
                 <DetailRow label="Placa del vehículo" value={d.vehicle_plate ?? '—'} />
@@ -122,14 +122,14 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
             </View>
           </Section>
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Inspector Sanitario', name: d.approved_by ?? '' },
             { label: 'Responsable de Despacho', name: '' },
             { label: 'Conductor / Transportista', name: d.driver_name ?? '' },
-          ]} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
-        <DocFooter org={d.org} pageLabel="Guía de Despacho Sanitaria" />
+        <DocFooter generatedAt={new Date().toLocaleDateString()} />
       </Page>
     </Document>
   )

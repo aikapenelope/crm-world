@@ -49,7 +49,7 @@ export default function LeadDetailPage() {
         method: 'POST',
         body: JSON.stringify({ lead_id: params.id, city: lead.city }),
       })
-      const data = await res.json()
+      const data = res.result as any
       if (data.coverage_status === 'covered') {
         flash(`✓ Cobertura disponible en ${data.zone_name}`, 'success')
       } else {
@@ -61,7 +61,7 @@ export default function LeadDetailPage() {
   }
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando lead..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Lead no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Lead no encontrado." /></PageBody></Page>
 
   const groups: CrudFormGroup[] = [
     {
@@ -135,7 +135,7 @@ export default function LeadDetailPage() {
         )}
 
         <CrudForm
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           initialValues={lead}
           cancelHref="/backend/isp-sales"

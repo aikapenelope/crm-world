@@ -8,7 +8,6 @@ bootstrap()
 import { detectLocale, loadDictionary } from '@open-mercato/shared/lib/i18n/server'
 
 export const metadata: Metadata = {
-  title: 'Open Mercato',
   description: 'AI-supportive, modular ERP foundation for product & service companies',
   icons: {
     icon: '/open-mercato.svg',

@@ -27,5 +27,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/retail-inventory',
   },
+]
 
 export default notificationTypes

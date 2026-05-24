@@ -32,10 +32,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.schedule_time) lines.push(String(r.schedule_time))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.group_code) ?? 'Group Code',
-          subtitle: ((norm(r.status) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.group_code as string) as string | undefined) ?? 'Group Code',
+          subtitle: ((norm(r.status as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'calendar',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status as string) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -48,16 +48,16 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.group_code) ?? 'Group Code',
-          subtitle: norm(r.status) ?? undefined,
+          title: (norm(r.group_code as string) as string | undefined) ?? 'Group Code',
+          subtitle: (norm(r.status as string) as string | undefined) ?? undefined,
           icon: 'calendar',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status as string) as string | undefined) ?? undefined,
         }
       },
 
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => {
         const id = ctx.record.id
-        return id ? `/backend/academy_groups/${{encodeURIComponent(String(id))}}`  : '/backend/academy_groups/'
+        return id ? `/backend/academy_groups/${encodeURIComponent(String(id))}`  : '/backend/academy_groups/'
       },
     },
   ],

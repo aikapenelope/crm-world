@@ -36,7 +36,7 @@ const MICROBIO_LABEL: Record<string, string> = { pending: 'Pendiente', approved:
 
 export default function AgriProcessingPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_processing.page' })
   const [batches, setBatches]   = React.useState<BatchRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)
@@ -66,9 +66,8 @@ export default function AgriProcessingPage() {
     const next = nextStatus[batch.status]
     if (!next) return
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_processing.batch', recordId: batch.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-processing/slaughter-batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batch.id, status: next }),
@@ -195,24 +194,24 @@ export default function AgriProcessingPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Beneficio</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_processing.slaughter_batch"
               apiPath="/api/agri-processing/slaughter-batches"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'batch_number',    label: 'N° Lote (BENEF-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'flock_id',        label: 'Lote de Aves',             required: true, options: flockOptions },
-                { type: 'date' as const,   name: 'slaughter_date',  label: 'Fecha de Beneficio',       required: true },
-                { type: 'number' as const, name: 'birds_in',        label: 'Aves Ingresadas',          required: true },
-                { type: 'text' as const,   name: 'live_weight_kg',  label: 'Peso Vivo Total (kg)',     required: true },
-                { type: 'number' as const, name: 'birds_processed', label: 'Aves Beneficiadas',        required: true },
-                { type: 'number' as const, name: 'condemned_count', label: 'Decomisos' },
-                { type: 'text' as const,   name: 'condemned_reason',label: 'Causa del Decomiso' },
-                { type: 'textarea' as const, name: 'notes',         label: 'Observaciones' },
+                { type: 'text' as const,   id: 'batch_number',    label: 'N° Lote (BENEF-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'flock_id',        label: 'Lote de Aves',             required: true, options: flockOptions },
+                { type: 'date' as const,   id: 'slaughter_date',  label: 'Fecha de Beneficio',       required: true },
+                { type: 'number' as const, id: 'birds_in',        label: 'Aves Ingresadas',          required: true },
+                { type: 'text' as const,   id: 'live_weight_kg',  label: 'Peso Vivo Total (kg)',     required: true },
+                { type: 'number' as const, id: 'birds_processed', label: 'Aves Beneficiadas',        required: true },
+                { type: 'number' as const, id: 'condemned_count', label: 'Decomisos' },
+                { type: 'text' as const,   id: 'condemned_reason',label: 'Causa del Decomiso' },
+                { type: 'textarea' as const, id: 'notes',         label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'counts', label: 'Conteos',   fields: ['batch_number', 'flock_id', 'slaughter_date', 'birds_in', 'live_weight_kg', 'birds_processed'] },
-                { id: 'quality', label: 'Calidad',  fields: ['condemned_count', 'condemned_reason', 'notes'] },
+                { id: 'counts', title: 'Conteos',   fields: ['batch_number', 'flock_id', 'slaughter_date', 'birds_in', 'live_weight_kg', 'birds_processed'] },
+                { id: 'quality', title: 'Calidad',  fields: ['condemned_count', 'condemned_reason', 'notes'] },
               ]}
               onSuccess={() => { flash('Lote de beneficio registrado', 'success'); setShowForm(false); load() }}
             />
@@ -221,11 +220,10 @@ export default function AgriProcessingPage() {
 
         <DataTable
           entityId="agri_processing.slaughter_batch"
-          extensionTableId="agri-processing-batches-list"
           data={batches}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin lotes de beneficio', description: 'Registra el primer lote cuando inicies el beneficio en planta.' }}
+          emptyState="Sin lotes de beneficio"
           stickyActionsColumn
         />
       </PageBody>

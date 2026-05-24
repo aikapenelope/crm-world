@@ -14,7 +14,7 @@ import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { z } from 'zod'
 import { AgriJornaleroPayrollEntity } from '../../data/entities'
 import { jornaleroPayrollCreateSchema, jornaleroPayrollUpdateSchema } from '../../data/validators'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 
 const VACATION_RATE  = 15 / 365  // 0.04110

@@ -4,5 +4,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['isp_plans.manage'],
   pageTitle: 'Editar Plan',
-  hidden: true,
+  navHidden: true,
 }

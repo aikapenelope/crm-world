@@ -54,14 +54,14 @@ const s = StyleSheet.create({
   cLot: { flex: 2, fontSize: FONT_SIZES.sm },
   cQty: { flex: 1, fontSize: FONT_SIZES.sm, textAlign: 'right' },
   cPrice: { flex: 2, fontSize: FONT_SIZES.sm, textAlign: 'right' },
-  totalSection: { marginTop: SPACING[2], paddingRight: SPACING[2] },
-  totalRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: SPACING[4], paddingVertical: 3 },
+  totalSection: { marginTop: (SPACING as any)[2], paddingRight: (SPACING as any)[2] },
+  totalRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: (SPACING as any)[4], paddingVertical: 3 },
   totalLabel: { fontSize: FONT_SIZES.sm, color: COLORS.neutral, width: 140, textAlign: 'right' },
   totalValue: { fontSize: FONT_SIZES.sm, fontFamily: FONTS.bold, width: 100, textAlign: 'right' },
-  grandTotalRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: SPACING[4], paddingVertical: 5, backgroundColor: COLORS.primary, borderRadius: 3, marginTop: 3, paddingHorizontal: SPACING[2] },
+  grandTotalRow: { flexDirection: 'row', justifyContent: 'flex-end', gap: (SPACING as any)[4], paddingVertical: 5, backgroundColor: COLORS.primary, borderRadius: 3, marginTop: 3, paddingHorizontal: (SPACING as any)[2] },
   grandLabel: { fontSize: FONT_SIZES.base, fontFamily: FONTS.bold, color: COLORS.white, width: 140, textAlign: 'right' },
   grandValue: { fontSize: FONT_SIZES.xl, fontFamily: FONTS.bold, color: COLORS.white, width: 100, textAlign: 'right' },
-  coldAlert: { flexDirection: 'row', gap: 6, padding: 8, backgroundColor: '#EFF6FF', borderRadius: 4, borderWidth: 0.5, borderColor: COLORS.primaryLight, marginBottom: SPACING[2] },
+  coldAlert: { flexDirection: 'row', gap: 6, padding: 8, backgroundColor: '#EFF6FF', borderRadius: 4, borderWidth: 0.5, borderColor: COLORS.primaryLight, marginBottom: (SPACING as any)[2] },
 })
 
 export function GuiaDespachoMfgPdf({ data: d }: { data: GuiaDespachoMfgData }) {
@@ -72,17 +72,16 @@ export function GuiaDespachoMfgPdf({ data: d }: { data: GuiaDespachoMfgData }) {
       <Page size="A4" style={baseStyles.page}>
         <DocHeader
           org={d.org}
-          title="Guía de Despacho"
-          subtitle={`${d.dispatch_number} | Pedido ${d.sale_order_number} | ${d.dispatch_date ? fmtDate(d.dispatch_date) : '—'}`}
-          docId={docId('GD', d.id)}
+          docTitle="Guía de Despacho"
+          docNumber={`${d.dispatch_number} | Pedido ${d.sale_order_number} | ${d.dispatch_date ? fmtDate(d.dispatch_date) : '—'}`}
         />
 
         <StatusBanner label="DESPACHO DE PRODUCTO TERMINADO" color={COLORS.primaryLight} />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
           {/* Cliente y transporte */}
           <Section title="Destinatario y Transporte">
-            <View style={{ flexDirection: 'row', gap: SPACING[3] }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3] }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="Cliente" value={d.customer_name} />
                 {d.customer_rif && <DetailRow label="RIF" value={d.customer_rif} />}
@@ -150,19 +149,19 @@ export function GuiaDespachoMfgPdf({ data: d }: { data: GuiaDespachoMfgData }) {
           </View>
 
           {d.notes && (
-            <View style={{ marginTop: SPACING[3], padding: SPACING[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
+            <View style={{ marginTop: (SPACING as any)[3], padding: (SPACING as any)[2], backgroundColor: COLORS.gray50, borderRadius: 3 }}>
               <Text style={{ fontSize: FONT_SIZES.xs, color: COLORS.neutral }}>{d.notes}</Text>
             </View>
           )}
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Responsable de Almacén', name: '' },
             { label: 'Conductor / Transportista', name: d.driver_name ?? '' },
             { label: 'Recibido por el Cliente', name: '' },
-          ]} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
-        <DocFooter org={d.org} pageLabel="Guía de Despacho Industrial" />
+        <DocFooter generatedAt={new Date().toLocaleDateString()} />
       </Page>
     </Document>
   )

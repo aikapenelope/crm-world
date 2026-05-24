@@ -10,7 +10,7 @@ import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
 import { ArrowLeft, DollarSign, CalendarPlus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { calendarLinks, dueDateEvent } from '@app/lib/calendar-links'
+import { calendarLinks, dueDateEvent } from '@/lib/calendar-links'
 
 type ReceiptRow = {
   id: string
@@ -60,10 +60,10 @@ export default function CondoReceiptsPage() {
       }),
     })
     if (result.ok) {
-      flash({ type: 'success', message: 'Pago registrado' })
+      flash('Pago registrado', 'success')
       await loadReceipts()
     } else {
-      flash({ type: 'error', message: 'Error al registrar pago' })
+      flash('Error al registrar pago', 'error')
     }
     setPayingId(null)
   }

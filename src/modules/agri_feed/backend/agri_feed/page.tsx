@@ -56,8 +56,8 @@ export default function AgriFeedPage() {
   React.useEffect(() => { load() }, [load])
 
   const formulaFields = [
-    { type: 'text' as const,   name: 'name',         label: 'Nombre de la Fórmula', required: true },
-    { type: 'select' as const, name: 'formula_type', label: 'Tipo',                 required: true,
+    { type: 'text' as const,   id: 'name',         label: 'Nombre de la Fórmula', required: true },
+    { type: 'select' as const, id: 'formula_type', label: 'Tipo',                 required: true,
       options: [
         { value: 'starter',  label: 'Iniciador (0-14 días)' },
         { value: 'grower',   label: 'Engorde (15-35 días)' },
@@ -66,7 +66,7 @@ export default function AgriFeedPage() {
         { value: 'breeding', label: 'Reproductores' },
         { value: 'other',    label: 'Otro' },
       ]},
-    { type: 'select' as const, name: 'species',       label: 'Especie',
+    { type: 'select' as const, id: 'species',       label: 'Especie',
       options: [
         { value: 'broiler', label: 'Pollos de Engorde' },
         { value: 'layer',   label: 'Gallinas Ponedoras' },
@@ -75,11 +75,11 @@ export default function AgriFeedPage() {
         { value: 'bovine',  label: 'Bovinos' },
         { value: 'all',     label: 'General' },
       ]},
-    { type: 'text' as const,   name: 'protein_pct',     label: 'Proteína (%)' },
-    { type: 'number' as const, name: 'energy_kcal_kg',  label: 'Energía (kcal/kg)' },
-    { type: 'text' as const,   name: 'lysine_pct',      label: 'Lisina (%)' },
-    { type: 'text' as const,   name: 'cost_per_ton_usd', label: 'Costo/ton (USD)' },
-    { type: 'textarea' as const, name: 'notes',         label: 'Observaciones' },
+    { type: 'text' as const,   id: 'protein_pct',     label: 'Proteína (%)' },
+    { type: 'number' as const, id: 'energy_kcal_kg',  label: 'Energía (kcal/kg)' },
+    { type: 'text' as const,   id: 'lysine_pct',      label: 'Lisina (%)' },
+    { type: 'text' as const,   id: 'cost_per_ton_usd', label: 'Costo/ton (USD)' },
+    { type: 'textarea' as const, id: 'notes',         label: 'Observaciones' },
   ]
 
   const columns: ColumnDef<FormulaRow>[] = [
@@ -165,17 +165,17 @@ export default function AgriFeedPage() {
             <h3 className="text-sm font-semibold mb-4">
               {editing ? `Editar — ${editing.name}` : 'Nueva Fórmula'}
             </h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_feed.formula"
               apiPath="/api/agri-feed/formulas"
               mode={editing ? 'edit' : 'create'}
               initial={editing ?? undefined}
               fields={formulaFields}
               groups={[
-                { id: 'general',     label: 'General',          fields: ['name', 'formula_type', 'species'] },
-                { id: 'nutrition',   label: 'Análisis Nutricional', fields: ['protein_pct', 'energy_kcal_kg', 'lysine_pct'] },
-                { id: 'cost',        label: 'Costo',            fields: ['cost_per_ton_usd'] },
-                { id: 'notes',       label: 'Notas',            fields: ['notes'] },
+                { id: 'general',     title: 'General',          fields: ['name', 'formula_type', 'species'] },
+                { id: 'nutrition',   title: 'Análisis Nutricional', fields: ['protein_pct', 'energy_kcal_kg', 'lysine_pct'] },
+                { id: 'cost',        title: 'Costo',            fields: ['cost_per_ton_usd'] },
+                { id: 'notes',       title: 'Notas',            fields: ['notes'] },
               ]}
               onSuccess={handleSuccess}
             />
@@ -184,14 +184,10 @@ export default function AgriFeedPage() {
 
         <DataTable
           entityId="agri_feed.formula"
-          extensionTableId="agri-feed-formulas-list"
           data={formulas}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin fórmulas de alimento',
-            description: 'Crea la primera fórmula para comenzar a gestionar el alimento balanceado.',
-          }}
+          emptyState="Sin fórmulas de alimento"
           stickyActionsColumn
         />
       </PageBody>

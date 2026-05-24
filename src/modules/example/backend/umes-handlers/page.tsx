@@ -326,7 +326,7 @@ export default function UmesHandlersPage() {
   )
 
   const groups = React.useMemo<CrudFormGroup[]>(
-    () => [{ id: 'phase-c-main', title: t('example.umes.handlers.group.main'), fields: ['title', 'note'] }],
+    () => [{ id: 'phase-c-main', label: t('example.umes.handlers.group.main'), fields: ['title', 'note'] }],
     [t],
   )
 

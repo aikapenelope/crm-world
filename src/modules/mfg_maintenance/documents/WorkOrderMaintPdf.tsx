@@ -52,7 +52,7 @@ const s = StyleSheet.create({
   checklist: { flexDirection: 'row', gap: 8, paddingVertical: 3 },
   checkbox: { width: 12, height: 12, borderWidth: 1, borderColor: COLORS.gray400, borderRadius: 2 },
   checkLabel: { fontSize: FONT_SIZES.sm, flex: 1 },
-  stepBox: { padding: SPACING[3], backgroundColor: COLORS.gray50, borderRadius: 4, borderLeftWidth: 3, borderLeftColor: COLORS.primaryLight, marginBottom: SPACING[2] },
+  stepBox: { padding: (SPACING as any)[3], backgroundColor: COLORS.gray50, borderRadius: 4, borderLeftWidth: 3, borderLeftColor: COLORS.primaryLight, marginBottom: (SPACING as any)[2] },
 })
 
 export function WorkOrderMaintPdf({ data: d }: { data: WorkOrderMaintPdfData }) {
@@ -63,15 +63,14 @@ export function WorkOrderMaintPdf({ data: d }: { data: WorkOrderMaintPdfData }) 
       <Page size="A4" style={baseStyles.page}>
         <DocHeader
           org={d.org}
-          title={`Orden de Trabajo — ${WORK_TYPE[d.work_type] ?? d.work_type}`}
-          subtitle={`WO ${d.wo_number} | ${d.equipment_code} — ${d.equipment_name}`}
-          docId={docId('WO', d.id)}
+          docTitle={`Orden de Trabajo — ${WORK_TYPE[d.work_type] ?? d.work_type}`}
+          docNumber={`WO ${d.wo_number} | ${d.equipment_code} — ${d.equipment_name}`}
         />
 
-        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: SPACING[3] }}>
+        <View style={{ paddingHorizontal: PAGE.padding, paddingTop: (SPACING as any)[3] }}>
           {/* Header info */}
           <Section title="Datos de la Orden">
-            <View style={{ flexDirection: 'row', gap: SPACING[3], alignItems: 'flex-start' }}>
+            <View style={{ flexDirection: 'row', gap: (SPACING as any)[3], alignItems: 'flex-start' }}>
               <View style={{ flex: 1 }}>
                 <DetailRow label="WO N°" value={d.wo_number} />
                 <DetailRow label="Equipo" value={`${d.equipment_code} — ${d.equipment_name}`} />
@@ -135,7 +134,7 @@ export function WorkOrderMaintPdf({ data: d }: { data: WorkOrderMaintPdfData }) 
               {d.actual_duration_hrs && <DetailRow label="Duración real" value={`${d.actual_duration_hrs}h`} />}
               {d.total_parts_cost_usd > 0 && <DetailRow label="Costo de repuestos" value={`USD ${d.total_parts_cost_usd.toFixed(2)}`} />}
               {d.work_performed && (
-                <View style={[s.stepBox, { marginTop: SPACING[2] }]}>
+                <View style={[s.stepBox, { marginTop: (SPACING as any)[2] }]}>
                   <Text style={{ fontSize: FONT_SIZES.sm, color: COLORS.text, lineHeight: 1.5 }}>{d.work_performed}</Text>
                 </View>
               )}
@@ -158,14 +157,14 @@ export function WorkOrderMaintPdf({ data: d }: { data: WorkOrderMaintPdfData }) 
             ))}
           </Section>
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Técnico Ejecutor', name: d.assigned_to_name ?? '' },
             { label: 'Supervisor de Mantenimiento', name: '' },
             { label: 'Operador del Equipo (verificación)', name: '' },
-          ]} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
-        <DocFooter org={d.org} pageLabel="Orden de Trabajo de Mantenimiento" />
+        <DocFooter generatedAt={new Date().toLocaleDateString()} />
       </Page>
     </Document>
   )

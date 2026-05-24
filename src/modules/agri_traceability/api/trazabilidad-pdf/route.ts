@@ -5,7 +5,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { TrazabilidadPdf, type TrazabilidadPdfData, type TraceLink } from '../../documents/TrazabilidadPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['agri_traceability.view'] },
@@ -103,7 +103,7 @@ export async function GET(request: Request, ctx: any) {
     id: p.lot_id ?? lotNumber,
   }
 
-  const stream = await renderToStream(React.createElement(TrazabilidadPdf, { data }))
+  const stream = await renderToStream(React.createElement(TrazabilidadPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

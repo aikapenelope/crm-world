@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { ValuacionObra, type ValuacionPDFData } from '../../../documents/ValuacionObra'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['const_progress.view'] },
@@ -83,9 +83,7 @@ export async function GET(request: Request, ctx: any) {
     id: v.id,
   }
 
-  const stream = await renderToStream(
-    React.createElement(ValuacionObra, { data })
-  )
+  const stream = await renderToStream(React.createElement(ValuacionObra, { data }) as any)
 
   const chunks: Buffer[] = []
   for await (const chunk of stream) {

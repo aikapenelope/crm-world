@@ -26,7 +26,7 @@ const WO_TYPE_LABEL: Record<string, string> = { preventive: 'Preventivo', correc
 
 export default function MfgMaintenancePage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_maintenance.page' })
   const [equipment, setEq]    = React.useState<EqRow[]>([])
   const [workOrders, setWos]  = React.useState<WoRow[]>([])
   const [spareParts, setSps]  = React.useState<SpRow[]>([])
@@ -63,8 +63,8 @@ export default function MfgMaintenancePage() {
 
   const handleStartWo = (wo: WoRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-maintenance/work-orders-maint', { method: 'PUT', body: JSON.stringify({ id: wo.id, status: 'in_progress', started_at: new Date().toISOString() }) })
         flash(`WO ${wo.wo_number} iniciada`, 'success')
         load()
@@ -113,7 +113,7 @@ export default function MfgMaintenancePage() {
     { accessorKey: 'scheduled_date', header: 'Fecha plan', cell: ({ row }) => row.original.scheduled_date ? new Date(row.original.scheduled_date).toLocaleDateString('es-VE') : '—' },
     { id: 'actions', cell: ({ row }) => <RowActions items={[
       { id: 'start', label: 'Iniciar WO', onSelect: () => handleStartWo(row.original) },
-      { id: 'view', label: 'Ver equipo', onSelect: () => router.push(`/backend/mfg-maintenance/${row.original.equipment_id ?? ''}`) },
+      { id: 'view', label: 'Ver equipo', onSelect: () => router.push(`/backend/mfg-maintenance/${row.original.equipment_code ?? ''}`) },
     ]} /> },
   ]
 
@@ -182,20 +182,20 @@ export default function MfgMaintenancePage() {
         {showWoForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Crear Orden de Trabajo de Mantenimiento</h3>
-            <CrudForm entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'wo_number',       label: 'Número WO (WO-MAINT-2026-XXX)', required: true },
-                { type: 'text' as const,   name: 'equipment_code',  label: 'Código de Equipo', required: true },
-                { type: 'text' as const,   name: 'equipment_name',  label: 'Nombre del Equipo', required: true },
-                { type: 'select' as const, name: 'work_type',       label: 'Tipo', required: true, options: [{ value: 'preventive', label: 'Preventivo' }, { value: 'corrective', label: 'Correctivo' }, { value: 'predictive', label: 'Predictivo' }] },
-                { type: 'select' as const, name: 'priority',        label: 'Prioridad', required: true, options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }, { value: 'low', label: 'Baja' }] },
-                { type: 'textarea' as const, name: 'description',   label: 'Descripción de la tarea', required: true },
-                { type: 'textarea' as const, name: 'fault_description', label: 'Descripción de la falla (si es correctivo)' },
-                { type: 'date' as const,   name: 'scheduled_date',  label: 'Fecha programada' },
+                { type: 'text' as const,   id: 'wo_number',       label: 'Número WO (WO-MAINT-2026-XXX)', required: true },
+                { type: 'text' as const,   id: 'equipment_code',  label: 'Código de Equipo', required: true },
+                { type: 'text' as const,   id: 'equipment_name',  label: 'Nombre del Equipo', required: true },
+                { type: 'select' as const, id: 'work_type',       label: 'Tipo', required: true, options: [{ value: 'preventive', label: 'Preventivo' }, { value: 'corrective', label: 'Correctivo' }, { value: 'predictive', label: 'Predictivo' }] },
+                { type: 'select' as const, id: 'priority',        label: 'Prioridad', required: true, options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }, { value: 'low', label: 'Baja' }] },
+                { type: 'textarea' as const, id: 'description',   label: 'Descripción de la tarea', required: true },
+                { type: 'textarea' as const, id: 'fault_description', label: 'Descripción de la falla (si es correctivo)' },
+                { type: 'date' as const,   id: 'scheduled_date',  label: 'Fecha programada' },
               ]}
               groups={[
-                { id: 'basic', label: 'Identificación', fields: ['wo_number', 'equipment_code', 'equipment_name', 'work_type', 'priority'] },
-                { id: 'desc',  label: 'Descripción',    fields: ['description', 'fault_description', 'scheduled_date'] },
+                { id: 'basic', title: 'Identificación', fields: ['wo_number', 'equipment_code', 'equipment_name', 'work_type', 'priority'] },
+                { id: 'desc',  title: 'Descripción',    fields: ['description', 'fault_description', 'scheduled_date'] },
               ]}
               onSuccess={() => { flash('Orden de trabajo creada', 'success'); setWoForm(false); load() }}
             />
@@ -210,18 +210,18 @@ export default function MfgMaintenancePage() {
         </div>
 
         {activeTab === 'work_orders' && (
-          <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maintenance-wos" data={workOrders} columns={woCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin órdenes de trabajo abiertas', description: 'Ejecuta la verificación de mantenimientos para generar WOs automáticamente.' }}
+          <DataTable entityId="mfg_maintenance.wo" data={workOrders} columns={woCols} isLoading={isLoading}
+            emptyState="Sin órdenes de trabajo abiertas"
             stickyActionsColumn />
         )}
         {activeTab === 'equipment' && (
-          <DataTable entityId="mfg_maintenance.equipment" extensionTableId="mfg-maintenance-equipment" data={equipment} columns={eqCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin equipos registrados', description: 'Registra los equipos de la planta para gestionar su mantenimiento.' }}
+          <DataTable entityId="mfg_maintenance.equipment" data={equipment} columns={eqCols} isLoading={isLoading}
+            emptyState="Sin equipos registrados"
             stickyActionsColumn />
         )}
         {activeTab === 'spare_parts' && (
-          <DataTable entityId="mfg_maintenance.spare_part" extensionTableId="mfg-maintenance-spares" data={spareParts} columns={spCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin repuestos registrados', description: 'Registra los repuestos críticos para que el sistema alerte antes de agotarse.' }} />
+          <DataTable entityId="mfg_maintenance.spare_part" data={spareParts} columns={spCols} isLoading={isLoading}
+            emptyState="Sin repuestos registrados" />
         )}
       </PageBody>
     </Page>

@@ -32,7 +32,7 @@ const STATUS_VARIANT: Record<string, 'neutral' | 'warning' | 'success'> = {
 const STATUS_LABEL: Record<string, string> = { draft: 'Borrador', approved: 'Aprobada', paid: 'Pagada' }
 
 export default function PayrollsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_hr.page' })
   const [payrolls, setPayrolls]    = React.useState<PayrollRow[]>([])
   const [employees, setEmployees]  = React.useState<Employee[]>([])
   const [isLoading, setLoading]    = React.useState(true)
@@ -120,9 +120,8 @@ export default function PayrollsPage() {
 
   const handleApprove = (p: PayrollRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.payroll', recordId: p.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/jornalero-payrolls', {
           method: 'PUT',
           body: JSON.stringify({ id: p.id, status: 'approved' }),
@@ -135,9 +134,8 @@ export default function PayrollsPage() {
 
   const handlePay = (p: PayrollRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.payroll', recordId: p.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/jornalero-payrolls', {
           method: 'PUT',
           body: JSON.stringify({ id: p.id, status: 'paid', payment_date: new Date().toISOString().split('T')[0] }),
@@ -362,14 +360,10 @@ export default function PayrollsPage() {
 
         <DataTable
           entityId="agri_hr.payroll"
-          extensionTableId="agri-hr-payrolls-list"
           data={payrolls}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin nóminas registradas',
-            description: 'Registra la primera nómina de jornaleros o destajeros para este período.',
-          }}
+          emptyState="Sin nóminas registradas"
           stickyActionsColumn
         />
       </PageBody>

@@ -11,7 +11,7 @@ export const searchConfig: SearchModuleConfig = {
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
         const r = ctx.record
         if (!r.name) return null
-        return { text: [String(r.name)], presenter: { title: norm(r.name) ?? 'Regla de precio', icon: 'percent' }, links: [{ href: '/backend/retail_pricing', label: 'Ver precios', kind: 'primary' }], checksumSource: { name: r.name, updated_at: r.updated_at } }
+        return { text: [String(r.name)], presenter: { title: (norm(r.name as string) as string | undefined) ?? 'Regla de precio', icon: 'percent' }, links: [{ href: '/backend/retail_pricing', label: 'Ver precios', kind: 'primary' }], checksumSource: { name: r.name, updated_at: r.updated_at } }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => ({ title: norm(ctx.record.name) ?? 'Regla de precio', icon: 'percent' }),
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => '/backend/retail_pricing',

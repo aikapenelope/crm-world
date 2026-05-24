@@ -1,19 +1,47 @@
-# CI — Aika Platform
+# CI — crm-world (Standalone Open Mercato Application)
 #
-# Corre en cada PR hacia main y en cada push a main.
-# Dos jobs en paralelo: typecheck y lint.
+# Three parallel jobs on every PR to main and every push to main.
 #
-# typecheck: yarn generate (descubre módulos) → yarn typecheck (tsc --noEmit)
-# lint:      yarn lint (ESLint)
+# ┌─────────────┬──────────────────────────────────────────────────────────┐
+# │ Job         │ What it validates                                         │
+# ├─────────────┼──────────────────────────────────────────────────────────┤
+# │ lint        │ ESLint on src/modules (pure TypeScript business logic)    │
+# │ typecheck   │ tsc --noEmit on all production code (*.ts + *.tsx)       │
+# │ test        │ Jest unit tests (src/modules/**/__tests__/**/*.spec.ts)   │
+# └─────────────┴──────────────────────────────────────────────────────────┘
 #
-# NOTA: --immutable eliminado. En Yarn 4, --immutable trata YN0086 (peer dep
-# warnings) como error fatal, lo que bloquea el install aunque las dependencias
-# estén correctamente instaladas. Yarn 4 sin --immutable sigue respetando
-# el lockfile en CI (no modifica yarn.lock si no hay cambios).
+# Design notes
+# ────────────
+# • All three jobs share the same yarn/node_modules cache key.
+#   The first runner to install saves the cache; subsequent runners reuse it.
 #
-# El audit de seguridad (yarn npm audit) está deliberadamente excluido del CI
-# de PR para no bloquear trabajo por CVEs en dependencias transitivas que no
-# controlamos. Se puede correr manualmente con: yarn npm audit --severity high
+# • yarn install runs without --immutable.
+#   Yarn 4 auto-enables "hardened mode" (≡ --immutable) for public-repo PRs.
+#   YN0086 peer-dep warnings are non-fatal without the flag; the lockfile is
+#   still fully respected (Yarn never changes it without explicit install).
+#
+# • typecheck uses NODE_OPTIONS=--max-old-space-size=6144.
+#   The project has 111+ modules; tsc exhausts the default Node heap (~1.5 GB)
+#   on ubuntu-latest (7 GB total RAM). 6 GB gives headroom without OOM.
+#
+# • yarn generate runs before typecheck.
+#   mercato generate writes .mercato/generated/*.ts files that tsconfig.json
+#   includes. Without them, tsc reports "Cannot find module '#generated/...'".
+#
+# • lint scope: src/modules only (not the full Next.js app).
+#   The Open Mercato monorepo CI does the same: it excludes @open-mercato/app
+#   from the lint turbo filter. Reason: eslint-config-next + ESLint v10 flat
+#   config triggers scopeManager.addGlobals errors on React component files.
+#   App-layer lint runs locally via IDE / pre-commit hooks.
+#
+# • Security audit (yarn npm audit) is intentionally excluded from PR CI to
+#   avoid blocking work on CVEs in transitive dependencies we do not control.
+#   Run manually: yarn npm audit --severity high
+#
+# References
+# ──────────
+# open-mercato/open-mercato .github/workflows/ci.yml
+# open-mercato/open-mercato apps/mercato/jest.config.cjs
 
 name: CI
 
@@ -28,72 +56,40 @@ on:
     branches:
       - main
 
-# Cancela runs en curso del mismo ref al hacer push nuevo.
+# Cancel in-progress runs on the same ref when a new push arrives.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# ─── Shared setup ─────────────────────────────────────────────────────────────
+# All three jobs use the same Node version and Yarn cache strategy.
+# Extracted as workflow-level defaults to avoid repetition.
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
-  # ── TypeScript ─────────────────────────────────────────────────────────────
-  typecheck:
-    name: Typecheck
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (Yarn 4)
-        run: corepack enable
-
-      - name: Cache .yarn/cache
-        uses: actions/cache@v4
-        with:
-          path: .yarn/cache
-          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: yarn-${{ runner.os }}-
-
-      - name: Cache node_modules
-        id: nm-cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Install dependencies
-        if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: yarn install
-
-      - name: Generate module glue
-        run: yarn generate
-
-      - name: Typecheck
-        run: yarn typecheck
-
-  # ── ESLint ─────────────────────────────────────────────────────────────────
+  # ── Lint ────────────────────────────────────────────────────────────────────
+  # Fast static analysis on pure TypeScript module code.
+  # Does NOT need yarn generate — eslint does not type-check, only lints.
+  # Fails fast before the heavier typecheck and test jobs consume minutes.
   lint:
     name: Lint
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
 
       - name: Enable Corepack (Yarn 4)
         run: corepack enable
 
-      - name: Cache .yarn/cache
+      - name: Cache Yarn packages
         uses: actions/cache@v4
         with:
           path: .yarn/cache
@@ -113,3 +109,130 @@ jobs:
 
       - name: Lint
         run: yarn lint
+
+  # ── Typecheck ───────────────────────────────────────────────────────────────
+  # Full tsc --noEmit on all production code (*.ts + *.tsx).
+  # Test files (__tests__/**/*.spec.ts) are excluded via tsconfig.json so
+  # ts-jest compiles them independently with CJS-compatible settings.
+  #
+  # yarn generate runs first — it writes .mercato/generated/*.ts which
+  # tsconfig.json includes. Skipping it causes spurious "module not found" errors.
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    # Raise the Node heap to 6 GB so tsc can analyse 111+ modules without OOM.
+    # ubuntu-latest has 7 GB RAM; 6 GB leaves enough for the runner itself.
+    env:
+      NODE_OPTIONS: --max-old-space-size=6144
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache Yarn packages
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Generate module glue
+        # Writes .mercato/generated/modules.generated.ts and related type files.
+        # Required before tsc so all #generated/* imports resolve.
+        run: yarn generate
+
+      - name: Typecheck
+        run: yarn typecheck
+
+  # ── Unit Tests ──────────────────────────────────────────────────────────────
+  # Jest unit tests: src/modules/**/__tests__/**/*.spec.ts
+  #
+  # Tests are pure — no database, no HTTP, no framework dependencies.
+  # Each module's data/validators.ts is tested with Zod safeParse assertions.
+  # MikroORM entities in test context are handled by jest-mikroorm-transformer
+  # (sanitises import.meta.* → CJS stubs, then delegates to ts-jest).
+  #
+  # --ci        disables watch mode and fails on snapshots that need updating.
+  # --forceExit closes Jest after all tests finish (guards against open handles
+  #             from MikroORM optional-dep discovery at import time).
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache Yarn packages
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Unit Tests
+        run: yarn test --ci --forceExit
+
+      - name: Coverage summary (informational)
+        # Produces a coverage report but does NOT fail on thresholds.
+        # The suite grows incrementally alongside modules — thresholds activate
+        # once there is sufficient coverage across all verticals.
+        if: always()
+        run: |
+          yarn test --ci --forceExit --coverage \
+            --coverageReporters=json-summary 2>/dev/null || true
+        continue-on-error: true
+
+      - name: Publish coverage to Step Summary
+        if: always()
+        run: |
+          SUMMARY="coverage/coverage-summary.json"
+          [ -f "$SUMMARY" ] || exit 0
+          node -e "
+          const fs = require('fs')
+          const s = JSON.parse(fs.readFileSync('$SUMMARY', 'utf8')).total || {}
+          const row = (k) => {
+            const m = s[k] || {}
+            return '| ' + k + ' | ' + (m.covered??0) + '/' + (m.total??0) + ' | ' + (m.pct??0) + '% |'
+          }
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
+            '## Unit Test Coverage', '',
+            '| Metric | Covered/Total | % |',
+            '|---|---:|---:|',
+            row('lines'), row('statements'), row('functions'), row('branches'), '',
+          ].join('\n'))
+          "

@@ -21,7 +21,7 @@ const DISP_STATUS_VARIANT: Record<string, 'neutral' | 'warning' | 'success'> = {
 export default function DispatchDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_dispatch.page' })
 
   const [state, setState]     = React.useState<PageState>('loading')
   const [so, setSo]           = React.useState<any>(null)
@@ -52,8 +52,8 @@ export default function DispatchDetailPage() {
 
   const handleConfirmDelivery = (disp: any) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_dispatch.dispatch', recordId: disp.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_dispatch.dispatch', recordId: disp.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-dispatch/dispatch-orders', { method: 'PUT', body: JSON.stringify({ id: disp.id, status: 'delivered', delivery_date: new Date().toISOString().split('T')[0], customer_signature: true }) })
         await apiCallOrThrow('/api/mfg-dispatch/sale-orders', { method: 'PUT', body: JSON.stringify({ id: params.id, status: 'invoiced', actual_dispatch_date: new Date().toISOString().split('T')[0] }) })
         flash('Entrega confirmada — pedido marcado como facturado', 'success')
@@ -68,7 +68,7 @@ export default function DispatchDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-dispatch')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Despacho
       </Button>
-      <ErrorMessage message="Pedido no encontrado." />
+      <ErrorMessage label="Pedido no encontrado." />
     </PageBody></Page>
   )
 
@@ -127,16 +127,16 @@ export default function DispatchDetailPage() {
             </div>
             {showLineForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm entityId="mfg_dispatch.sale_order_line" apiPath="/api/mfg-dispatch/sale-order-lines" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_dispatch.sale_order_line" apiPath="/api/mfg-dispatch/sale-order-lines" mode="create"
                   initial={{ sale_order_id: params.id, line_number: lines.length + 1 }}
                   fields={[
-                    { type: 'text' as const, name: 'product_code',   label: 'Código producto', required: true },
-                    { type: 'text' as const, name: 'product_name',   label: 'Nombre producto', required: true },
-                    { type: 'text' as const, name: 'quantity',       label: 'Cantidad', required: true },
-                    { type: 'text' as const, name: 'uom',            label: 'Unidad', required: true },
-                    { type: 'text' as const, name: 'unit_price_usd', label: 'Precio unitario (USD)', required: true },
-                    { type: 'text' as const, name: 'total_price_usd', label: 'Total (USD)', required: true },
-                    { type: 'text' as const, name: 'lot_number',     label: 'Número de lote de PT' },
+                    { type: 'text' as const, id: 'product_code',   label: 'Código producto', required: true },
+                    { type: 'text' as const, id: 'product_name',   label: 'Nombre producto', required: true },
+                    { type: 'text' as const, id: 'quantity',       label: 'Cantidad', required: true },
+                    { type: 'text' as const, id: 'uom',            label: 'Unidad', required: true },
+                    { type: 'text' as const, id: 'unit_price_usd', label: 'Precio unitario (USD)', required: true },
+                    { type: 'text' as const, id: 'total_price_usd', label: 'Total (USD)', required: true },
+                    { type: 'text' as const, id: 'lot_number',     label: 'Número de lote de PT' },
                   ]}
                   onSubmit={async (v) => {
                     await apiCallOrThrow('/api/mfg-dispatch/sale-order-lines', { method: 'POST', body: JSON.stringify({ ...v, sale_order_id: params.id }) })
@@ -192,15 +192,15 @@ export default function DispatchDetailPage() {
             </div>
             {showDispForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm entityId="mfg_dispatch.dispatch_order" apiPath="/api/mfg-dispatch/dispatch-orders" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_dispatch.dispatch_order" apiPath="/api/mfg-dispatch/dispatch-orders" mode="create"
                   initial={{ sale_order_id: params.id, sale_order_number: so.order_number, customer_name: so.customer_name, dispatch_date: new Date().toISOString().split('T')[0], requires_temperature_control: so.requires_temperature_control }}
                   fields={[
-                    { type: 'text' as const,   name: 'dispatch_number',  label: 'Número guía (DISP-2026-XXX)', required: true },
-                    { type: 'text' as const,   name: 'carrier_name',     label: 'Transporte / Empresa de carga' },
-                    { type: 'text' as const,   name: 'vehicle_plate',    label: 'Placa del vehículo (AA-123-BC)' },
-                    { type: 'text' as const,   name: 'driver_name',      label: 'Nombre del conductor' },
-                    { type: 'date' as const,   name: 'dispatch_date',    label: 'Fecha de despacho' },
-                    { type: 'text' as const,   name: 'temperature_range', label: 'Rango de temperatura (si aplica)' },
+                    { type: 'text' as const,   id: 'dispatch_number',  label: 'Número guía (DISP-2026-XXX)', required: true },
+                    { type: 'text' as const,   id: 'carrier_name',     label: 'Transporte / Empresa de carga' },
+                    { type: 'text' as const,   id: 'vehicle_plate',    label: 'Placa del vehículo (AA-123-BC)' },
+                    { type: 'text' as const,   id: 'driver_name',      label: 'Nombre del conductor' },
+                    { type: 'date' as const,   id: 'dispatch_date',    label: 'Fecha de despacho' },
+                    { type: 'text' as const,   id: 'temperature_range', label: 'Rango de temperatura (si aplica)' },
                   ]}
                   onSuccess={() => { flash('Guía de despacho emitida', 'success'); setDF(false); load() }}
                 />

@@ -63,7 +63,7 @@ export default function PortalVotesPage({ params }: Props) {
     load()
   }, [])
 
-  const backUrl = unitId ? `/${params.orgSlug}/portal/dashboard?unit_id=${unitId}` : `/${params.orgSlug}/portal/dashboard`
+  const backUrl = unitId ? `/${(params as any).orgSlug}/portal/dashboard?unit_id=${unitId}` : `/${(params as any).orgSlug}/portal/dashboard`
 
   const openVotes = votes.filter(v => v.status === 'open')
   const closedVotes = votes.filter(v => v.status !== 'open')
@@ -72,7 +72,7 @@ export default function PortalVotesPage({ params }: Props) {
     const params = new URLSearchParams()
     if (unitId) params.set('unit_id', unitId)
     if (buildingId) params.set('building_id', buildingId)
-    return `/${params.orgSlug}/portal/votes/${voteId}?${params.toString()}`
+    return `/${(params as any).orgSlug}/portal/votes/${voteId}?${params.toString()}`
   }
 
   function VoteCard({ v }: { v: VoteItem }) {

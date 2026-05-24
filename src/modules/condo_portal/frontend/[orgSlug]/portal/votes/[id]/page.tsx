@@ -30,7 +30,7 @@ const CHOICE_OPTIONS = [
   { value: 'abstain', label: 'Abstención', description: 'Me abstengo de votar' },
 ]
 
-export default function PortalVoteDetailPage({ params }: Props) {
+export default function PortalVoteDetailPage(_props: Props) {
   const params = useParams()
   const router = useRouter()
   const voteId = params?.id as string
@@ -88,7 +88,7 @@ export default function PortalVoteDetailPage({ params }: Props) {
     const p = new URLSearchParams()
     if (unitId) p.set('unit_id', unitId)
     if (buildingId) p.set('building_id', buildingId)
-    return `/${params.orgSlug}/portal/votes?${p.toString()}`
+    return `/${(params as any).orgSlug}/portal/votes?${p.toString()}`
   })()
 
   if (isLoading) return <div className="p-8 text-center text-muted-foreground">Cargando...</div>

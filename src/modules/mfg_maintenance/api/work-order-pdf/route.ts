@@ -5,7 +5,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { WorkOrderMaintPdf, type WorkOrderMaintPdfData, type SparePart } from '../../documents/WorkOrderMaintPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['mfg_maintenance.view'] },
@@ -55,7 +55,7 @@ export async function GET(request: Request, ctx: any) {
     id: woId,
   }
 
-  const stream = await renderToStream(React.createElement(WorkOrderMaintPdf, { data }))
+  const stream = await renderToStream(React.createElement(WorkOrderMaintPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

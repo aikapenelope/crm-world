@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['ve_withholdings.create'],
   pageTitle: 'Registrar Retención',
   pageTitleKey: 've_withholdings.create.title',
-  hidden: true,
+  navHidden: true,
 }

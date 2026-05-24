@@ -159,14 +159,10 @@ export default function AgriUnitsPage() {
       <PageBody>
         <DataTable
           entityId="agri_units.flock"
-          extensionTableId="agri-flocks-list"
           data={flocks}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin lotes registrados',
-            description: 'Inicia un nuevo lote cuando lleguen las aves.',
-          }}
+          emptyState="Sin lotes registrados"
           stickyActionsColumn
         />
       </PageBody>

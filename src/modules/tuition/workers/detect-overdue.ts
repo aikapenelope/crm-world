@@ -6,7 +6,7 @@
  *
  * The worker is idempotent — charges already in 'overdue' status are skipped.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

@@ -109,11 +109,10 @@ export default function WorkOrdersPage() {
       <PageBody>
         <DataTable
           entityId="isp_technicians.work_order"
-          extensionTableId="isp-work-orders-list"
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin órdenes', description: 'Crea la primera orden de trabajo.' }}
+          emptyState="Sin órdenes"
           stickyActionsColumn
         />
       </PageBody>

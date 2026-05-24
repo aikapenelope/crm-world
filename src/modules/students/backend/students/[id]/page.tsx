@@ -151,7 +151,7 @@ export default function StudentDetailPage() {
                   }`}
                 >
                   <Icon className="h-4 w-4" />
-                  {tab.label}
+                  {((tab as any).title ?? (tab as any).label)}
                 </Button>
               )
             })}
@@ -278,7 +278,7 @@ function GeneralTab({ student, studentId, organizationId, tenantId, router }: {
     <CrudForm
       title=""
       backHref=""
-      fields={[]}
+      fields={[] as any[]}
       groups={groups}
       submitLabel="Guardar cambios"
       cancelHref="/backend/students"

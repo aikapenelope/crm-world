@@ -18,8 +18,8 @@
  *      d. Crear MfgShiftReport + MfgOeeHistory
  *   3. Emitir evento shift.closed → notificación al gerente de planta
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
-import { eventsConfig } from '../events'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
+import { eventsConfig } from '../../events'
 import { v4 } from 'uuid'
 
 export const metadata = {
@@ -37,7 +37,7 @@ export async function POST(request: Request, ctx: any) {
   // Determine which shift just closed
   let shiftType: string
   let shiftStart: Date
-  let shiftEnd = new Date(now)
+  const shiftEnd = new Date(now)
 
   if (hourVE >= 6 && hourVE < 14) {
     // Afternoon shift closing morning

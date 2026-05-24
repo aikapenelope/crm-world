@@ -121,11 +121,10 @@ export default function IspSalesPage() {
       <PageBody>
         <DataTable
           entityId="isp_sales.lead"
-          extensionTableId="isp-leads-list"
           data={leads}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin leads', description: 'Registra tu primer prospecto.' }}
+          emptyState="Sin leads"
           stickyActionsColumn
         />
       </PageBody>

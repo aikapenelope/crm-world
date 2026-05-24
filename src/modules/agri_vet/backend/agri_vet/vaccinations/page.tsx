@@ -39,7 +39,7 @@ const ROUTE_LABEL: Record<string, string> = {
 }
 
 export default function VaccinationsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_vet.page' })
   const [records, setRecords]    = React.useState<VacRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)
@@ -64,9 +64,8 @@ export default function VaccinationsPage() {
 
   const handleApply = (row: VacRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_vet.vaccination', recordId: row.id },
-      mutationPayload: async () => {
+      operation: async () => {
         const today = new Date().toISOString().split('T')[0]
         const withdrawalEnd = row.withdrawal_days > 0
           ? new Date(Date.now() + row.withdrawal_days * 86400000).toISOString().split('T')[0]
@@ -166,16 +165,16 @@ export default function VaccinationsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Vacunación</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_vet.vaccination"
               apiPath="/api/agri-vet/vaccination-records"
               mode="create"
               fields={[
-                { type: 'select' as const,   name: 'flock_id',             label: 'Lote de Aves',           required: true, options: flockOptions },
-                { type: 'text' as const,     name: 'vaccine_name',         label: 'Nombre de la Vacuna',    required: true },
-                { type: 'text' as const,     name: 'active_ingredient',    label: 'Principio Activo' },
-                { type: 'text' as const,     name: 'manufacturer',         label: 'Laboratorio' },
-                { type: 'select' as const,   name: 'administration_route', label: 'Vía de Administración',
+                { type: 'select' as const,   id: 'flock_id',             label: 'Lote de Aves',           required: true, options: flockOptions },
+                { type: 'text' as const,     id: 'vaccine_name',         label: 'Nombre de la Vacuna',    required: true },
+                { type: 'text' as const,     id: 'active_ingredient',    label: 'Principio Activo' },
+                { type: 'text' as const,     id: 'manufacturer',         label: 'Laboratorio' },
+                { type: 'select' as const,   id: 'administration_route', label: 'Vía de Administración',
                   options: [
                     { value: 'drinking_water', label: 'Agua de bebida' },
                     { value: 'ocular',         label: 'Ocular' },
@@ -184,17 +183,17 @@ export default function VaccinationsPage() {
                     { value: 'subcutaneous',   label: 'Subcutáneo' },
                     { value: 'oral',           label: 'Oral' },
                   ]},
-                { type: 'date' as const,     name: 'scheduled_date',       label: 'Fecha Programada',       required: true },
-                { type: 'date' as const,     name: 'applied_date',         label: 'Fecha Aplicada (si ya fue)' },
-                { type: 'number' as const,   name: 'birds_treated',        label: 'Aves Tratadas' },
-                { type: 'text' as const,     name: 'vaccine_lot_number',   label: 'Lote de la Vacuna' },
-                { type: 'number' as const,   name: 'withdrawal_days',      label: 'Días de Retiro' },
-                { type: 'textarea' as const, name: 'notes',                label: 'Observaciones' },
+                { type: 'date' as const,     id: 'scheduled_date',       label: 'Fecha Programada',       required: true },
+                { type: 'date' as const,     id: 'applied_date',         label: 'Fecha Aplicada (si ya fue)' },
+                { type: 'number' as const,   id: 'birds_treated',        label: 'Aves Tratadas' },
+                { type: 'text' as const,     id: 'vaccine_lot_number',   label: 'Lote de la Vacuna' },
+                { type: 'number' as const,   id: 'withdrawal_days',      label: 'Días de Retiro' },
+                { type: 'textarea' as const, id: 'notes',                label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'vaccine',     label: 'Vacuna',      fields: ['flock_id', 'vaccine_name', 'active_ingredient', 'manufacturer', 'administration_route'] },
-                { id: 'application', label: 'Aplicación',  fields: ['scheduled_date', 'applied_date', 'birds_treated', 'vaccine_lot_number', 'withdrawal_days'] },
-                { id: 'notes',       label: 'Notas',       fields: ['notes'] },
+                { id: 'vaccine',     title: 'Vacuna',      fields: ['flock_id', 'vaccine_name', 'active_ingredient', 'manufacturer', 'administration_route'] },
+                { id: 'application', title: 'Aplicación',  fields: ['scheduled_date', 'applied_date', 'birds_treated', 'vaccine_lot_number', 'withdrawal_days'] },
+                { id: 'notes',       title: 'Notas',       fields: ['notes'] },
               ]}
               onSuccess={() => { flash('Vacunación registrada', 'success'); setShowForm(false); load() }}
             />
@@ -202,11 +201,10 @@ export default function VaccinationsPage() {
         )}
         <DataTable
           entityId="agri_vet.vaccination"
-          extensionTableId="agri-vet-vaccinations-list"
           data={records}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin vacunaciones registradas', description: 'Registra el primer esquema de vacunación.' }}
+          emptyState="Sin vacunaciones registradas"
           stickyActionsColumn
         />
       </PageBody>

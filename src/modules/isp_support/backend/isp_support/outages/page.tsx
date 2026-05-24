@@ -121,11 +121,10 @@ export default function IspOutagesPage() {
 
         <DataTable
           entityId="isp_support.outage"
-          extensionTableId="isp-outages-list"
           data={outages}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin averías registradas', description: 'Las averías masivas se crean automáticamente cuando se reporta un nodo caído.' }}
+          emptyState="Sin averías registradas"
           stickyActionsColumn
         />
       </PageBody>

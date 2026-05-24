@@ -17,7 +17,7 @@
  * Cross-module: reads agri_vet_vaccination_records, agri_input_items,
  * agri_input_movements via Kysely.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 import { v4 } from 'uuid'
 

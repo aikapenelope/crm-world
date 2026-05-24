@@ -29,7 +29,7 @@ const TRIGGER_LABEL: Record<string, string> = { hours: 'horas', days: 'días', c
 export default function EquipmentDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_maintenance.page' })
 
   const [state, setState]   = React.useState<PageState>('loading')
   const [eq, setEq]         = React.useState<any>(null)
@@ -57,8 +57,8 @@ export default function EquipmentDetailPage() {
 
   const handleComplete = (wo: WoRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-maintenance/work-orders-maint', {
           method: 'PUT',
           body: JSON.stringify({ id: wo.id, status: 'completed', completed_at: new Date().toISOString() }),
@@ -75,7 +75,7 @@ export default function EquipmentDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-maintenance')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Mantenimiento
       </Button>
-      <ErrorMessage message="Equipo no encontrado." />
+      <ErrorMessage label="Equipo no encontrado." />
     </PageBody></Page>
   )
 
@@ -183,21 +183,21 @@ export default function EquipmentDetailPage() {
             </div>
             {showPlanForm && (
               <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-                <CrudForm entityId="mfg_maintenance.plan" apiPath="/api/mfg-maintenance/maintenance-plans" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_maintenance.plan" apiPath="/api/mfg-maintenance/maintenance-plans" mode="create"
                   initial={{ equipment_id: params.id, equipment_code: eq.equipment_code }}
                   fields={[
-                    { type: 'text' as const,   name: 'plan_name',           label: 'Nombre del plan (ej: Cambio de aceite cada 500h)', required: true },
-                    { type: 'select' as const, name: 'trigger_type',        label: 'Tipo de trigger', required: true, options: [{ value: 'days', label: 'Días calendario' }, { value: 'hours', label: 'Horas de operación' }, { value: 'cycles', label: 'Ciclos de producción' }] },
-                    { type: 'text' as const,   name: 'trigger_interval',    label: 'Intervalo (ej: 30, 500, 2000)', required: true },
-                    { type: 'text' as const,   name: 'estimated_duration_hrs', label: 'Duración estimada (horas)' },
-                    { type: 'text' as const,   name: 'required_technician_skill', label: 'Perfil técnico requerido (ej: Electricista)' },
+                    { type: 'text' as const,   id: 'plan_name',           label: 'Nombre del plan (ej: Cambio de aceite cada 500h)', required: true },
+                    { type: 'select' as const, id: 'trigger_type',        label: 'Tipo de trigger', required: true, options: [{ value: 'days', label: 'Días calendario' }, { value: 'hours', label: 'Horas de operación' }, { value: 'cycles', label: 'Ciclos de producción' }] },
+                    { type: 'text' as const,   id: 'trigger_interval',    label: 'Intervalo (ej: 30, 500, 2000)', required: true },
+                    { type: 'text' as const,   id: 'estimated_duration_hrs', label: 'Duración estimada (horas)' },
+                    { type: 'text' as const,   id: 'required_technician_skill', label: 'Perfil técnico requerido (ej: Electricista)' },
                   ]}
                   onSuccess={() => { flash('Plan de mantenimiento agregado', 'success'); setPF(false); load() }}
                 />
               </div>
             )}
-            <DataTable entityId="mfg_maintenance.plan" extensionTableId="mfg-maint-plans" data={plans} columns={planCols} isLoading={false}
-              emptyState={{ title: 'Sin planes de mantenimiento', description: 'Agrega el primer plan preventivo para este equipo.' }} />
+            <DataTable entityId="mfg_maintenance.plan" data={plans} columns={planCols} isLoading={false}
+              emptyState="Sin planes de mantenimiento" />
           </div>
 
           {/* Work orders */}
@@ -210,20 +210,20 @@ export default function EquipmentDetailPage() {
             </div>
             {showWoForm && (
               <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-                <CrudForm entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
                   initial={{ equipment_id: params.id, equipment_code: eq.equipment_code, equipment_name: eq.name, work_type: 'corrective', priority: 'high' }}
                   fields={[
-                    { type: 'text' as const,     name: 'wo_number',        label: 'N° WO (WO-MAINT-2026-XXX)', required: true },
-                    { type: 'textarea' as const, name: 'description',      label: 'Descripción de la tarea', required: true },
-                    { type: 'textarea' as const, name: 'fault_description', label: 'Descripción de la falla reportada', required: true },
-                    { type: 'select' as const,   name: 'priority',         label: 'Prioridad', options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }] },
+                    { type: 'text' as const,     id: 'wo_number',        label: 'N° WO (WO-MAINT-2026-XXX)', required: true },
+                    { type: 'textarea' as const, id: 'description',      label: 'Descripción de la tarea', required: true },
+                    { type: 'textarea' as const, id: 'fault_description', label: 'Descripción de la falla reportada', required: true },
+                    { type: 'select' as const,   id: 'priority',         label: 'Prioridad', options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }] },
                   ]}
                   onSuccess={() => { flash('WO correctiva creada', 'success'); setWF(false); load() }}
                 />
               </div>
             )}
-            <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maint-wo-history" data={wos} columns={woCols} isLoading={false}
-              emptyState={{ title: 'Sin órdenes de trabajo' }} stickyActionsColumn />
+            <DataTable entityId="mfg_maintenance.wo" data={wos} columns={woCols} isLoading={false}
+              emptyState="Sin órdenes de trabajo" stickyActionsColumn />
           </div>
         </div>
       </PageBody>

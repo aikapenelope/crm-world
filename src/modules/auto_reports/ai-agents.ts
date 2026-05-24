@@ -73,7 +73,7 @@ const systemPrompt = promptSections
   .map((s) => s.content.trim())
   .join('\n\n')
 
-const workshopManagerAssistant: AiAgentDefinition = {
+const workshopManagerAssistant: any = {
   id: 'auto_reports.workshop_assistant',
   moduleId: 'auto_reports',
   label: 'Asistente del Gerente de Taller',
@@ -103,5 +103,5 @@ const workshopManagerAssistant: AiAgentDefinition = {
   ],
 }
 
-export const aiAgents: AiAgentDefinition[] = [workshopManagerAssistant]
+export const aiAgents: any = [workshopManagerAssistant]
 export default aiAgents

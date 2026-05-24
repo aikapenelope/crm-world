@@ -19,20 +19,20 @@ export const searchConfig: SearchModuleConfig = {
       fieldPolicy: { searchable: ['first_name', 'last_name', 'cedula', 'department', 'position', 'employee_type'], excluded: ['tenant_id', 'organization_id', 'bank_account'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
         const r = ctx.record
-        const fullName = [norm(r.first_name), norm(r.last_name)].filter(Boolean).join(' ')
+        const fullName = [norm(r.first_name as string), norm(r.last_name as string)].filter(Boolean).join(' ')
         if (!fullName) return null
         const typeLabel = EMP_TYPE[String(r.employee_type ?? '')] ?? String(r.employee_type ?? '')
         return {
-          text: [fullName, norm(r.cedula) ?? '', typeLabel].filter(Boolean),
-          presenter: { title: fullName, subtitle: [norm(r.position), typeLabel].filter(Boolean).join(' · '), icon: 'user', badge: r.status === 'active' ? 'Activo' : 'Inactivo' },
+          text: [fullName, norm(r.cedula as string) ?? '', typeLabel].filter(Boolean),
+          presenter: { title: fullName, subtitle: [norm(r.position as string), typeLabel].filter(Boolean).join(' · '), icon: 'user', badge: r.status as string | undefined === 'active' ? 'Activo' : 'Inactivo' },
           links: [{ href: `/backend/agri-hr`, label: 'Ver personal', kind: 'primary' }],
           checksumSource: { first_name: r.first_name, last_name: r.last_name, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        const fullName = [norm(r.first_name), norm(r.last_name)].filter(Boolean).join(' ')
-        return { title: fullName, subtitle: EMP_TYPE[String(r.employee_type ?? '')] ?? String(r.employee_type ?? ''), icon: 'user', badge: r.status === 'active' ? 'Activo' : 'Inactivo' }
+        const fullName = [norm(r.first_name as string), norm(r.last_name as string)].filter(Boolean).join(' ')
+        return { title: fullName, subtitle: EMP_TYPE[String(r.employee_type ?? '')] ?? String(r.employee_type ?? ''), icon: 'user', badge: r.status as string | undefined === 'active' ? 'Activo' : 'Inactivo' }
       },
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-hr`,
     },
@@ -45,7 +45,7 @@ export const searchConfig: SearchModuleConfig = {
         const statusLabel = SETTLE_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
           text: [`FCA: ${r.actual_fca}`, `USD ${r.total_payment_usd}`].filter(Boolean),
-          presenter: { title: `Liquidación · Ciclo ${new Date(r.cycle_end_date as string).toLocaleDateString('es-VE')}`, subtitle: `USD ${r.total_payment_usd}`, icon: 'file-text', badge: statusLabel },
+          presenter: { title: `Liquidación · Ciclo ${new Date(r.cycle_end_date as string).toLocaleDateString()}`, subtitle: `USD ${r.total_payment_usd}`, icon: 'file-text', badge: statusLabel },
           links: [{ href: `/backend/agri-hr/settlements`, label: 'Ver liquidación', kind: 'primary' }],
           checksumSource: { status: r.status, total_payment_usd: r.total_payment_usd, updated_at: r.updated_at },
         }

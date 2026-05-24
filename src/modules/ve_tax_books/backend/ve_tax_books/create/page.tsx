@@ -129,7 +129,7 @@ export default function CreateTaxBookEntryPage() {
 
         <CrudForm
           backHref="/backend/ve_tax_books"
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Registrar Entrada"
           cancelHref="/backend/ve_tax_books"

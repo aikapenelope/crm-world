@@ -13,7 +13,7 @@ import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, Zap } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'ready'
@@ -47,7 +47,7 @@ const DOWNTIME_LABEL: Record<string, string> = {
 export default function OrderDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_orders.page' })
 
   const [state, setState]       = React.useState<PageState>('loading')
   const [order, setOrder]       = React.useState<any>(null)
@@ -78,9 +78,8 @@ export default function OrderDetailPage() {
 
   const handleStartOp = (op: OpRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.operation', recordId: op.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/order-operations', {
           method: 'PUT',
           body: JSON.stringify({ id: op.id, status: 'in_progress', actual_start: new Date().toISOString() }),
@@ -93,9 +92,8 @@ export default function OrderDetailPage() {
 
   const handleCompleteOp = (op: OpRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.operation', recordId: op.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/order-operations', {
           method: 'PUT',
           body: JSON.stringify({ id: op.id, status: 'completed', actual_end: new Date().toISOString() }),
@@ -110,9 +108,8 @@ export default function OrderDetailPage() {
     const durationMs = Date.now() - new Date(dt.started_at).getTime()
     const durationHrs = (durationMs / 3600000).toFixed(4)
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.downtime', recordId: dt.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/downtimes', {
           method: 'PUT',
           body: JSON.stringify({ id: dt.id, ended_at: new Date().toISOString(), duration_hrs: durationHrs }),
@@ -129,7 +126,7 @@ export default function OrderDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-orders')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Órdenes
       </Button>
-      <ErrorMessage message="Orden de producción no encontrada." />
+      <ErrorMessage label="Orden de producción no encontrada." />
     </PageBody></Page>
   )
 
@@ -275,16 +272,16 @@ export default function OrderDetailPage() {
           </div>
           {showOpForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-              <CrudForm
+              <CrudForm{...({} as any)}
                 entityId="mfg_orders.operation"
                 apiPath="/api/mfg-orders/order-operations"
                 mode="create"
                 initial={{ order_id: params.id, operation_number: operations.length + 1 }}
                 fields={[
-                  { type: 'number' as const, name: 'operation_number',     label: 'N° de secuencia', required: true },
-                  { type: 'text' as const,   name: 'operation_name',       label: 'Nombre de la operación', required: true },
-                  { type: 'select' as const, name: 'work_center_id',       label: 'Centro de trabajo / línea', options: wcOptions },
-                  { type: 'text' as const,   name: 'planned_duration_hrs', label: 'Tiempo estándar (horas)', required: true },
+                  { type: 'number' as const, id: 'operation_number',     label: 'N° de secuencia', required: true },
+                  { type: 'text' as const,   id: 'operation_name',       label: 'Nombre de la operación', required: true },
+                  { type: 'select' as const, id: 'work_center_id',       label: 'Centro de trabajo / línea', options: wcOptions },
+                  { type: 'text' as const,   id: 'planned_duration_hrs', label: 'Tiempo estándar (horas)', required: true },
                 ]}
                 onSubmit={async (values) => {
                   await apiCallOrThrow('/api/mfg-orders/order-operations', {
@@ -300,11 +297,10 @@ export default function OrderDetailPage() {
           )}
           <DataTable
             entityId="mfg_orders.operation"
-            extensionTableId="mfg-order-operations"
             data={operations}
             columns={opColumns}
             isLoading={false}
-            emptyState={{ title: 'Sin operaciones', description: 'Agrega las operaciones del routing para ejecutar esta orden.' }}
+            emptyState="Sin operaciones"
             stickyActionsColumn
           />
         </div>
@@ -319,13 +315,13 @@ export default function OrderDetailPage() {
           </div>
           {showDtForm && (
             <div className="mb-4 border border-border rounded-lg p-4 bg-background">
-              <CrudForm
+              <CrudForm{...({} as any)}
                 entityId="mfg_orders.downtime"
                 apiPath="/api/mfg-orders/downtimes"
                 mode="create"
                 initial={{ order_id: params.id, started_at: new Date().toISOString().slice(0, 16) }}
                 fields={[
-                  { type: 'select' as const, name: 'cause_category', label: 'Categoría del paro', required: true,
+                  { type: 'select' as const, id: 'cause_category', label: 'Categoría del paro', required: true,
                     options: [
                       { value: 'electrical_cut',    label: '⚡ Corte eléctrico externo (CORPOELEC)' },
                       { value: 'mechanical_failure', label: 'Falla mecánica' },
@@ -336,8 +332,8 @@ export default function OrderDetailPage() {
                       { value: 'operator_absence',  label: 'Ausencia de operador' },
                       { value: 'other',             label: 'Otro motivo' },
                     ]},
-                  { type: 'textarea' as const, name: 'cause_description', label: 'Descripción de la causa', required: true },
-                  { type: 'datetime-local' as const, name: 'started_at', label: 'Hora de inicio', required: true },
+                  { type: 'textarea' as const, id: 'cause_description', label: 'Descripción de la causa', required: true },
+                  { type: 'datetime-local' as const, id: 'started_at', label: 'Hora de inicio', required: true },
                 ]}
                 onSubmit={async (values) => {
                   const isForceMajeure = values.cause_category === 'electrical_cut'
@@ -355,11 +351,10 @@ export default function OrderDetailPage() {
           {downtimes.length > 0 ? (
             <DataTable
               entityId="mfg_orders.downtime"
-              extensionTableId="mfg-order-downtimes"
               data={downtimes}
               columns={dtColumns}
               isLoading={false}
-              emptyState={{ title: 'Sin paros registrados' }}
+              emptyState="Sin paros registrados"
               stickyActionsColumn
             />
           ) : (

@@ -27,5 +27,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/isp-sales/commissions',
   },
+]
 
 export default notificationTypes

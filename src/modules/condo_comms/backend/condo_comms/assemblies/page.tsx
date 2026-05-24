@@ -9,7 +9,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { ArrowLeft, Plus, CalendarPlus, Download } from 'lucide-react'
-import { calendarLinks, downloadIcs } from '@app/lib/calendar-links'
+import { calendarLinks, downloadIcs } from '@/lib/calendar-links'
 
 type AssemblyRow = {
   id: string

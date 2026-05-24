@@ -9,24 +9,24 @@ export async function GET(_request: Request, ctx: any) {
 
   const [byStatus, byType, outages, slaBreached] = await Promise.all([
     kysely.selectFrom('isp_support_tickets')
-      .select(['status', kysely.fn.count<number>('id').as('count')])
+      .select(['status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .groupBy('status').execute(),
 
     kysely.selectFrom('isp_support_tickets')
-      .select(['type', kysely.fn.count<number>('id').as('count')])
+      .select(['type', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('status', 'not in', ['resolved', 'closed'])
       .groupBy('type').execute(),
 
     kysely.selectFrom('isp_outages')
-      .select(kysely.fn.count<number>('id').as('count'))
+      .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .where('status', '!=', 'resolved')
       .executeTakeFirst(),
 
     kysely.selectFrom('isp_support_tickets')
-      .select(kysely.fn.count<number>('id').as('count'))
+      .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .where('sla_breached', '=', true)
       .where('status', 'not in', ['resolved', 'closed'])

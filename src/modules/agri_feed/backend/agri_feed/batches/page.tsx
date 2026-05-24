@@ -36,7 +36,7 @@ const STATUS_LABEL: Record<string, string> = {
 }
 
 export default function FeedBatchesPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_feed.page' })
   const [batches, setBatches]   = React.useState<BatchRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)
@@ -57,9 +57,8 @@ export default function FeedBatchesPage() {
 
   const handleApprove = (batch: BatchRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_feed.batch', recordId: batch.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-feed/batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batch.id, status: 'approved' }),
@@ -72,9 +71,8 @@ export default function FeedBatchesPage() {
 
   const handleReject = (batch: BatchRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_feed.batch', recordId: batch.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-feed/batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batch.id, status: 'rejected' }),
@@ -142,7 +140,7 @@ export default function FeedBatchesPage() {
           items={[
             ...(row.original.status === 'pending_analysis' ? [
               { id: 'approve', label: 'Aprobar lote',  onSelect: () => handleApprove(row.original) },
-              { id: 'reject',  label: 'Rechazar lote', variant: 'destructive' as const, onSelect: () => handleReject(row.original) },
+              { id: 'reject',  label: 'Rechazar lote'as const, onSelect: () => handleReject(row.original) },
             ] : []),
             { id: 'edit', label: 'Editar', onSelect: () => {} },
           ]}
@@ -166,33 +164,33 @@ export default function FeedBatchesPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Lote de Alimento</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_feed.batch"
               apiPath="/api/agri-feed/batches"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'batch_number',        label: 'Número de Lote',         required: true },
-                { type: 'select' as const, name: 'formula_id',          label: 'Fórmula',                required: true, options: formulas },
-                { type: 'date' as const,   name: 'batch_date',          label: 'Fecha',                  required: true },
-                { type: 'text' as const,   name: 'quantity_tons',       label: 'Cantidad (toneladas)',    required: true },
-                { type: 'select' as const, name: 'source_type',         label: 'Origen',
+                { type: 'text' as const,   id: 'batch_number',        label: 'Número de Lote',         required: true },
+                { type: 'select' as const, id: 'formula_id',          label: 'Fórmula',                required: true, options: formulas },
+                { type: 'date' as const,   id: 'batch_date',          label: 'Fecha',                  required: true },
+                { type: 'text' as const,   id: 'quantity_tons',       label: 'Cantidad (toneladas)',    required: true },
+                { type: 'select' as const, id: 'source_type',         label: 'Origen',
                   options: [
                     { value: 'purchased',       label: 'Comprado a terceros' },
                     { value: 'own_production',  label: 'Producción propia' },
                   ]},
-                { type: 'text' as const,   name: 'supplier_invoice',    label: 'Factura del Proveedor' },
-                { type: 'text' as const,   name: 'supplier_lot_number', label: 'Lote del Proveedor' },
-                { type: 'text' as const,   name: 'protein_result_pct',  label: 'Proteína Real (%)' },
-                { type: 'text' as const,   name: 'moisture_result_pct', label: 'Humedad (%)' },
-                { type: 'text' as const,   name: 'aflatoxin_ppb',       label: 'Aflatoxinas (ppb) — Límite: 20 ppb' },
-                { type: 'text' as const,   name: 'cost_per_ton_usd',    label: 'Costo Real (USD/ton)' },
-                { type: 'textarea' as const, name: 'notes',             label: 'Observaciones' },
+                { type: 'text' as const,   id: 'supplier_invoice',    label: 'Factura del Proveedor' },
+                { type: 'text' as const,   id: 'supplier_lot_number', label: 'Lote del Proveedor' },
+                { type: 'text' as const,   id: 'protein_result_pct',  label: 'Proteína Real (%)' },
+                { type: 'text' as const,   id: 'moisture_result_pct', label: 'Humedad (%)' },
+                { type: 'text' as const,   id: 'aflatoxin_ppb',       label: 'Aflatoxinas (ppb) — Límite: 20 ppb' },
+                { type: 'text' as const,   id: 'cost_per_ton_usd',    label: 'Costo Real (USD/ton)' },
+                { type: 'textarea' as const, id: 'notes',             label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'general',   label: 'General',     fields: ['batch_number', 'formula_id', 'batch_date', 'quantity_tons', 'source_type'] },
-                { id: 'supplier',  label: 'Proveedor',   fields: ['supplier_invoice', 'supplier_lot_number'] },
-                { id: 'analysis',  label: 'Análisis QC', fields: ['protein_result_pct', 'moisture_result_pct', 'aflatoxin_ppb'] },
-                { id: 'cost',      label: 'Costo',       fields: ['cost_per_ton_usd', 'notes'] },
+                { id: 'general',   title: 'General',     fields: ['batch_number', 'formula_id', 'batch_date', 'quantity_tons', 'source_type'] },
+                { id: 'supplier',  title: 'Proveedor',   fields: ['supplier_invoice', 'supplier_lot_number'] },
+                { id: 'analysis',  title: 'Análisis QC', fields: ['protein_result_pct', 'moisture_result_pct', 'aflatoxin_ppb'] },
+                { id: 'cost',      title: 'Costo',       fields: ['cost_per_ton_usd', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Lote registrado', 'success')
@@ -205,14 +203,10 @@ export default function FeedBatchesPage() {
 
         <DataTable
           entityId="agri_feed.batch"
-          extensionTableId="agri-feed-batches-list"
           data={batches}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin lotes de alimento',
-            description: 'Registra el primer lote de alimento balanceado.',
-          }}
+          emptyState="Sin lotes de alimento"
           stickyActionsColumn
         />
       </PageBody>

@@ -17,5 +17,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/ve-withholdings',
   },
+]
 
 export default notificationTypes

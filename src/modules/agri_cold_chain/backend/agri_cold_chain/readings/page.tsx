@@ -281,16 +281,10 @@ export default function TemperatureReadingsPage() {
         {/* Readings table */}
         <DataTable
           entityId="agri_cold_chain.temperature_log"
-          extensionTableId="agri-cold-chain-readings-list"
           data={readings}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin lecturas en este período',
-            description: selectedUnit?.sensor_id
-              ? 'El sensor aún no ha enviado lecturas en este período.'
-              : 'Esta unidad no tiene sensor IoT. Usa "Ingresar manual" para registrar lecturas.',
-          }}
+          emptyState="Sin lecturas en este período"
         />
       </PageBody>
     </Page>

@@ -54,7 +54,7 @@ export async function GET(request: Request) {
 
 const emitSseTestSchema = z.object({
   eventId: z.enum(['example.todo.created', 'example.todo.updated', 'example.todo.deleted']).default('example.todo.updated'),
-  payload: z.record(z.string(), z.unknown()).optional().default({}),
+  payload: z.record(z.string(), z.unknown().optional().default({})),
   organizationId: z.string().uuid().nullable().optional(),
   organizationIds: z.array(z.string().uuid()).optional(),
   recipientUserId: z.string().uuid().optional(),

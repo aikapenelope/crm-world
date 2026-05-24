@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['agri_feed.edit'],
   pageTitle: 'Ingredientes de Fórmula',
-  hidden: true,
+  navHidden: true,
 }

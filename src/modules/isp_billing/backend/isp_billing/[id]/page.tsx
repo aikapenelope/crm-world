@@ -41,7 +41,7 @@ export default function InvoiceDetailPage() {
   React.useEffect(() => { load() }, [load])
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando factura..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Factura no encontrada." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Factura no encontrada." /></PageBody></Page>
 
   const isPending = ['pending', 'partial', 'overdue'].includes(invoice.status)
 
@@ -119,7 +119,7 @@ export default function InvoiceDetailPage() {
           <div className="mb-6 p-4 border border-border rounded-lg bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar cobro</h3>
             <CrudForm
-              fields={[]}
+              fields={[] as any[]}
               groups={paymentGroups}
               onSubmit={async (values) => {
                 if (submitting) return

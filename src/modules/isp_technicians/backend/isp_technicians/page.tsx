@@ -101,11 +101,10 @@ export default function IspTechniciansPage() {
       <PageBody>
         <DataTable
           entityId="isp_technicians.technician"
-          extensionTableId="isp-technicians-list"
           data={techs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin técnicos', description: 'Registra tu primer técnico de campo.' }}
+          emptyState="Sin técnicos"
           stickyActionsColumn
         />
       </PageBody>

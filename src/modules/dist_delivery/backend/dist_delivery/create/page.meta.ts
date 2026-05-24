@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_delivery.create'],
   pageTitle: 'Nuevo Despacho',
   pageTitleKey: 'dist_delivery.create.title',
-  hidden: true,
+  navHidden: true,
 }

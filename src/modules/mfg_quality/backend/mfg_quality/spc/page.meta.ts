@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['mfg_quality.view'],
   pageTitle: 'Cartas de Control SPC',
-  hidden: true,
+  navHidden: true,
 }

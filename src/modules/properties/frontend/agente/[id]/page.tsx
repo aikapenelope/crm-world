@@ -55,8 +55,8 @@ export default function AgentPortalPage() {
     async function load() {
       setLoading(true)
       try {
-        const { data } = await apiCall<{ properties: PortalProperty[] }>(`/api/agent-portal?agentId=${agentId}`)
-        setProperties(data?.properties ?? [])
+        const res = await apiCall<{ properties: PortalProperty[] }>(`/api/agent-portal?agentId=${agentId}`)
+        setProperties(res.result?.properties ?? [])
       } finally {
         setLoading(false)
       }

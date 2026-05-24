@@ -66,23 +66,23 @@ export default function AgriHrPage() {
   ]
 
   const employeeFormFields = [
-    { type: 'text' as const,   name: 'first_name',       label: 'Nombre',              required: true },
-    { type: 'text' as const,   name: 'last_name',        label: 'Apellido',            required: true },
-    { type: 'text' as const,   name: 'cedula',           label: 'Cédula (V-XXXXXXXX)' },
-    { type: 'select' as const, name: 'employee_type',    label: 'Tipo de Trabajador',  required: true,
+    { type: 'text' as const,   id: 'first_name',       label: 'Nombre',              required: true },
+    { type: 'text' as const,   id: 'last_name',        label: 'Apellido',            required: true },
+    { type: 'text' as const,   id: 'cedula',           label: 'Cédula (V-XXXXXXXX)' },
+    { type: 'select' as const, id: 'employee_type',    label: 'Tipo de Trabajador',  required: true,
       options: [
         { value: 'fixed', label: 'Fijo Mensual' },
         { value: 'jornalero', label: 'Jornalero (pago diario)' },
         { value: 'destajero', label: 'Destajero (por unidad)' },
       ]},
-    { type: 'text' as const,   name: 'department',       label: 'Departamento' },
-    { type: 'text' as const,   name: 'position',         label: 'Cargo' },
-    { type: 'date' as const,   name: 'hire_date',        label: 'Fecha de Ingreso',    required: true },
-    { type: 'text' as const,   name: 'salary_usd',       label: 'Salario Mensual (USD) — solo fijos' },
-    { type: 'text' as const,   name: 'base_jornal_usd',  label: 'Jornal Diario (USD) — jornaleros' },
-    { type: 'text' as const,   name: 'base_destajo_usd', label: 'Tarifa por Unidad (USD) — destajeros' },
-    { type: 'text' as const,   name: 'bank_name',        label: 'Banco' },
-    { type: 'text' as const,   name: 'bank_account',     label: 'Número de Cuenta' },
+    { type: 'text' as const,   id: 'department',       label: 'Departamento' },
+    { type: 'text' as const,   id: 'position',         label: 'Cargo' },
+    { type: 'date' as const,   id: 'hire_date',        label: 'Fecha de Ingreso',    required: true },
+    { type: 'text' as const,   id: 'salary_usd',       label: 'Salario Mensual (USD) — solo fijos' },
+    { type: 'text' as const,   id: 'base_jornal_usd',  label: 'Jornal Diario (USD) — jornaleros' },
+    { type: 'text' as const,   id: 'base_destajo_usd', label: 'Tarifa por Unidad (USD) — destajeros' },
+    { type: 'text' as const,   id: 'bank_name',        label: 'Banco' },
+    { type: 'text' as const,   id: 'bank_account',     label: 'Número de Cuenta' },
   ]
 
   const TYPE_FILTERS = [
@@ -114,17 +114,17 @@ export default function AgriHrPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.first_name} ${editing.last_name}` : 'Nuevo Personal'}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_hr.employee"
               apiPath="/api/agri-hr/employees"
               mode={editing ? 'edit' : 'create'}
               initial={editing ?? undefined}
               fields={employeeFormFields}
               groups={[
-                { id: 'personal',  label: 'Datos Personales', fields: ['first_name', 'last_name', 'cedula', 'hire_date'] },
-                { id: 'job',       label: 'Cargo y Tipo',     fields: ['employee_type', 'department', 'position'] },
-                { id: 'pay',       label: 'Remuneración',     fields: ['salary_usd', 'base_jornal_usd', 'base_destajo_usd'] },
-                { id: 'bank',      label: 'Datos Bancarios',  fields: ['bank_name', 'bank_account'] },
+                { id: 'personal',  title: 'Datos Personales', fields: ['first_name', 'last_name', 'cedula', 'hire_date'] },
+                { id: 'job',       title: 'Cargo y Tipo',     fields: ['employee_type', 'department', 'position'] },
+                { id: 'pay',       title: 'Remuneración',     fields: ['salary_usd', 'base_jornal_usd', 'base_destajo_usd'] },
+                { id: 'bank',      title: 'Datos Bancarios',  fields: ['bank_name', 'bank_account'] },
               ]}
               onSuccess={() => { flash(editing ? 'Personal actualizado' : 'Personal registrado', 'success'); setShowForm(false); setEditing(null); load() }}
             />
@@ -132,11 +132,10 @@ export default function AgriHrPage() {
         )}
         <DataTable
           entityId="agri_hr.employee"
-          extensionTableId="agri-hr-employees-list"
           data={employees}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin personal registrado', description: 'Registra el personal fijo, jornaleros y destajeros del sector agropecuario.' }}
+          emptyState="Sin personal registrado"
           stickyActionsColumn
         />
       </PageBody>

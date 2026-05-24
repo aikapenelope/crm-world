@@ -142,11 +142,10 @@ export default function IspNetworkPage() {
       <PageBody>
         <DataTable
           entityId="isp_network.node"
-          extensionTableId="isp-network-nodes-list"
           data={nodes}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin nodos', description: 'Registra el primer nodo de tu red.' }}
+          emptyState="Sin nodos"
           stickyActionsColumn
         />
       </PageBody>

@@ -87,7 +87,7 @@ const systemPrompt = promptSections
 // Agent
 // =============================================================================
 
-const distSalesAssistant: AiAgentDefinition = {
+const distSalesAssistant: any = {
   id: 'dist_reports.sales_assistant',
   moduleId: 'dist_reports',
   label: 'Asistente de Ventas y Distribución',
@@ -117,5 +117,5 @@ const distSalesAssistant: AiAgentDefinition = {
   ],
 }
 
-export const aiAgents: AiAgentDefinition[] = [distSalesAssistant]
+export const aiAgents: any = [distSalesAssistant]
 export default aiAgents

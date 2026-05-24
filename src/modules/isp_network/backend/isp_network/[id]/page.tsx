@@ -32,7 +32,7 @@ export default function EditIspNetworkNodePage() {
   }, [params.id])
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Nodo no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Nodo no encontrado." /></PageBody></Page>
 
   const groups: CrudFormGroup[] = [
     {
@@ -96,7 +96,7 @@ export default function EditIspNetworkNodePage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nodo: {node.name}</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           initialValues={node}
           cancelHref="/backend/isp-network"

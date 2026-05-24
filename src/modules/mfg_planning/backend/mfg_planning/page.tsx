@@ -33,7 +33,7 @@ function getWeekStart(d: Date) {
 }
 
 export default function MfgPlanningPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_planning.page' })
   const [items, setItems]        = React.useState<MpsRow[]>([])
   const [capacity, setCapacity]  = React.useState<CapRow[]>([])
   const [energy, setEnergy]      = React.useState<EnergyRow[]>([])
@@ -62,8 +62,8 @@ export default function MfgPlanningPage() {
 
   const handleConfirm = (item: MpsRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_planning.schedule', recordId: item.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_planning.schedule', recordId: item.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-planning/master-schedule', { method: 'PUT', body: JSON.stringify({ id: item.id, status: 'confirmed' }) })
         flash(`MPS ${item.schedule_number} confirmado`, 'success')
         load()
@@ -193,14 +193,14 @@ export default function MfgPlanningPage() {
         {showEnergyForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Registrar Ventana Energética (patrón CORPOELEC)</h3>
-            <CrudForm entityId="mfg_planning.energy_window" apiPath="/api/mfg-planning/energy-windows" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_planning.energy_window" apiPath="/api/mfg-planning/energy-windows" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'zone',             label: 'Zona / Municipio (ej: Zona Industrial Tejerías)', required: true },
-                { type: 'select' as const, name: 'day_of_week',      label: 'Día de la semana', required: true, options: [{ value: '0', label: 'Lunes' }, { value: '1', label: 'Martes' }, { value: '2', label: 'Miércoles' }, { value: '3', label: 'Jueves' }, { value: '4', label: 'Viernes' }, { value: '5', label: 'Sábado' }, { value: '6', label: 'Domingo' }] },
-                { type: 'number' as const, name: 'hour_start',       label: 'Hora inicio (0-23)', required: true },
-                { type: 'number' as const, name: 'hour_end',         label: 'Hora fin (0-23)', required: true },
-                { type: 'select' as const, name: 'restriction_type', label: 'Tipo', required: true, options: [{ value: 'restriction', label: 'Corte planificado' }, { value: 'unstable', label: 'Inestable' }, { value: 'reliable', label: 'Confiable' }] },
-                { type: 'text' as const,   name: 'reliability_pct',  label: 'Confiabilidad histórica (%)' },
+                { type: 'text' as const,   id: 'zone',             label: 'Zona / Municipio (ej: Zona Industrial Tejerías)', required: true },
+                { type: 'select' as const, id: 'day_of_week',      label: 'Día de la semana', required: true, options: [{ value: '0', label: 'Lunes' }, { value: '1', label: 'Martes' }, { value: '2', label: 'Miércoles' }, { value: '3', label: 'Jueves' }, { value: '4', label: 'Viernes' }, { value: '5', label: 'Sábado' }, { value: '6', label: 'Domingo' }] },
+                { type: 'number' as const, id: 'hour_start',       label: 'Hora inicio (0-23)', required: true },
+                { type: 'number' as const, id: 'hour_end',         label: 'Hora fin (0-23)', required: true },
+                { type: 'select' as const, id: 'restriction_type', label: 'Tipo', required: true, options: [{ value: 'restriction', label: 'Corte planificado' }, { value: 'unstable', label: 'Inestable' }, { value: 'reliable', label: 'Confiable' }] },
+                { type: 'text' as const,   id: 'reliability_pct',  label: 'Confiabilidad histórica (%)' },
               ]}
               onSuccess={() => { flash('Ventana energética registrada', 'success'); setEF(false); load() }}
             />
@@ -211,18 +211,18 @@ export default function MfgPlanningPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Agregar Ítem al MPS</h3>
-            <CrudForm entityId="mfg_planning.schedule" apiPath="/api/mfg-planning/master-schedule" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_planning.schedule" apiPath="/api/mfg-planning/master-schedule" mode="create"
               initial={{ week_start: weekFilter, week_end: weekEnd.toISOString().split('T')[0] }}
               fields={[
-                { type: 'text' as const,   name: 'schedule_number',  label: 'N° MPS (MPS-2026-W23-XXX)', required: true },
-                { type: 'text' as const,   name: 'product_code',     label: 'Código de Producto', required: true },
-                { type: 'text' as const,   name: 'product_name',     label: 'Nombre del Producto', required: true },
-                { type: 'text' as const,   name: 'planned_quantity', label: 'Cantidad Planificada', required: true },
-                { type: 'text' as const,   name: 'uom',              label: 'Unidad', required: true },
-                { type: 'select' as const, name: 'work_center_id',   label: 'Línea / Centro de Trabajo', options: wcOptions },
-                { type: 'number' as const, name: 'priority',         label: 'Prioridad (1-100)' },
-                { type: 'datetime-local' as const, name: 'planned_start', label: 'Inicio planificado' },
-                { type: 'datetime-local' as const, name: 'planned_end',   label: 'Fin planificado' },
+                { type: 'text' as const,   id: 'schedule_number',  label: 'N° MPS (MPS-2026-W23-XXX)', required: true },
+                { type: 'text' as const,   id: 'product_code',     label: 'Código de Producto', required: true },
+                { type: 'text' as const,   id: 'product_name',     label: 'Nombre del Producto', required: true },
+                { type: 'text' as const,   id: 'planned_quantity', label: 'Cantidad Planificada', required: true },
+                { type: 'text' as const,   id: 'uom',              label: 'Unidad', required: true },
+                { type: 'select' as const, id: 'work_center_id',   label: 'Línea / Centro de Trabajo', options: wcOptions },
+                { type: 'number' as const, id: 'priority',         label: 'Prioridad (1-100)' },
+                { type: 'datetime-local' as const, id: 'planned_start', label: 'Inicio planificado' },
+                { type: 'datetime-local' as const, id: 'planned_end',   label: 'Fin planificado' },
               ]}
               onSuccess={() => { flash('Ítem MPS agregado', 'success'); setForm(false); load() }}
             />
@@ -233,16 +233,16 @@ export default function MfgPlanningPage() {
         {capacity.length > 0 && (
           <div className="mb-6">
             <h3 className="text-sm font-semibold mb-3">Carga de Capacidad — Semana</h3>
-            <DataTable entityId="mfg_planning.capacity" extensionTableId="mfg-planning-capacity" data={capacity} columns={capCols} isLoading={isLoading}
-              emptyState={{ title: 'Sin datos de capacidad' }} />
+            <DataTable entityId="mfg_planning.capacity" data={capacity} columns={capCols} isLoading={isLoading}
+              emptyState="Sin datos de capacidad" />
           </div>
         )}
 
         {/* MPS items */}
         <div>
           <h3 className="text-sm font-semibold mb-3">Ítems del MPS ({items.length})</h3>
-          <DataTable entityId="mfg_planning.schedule" extensionTableId="mfg-planning-mps" data={items} columns={mpsCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin ítems en el MPS esta semana', description: 'Agrega órdenes al plan maestro o carga desde el MRP.' }}
+          <DataTable entityId="mfg_planning.schedule" data={items} columns={mpsCols} isLoading={isLoading}
+            emptyState="Sin ítems en el MPS esta semana"
             stickyActionsColumn />
         </div>
       </PageBody>

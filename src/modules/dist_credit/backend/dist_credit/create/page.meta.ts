@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_credit.manage_limits'],
   pageTitle: 'Asignar Crédito',
   pageTitleKey: 'dist_credit.create.title',
-  hidden: true,
+  navHidden: true,
 }

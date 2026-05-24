@@ -37,5 +37,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/isp-technicians/work-orders',
   },
+]
 
 export default notificationTypes

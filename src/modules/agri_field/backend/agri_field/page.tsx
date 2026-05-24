@@ -21,7 +21,7 @@ const STATUS_LABEL: Record<string, string> = { planned: 'Planificado', active: '
 const DEST_LABEL: Record<string, string> = { own_feed: 'Alimento propio', sale: 'Venta', storage: 'Almacenamiento' }
 
 export default function AgriFieldPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_field.page' })
   const [cycles, setCycles]       = React.useState<CycleRow[]>([])
   const [plots, setPlots]         = React.useState<{ value: string; label: string }[]>([])
   const [isLoading, setLoading]   = React.useState(true)
@@ -46,9 +46,8 @@ export default function AgriFieldPage() {
 
   const handleHarvest = (cycle: CycleRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_field.cycle', recordId: cycle.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-field/crop-cycles', { method: 'PUT', body: JSON.stringify({ id: cycle.id, status: 'harvested', actual_harvest_date: new Date().toISOString().split('T')[0] }) })
         flash('Ciclo marcado como cosechado', 'success')
         load()
@@ -105,22 +104,22 @@ export default function AgriFieldPage() {
         {showPlotForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar Parcela Agrícola</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_field.plot"
               apiPath="/api/agri-field/field-plots"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'name',              label: 'Nombre de la Parcela', required: true },
-                { type: 'text' as const,   name: 'area_hectares',     label: 'Área (hectáreas)',      required: true },
-                { type: 'select' as const, name: 'irrigation_system', label: 'Sistema de Riego',
+                { type: 'text' as const,   id: 'name',              label: 'Nombre de la Parcela', required: true },
+                { type: 'text' as const,   id: 'area_hectares',     label: 'Área (hectáreas)',      required: true },
+                { type: 'select' as const, id: 'irrigation_system', label: 'Sistema de Riego',
                   options: [
                     { value: 'drip', label: 'Goteo' }, { value: 'sprinkler', label: 'Aspersión' },
                     { value: 'flood', label: 'Gravedad/Inundación' }, { value: 'rainfed', label: 'Solo lluvia' },
                   ]},
-                { type: 'text' as const,   name: 'soil_type',         label: 'Tipo de Suelo' },
-                { type: 'text' as const,   name: 'location_gps',      label: 'GPS (lat,lng)' },
+                { type: 'text' as const,   id: 'soil_type',         label: 'Tipo de Suelo' },
+                { type: 'text' as const,   id: 'location_gps',      label: 'GPS (lat,lng)' },
               ]}
-              groups={[{ id: 'general', label: 'General', fields: ['name', 'area_hectares', 'irrigation_system', 'soil_type', 'location_gps'] }]}
+              groups={[{ id: 'general', title: 'General', fields: ['name', 'area_hectares', 'irrigation_system', 'soil_type', 'location_gps'] }]}
               onSuccess={() => { flash('Parcela registrada', 'success'); setPlotForm(false); load() }}
             />
           </div>
@@ -129,33 +128,33 @@ export default function AgriFieldPage() {
         {showCycleForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nuevo Ciclo de Cultivo</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_field.cycle"
               apiPath="/api/agri-field/crop-cycles"
               mode="create"
               fields={[
-                { type: 'select' as const, name: 'field_plot_id',         label: 'Parcela',             required: true, options: plots },
-                { type: 'select' as const, name: 'crop_type',             label: 'Cultivo',             required: true,
+                { type: 'select' as const, id: 'field_plot_id',         label: 'Parcela',             required: true, options: plots },
+                { type: 'select' as const, id: 'crop_type',             label: 'Cultivo',             required: true,
                   options: [
                     { value: 'maize', label: 'Maíz' }, { value: 'soybean', label: 'Soya' },
                     { value: 'sorghum', label: 'Sorgo' }, { value: 'sunflower', label: 'Girasol' }, { value: 'other', label: 'Otro' },
                   ]},
-                { type: 'text' as const,   name: 'crop_variety',          label: 'Variedad / Híbrido' },
-                { type: 'date' as const,   name: 'planting_date',         label: 'Fecha de Siembra',   required: true },
-                { type: 'date' as const,   name: 'expected_harvest_date', label: 'Cosecha Estimada' },
-                { type: 'text' as const,   name: 'expected_yield_tons_ha', label: 'Rendimiento Esperado (ton/ha)' },
-                { type: 'select' as const, name: 'destination',           label: 'Destino',
+                { type: 'text' as const,   id: 'crop_variety',          label: 'Variedad / Híbrido' },
+                { type: 'date' as const,   id: 'planting_date',         label: 'Fecha de Siembra',   required: true },
+                { type: 'date' as const,   id: 'expected_harvest_date', label: 'Cosecha Estimada' },
+                { type: 'text' as const,   id: 'expected_yield_tons_ha', label: 'Rendimiento Esperado (ton/ha)' },
+                { type: 'select' as const, id: 'destination',           label: 'Destino',
                   options: [
                     { value: 'own_feed', label: 'Alimento propio' },
                     { value: 'sale', label: 'Venta' },
                     { value: 'storage', label: 'Almacenamiento' },
                   ]},
-                { type: 'textarea' as const, name: 'notes', label: 'Notas' },
+                { type: 'textarea' as const, id: 'notes', label: 'Notas' },
               ]}
               groups={[
-                { id: 'general',  label: 'General',   fields: ['field_plot_id', 'crop_type', 'crop_variety'] },
-                { id: 'schedule', label: 'Fechas',    fields: ['planting_date', 'expected_harvest_date'] },
-                { id: 'yield',    label: 'Producción', fields: ['expected_yield_tons_ha', 'destination', 'notes'] },
+                { id: 'general',  title: 'General',   fields: ['field_plot_id', 'crop_type', 'crop_variety'] },
+                { id: 'schedule', title: 'Fechas',    fields: ['planting_date', 'expected_harvest_date'] },
+                { id: 'yield',    title: 'Producción', fields: ['expected_yield_tons_ha', 'destination', 'notes'] },
               ]}
               onSuccess={() => { flash('Ciclo de cultivo creado', 'success'); setCycleForm(false); load() }}
             />
@@ -164,11 +163,10 @@ export default function AgriFieldPage() {
 
         <DataTable
           entityId="agri_field.cycle"
-          extensionTableId="agri-field-cycles-list"
           data={cycles}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin ciclos de cultivo', description: 'Registra las parcelas y luego inicia un ciclo de cultivo.' }}
+          emptyState="Sin ciclos de cultivo"
           stickyActionsColumn
         />
       </PageBody>

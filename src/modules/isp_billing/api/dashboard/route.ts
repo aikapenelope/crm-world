@@ -21,9 +21,9 @@ export async function GET(_request: Request, ctx: any) {
       .selectFrom('isp_invoices')
       .select([
         'status',
-        kysely.fn.count<number>('id').as('count'),
-        kysely.fn.sum<string>('total_usd').as('total_usd'),
-        kysely.fn.sum<string>('balance_usd').as('balance_usd'),
+        kysely.fn.count('id').as('count'),
+        kysely.fn.sum('total_usd').as('total_usd'),
+        kysely.fn.sum('balance_usd').as('balance_usd'),
       ])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
@@ -35,8 +35,8 @@ export async function GET(_request: Request, ctx: any) {
       .selectFrom('isp_payments')
       .select([
         'payment_method',
-        kysely.fn.count<number>('id').as('count'),
-        kysely.fn.sum<string>('amount_usd').as('total_usd'),
+        kysely.fn.count('id').as('count'),
+        kysely.fn.sum('amount_usd').as('total_usd'),
       ])
       .where('tenant_id', '=', scope.tenantId)
       .where('created_at', '>=', firstDayOfMonth.toISOString())
@@ -47,9 +47,9 @@ export async function GET(_request: Request, ctx: any) {
     kysely
       .selectFrom('isp_invoices')
       .select([
-        kysely.fn.sum<string>('total_usd').as('billed_usd'),
-        kysely.fn.sum<string>('paid_amount_usd').as('collected_usd'),
-        kysely.fn.sum<string>('balance_usd').as('pending_usd'),
+        kysely.fn.sum('total_usd').as('billed_usd'),
+        kysely.fn.sum('paid_amount_usd').as('collected_usd'),
+        kysely.fn.sum('balance_usd').as('pending_usd'),
       ])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)

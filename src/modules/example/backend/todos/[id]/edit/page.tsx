@@ -37,12 +37,12 @@ export default function EditTodoPage({ params }: { params?: { id?: string } }) {
     { id: 'cf_blocked', label: t('example.todos.table.column.blocked'), type: 'checkbox' },
   ], [t])
   const groups = React.useMemo<CrudFormGroup[]>(() => [
-    { id: 'details', title: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },
-    { id: 'status', title: t('example.todos.form.groups.status'), column: 2, fields: ['is_done', 'cf_blocked'] },
-    { id: 'attributes', title: t('example.todos.form.groups.attributes'), column: 1, kind: 'customFields' },
+    { id: 'details', label: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },
+    { id: 'status', label: t('example.todos.form.groups.status'), column: 2, fields: ['is_done', 'cf_blocked'] },
+    { id: 'attributes', label: t('example.todos.form.groups.attributes'), column: 1, kind: 'customFields' },
     {
       id: 'actions',
-      title: t('example.todos.form.groups.actions'),
+      label: t('example.todos.form.groups.actions'),
       column: 2,
       component: ({ setValue }) => (
         <div className="flex items-center gap-2">

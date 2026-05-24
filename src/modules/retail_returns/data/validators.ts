@@ -40,7 +40,7 @@ export const createPolicySchema = z.object({
   requires_original_packaging: z.boolean().default(false),
   refund_method: z.enum(['original', 'credit_note', 'store_credit', 'cash']).default('credit_note'),
   restocking_fee_percent: z.string().default('0.00'),
-  conditions: z.record(z.unknown()).nullable().optional(),
+  conditions: z.record(z.string(), z.unknown()).nullable().optional(),
 })
 
 export const listPolicySchema = z.object({

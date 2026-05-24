@@ -24,7 +24,7 @@ const STATUS_LABEL: Record<string, string> = {
 }
 
 export default function SaleInvoicesPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_sales.page' })
   const [invoices, setInvoices] = React.useState<InvoiceRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('')
@@ -42,9 +42,8 @@ export default function SaleInvoicesPage() {
 
   const handleMarkPaid = (inv: InvoiceRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_sales.invoice', recordId: inv.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-sales/sale-invoices', {
           method: 'PUT',
           body: JSON.stringify({ id: inv.id, status: 'paid', paid_amount_usd: inv.total_usd, paid_at: new Date().toISOString() }),
@@ -122,11 +121,10 @@ export default function SaleInvoicesPage() {
       <PageBody>
         <DataTable
           entityId="agri_sales.invoice"
-          extensionTableId="agri-sales-invoices-list"
           data={invoices}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin facturas', description: 'Las facturas se generan desde el detalle de una orden de venta.' }}
+          emptyState="Sin facturas"
           stickyActionsColumn
         />
       </PageBody>

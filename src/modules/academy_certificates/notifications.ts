@@ -17,5 +17,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/academy-certificates',
   },
+]
 
 export default notificationTypes

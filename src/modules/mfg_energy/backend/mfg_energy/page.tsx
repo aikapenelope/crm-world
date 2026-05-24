@@ -21,7 +21,7 @@ const SOURCE_LABEL: Record<string, string> = { grid: '⚡ Red CORPOELEC', genera
 const SHIFT_LABEL: Record<string, string> = { morning: 'Mañana', afternoon: 'Tarde', night: 'Noche' }
 
 export default function MfgEnergyPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_energy.page' })
   const [outages, setOutages]  = React.useState<OutageRow[]>([])
   const [consums, setConsums]  = React.useState<ConsumRow[]>([])
   const [isLoading, setLoad]   = React.useState(true)
@@ -44,8 +44,8 @@ export default function MfgEnergyPage() {
 
   const handleEndOutage = (outage: OutageRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_energy.outage', recordId: outage.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_energy.outage', recordId: outage.id },
+      operation: async () => {
         const now     = new Date().toISOString()
         const durationMs = Date.now() - new Date(outage.started_at).getTime()
         const durationHrs = (durationMs / 3600000).toFixed(4)
@@ -177,22 +177,22 @@ export default function MfgEnergyPage() {
         {showOutageForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><ZapOff className="size-4" /> Registrar Corte Eléctrico</h3>
-            <CrudForm entityId="mfg_energy.outage" apiPath="/api/mfg-energy/power-outages" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_energy.outage" apiPath="/api/mfg-energy/power-outages" mode="create"
               initial={{ started_at: new Date().toISOString().slice(0, 16) }}
               fields={[
-                { type: 'select' as const, name: 'outage_type', label: 'Tipo de corte', required: true, options: [
+                { type: 'select' as const, id: 'outage_type', label: 'Tipo de corte', required: true, options: [
                   { value: 'unscheduled_cut', label: 'Corte no programado (CORPOELEC)' },
                   { value: 'scheduled_restriction', label: 'Restricción programada (CORPOELEC)' },
                   { value: 'voltage_fluctuation', label: 'Fluctuación de voltaje' },
                   { value: 'complete_blackout', label: 'Apagón total' },
                 ]},
-                { type: 'datetime-local' as const, name: 'started_at', label: 'Hora de inicio del corte', required: true },
-                { type: 'datetime-local' as const, name: 'ended_at',   label: 'Hora de fin (dejar vacío si sigue activo)' },
-                { type: 'text' as const, name: 'zone', label: 'Zona CORPOELEC (opcional)' },
-                { type: 'text' as const, name: 'impact_production_hrs_lost', label: 'Horas de producción perdidas' },
-                { type: 'text' as const, name: 'products_affected', label: 'Líneas / productos afectados' },
-                { type: 'text' as const, name: 'generator_fuel_liters', label: 'Litros de combustible en generador' },
-                { type: 'text' as const, name: 'fuel_cost_usd', label: 'Costo del combustible (USD)' },
+                { type: 'datetime-local' as const, id: 'started_at', label: 'Hora de inicio del corte', required: true },
+                { type: 'datetime-local' as const, id: 'ended_at',   label: 'Hora de fin (dejar vacío si sigue activo)' },
+                { type: 'text' as const, id: 'zone', label: 'Zona CORPOELEC (opcional)' },
+                { type: 'text' as const, id: 'impact_production_hrs_lost', label: 'Horas de producción perdidas' },
+                { type: 'text' as const, id: 'products_affected', label: 'Líneas / productos afectados' },
+                { type: 'text' as const, id: 'generator_fuel_liters', label: 'Litros de combustible en generador' },
+                { type: 'text' as const, id: 'fuel_cost_usd', label: 'Costo del combustible (USD)' },
               ]}
               onSuccess={() => { flash('Corte registrado', 'info'); setOF(false); load() }}
             />
@@ -203,18 +203,18 @@ export default function MfgEnergyPage() {
         {showConsumForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Zap className="size-4" /> Registrar Consumo Eléctrico</h3>
-            <CrudForm entityId="mfg_energy.consumption" apiPath="/api/mfg-energy/energy-consumption" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_energy.consumption" apiPath="/api/mfg-energy/energy-consumption" mode="create"
               initial={{ record_date: new Date().toISOString().split('T')[0], shift_type: 'morning', energy_source: 'grid' }}
               fields={[
-                { type: 'date' as const,   name: 'record_date',           label: 'Fecha', required: true },
-                { type: 'select' as const, name: 'shift_type',            label: 'Turno', required: true, options: [{ value: 'morning', label: 'Mañana' }, { value: 'afternoon', label: 'Tarde' }, { value: 'night', label: 'Noche' }] },
-                { type: 'text' as const,   name: 'work_center_code',      label: 'Código de línea/equipo', required: true },
-                { type: 'text' as const,   name: 'work_center_name',      label: 'Nombre de la línea', required: true },
-                { type: 'text' as const,   name: 'kwh_consumed',          label: 'kWh consumidos', required: true },
-                { type: 'select' as const, name: 'energy_source',         label: 'Fuente', required: true, options: [{ value: 'grid', label: '⚡ Red CORPOELEC' }, { value: 'generator', label: '🔋 Generador propio' }, { value: 'mixed', label: '⚡+🔋 Mixto' }] },
-                { type: 'text' as const,   name: 'generator_hrs',         label: 'Horas en generador (si aplica)' },
-                { type: 'text' as const,   name: 'cost_per_kwh_usd',      label: 'Tarifa USD/kWh' },
-                { type: 'text' as const,   name: 'generator_fuel_cost_usd', label: 'Costo combustible generador (USD)' },
+                { type: 'date' as const,   id: 'record_date',           label: 'Fecha', required: true },
+                { type: 'select' as const, id: 'shift_type',            label: 'Turno', required: true, options: [{ value: 'morning', label: 'Mañana' }, { value: 'afternoon', label: 'Tarde' }, { value: 'night', label: 'Noche' }] },
+                { type: 'text' as const,   id: 'work_center_code',      label: 'Código de línea/equipo', required: true },
+                { type: 'text' as const,   id: 'work_center_name',      label: 'Nombre de la línea', required: true },
+                { type: 'text' as const,   id: 'kwh_consumed',          label: 'kWh consumidos', required: true },
+                { type: 'select' as const, id: 'energy_source',         label: 'Fuente', required: true, options: [{ value: 'grid', label: '⚡ Red CORPOELEC' }, { value: 'generator', label: '🔋 Generador propio' }, { value: 'mixed', label: '⚡+🔋 Mixto' }] },
+                { type: 'text' as const,   id: 'generator_hrs',         label: 'Horas en generador (si aplica)' },
+                { type: 'text' as const,   id: 'cost_per_kwh_usd',      label: 'Tarifa USD/kWh' },
+                { type: 'text' as const,   id: 'generator_fuel_cost_usd', label: 'Costo combustible generador (USD)' },
               ]}
               onSuccess={() => { flash('Consumo registrado', 'success'); setCF(false); load() }}
             />
@@ -228,13 +228,13 @@ export default function MfgEnergyPage() {
         </div>
 
         {activeTab === 'outages' && (
-          <DataTable entityId="mfg_energy.outage" extensionTableId="mfg-energy-outages" data={outages} columns={outageCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin cortes registrados', description: 'Registra los cortes de CORPOELEC para analizar su impacto en producción.' }}
+          <DataTable entityId="mfg_energy.outage" data={outages} columns={outageCols} isLoading={isLoading}
+            emptyState="Sin cortes registrados"
             stickyActionsColumn />
         )}
         {activeTab === 'consumption' && (
-          <DataTable entityId="mfg_energy.consumption" extensionTableId="mfg-energy-consumption" data={consums} columns={consumCols} isLoading={isLoading}
-            emptyState={{ title: 'Sin registros de consumo', description: 'Registra el consumo eléctrico por turno para calcular el costo energético por unidad producida.' }} />
+          <DataTable entityId="mfg_energy.consumption" data={consums} columns={consumCols} isLoading={isLoading}
+            emptyState="Sin registros de consumo" />
         )}
       </PageBody>
     </Page>

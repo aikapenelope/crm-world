@@ -98,11 +98,10 @@ export default function CommissionsPage() {
       <PageBody>
         <DataTable
           entityId="isp_sales.commission"
-          extensionTableId="isp-commissions-list"
           data={commissions}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin comisiones', description: 'Las comisiones se generan cuando se activa un abonado.' }}
+          emptyState="Sin comisiones"
         />
       </PageBody>
     </Page>

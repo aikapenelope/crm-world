@@ -15,7 +15,7 @@ import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, Trash2, CheckCircle, GitBranch } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'ready'
@@ -41,7 +41,7 @@ const COMP_TYPE_VARIANT: Record<string, 'neutral' | 'info' | 'warning' | 'succes
 export default function BomDetailPage() {
   const params = useParams<{ id: string }>()
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_bom.page' })
 
   const [state, setState]         = React.useState<PageState>('loading')
   const [bom, setBom]             = React.useState<any>(null)
@@ -76,9 +76,8 @@ export default function BomDetailPage() {
 
   const handleDeleteLine = (line: BomLine) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_bom.line', recordId: line.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-bom/bom-lines', {
           method: 'DELETE',
           body: JSON.stringify({ id: line.id }),
@@ -148,7 +147,7 @@ export default function BomDetailPage() {
       id: 'actions',
       cell: ({ row }) => bom?.status === 'draft' ? (
         <RowActions items={[
-          { id: 'delete', label: 'Eliminar componente', variant: 'destructive' as const, onSelect: () => handleDeleteLine(row.original) },
+          { id: 'delete', label: 'Eliminar componente'as const, onSelect: () => handleDeleteLine(row.original) },
         ]} />
       ) : null,
     },
@@ -160,7 +159,7 @@ export default function BomDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-bom')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> BOMs
       </Button>
-      <ErrorMessage message="BOM no encontrado." />
+      <ErrorMessage label="BOM no encontrado." />
     </PageBody></Page>
   )
 
@@ -219,31 +218,31 @@ export default function BomDetailPage() {
         {showAddLine && isEditable && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Agregar Componente al BOM</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_bom.line"
               apiPath="/api/mfg-bom/bom-lines"
               mode="create"
               initial={{ bom_id: params.id, line_number: lines.length + 1 }}
               fields={[
-                { type: 'text' as const,   name: 'component_code',   label: 'Código del Componente', required: true },
-                { type: 'text' as const,   name: 'component_name',   label: 'Nombre del Componente', required: true },
-                { type: 'select' as const, name: 'component_type',   label: 'Tipo de Componente', required: true,
+                { type: 'text' as const,   id: 'component_code',   label: 'Código del Componente', required: true },
+                { type: 'text' as const,   id: 'component_name',   label: 'Nombre del Componente', required: true },
+                { type: 'select' as const, id: 'component_type',   label: 'Tipo de Componente', required: true,
                   options: [
                     { value: 'raw_material', label: 'Materia Prima' },
                     { value: 'packaging',    label: 'Material de Empaque' },
                     { value: 'subassembly',  label: 'Subconjunto (tiene su propio BOM)' },
                     { value: 'consumable',   label: 'Consumible de proceso' },
                   ]},
-                { type: 'text' as const,   name: 'quantity',         label: 'Cantidad por base del BOM', required: true },
-                { type: 'text' as const,   name: 'uom',              label: 'Unidad de Medida', required: true },
-                { type: 'text' as const,   name: 'scrap_pct',        label: 'Merma del proceso (%)' },
-                { type: 'number' as const, name: 'lead_offset_days', label: 'Días de anticipación para solicitar' },
-                { type: 'textarea' as const, name: 'notes',          label: 'Notas / Especificaciones' },
+                { type: 'text' as const,   id: 'quantity',         label: 'Cantidad por base del BOM', required: true },
+                { type: 'text' as const,   id: 'uom',              label: 'Unidad de Medida', required: true },
+                { type: 'text' as const,   id: 'scrap_pct',        label: 'Merma del proceso (%)' },
+                { type: 'number' as const, id: 'lead_offset_days', label: 'Días de anticipación para solicitar' },
+                { type: 'textarea' as const, id: 'notes',          label: 'Notas / Especificaciones' },
               ]}
               groups={[
-                { id: 'component', label: 'Componente',   fields: ['component_code', 'component_name', 'component_type'] },
-                { id: 'quantity',  label: 'Cantidad',     fields: ['quantity', 'uom', 'scrap_pct', 'lead_offset_days'] },
-                { id: 'notes',     label: 'Notas',        fields: ['notes'] },
+                { id: 'component', title: 'Componente',   fields: ['component_code', 'component_name', 'component_type'] },
+                { id: 'quantity',  title: 'Cantidad',     fields: ['quantity', 'uom', 'scrap_pct', 'lead_offset_days'] },
+                { id: 'notes',     title: 'Notas',        fields: ['notes'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/mfg-bom/bom-lines', {
@@ -276,14 +275,10 @@ export default function BomDetailPage() {
           <h3 className="text-sm font-semibold mb-3">Componentes ({lines.length})</h3>
           <DataTable
             entityId="mfg_bom.line"
-            extensionTableId="mfg-bom-lines"
             data={lines}
             columns={lineColumns}
             isLoading={false}
-            emptyState={{
-              title: 'Sin componentes',
-              description: 'Agrega los materiales necesarios para fabricar este producto.',
-            }}
+            emptyState="Sin componentes"
             stickyActionsColumn
           />
         </div>

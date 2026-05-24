@@ -32,10 +32,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.entry_type) lines.push(String(r.entry_type))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.description) ?? 'Description',
-          subtitle: ((norm(r.category) ?? '') + ' · ' + (norm(r.entry_type) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.description as string) as string | undefined) ?? 'Description',
+          subtitle: ((norm(r.category as string) ?? '') + ' · ' + (norm(r.entry_type as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'dollar-sign',
-          badge: norm(r.entry_type) ?? undefined,
+          badge: (norm(r.entry_type as string) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -48,10 +48,10 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.description) ?? 'Description',
-          subtitle: norm(r.category) ?? undefined,
+          title: (norm(r.description as string) as string | undefined) ?? 'Description',
+          subtitle: (norm(r.category as string) as string | undefined) ?? undefined,
           icon: 'dollar-sign',
-          badge: norm(r.entry_type) ?? undefined,
+          badge: (norm(r.entry_type as string) as string | undefined) ?? undefined,
         }
       },
 

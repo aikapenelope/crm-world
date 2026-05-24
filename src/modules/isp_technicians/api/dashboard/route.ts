@@ -11,18 +11,18 @@ export async function GET(_request: Request, ctx: any) {
 
   const [woByStatus, techStatus, todayOts] = await Promise.all([
     kysely.selectFrom('isp_work_orders')
-      .select(['status', kysely.fn.count<number>('id').as('count')])
+      .select(['status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .groupBy('status').execute(),
 
     kysely.selectFrom('isp_field_technicians')
-      .select(['status', kysely.fn.count<number>('id').as('count')])
+      .select(['status', kysely.fn.count('id').as('count')])
       .where('tenant_id', '=', scope.tenantId)
       .where('deleted_at', 'is', null)
       .groupBy('status').execute(),
 
     kysely.selectFrom('isp_work_orders')
-      .select(kysely.fn.count<number>('id').as('count'))
+      .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .where('scheduled_date', '=', today)
       .where('status', 'in', ['scheduled', 'in_progress'])

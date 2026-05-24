@@ -75,7 +75,7 @@ export default function CreateValuationPage() {
     const currentPeriod = lines.reduce((s, l) => {
       return s + Number(l.curr_qty) * Number(l.item.unit_cost)
     }, 0)
-    const selectedProject = projects.find((p) => p.project_id === form.project_id) ??
+    const selectedProject = projects.find((p) => p.id === form.project_id) ??
       projects.find((p) => p.id === form.project_id)
     const retPct = Number(form.retention_percent) / 100
     const retention = currentPeriod * retPct
@@ -114,7 +114,7 @@ export default function CreateValuationPage() {
     })
 
     if (!result.ok) {
-      flash({ type: 'error', message: 'Error al crear la valuación' })
+      flash('Error al crear la valuación', 'error')
       setIsSubmitting(false)
       return
     }
@@ -148,7 +148,7 @@ export default function CreateValuationPage() {
       })
     }
 
-    flash({ type: 'success', message: 'Valuación creada exitosamente' })
+    flash('Valuación creada exitosamente', 'success')
     router.push('/backend/const_progress')
     setIsSubmitting(false)
   }

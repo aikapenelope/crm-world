@@ -150,11 +150,10 @@ export default function IspSupportPage() {
       <PageBody>
         <DataTable
           entityId="isp_support.ticket"
-          extensionTableId="isp-tickets-list"
           data={tickets}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin tickets', description: 'Crea el primer ticket de soporte.' }}
+          emptyState="Sin tickets"
           stickyActionsColumn
         />
       </PageBody>

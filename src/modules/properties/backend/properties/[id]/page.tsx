@@ -122,7 +122,7 @@ export default function PropertyDetailPage() {
                   }`}
                 >
                   <Icon className="h-4 w-4" />
-                  {tab.label}
+                  {((tab as any).title ?? (tab as any).label)}
                 </button>
               )
             })}
@@ -252,7 +252,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     <CrudForm
       title=""
       backHref=""
-      fields={[]}
+      fields={[] as any[]}
       groups={groups}
       submitLabel="Guardar cambios"
       cancelHref="/backend/properties"

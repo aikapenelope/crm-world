@@ -29,7 +29,7 @@ const SPECIES_LABEL: Record<string, string> = {
 
 export default function VaccinationProgramsPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_vet.page' })
   const [programs, setPrograms]  = React.useState<ProgramRow[]>([])
   const [isLoading, setLoading]  = React.useState(true)
   const [showForm, setShowForm]  = React.useState(false)
@@ -49,9 +49,8 @@ export default function VaccinationProgramsPage() {
 
   const handleToggle = (prog: ProgramRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_vet.vaccination_program', recordId: prog.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-vet/vaccination-programs', {
           method: 'PUT',
           body: JSON.stringify({ id: prog.id, is_active: !prog.is_active }),
@@ -148,13 +147,13 @@ export default function VaccinationProgramsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Crear Programa de Vacunación</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_vet.vaccination_program"
               apiPath="/api/agri-vet/vaccination-programs"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'name',    label: 'Nombre del Programa', required: true },
-                { type: 'select' as const, name: 'species', label: 'Especie', required: true,
+                { type: 'text' as const,   id: 'name',    label: 'Nombre del Programa', required: true },
+                { type: 'select' as const, id: 'species', label: 'Especie', required: true,
                   options: [
                     { value: 'broiler', label: 'Pollo de Engorde (broiler)' },
                     { value: 'layer',   label: 'Gallina Ponedora' },
@@ -163,10 +162,10 @@ export default function VaccinationProgramsPage() {
                     { value: 'bovine',  label: 'Bovino' },
                     { value: 'all',     label: 'General (todas las especies)' },
                   ]},
-                { type: 'textarea' as const, name: 'notes', label: 'Descripción / referencias del programa' },
+                { type: 'textarea' as const, id: 'notes', label: 'Descripción / referencias del programa' },
               ]}
               groups={[
-                { id: 'info', label: 'Identificación', fields: ['name', 'species', 'notes'] },
+                { id: 'info', title: 'Identificación', fields: ['name', 'species', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Programa creado — ahora agrega las vacunas en el detalle del programa', 'success')
@@ -179,14 +178,10 @@ export default function VaccinationProgramsPage() {
 
         <DataTable
           entityId="agri_vet.vaccination_program"
-          extensionTableId="agri-vet-programs-list"
           data={programs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin programas de vacunación',
-            description: 'Crea el primer programa de vacunación para Ross 308 o Cobb 500. Una vez activo, los nuevos flocks podrán asignarlo para generar el calendario automáticamente.',
-          }}
+          emptyState="Sin programas de vacunación"
           stickyActionsColumn
         />
       </PageBody>

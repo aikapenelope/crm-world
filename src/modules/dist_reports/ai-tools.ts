@@ -16,7 +16,7 @@ const getReceivablesSummary = defineAiTool({
     status: z.enum(['active', 'blocked', 'overdue']).optional().describe('Filter by account status'),
     min_balance: z.number().optional().describe('Minimum outstanding balance in USD'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -67,7 +67,7 @@ const getInventoryStatus = defineAiTool({
     low_stock_only: z.boolean().optional().describe('If true, only return items at or below reorder point'),
     warehouse_code: z.string().optional().describe('Filter by specific warehouse'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -112,7 +112,7 @@ const getDeliveryPerformance = defineAiTool({
     status: z.enum(['pending', 'in_transit', 'completed', 'partial']).optional(),
     limit: z.number().int().min(1).max(50).default(20),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -152,7 +152,7 @@ const getRouteEffectiveness = defineAiTool({
   inputSchema: z.object({
     limit: z.number().int().min(1).max(30).default(20),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -187,7 +187,7 @@ const getCommissionSummary = defineAiTool({
   inputSchema: z.object({
     salesperson_id: z.string().uuid().optional().describe('Filter by specific salesperson'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 

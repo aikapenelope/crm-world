@@ -130,7 +130,7 @@ export default function HaccpPlanDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-quality/haccp')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Planes HACCP
       </Button>
-      <ErrorMessage message="Plan no encontrado." />
+      <ErrorMessage label="Plan no encontrado." />
     </PageBody></Page>
   )
 

@@ -80,7 +80,7 @@ export default function TicketDetailPage() {
   }
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando ticket..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Ticket no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Ticket no encontrado." /></PageBody></Page>
 
   const isOpen = ['open', 'assigned', 'in_progress'].includes(ticket.status)
 

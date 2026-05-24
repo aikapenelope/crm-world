@@ -55,7 +55,7 @@ export default function IspSubscriberDetailPage() {
   }
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando abonado..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Abonado no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Abonado no encontrado." /></PageBody></Page>
 
   const isActive = subscriber.service_status === 'active'
   const isSuspended = ['suspended_overdue', 'suspended_voluntary'].includes(subscriber.service_status)
@@ -147,7 +147,7 @@ export default function IspSubscriberDetailPage() {
 
         {activeTab === 'info' && (
           <CrudForm
-            fields={[]}
+            fields={[] as any[]}
             groups={infoGroups}
             initialValues={subscriber}
             cancelHref="/backend/isp-subscribers"

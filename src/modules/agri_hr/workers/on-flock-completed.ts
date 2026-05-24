@@ -20,7 +20,7 @@
  * via Kysely — never imports foreign entities directly.
  */
 import { AgriProducerSettlementEntity } from '../data/entities'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

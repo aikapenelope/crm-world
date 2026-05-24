@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_credit.view_aging'],
   pageTitle: 'Antigüedad de Saldos',
   pageTitleKey: 'dist_credit.aging.title',
-  hidden: true,
+  navHidden: true,
 }

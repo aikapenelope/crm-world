@@ -37,7 +37,7 @@ function VarianceCell({ value, label }: { value: number; label: string }) {
 }
 
 export default function MfgCostsPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_costs.page' })
   const [variances, setVars]  = React.useState<VarRow[]>([])
   const [isLoading, setLoad]  = React.useState(true)
   const [statusFilter, setSF] = React.useState('calculated')
@@ -58,8 +58,8 @@ export default function MfgCostsPage() {
 
   const handleCalculate = (orderId: string, orderNumber: string) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_costs.variance', recordId: orderId },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_costs.variance', recordId: orderId },
+      operation: async () => {
         const res = await apiCallOrThrow<any>(`/api/mfg-costs/calculate-variances?order_id=${orderId}`, { method: 'POST', body: '{}' })
         const d = res.result?.data
         flash(`Variaciones calculadas para ${orderNumber}: USD ${d?.total_variance_usd} (${d?.favorable ? 'favorable' : 'desfavorable'})`, d?.favorable ? 'success' : 'warning')
@@ -70,8 +70,8 @@ export default function MfgCostsPage() {
 
   const handleApprove = (v: VarRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_costs.variance', recordId: v.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_costs.variance', recordId: v.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-costs/cost-variances', { method: 'PUT', body: JSON.stringify({ id: v.id, status: 'approved' }) })
         flash(`Variaciones de ${v.order_number} aprobadas`, 'success')
         load()
@@ -172,8 +172,8 @@ export default function MfgCostsPage() {
           </div>
         )}
 
-        <DataTable entityId="mfg_costs.variance" extensionTableId="mfg-costs-variances" data={variances} columns={columns} isLoading={isLoading}
-          emptyState={{ title: 'Sin variaciones calculadas', description: 'Cierra órdenes de producción y calcula las variaciones de costo.' }}
+        <DataTable entityId="mfg_costs.variance" data={variances} columns={columns} isLoading={isLoading}
+          emptyState="Sin variaciones calculadas"
           stickyActionsColumn />
       </PageBody>
     </Page>

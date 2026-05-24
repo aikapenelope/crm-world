@@ -105,11 +105,10 @@ export default function IspCpeInventoryPage() {
       <PageBody>
         <DataTable
           entityId="isp_network.cpe"
-          extensionTableId="isp-cpe-list"
           data={items}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin equipos', description: 'Registra tu primer CPE.' }}
+          emptyState="Sin equipos"
           stickyActionsColumn
         />
       </PageBody>

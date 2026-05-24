@@ -67,7 +67,7 @@ export default function CreateCreditLimitPage() {
 
         <CrudForm
           backHref="/backend/dist_credit"
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Asignar Crédito"
           cancelHref="/backend/dist_credit"

@@ -53,8 +53,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: norm(r.name) ?? 'Lead',
-            subtitle: [norm(r.city), SOURCE_LABELS[String(r.source ?? '')] ?? norm(r.source)].filter(Boolean).join(' · ') || undefined,
+            title: (norm(r.name as string) as string | undefined) ?? 'Lead',
+            subtitle: [norm(r.city as string), SOURCE_LABELS[String(r.source ?? '')] ?? norm(r.source as string)].filter(Boolean).join(' · ') || undefined,
             icon: 'trending-up',
             badge: statusLabel,
           },
@@ -67,8 +67,8 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: norm(r.name) ?? 'Lead',
-          subtitle: [norm(r.city), SOURCE_LABELS[String(r.source ?? '')] ?? norm(r.source)].filter(Boolean).join(' · ') || undefined,
+          title: (norm(r.name as string) as string | undefined) ?? 'Lead',
+          subtitle: [norm(r.city as string), SOURCE_LABELS[String(r.source ?? '')] ?? norm(r.source as string)].filter(Boolean).join(' · ') || undefined,
           icon: 'trending-up',
           badge: statusLabel,
         }

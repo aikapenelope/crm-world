@@ -2,5 +2,5 @@ export const metadata = {
   requireCustomerAuth: true,
   requireCustomerFeatures: ['isp_portal.create_ticket'],
   pageTitle: 'Nuevo Ticket',
-  hidden: true,
+  navHidden: true,
 }

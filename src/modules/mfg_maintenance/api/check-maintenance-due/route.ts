@@ -9,8 +9,8 @@
  *   4. Verifica stock de repuestos requeridos para las WOs generadas
  *   5. Emite alertas para repuestos por debajo del safety_stock
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
-import { eventsConfig } from '../events'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
+import { eventsConfig } from '../../events'
 import { v4 } from 'uuid'
 
 export const metadata = {

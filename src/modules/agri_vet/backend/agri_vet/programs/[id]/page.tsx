@@ -132,7 +132,7 @@ export default function VaccinationProgramDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-vet/programs')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Programas
       </Button>
-      <ErrorMessage message="Programa no encontrado." />
+      <ErrorMessage label="Programa no encontrado." />
     </PageBody></Page>
   )
 

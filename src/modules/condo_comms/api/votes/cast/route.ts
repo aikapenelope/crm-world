@@ -4,8 +4,8 @@
  * Emits condo_comms.vote.cast (clientBroadcast: true) so the vote
  * results page shows the live running tally without any polling.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
-import { eventsConfig } from '../../events'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
+import { eventsConfig } from '../../../events'
 
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_comms.view'] },

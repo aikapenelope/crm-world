@@ -20,7 +20,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, CalendarPlus, CheckCircle2, DollarSign, Download } from 'lucide-react'
-import { calendarLinks, dueDateEvent } from '@app/lib/calendar-links'
+import { calendarLinks, dueDateEvent } from '@/lib/calendar-links'
 
 type Receipt = {
   id: string

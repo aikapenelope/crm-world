@@ -8,7 +8,7 @@
  * IGTF: se calcula automáticamente (3%) cuando el método de pago es en divisas
  * (zelle, efectivo_usd, binance, transferencia) o el pago es en USDT.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 import { registerPaymentSchema } from '../../../data/validators'
 

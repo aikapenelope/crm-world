@@ -121,21 +121,21 @@ export default function AgriColdChainPage() {
   ]
 
   const formFields = [
-    { type: 'text' as const,   name: 'name',                 label: 'Nombre',                    required: true },
-    { type: 'select' as const, name: 'unit_type',            label: 'Tipo',                      required: true,
+    { type: 'text' as const,   id: 'name',                 label: 'Nombre',                    required: true },
+    { type: 'select' as const, id: 'unit_type',            label: 'Tipo',                      required: true,
       options: [
         { value: 'chill_room',   label: 'Cuarto Frío (0-4°C)' },
         { value: 'freezer',      label: 'Congelador (-18°C o menos)' },
         { value: 'refrigerator', label: 'Refrigerador (2-8°C)' },
         { value: 'reefer_truck', label: 'Camión Refrigerado' },
       ]},
-    { type: 'text' as const,   name: 'target_temp_min',      label: 'Temp. Mínima Objetivo (°C)', required: true },
-    { type: 'text' as const,   name: 'target_temp_max',      label: 'Temp. Máxima Objetivo (°C)', required: true },
-    { type: 'text' as const,   name: 'capacity_tons',        label: 'Capacidad (toneladas)' },
-    { type: 'text' as const,   name: 'sensor_id',            label: 'ID del Sensor IoT' },
-    { type: 'number' as const, name: 'min_alert_minutes',    label: 'Minutos para alerta (≥15 en Venezuela)' },
-    { type: 'text' as const,   name: 'alert_phone',          label: 'WhatsApp de alertas (+58XXXXXXXXXX)' },
-    { type: 'text' as const,   name: 'location_description', label: 'Descripción de Ubicación' },
+    { type: 'text' as const,   id: 'target_temp_min',      label: 'Temp. Mínima Objetivo (°C)', required: true },
+    { type: 'text' as const,   id: 'target_temp_max',      label: 'Temp. Máxima Objetivo (°C)', required: true },
+    { type: 'text' as const,   id: 'capacity_tons',        label: 'Capacidad (toneladas)' },
+    { type: 'text' as const,   id: 'sensor_id',            label: 'ID del Sensor IoT' },
+    { type: 'number' as const, id: 'min_alert_minutes',    label: 'Minutos para alerta (≥15 en Venezuela)' },
+    { type: 'text' as const,   id: 'alert_phone',          label: 'WhatsApp de alertas (+58XXXXXXXXXX)' },
+    { type: 'text' as const,   id: 'location_description', label: 'Descripción de Ubicación' },
   ]
 
   return (
@@ -168,16 +168,16 @@ export default function AgriColdChainPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">{editing ? `Editar — ${editing.name}` : 'Nueva Unidad de Frío'}</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_cold_chain.storage_unit"
               apiPath="/api/agri-cold-chain/cold-storage-units"
               mode={editing ? 'edit' : 'create'}
               initial={editing ?? undefined}
               fields={formFields}
               groups={[
-                { id: 'general',  label: 'General',        fields: ['name', 'unit_type', 'target_temp_min', 'target_temp_max', 'capacity_tons'] },
-                { id: 'iot',      label: 'Sensor / IoT',   fields: ['sensor_id', 'min_alert_minutes', 'alert_phone'] },
-                { id: 'location', label: 'Ubicación',      fields: ['location_description'] },
+                { id: 'general',  title: 'General',        fields: ['name', 'unit_type', 'target_temp_min', 'target_temp_max', 'capacity_tons'] },
+                { id: 'iot',      title: 'Sensor / IoT',   fields: ['sensor_id', 'min_alert_minutes', 'alert_phone'] },
+                { id: 'location', title: 'Ubicación',      fields: ['location_description'] },
               ]}
               onSuccess={() => { flash(editing ? 'Unidad actualizada' : 'Unidad registrada', 'success'); setShowForm(false); setEditing(null); load() }}
             />
@@ -186,14 +186,10 @@ export default function AgriColdChainPage() {
 
         <DataTable
           entityId="agri_cold_chain.storage_unit"
-          extensionTableId="agri-cold-chain-units-list"
           data={units}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin unidades de frío registradas',
-            description: 'Registra los cuartos fríos para monitorear la cadena de temperatura.',
-          }}
+          emptyState="Sin unidades de frío registradas"
           stickyActionsColumn
         />
       </PageBody>

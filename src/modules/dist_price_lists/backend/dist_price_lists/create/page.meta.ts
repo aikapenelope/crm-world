@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_price_lists.manage'],
   pageTitle: 'Nueva Lista de Precios',
   pageTitleKey: 'dist_price_lists.create.title',
-  hidden: true,
+  navHidden: true,
 }

@@ -26,7 +26,7 @@ const STATUS_LABEL: Record<string, string> = { calculated: 'Calculada', approved
 
 export default function SettlementsPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_hr.page' })
   const [settlements, setSettlements] = React.useState<SettlementRow[]>([])
   const [isLoading, setLoading]       = React.useState(true)
   const [showForm, setShowForm]       = React.useState(false)
@@ -50,9 +50,8 @@ export default function SettlementsPage() {
 
   const handleApprove = (s: SettlementRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.settlement', recordId: s.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/producer-settlements', {
           method: 'PUT',
           body: JSON.stringify({ id: s.id, status: 'approved', approved_at: new Date().toISOString() }),
@@ -65,9 +64,8 @@ export default function SettlementsPage() {
 
   const handlePay = (s: SettlementRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.settlement', recordId: s.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/producer-settlements', {
           method: 'PUT',
           body: JSON.stringify({ id: s.id, status: 'paid', payment_date: new Date().toISOString().split('T')[0] }),
@@ -136,36 +134,36 @@ export default function SettlementsPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Calcular Liquidación de Productor Integrado</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_hr.settlement"
               apiPath="/api/agri-hr/producer-settlements"
               mode="create"
               fields={[
-                { type: 'select' as const, name: 'flock_id',             label: 'Lote de Aves',            required: true, options: flockOptions },
-                { type: 'select' as const, name: 'farm_unit_id',         label: 'Galpón (Productor)',       required: true, options: unitOptions },
-                { type: 'text' as const,   name: 'producer_id',          label: 'ID del Productor (Customer)', required: true },
-                { type: 'date' as const,   name: 'cycle_start_date',     label: 'Inicio del Ciclo',         required: true },
-                { type: 'date' as const,   name: 'cycle_end_date',       label: 'Fin del Ciclo',            required: true },
-                { type: 'number' as const, name: 'initial_birds',        label: 'Aves Iniciales',           required: true },
-                { type: 'number' as const, name: 'final_birds',          label: 'Aves Finales',             required: true },
-                { type: 'text' as const,   name: 'actual_fca',           label: 'FCA Real',                 required: true },
-                { type: 'text' as const,   name: 'actual_avg_weight_kg', label: 'Peso Promedio Real (kg)',  required: true },
-                { type: 'text' as const,   name: 'actual_mortality_pct', label: 'Mortalidad Real (%)',      required: true },
-                { type: 'text' as const,   name: 'target_fca',           label: 'FCA Objetivo (Contrato)',  required: true },
-                { type: 'text' as const,   name: 'target_weight_kg',     label: 'Peso Objetivo (Contrato, kg)', required: true },
-                { type: 'text' as const,   name: 'price_per_kg_usd',     label: 'Precio Base (USD/kg)',     required: true },
-                { type: 'text' as const,   name: 'base_payment_usd',     label: 'Pago Base Calculado (USD)', required: true },
-                { type: 'text' as const,   name: 'fca_bonus_usd',        label: 'Bonus FCA (USD)' },
-                { type: 'text' as const,   name: 'weight_bonus_usd',     label: 'Bonus Peso (USD)' },
-                { type: 'text' as const,   name: 'fca_penalty_usd',      label: 'Penalización FCA (USD)' },
-                { type: 'text' as const,   name: 'total_payment_usd',    label: 'Total a Pagar (USD)',      required: true },
-                { type: 'textarea' as const, name: 'notes',              label: 'Observaciones del Técnico' },
+                { type: 'select' as const, id: 'flock_id',             label: 'Lote de Aves',            required: true, options: flockOptions },
+                { type: 'select' as const, id: 'farm_unit_id',         label: 'Galpón (Productor)',       required: true, options: unitOptions },
+                { type: 'text' as const,   id: 'producer_id',          label: 'ID del Productor (Customer)', required: true },
+                { type: 'date' as const,   id: 'cycle_start_date',     label: 'Inicio del Ciclo',         required: true },
+                { type: 'date' as const,   id: 'cycle_end_date',       label: 'Fin del Ciclo',            required: true },
+                { type: 'number' as const, id: 'initial_birds',        label: 'Aves Iniciales',           required: true },
+                { type: 'number' as const, id: 'final_birds',          label: 'Aves Finales',             required: true },
+                { type: 'text' as const,   id: 'actual_fca',           label: 'FCA Real',                 required: true },
+                { type: 'text' as const,   id: 'actual_avg_weight_kg', label: 'Peso Promedio Real (kg)',  required: true },
+                { type: 'text' as const,   id: 'actual_mortality_pct', label: 'Mortalidad Real (%)',      required: true },
+                { type: 'text' as const,   id: 'target_fca',           label: 'FCA Objetivo (Contrato)',  required: true },
+                { type: 'text' as const,   id: 'target_weight_kg',     label: 'Peso Objetivo (Contrato, kg)', required: true },
+                { type: 'text' as const,   id: 'price_per_kg_usd',     label: 'Precio Base (USD/kg)',     required: true },
+                { type: 'text' as const,   id: 'base_payment_usd',     label: 'Pago Base Calculado (USD)', required: true },
+                { type: 'text' as const,   id: 'fca_bonus_usd',        label: 'Bonus FCA (USD)' },
+                { type: 'text' as const,   id: 'weight_bonus_usd',     label: 'Bonus Peso (USD)' },
+                { type: 'text' as const,   id: 'fca_penalty_usd',      label: 'Penalización FCA (USD)' },
+                { type: 'text' as const,   id: 'total_payment_usd',    label: 'Total a Pagar (USD)',      required: true },
+                { type: 'textarea' as const, id: 'notes',              label: 'Observaciones del Técnico' },
               ]}
               groups={[
-                { id: 'cycle',    label: 'Ciclo',         fields: ['flock_id', 'farm_unit_id', 'producer_id', 'cycle_start_date', 'cycle_end_date', 'initial_birds', 'final_birds'] },
-                { id: 'results',  label: 'Resultados',    fields: ['actual_fca', 'actual_avg_weight_kg', 'actual_mortality_pct'] },
-                { id: 'contract', label: 'Contrato',      fields: ['target_fca', 'target_weight_kg', 'price_per_kg_usd'] },
-                { id: 'payment',  label: 'Liquidación',   fields: ['base_payment_usd', 'fca_bonus_usd', 'weight_bonus_usd', 'fca_penalty_usd', 'total_payment_usd', 'notes'] },
+                { id: 'cycle',    title: 'Ciclo',         fields: ['flock_id', 'farm_unit_id', 'producer_id', 'cycle_start_date', 'cycle_end_date', 'initial_birds', 'final_birds'] },
+                { id: 'results',  title: 'Resultados',    fields: ['actual_fca', 'actual_avg_weight_kg', 'actual_mortality_pct'] },
+                { id: 'contract', title: 'Contrato',      fields: ['target_fca', 'target_weight_kg', 'price_per_kg_usd'] },
+                { id: 'payment',  title: 'Liquidación',   fields: ['base_payment_usd', 'fca_bonus_usd', 'weight_bonus_usd', 'fca_penalty_usd', 'total_payment_usd', 'notes'] },
               ]}
               onSuccess={() => { flash('Liquidación calculada', 'success'); setShowForm(false); load() }}
             />
@@ -174,11 +172,10 @@ export default function SettlementsPage() {
 
         <DataTable
           entityId="agri_hr.settlement"
-          extensionTableId="agri-hr-settlements-list"
           data={settlements}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin liquidaciones registradas', description: 'Las liquidaciones se crean al final de cada ciclo del productor integrado.' }}
+          emptyState="Sin liquidaciones registradas"
           stickyActionsColumn
         />
       </PageBody>

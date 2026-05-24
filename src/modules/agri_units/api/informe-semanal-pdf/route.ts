@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { InformeSemanalPdf, type InformeSemanalData } from '../../documents/InformeSemanalPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['agri_units.view'] },
@@ -89,7 +89,7 @@ export async function GET(request: Request, ctx: any) {
     id: flockId,
   }
 
-  const stream = await renderToStream(React.createElement(InformeSemanalPdf, { data }))
+  const stream = await renderToStream(React.createElement(InformeSemanalPdf, { data }) as any)
   const response = new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

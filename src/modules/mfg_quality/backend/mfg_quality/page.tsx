@@ -42,7 +42,7 @@ const SOURCE_LABEL: Record<string, string> = {
 
 export default function MfgQualityPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_quality.page' })
   const [ncs, setNcs]           = React.useState<NcRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [statusFilter, setFilter] = React.useState('open')
@@ -159,14 +159,14 @@ export default function MfgQualityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Registrar No-Conformidad</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="mfg_quality.nc"
               apiPath="/api/mfg-quality/nonconformances"
               mode="create"
               initial={{ status: 'open' }}
               fields={[
-                { type: 'text' as const,   name: 'nc_number',    label: 'Número de NC (NC-MFG-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'source',       label: 'Origen de la detección', required: true,
+                { type: 'text' as const,   id: 'nc_number',    label: 'Número de NC (NC-MFG-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'source',       label: 'Origen de la detección', required: true,
                   options: [
                     { value: 'receiving',       label: 'Recepción de materia prima' },
                     { value: 'in_process',      label: 'Durante el proceso productivo' },
@@ -174,24 +174,24 @@ export default function MfgQualityPage() {
                     { value: 'customer_return', label: 'Devolución de cliente' },
                     { value: 'audit',           label: 'Auditoría interna/externa' },
                   ]},
-                { type: 'text' as const,   name: 'product_code', label: 'Código del producto/material afectado' },
-                { type: 'textarea' as const, name: 'description', label: 'Descripción de la desviación', required: true },
-                { type: 'select' as const, name: 'severity',     label: 'Severidad', required: true,
+                { type: 'text' as const,   id: 'product_code', label: 'Código del producto/material afectado' },
+                { type: 'textarea' as const, id: 'description', label: 'Descripción de la desviación', required: true },
+                { type: 'select' as const, id: 'severity',     label: 'Severidad', required: true,
                   options: [
                     { value: 'critical', label: 'Crítica — riesgo de inocuidad/seguridad' },
                     { value: 'major',    label: 'Mayor — incumple especificación' },
                     { value: 'minor',    label: 'Menor — desviación cosmética o marginal' },
                   ]},
-                { type: 'text' as const,   name: 'quantity_affected', label: 'Cantidad afectada' },
-                { type: 'text' as const,   name: 'uom',               label: 'Unidad de medida' },
-                { type: 'text' as const,   name: 'lot_number',        label: 'Número de lote afectado' },
-                { type: 'text' as const,   name: 'cost_nc_usd',       label: 'Costo estimado de la NC (USD)' },
-                { type: 'textarea' as const, name: 'notes',           label: 'Observaciones iniciales' },
+                { type: 'text' as const,   id: 'quantity_affected', label: 'Cantidad afectada' },
+                { type: 'text' as const,   id: 'uom',               label: 'Unidad de medida' },
+                { type: 'text' as const,   id: 'lot_number',        label: 'Número de lote afectado' },
+                { type: 'text' as const,   id: 'cost_nc_usd',       label: 'Costo estimado de la NC (USD)' },
+                { type: 'textarea' as const, id: 'notes',           label: 'Observaciones iniciales' },
               ]}
               groups={[
-                { id: 'basic',    label: 'Identificación', fields: ['nc_number', 'source', 'product_code', 'lot_number'] },
-                { id: 'desc',     label: 'Descripción',    fields: ['description', 'severity', 'quantity_affected', 'uom'] },
-                { id: 'cost',     label: 'Costo / Notas',  fields: ['cost_nc_usd', 'notes'] },
+                { id: 'basic',    title: 'Identificación', fields: ['nc_number', 'source', 'product_code', 'lot_number'] },
+                { id: 'desc',     title: 'Descripción',    fields: ['description', 'severity', 'quantity_affected', 'uom'] },
+                { id: 'cost',     title: 'Costo / Notas',  fields: ['cost_nc_usd', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('No-Conformidad registrada', 'success')
@@ -204,14 +204,10 @@ export default function MfgQualityPage() {
 
         <DataTable
           entityId="mfg_quality.nc"
-          extensionTableId="mfg-quality-ncs"
           data={ncs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{
-            title: 'Sin no-conformidades',
-            description: 'Registra una NC cuando detectes una desviación de los estándares de calidad.',
-          }}
+          emptyState="Sin no-conformidades"
           stickyActionsColumn
         />
       </PageBody>

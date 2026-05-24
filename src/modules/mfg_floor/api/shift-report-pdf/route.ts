@@ -5,7 +5,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { ReporteTurnoPdf, type ReporteTurnoData } from '../../documents/ReporteTurnoPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['mfg_floor.view'] },
@@ -46,7 +46,7 @@ export async function GET(request: Request, ctx: any) {
     id: reportId,
   }
 
-  const stream = await renderToStream(React.createElement(ReporteTurnoPdf, { data }))
+  const stream = await renderToStream(React.createElement(ReporteTurnoPdf, { data }) as any)
   return new Response(stream as any, {
     headers: {
       'Content-Type': 'application/pdf',

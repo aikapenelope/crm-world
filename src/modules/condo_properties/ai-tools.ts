@@ -14,7 +14,7 @@ const listBuildings = defineAiTool({
     search: z.string().optional().describe('Filter by building name or code'),
     limit: z.number().int().min(1).max(50).default(20),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -45,7 +45,7 @@ const listUnits = defineAiTool({
     status: z.enum(['occupied', 'vacant', 'for_sale', 'for_rent']).optional(),
     limit: z.number().int().min(1).max(100).default(50),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -76,7 +76,7 @@ const getDebtors = defineAiTool({
     building_id: z.string().uuid().optional().describe('Filter by building'),
     min_months: z.number().int().min(1).optional().describe('Minimum months overdue'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -142,7 +142,7 @@ const getFinancialSummary = defineAiTool({
     building_id: z.string().uuid().optional(),
     period_month: z.string().optional().describe('Period in YYYY-MM format'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -180,7 +180,7 @@ const getMaintenanceStatus = defineAiTool({
     building_id: z.string().uuid().optional(),
     status: z.enum(['open', 'assigned', 'in_progress', 'completed']).optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -214,7 +214,7 @@ const getUnitDebt = defineAiTool({
     unit_number: z.string().describe('Unit number like "4-A", "PB-L3", "PH-1"'),
     building_id: z.string().uuid().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -267,7 +267,7 @@ const generateFeeReceipts = defineAiTool({
   inputSchema: z.object({
     fee_config_id: z.string().uuid().describe('The fee configuration ID to generate receipts for'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     // Mutation tools must use prepareMutation in production
     // For now, return preview info for the approval card
     const em = ctx.container.resolve('em')

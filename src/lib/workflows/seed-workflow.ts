@@ -7,7 +7,7 @@
  *
  * Usage in a module's setup.ts:
  *
- *   import { seedModuleWorkflow } from '@app/lib/workflows/seed-workflow'
+ *   import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
  *
  *   export const setup: ModuleSetupConfig = {
  *     seedDefaults: async (ctx) => {

@@ -31,7 +31,7 @@ const SO_STATUS_LABEL: Record<string, string> = {
 
 export default function MfgDispatchPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_dispatch.page' })
   const [orders, setOrders]    = React.useState<SoRow[]>([])
   const [isLoading, setLoad]   = React.useState(true)
   const [statusFilter, setSF]  = React.useState('confirmed')
@@ -50,8 +50,8 @@ export default function MfgDispatchPage() {
 
   const handleConfirm = (so: SoRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_dispatch.sale_order', recordId: so.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_dispatch.sale_order', recordId: so.id },
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-dispatch/sale-orders', { method: 'PUT', body: JSON.stringify({ id: so.id, status: 'confirmed' }) })
         flash(`Pedido ${so.order_number} confirmado — lotes reservados`, 'success')
         load()
@@ -132,25 +132,25 @@ export default function MfgDispatchPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Truck className="size-4" /> Nuevo Pedido Industrial</h3>
-            <CrudForm entityId="mfg_dispatch.sale_order" apiPath="/api/mfg-dispatch/sale-orders" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_dispatch.sale_order" apiPath="/api/mfg-dispatch/sale-orders" mode="create"
               initial={{ currency: 'USD', iva_pct: '16.00' }}
               fields={[
-                { type: 'text' as const,   name: 'order_number',           label: 'Número de Pedido (SO-MFG-2026-XXX)', required: true },
-                { type: 'text' as const,   name: 'customer_name',          label: 'Nombre del Cliente', required: true },
-                { type: 'text' as const,   name: 'customer_rif',           label: 'RIF del Cliente (J-12345678-9)' },
-                { type: 'select' as const, name: 'currency',               label: 'Moneda', options: [{ value: 'USD', label: 'USD (Dólares)' }, { value: 'VES', label: 'VES (Bolívares)' }] },
-                { type: 'select' as const, name: 'payment_method',         label: 'Método de pago', options: [{ value: 'zelle', label: 'Zelle' }, { value: 'binance', label: 'Binance Pay' }, { value: 'efectivo_usd', label: 'Efectivo USD' }, { value: 'transferencia', label: 'Transferencia' }, { value: 'pago_movil', label: 'Pago Móvil' }] },
-                { type: 'date' as const,   name: 'scheduled_dispatch_date', label: 'Fecha de despacho solicitada' },
-                { type: 'text' as const,   name: 'delivery_address',       label: 'Dirección de entrega' },
-                { type: 'textarea' as const, name: 'notes',                label: 'Notas' },
+                { type: 'text' as const,   id: 'order_number',           label: 'Número de Pedido (SO-MFG-2026-XXX)', required: true },
+                { type: 'text' as const,   id: 'customer_name',          label: 'Nombre del Cliente', required: true },
+                { type: 'text' as const,   id: 'customer_rif',           label: 'RIF del Cliente (J-12345678-9)' },
+                { type: 'select' as const, id: 'currency',               label: 'Moneda', options: [{ value: 'USD', label: 'USD (Dólares)' }, { value: 'VES', label: 'VES (Bolívares)' }] },
+                { type: 'select' as const, id: 'payment_method',         label: 'Método de pago', options: [{ value: 'zelle', label: 'Zelle' }, { value: 'binance', label: 'Binance Pay' }, { value: 'efectivo_usd', label: 'Efectivo USD' }, { value: 'transferencia', label: 'Transferencia' }, { value: 'pago_movil', label: 'Pago Móvil' }] },
+                { type: 'date' as const,   id: 'scheduled_dispatch_date', label: 'Fecha de despacho solicitada' },
+                { type: 'text' as const,   id: 'delivery_address',       label: 'Dirección de entrega' },
+                { type: 'textarea' as const, id: 'notes',                label: 'Notas' },
               ]}
               onSuccess={() => { flash('Pedido creado', 'success'); setForm(false); load() }}
             />
           </div>
         )}
 
-        <DataTable entityId="mfg_dispatch.sale_order" extensionTableId="mfg-dispatch-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState={{ title: 'Sin pedidos industriales', description: 'Registra el primer pedido de producto terminado.' }}
+        <DataTable entityId="mfg_dispatch.sale_order" data={orders} columns={columns} isLoading={isLoading}
+          emptyState="Sin pedidos industriales"
           stickyActionsColumn />
       </PageBody>
     </Page>

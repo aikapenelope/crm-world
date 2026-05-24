@@ -143,11 +143,10 @@ export default function IspBillingPage() {
       <PageBody>
         <DataTable
           entityId="isp_billing.invoice"
-          extensionTableId="isp-invoices-list"
           data={invoices}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin facturas', description: 'Usa "Generar mes" para crear las facturas del período actual.' }}
+          emptyState="Sin facturas"
           stickyActionsColumn
         />
       </PageBody>

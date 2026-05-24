@@ -44,7 +44,7 @@ function StatusPipeline({ status }: { status: string }) {
 
 export default function MfgProcurementPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_procurement.page' })
   const [orders, setOrders]      = React.useState<PoRow[]>([])
   const [isLoading, setLoad]     = React.useState(true)
   const [statusFilter, setSF]    = React.useState('in_transit')
@@ -71,8 +71,8 @@ export default function MfgProcurementPage() {
     if (currentIdx < 0 || currentIdx >= PO_STATUS_FLOW.length - 1) return
     const nextStatus = PO_STATUS_FLOW[currentIdx + 1]
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_procurement.po', recordId: po.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_procurement.po', recordId: po.id },
+      operation: async () => {
         const updateData: Record<string, any> = { id: po.id, status: nextStatus }
         if (nextStatus === 'at_customs') updateData.actual_arrival_port = new Date().toISOString().split('T')[0]
         if (nextStatus === 'delivered') updateData.actual_warehouse_arrival = new Date().toISOString().split('T')[0]
@@ -160,26 +160,26 @@ export default function MfgProcurementPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Ship className="size-4" /> Crear Orden de Compra</h3>
-            <CrudForm entityId="mfg_procurement.po" apiPath="/api/mfg-procurement/purchase-orders" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_procurement.po" apiPath="/api/mfg-procurement/purchase-orders" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'po_number',          label: 'Número OC (PO-IMP-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'supplier_id',        label: 'Proveedor', required: true, options: supplierOptions },
-                { type: 'text' as const,   name: 'supplier_name',      label: 'Nombre del proveedor', required: true },
-                { type: 'select' as const, name: 'po_type',            label: 'Tipo', required: true, options: [{ value: 'national', label: 'Nacional' }, { value: 'international', label: 'Internacional (importación)' }] },
-                { type: 'text' as const,   name: 'subtotal_fob',       label: 'Valor FOB (USD)', required: true },
-                { type: 'select' as const, name: 'incoterm',           label: 'Incoterm', options: [{ value: 'FOB', label: 'FOB' }, { value: 'CIF', label: 'CIF' }, { value: 'EXW', label: 'EXW' }, { value: 'DAP', label: 'DAP' }] },
-                { type: 'text' as const,   name: 'country_of_origin',  label: 'País de origen' },
-                { type: 'date' as const,   name: 'estimated_ship_date', label: 'Fecha embarque estimada' },
-                { type: 'date' as const,   name: 'estimated_warehouse_arrival', label: 'ETA almacén estimada' },
-                { type: 'text' as const,   name: 'bcv_rate_at_order',  label: 'Tasa BCV al hacer la OC (Bs/USD)' },
+                { type: 'text' as const,   id: 'po_number',          label: 'Número OC (PO-IMP-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'supplier_id',        label: 'Proveedor', required: true, options: supplierOptions },
+                { type: 'text' as const,   id: 'supplier_name',      label: 'Nombre del proveedor', required: true },
+                { type: 'select' as const, id: 'po_type',            label: 'Tipo', required: true, options: [{ value: 'national', label: 'Nacional' }, { value: 'international', label: 'Internacional (importación)' }] },
+                { type: 'text' as const,   id: 'subtotal_fob',       label: 'Valor FOB (USD)', required: true },
+                { type: 'select' as const, id: 'incoterm',           label: 'Incoterm', options: [{ value: 'FOB', label: 'FOB' }, { value: 'CIF', label: 'CIF' }, { value: 'EXW', label: 'EXW' }, { value: 'DAP', label: 'DAP' }] },
+                { type: 'text' as const,   id: 'country_of_origin',  label: 'País de origen' },
+                { type: 'date' as const,   id: 'estimated_ship_date', label: 'Fecha embarque estimada' },
+                { type: 'date' as const,   id: 'estimated_warehouse_arrival', label: 'ETA almacén estimada' },
+                { type: 'text' as const,   id: 'bcv_rate_at_order',  label: 'Tasa BCV al hacer la OC (Bs/USD)' },
               ]}
               onSuccess={() => { flash('OC creada', 'success'); setForm(false); load() }}
             />
           </div>
         )}
 
-        <DataTable entityId="mfg_procurement.po" extensionTableId="mfg-procurement-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState={{ title: 'Sin órdenes de compra', description: 'Crea la primera OC desde las requisiciones del MRP o manualmente.' }}
+        <DataTable entityId="mfg_procurement.po" data={orders} columns={columns} isLoading={isLoading}
+          emptyState="Sin órdenes de compra"
           stickyActionsColumn />
       </PageBody>
     </Page>

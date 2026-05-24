@@ -5,7 +5,7 @@
  * emite isp_technicians.installation.done para que isp_subscribers
  * cambie el service_status a 'active'.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 import { completeWorkOrderSchema } from '../../../data/validators'
 

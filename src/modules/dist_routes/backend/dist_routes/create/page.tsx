@@ -57,7 +57,7 @@ export default function CreateRoutePage() {
 
         <CrudForm
           backHref="/backend/dist_routes"
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Crear Ruta"
           cancelHref="/backend/dist_routes"

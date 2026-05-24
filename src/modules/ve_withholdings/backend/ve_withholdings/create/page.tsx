@@ -103,7 +103,7 @@ export default function CreateWithholdingPage() {
 
         <CrudForm
           backHref="/backend/ve_withholdings"
-          fields={[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Registrar Retención"
           cancelHref="/backend/ve_withholdings"

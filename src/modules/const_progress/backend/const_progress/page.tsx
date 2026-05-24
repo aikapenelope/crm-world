@@ -10,7 +10,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, CheckCircle, Send, ArrowLeft, CalendarPlus } from 'lucide-react'
-import { calendarLinks } from '@app/lib/calendar-links'
+import { calendarLinks } from '@/lib/calendar-links'
 
 type ValuationRow = {
   id: string
@@ -76,10 +76,10 @@ export default function ConstProgressPage() {
       body: JSON.stringify({ valuation_id: id }),
     })
     if (result.ok) {
-      flash({ type: 'success', message: 'Valuación enviada para aprobación' })
+      flash('Valuación enviada para aprobación', 'success')
       await loadValuations()
     } else {
-      flash({ type: 'error', message: 'Error al enviar la valuación' })
+      flash('Error al enviar la valuación', 'error')
     }
     setActioning(null)
   }
@@ -91,10 +91,10 @@ export default function ConstProgressPage() {
       body: JSON.stringify({ valuation_id: id }),
     })
     if (result.ok) {
-      flash({ type: 'success', message: 'Valuación aprobada' })
+      flash('Valuación aprobada', 'success')
       await loadValuations()
     } else {
-      flash({ type: 'error', message: 'Error al aprobar la valuación' })
+      flash('Error al aprobar la valuación', 'error')
     }
     setActioning(null)
   }

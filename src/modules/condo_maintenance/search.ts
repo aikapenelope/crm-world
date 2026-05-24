@@ -81,13 +81,13 @@ export const searchConfig: SearchModuleConfig = {
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         const catLabel = CATEGORY_LABELS[String(r.category ?? '')] ?? String(r.category ?? '')
         const subtitle = [
-          norm(r.requested_by_name),
+          norm(r.requested_by_name as string),
           catLabel || null,
           statusLabel || null,
         ].filter(Boolean).join(' · ')
 
         const presenter: SearchResultPresenter = {
-          title: norm(r.title) ?? norm(r.request_number) ?? 'Solicitud',
+          title: (norm(r.title as string) as string | undefined) ?? norm(r.request_number as string) ?? 'Solicitud',
           subtitle: subtitle || undefined,
           icon: 'wrench',
           badge: statusLabel,
@@ -111,8 +111,8 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: norm(r.title) ?? norm(r.request_number) ?? 'Solicitud',
-          subtitle: norm(r.requested_by_name) ?? undefined,
+          title: (norm(r.title as string) as string | undefined) ?? norm(r.request_number as string) ?? 'Solicitud',
+          subtitle: (norm(r.requested_by_name as string) as string | undefined) ?? undefined,
           icon: 'wrench',
           badge: statusLabel,
         }

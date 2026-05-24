@@ -14,7 +14,7 @@
  *
  * Ref: AGM.md §12.1, docs/REALTIME.md, .ai/specs/2026-05-26-isp-telecom-vertical.md
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

@@ -34,7 +34,7 @@ export const searchConfig: SearchModuleConfig = {
         if (r.address) lines.push(`Dirección: ${r.address}`)
         if (!lines.length) return null
 
-        const subtitle = [norm(r.city), norm(r.building_type), r.total_units ? `${r.total_units} unidades` : null]
+        const subtitle = [norm(r.city as string), norm(r.building_type as string), r.total_units ? `${r.total_units} unidades` : null]
           .filter(Boolean).join(' · ')
 
         const presenter: SearchResultPresenter = {
@@ -58,12 +58,12 @@ export const searchConfig: SearchModuleConfig = {
 
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        const subtitle = [norm(r.city), norm(r.building_type)].filter(Boolean).join(' · ')
+        const subtitle = [norm(r.city as string), norm(r.building_type as string)].filter(Boolean).join(' · ')
         return {
           title: String(r.name ?? 'Edificio'),
           subtitle: subtitle || undefined,
           icon: 'building-2',
-          badge: norm(r.building_type) ?? undefined,
+          badge: (norm(r.building_type as string) as string | undefined) ?? undefined,
         }
       },
 
@@ -101,9 +101,9 @@ export const searchConfig: SearchModuleConfig = {
 
         const presenter: SearchResultPresenter = {
           title: `Unidad ${r.unit_number}`,
-          subtitle: [norm(r.owner_name), norm(r.unit_type)].filter(Boolean).join(' · ') || undefined,
+          subtitle: [norm(r.owner_name as string), norm(r.unit_type as string)].filter(Boolean).join(' · ') || undefined,
           icon: 'home',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status as string) as string | undefined) ?? undefined,
         }
 
         return {
@@ -118,9 +118,9 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         return {
           title: `Unidad ${r.unit_number}`,
-          subtitle: norm(r.owner_name) ?? undefined,
+          subtitle: (norm(r.owner_name as string) as string | undefined) ?? undefined,
           icon: 'home',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status as string) as string | undefined) ?? undefined,
         }
       },
 

@@ -33,10 +33,10 @@ export const searchConfig: SearchModuleConfig = {
         if (r.final_grade) lines.push(String(r.final_grade))
         if (!lines.length) return null
         const presenter: SearchResultPresenter = {
-          title: norm(r.student_name) ?? 'Student Name',
-          subtitle: ((norm(r.course_name) ?? '') + ' · ' + (norm(r.certificate_number) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
+          title: (norm(r.student_name as string) as string | undefined) ?? 'Student Name',
+          subtitle: ((norm(r.course_name as string) ?? '') + ' · ' + (norm(r.certificate_number as string) ?? '')).replace(/^\s*·\s*|\s*·\s*$/g, '') || undefined,
           icon: 'award',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status as string) as string | undefined) ?? undefined,
         }
         return {
           text: lines,
@@ -49,16 +49,16 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: norm(r.student_name) ?? 'Student Name',
-          subtitle: norm(r.course_name) ?? undefined,
+          title: (norm(r.student_name as string) as string | undefined) ?? 'Student Name',
+          subtitle: (norm(r.course_name as string) as string | undefined) ?? undefined,
           icon: 'award',
-          badge: norm(r.status) ?? undefined,
+          badge: (norm(r.status as string) as string | undefined) ?? undefined,
         }
       },
 
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => {
         const id = ctx.record.id
-        return id ? `/backend/academy_certificates/${{encodeURIComponent(String(id))}}`  : '/backend/academy_certificates/'
+        return id ? `/backend/academy_certificates/${encodeURIComponent(String(id))}`  : '/backend/academy_certificates/'
       },
     },
   ],

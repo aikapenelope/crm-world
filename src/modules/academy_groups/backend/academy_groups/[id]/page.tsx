@@ -221,9 +221,9 @@ export default function AcademyGroupDetailPage() {
         <div className="border-b mb-6">
           <div className="flex gap-0">
             {([
-              { id: 'sessions', label: `Sesiones (${sessions.length})` },
-              { id: 'students', label: `Alumnos (${enrollments.length})` },
-              { id: 'whatsapp', label: '💬 WhatsApp' },
+              { id: 'sessions', title: `Sesiones (${sessions.length})` },
+              { id: 'students', title: `Alumnos (${enrollments.length})` },
+              { id: 'whatsapp', title: '💬 WhatsApp' },
             ] as const).map(t => (
               <Button
                 key={t.id}
@@ -233,7 +233,7 @@ export default function AcademyGroupDetailPage() {
                 className={`px-4 py-2.5 text-sm border-b-2 rounded-none h-auto font-normal transition-colors
                   ${tab === t.id ? 'border-primary text-primary font-medium' : 'border-transparent text-muted-foreground'}`}
               >
-                {t.label}
+                {t.title}
               </Button>
             ))}
           </div>

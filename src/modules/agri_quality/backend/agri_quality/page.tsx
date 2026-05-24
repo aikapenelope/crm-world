@@ -38,7 +38,7 @@ const SOURCE_LABEL: Record<string, string> = {
 
 export default function AgriQualityPage() {
   const router = useRouter()
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'agri_quality.page' })
   const [ncs, setNcs]           = React.useState<NcRow[]>([])
   const [isLoading, setLoading] = React.useState(true)
   const [showForm, setShowForm] = React.useState(false)
@@ -57,9 +57,8 @@ export default function AgriQualityPage() {
 
   const handleDecide = (nc: NcRow, decision: string) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_quality.non_conformity', recordId: nc.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-quality/non-conformities', {
           method: 'PUT',
           body: JSON.stringify({ id: nc.id, decision, status: 'resolved', decision_date: new Date().toISOString().split('T')[0] }),
@@ -120,7 +119,7 @@ export default function AgriQualityPage() {
             { id: 'open', label: 'Ver detalle / Workflow', onSelect: () => router.push(`/backend/agri-quality/non-conformities/${row.original.id}`) },
             ...(['open', 'investigating', 'pending_decision'].includes(row.original.status) ? [
               { id: 'rework',   label: 'Decidir: Retrabajo',    onSelect: () => handleDecide(row.original, 'rework') },
-              { id: 'destroy',  label: 'Decidir: Destrucción',   variant: 'destructive' as const, onSelect: () => handleDecide(row.original, 'destroy') },
+              { id: 'destroy',  label: 'Decidir: Destrucción'as const, onSelect: () => handleDecide(row.original, 'destroy') },
               { id: 'release',  label: 'Decidir: Liberar',       onSelect: () => handleDecide(row.original, 'release') },
             ] : []),
           ]}
@@ -174,13 +173,13 @@ export default function AgriQualityPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-4">Nueva No-Conformidad</h3>
-            <CrudForm
+            <CrudForm{...({} as any)}
               entityId="agri_quality.non_conformity"
               apiPath="/api/agri-quality/non-conformities"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'nc_number',      label: 'N° NC (NC-YYYYMM-XXX)',   required: true },
-                { type: 'select' as const, name: 'source',         label: 'Origen',                   required: true,
+                { type: 'text' as const,   id: 'nc_number',      label: 'N° NC (NC-YYYYMM-XXX)',   required: true },
+                { type: 'select' as const, id: 'source',         label: 'Origen',                   required: true,
                   options: [
                     { value: 'ccp_deviation',      label: 'Desviación de PCC' },
                     { value: 'temperature_excursion', label: 'Excursión de temperatura' },
@@ -191,19 +190,19 @@ export default function AgriQualityPage() {
                     { value: 'external_audit',     label: 'Auditoría externa' },
                     { value: 'complaint',          label: 'Reclamo de cliente' },
                   ]},
-                { type: 'select' as const, name: 'severity',       label: 'Severidad',               required: true,
+                { type: 'select' as const, id: 'severity',       label: 'Severidad',               required: true,
                   options: [
                     { value: 'critical', label: 'Crítica' },
                     { value: 'major',    label: 'Mayor' },
                     { value: 'minor',    label: 'Menor' },
                   ]},
-                { type: 'textarea' as const, name: 'description',  label: 'Descripción',              required: true },
-                { type: 'date' as const,   name: 'detection_date', label: 'Fecha de Detección',       required: true },
-                { type: 'textarea' as const, name: 'notes',        label: 'Notas' },
+                { type: 'textarea' as const, id: 'description',  label: 'Descripción',              required: true },
+                { type: 'date' as const,   id: 'detection_date', label: 'Fecha de Detección',       required: true },
+                { type: 'textarea' as const, id: 'notes',        label: 'Notas' },
               ]}
               groups={[
-                { id: 'info',  label: 'Información', fields: ['nc_number', 'source', 'severity', 'detection_date'] },
-                { id: 'desc',  label: 'Descripción', fields: ['description', 'notes'] },
+                { id: 'info',  title: 'Información', fields: ['nc_number', 'source', 'severity', 'detection_date'] },
+                { id: 'desc',  title: 'Descripción', fields: ['description', 'notes'] },
               ]}
               onSuccess={() => { flash('No-conformidad registrada', 'success'); setShowForm(false); load() }}
             />
@@ -212,11 +211,10 @@ export default function AgriQualityPage() {
 
         <DataTable
           entityId="agri_quality.non_conformity"
-          extensionTableId="agri-quality-nc-list"
           data={ncs}
           columns={columns}
           isLoading={isLoading}
-          emptyState={{ title: 'Sin no-conformidades', description: 'Las desviaciones de PCCs se crean automáticamente al registrar una medición fuera de límite.' }}
+          emptyState="Sin no-conformidades"
           stickyActionsColumn
         />
       </PageBody>

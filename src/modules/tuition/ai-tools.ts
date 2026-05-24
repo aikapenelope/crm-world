@@ -17,7 +17,7 @@ const getCollectionStatus = defineAiTool({
     period: z.string().optional().describe('School period e.g. "2026-01"'),
     limit: z.number().int().min(1).max(50).default(20),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -62,7 +62,7 @@ const getAttendanceAlerts = defineAiTool({
     min_absence_days: z.number().int().min(1).default(5).describe('Minimum number of absence days to flag'),
     limit: z.number().int().min(1).max(30).default(15),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -100,7 +100,7 @@ const getEnrollmentSummary = defineAiTool({
   inputSchema: z.object({
     status: z.enum(['pending', 'approved', 'rejected', 'waitlisted']).optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -147,7 +147,7 @@ const getGradesSummary = defineAiTool({
     period_id: z.string().uuid().optional().describe('Grade period to analyze'),
     passing_threshold: z.number().min(0).max(100).default(10).describe('Minimum passing grade (Venezuelan scale 1-20, default ≥10)'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -191,7 +191,7 @@ const getStudentCount = defineAiTool({
   inputSchema: z.object({
     grade: z.string().optional().describe('Filter by grade level (e.g. "1er Grado")'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 

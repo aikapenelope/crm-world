@@ -31,7 +31,7 @@ const SC_STATUS_LABEL: Record<string, string> = {
 const SC_STATUS_FLOW = ['draft', 'materials_sent', 'in_production', 'completed']
 
 export default function MfgSubcontractPage() {
-  const { runMutation } = useGuardedMutation()
+  const { runMutation } = useGuardedMutation({ contextId: 'mfg_subcontract.page' })
   const [orders, setOrders]   = React.useState<ScRow[]>([])
   const [isLoading, setLoad]  = React.useState(true)
   const [statusFilter, setSF] = React.useState('in_production')
@@ -61,8 +61,8 @@ export default function MfgSubcontractPage() {
     if (idx < 0 || idx >= SC_STATUS_FLOW.length - 1) return
     const next = SC_STATUS_FLOW[idx + 1]
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_subcontract.order', recordId: order.id },
-      mutationPayload: async () => {
+      context: { entityId: 'mfg_subcontract.order', recordId: order.id },
+      operation: async () => {
         const update: Record<string, any> = { id: order.id, status: next }
         if (next === 'completed') {
           update.actual_delivery = new Date().toISOString().split('T')[0]
@@ -179,26 +179,26 @@ export default function MfgSubcontractPage() {
         {showForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Nueva Orden de Maquila</h3>
-            <CrudForm entityId="mfg_subcontract.order" apiPath="/api/mfg-subcontract/subcontract-orders" mode="create"
+            <CrudForm{...({} as any)} entityId="mfg_subcontract.order" apiPath="/api/mfg-subcontract/subcontract-orders" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'order_number',       label: 'Número SC (SC-2026-XXX)', required: true },
-                { type: 'text' as const,   name: 'subcontractor_name', label: 'Nombre del maquilador', required: true },
-                { type: 'text' as const,   name: 'product_code',       label: 'Código del Producto a Fabricar', required: true },
-                { type: 'text' as const,   name: 'product_name',       label: 'Nombre del Producto', required: true },
-                { type: 'text' as const,   name: 'quantity_ordered',   label: 'Cantidad a producir', required: true },
-                { type: 'text' as const,   name: 'uom',                label: 'Unidad', required: true },
-                { type: 'text' as const,   name: 'price_per_unit_usd', label: 'Precio de maquila por unidad (USD)', required: true },
-                { type: 'text' as const,   name: 'standard_scrap_pct', label: 'Merma contractual permitida (%)' },
-                { type: 'date' as const,   name: 'scheduled_delivery', label: 'Fecha de entrega pactada' },
-                { type: 'textarea' as const, name: 'notes',            label: 'Notas' },
+                { type: 'text' as const,   id: 'order_number',       label: 'Número SC (SC-2026-XXX)', required: true },
+                { type: 'text' as const,   id: 'subcontractor_name', label: 'Nombre del maquilador', required: true },
+                { type: 'text' as const,   id: 'product_code',       label: 'Código del Producto a Fabricar', required: true },
+                { type: 'text' as const,   id: 'product_name',       label: 'Nombre del Producto', required: true },
+                { type: 'text' as const,   id: 'quantity_ordered',   label: 'Cantidad a producir', required: true },
+                { type: 'text' as const,   id: 'uom',                label: 'Unidad', required: true },
+                { type: 'text' as const,   id: 'price_per_unit_usd', label: 'Precio de maquila por unidad (USD)', required: true },
+                { type: 'text' as const,   id: 'standard_scrap_pct', label: 'Merma contractual permitida (%)' },
+                { type: 'date' as const,   id: 'scheduled_delivery', label: 'Fecha de entrega pactada' },
+                { type: 'textarea' as const, id: 'notes',            label: 'Notas' },
               ]}
               onSuccess={() => { flash('Orden de maquila creada', 'success'); setForm(false); load() }}
             />
           </div>
         )}
 
-        <DataTable entityId="mfg_subcontract.order" extensionTableId="mfg-subcontract-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState={{ title: 'Sin órdenes de maquila', description: 'Crea una SC cuando necesites subcontratar producción a un maquilador.' }}
+        <DataTable entityId="mfg_subcontract.order" data={orders} columns={columns} isLoading={isLoading}
+          emptyState="Sin órdenes de maquila"
           stickyActionsColumn />
 
         {/* Materials panel for selected order */}
@@ -216,15 +216,15 @@ export default function MfgSubcontractPage() {
 
             {showMatForm && (
               <div className="mb-4 border border-border rounded-lg p-3 bg-background">
-                <CrudForm entityId="mfg_subcontract.material" apiPath="/api/mfg-subcontract/subcontract-materials" mode="create"
+                <CrudForm{...({} as any)} entityId="mfg_subcontract.material" apiPath="/api/mfg-subcontract/subcontract-materials" mode="create"
                   initial={{ subcontract_order_id: selectedOrder.id, sent_date: new Date().toISOString().split('T')[0] }}
                   fields={[
-                    { type: 'text' as const, name: 'material_code',  label: 'Código del material', required: true },
-                    { type: 'text' as const, name: 'material_name',  label: 'Nombre del material', required: true },
-                    { type: 'text' as const, name: 'quantity_sent',  label: 'Cantidad enviada', required: true },
-                    { type: 'text' as const, name: 'uom',            label: 'Unidad', required: true },
-                    { type: 'text' as const, name: 'unit_cost_usd',  label: 'Costo unitario (USD)' },
-                    { type: 'text' as const, name: 'lot_number',     label: 'Número de lote' },
+                    { type: 'text' as const, id: 'material_code',  label: 'Código del material', required: true },
+                    { type: 'text' as const, id: 'material_name',  label: 'Nombre del material', required: true },
+                    { type: 'text' as const, id: 'quantity_sent',  label: 'Cantidad enviada', required: true },
+                    { type: 'text' as const, id: 'uom',            label: 'Unidad', required: true },
+                    { type: 'text' as const, id: 'unit_cost_usd',  label: 'Costo unitario (USD)' },
+                    { type: 'text' as const, id: 'lot_number',     label: 'Número de lote' },
                   ]}
                   onSubmit={async (values) => {
                     await apiCallOrThrow('/api/mfg-subcontract/subcontract-materials', { method: 'POST', body: JSON.stringify({ ...values, subcontract_order_id: selectedOrder.id }) })

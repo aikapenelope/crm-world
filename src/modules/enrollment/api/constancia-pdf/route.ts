@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { ConstanciaInscripcion, type ConstanciaPDFData } from '../../documents/ConstanciaInscripcion'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 const GRADE_LABELS: Record<string, string> = {
   maternal: 'Maternal', preescolar_1: 'Preescolar I', preescolar_2: 'Preescolar II',
@@ -92,7 +92,7 @@ export async function GET(request: Request, ctx: any) {
     id: studentId,
   }
 
-  const stream = await renderToStream(React.createElement(ConstanciaInscripcion, { data }))
+  const stream = await renderToStream(React.createElement(ConstanciaInscripcion, { data }) as any)
   const chunks: Buffer[] = []
   for await (const chunk of stream) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
   const pdfBuffer = Buffer.concat(chunks)

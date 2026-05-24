@@ -293,14 +293,10 @@ export default function CcpMonitoringPage() {
           <h3 className="text-sm font-semibold mb-3">Registros de Hoy ({todayRecords.length})</h3>
           <DataTable
             entityId="agri_quality.ccp_monitoring"
-            extensionTableId="agri-quality-ccp-today"
             data={todayRecords}
             columns={columns}
             isLoading={isLoading}
-            emptyState={{
-              title: 'Sin registros hoy',
-              description: 'Registra la primera medición del turno actual.',
-            }}
+            emptyState="Sin registros hoy"
           />
         </div>
       </PageBody>

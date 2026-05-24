@@ -215,11 +215,10 @@ export default function AgriTraceabilityPage() {
           )}
           <DataTable
             entityId="agri_traceability.recall"
-            extensionTableId="agri-traceability-recalls-list"
             data={recalls}
             columns={recallColumns}
             isLoading={isLoading}
-            emptyState={{ title: 'Sin recalls registrados', description: 'Los recalls se crean desde esta pantalla cuando se detecta un problema de inocuidad.' }}
+            emptyState="Sin recalls registrados"
           />
         </div>
       </PageBody>

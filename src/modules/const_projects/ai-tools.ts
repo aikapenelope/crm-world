@@ -14,7 +14,7 @@ const getProjectOverview = defineAiTool({
     project_id: z.string().uuid().describe('Project ID').optional(),
     project_name: z.string().optional().describe('Search by project name (partial match)'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -41,7 +41,7 @@ const getBudgetVsActual = defineAiTool({
   inputSchema: z.object({
     project_id: z.string().uuid(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -99,7 +99,7 @@ const getOverdueRFIs = defineAiTool({
   inputSchema: z.object({
     project_id: z.string().uuid().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -127,7 +127,7 @@ const getPendingValuations = defineAiTool({
   inputSchema: z.object({
     project_id: z.string().uuid().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -160,7 +160,7 @@ const getMaterialAlerts = defineAiTool({
   inputSchema: z.object({
     project_id: z.string().uuid().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -195,7 +195,7 @@ const getScheduleStatus = defineAiTool({
   inputSchema: z.object({
     project_id: z.string().uuid().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
