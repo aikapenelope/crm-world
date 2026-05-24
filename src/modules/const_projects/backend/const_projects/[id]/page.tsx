@@ -222,7 +222,7 @@ export default function ConstProjectDetailPage() {
               { id: 'overview', label: 'Resumen', icon: HardHat },
               { id: 'valuations', title: `Valuaciones (${valuations.length})`, icon: FileText },
               { id: 'rfis', title: `RFIs (${rfis.length})`, icon: AlertTriangle },
-            ] as const).map(({ id, label, icon: Icon }) => (
+            ] as any[]).map(({ id, label, title, icon: Icon }: any) => (
               <Button
                 key={id}
                 type="button"
