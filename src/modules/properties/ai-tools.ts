@@ -16,7 +16,7 @@ const getPortfolioOverview = defineAiTool({
     operation: z.enum(['venta', 'alquiler', 'venta_alquiler']).optional(),
     city: z.string().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -76,7 +76,7 @@ const getSalesPipeline = defineAiTool({
     transaction_type: z.enum(['sale', 'rental', 'lease']).optional(),
     limit: z.number().int().min(1).max(30).default(15),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -122,7 +122,7 @@ const getStaleProperties = defineAiTool({
     days_inactive: z.number().int().min(7).default(30).describe('Minimum days without update to flag'),
     limit: z.number().int().min(1).max(20).default(10),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -169,7 +169,7 @@ const getMarketInsights = defineAiTool({
     property_type: z.string().optional().describe('Filter by property type (apartamento, casa, etc.)'),
     city: z.string().optional(),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -208,7 +208,7 @@ const getTopListingsByValue = defineAiTool({
     operation: z.enum(['venta', 'alquiler']).optional(),
     limit: z.number().int().min(1).max(10).default(5),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 

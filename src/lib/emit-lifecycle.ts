@@ -67,11 +67,11 @@ export interface LifecycleScope {
  * Using a minimal interface so this helper stays import-free of domain modules.
  */
 export interface ModuleEventsConfig {
-  emit: (
-    eventId: string,
-    payload: Record<string, unknown>,
-    options?: { persistent?: boolean },
-  ) => Promise<void>
+  // Uses `any` for eventId to be structurally compatible with both the
+  // type-safe EventModuleConfig<T>.emit (which constrains to declared IDs)
+  // and generic string-based emit signatures.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  emit: (eventId: any, payload: Record<string, unknown>, options?: { persistent?: boolean }) => Promise<void>
 }
 
 /**

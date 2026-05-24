@@ -5,7 +5,7 @@
  * results page shows the live running tally without any polling.
  */
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../events'
+import { eventsConfig } from '../../../events'
 
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_comms.view'] },

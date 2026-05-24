@@ -3,7 +3,7 @@
  * Sets issued_at and issued_by.
  */
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../events'
+import { eventsConfig } from '../../../events'
 
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['academy_certificates.manage'] },

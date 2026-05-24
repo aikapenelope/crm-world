@@ -15,7 +15,7 @@ const getActiveOrdersStatus = defineAiTool({
     work_center_id: z.string().uuid().optional().describe('Filter by work center / production line'),
     product_code:   z.string().optional().describe('Filter by product code'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const today  = new Date().toISOString()
@@ -82,7 +82,7 @@ const getOeeByLine = defineAiTool({
   inputSchema: z.object({
     days: z.number().int().min(1).max(90).default(30).describe('Number of days to analyze'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const since  = new Date(Date.now() - args.days * 86400000).toISOString()
@@ -153,7 +153,7 @@ const getDowntimeAnalysis = defineAiTool({
   inputSchema: z.object({
     days: z.number().int().min(1).max(90).default(30),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const since  = new Date(Date.now() - args.days * 86400000).toISOString()
@@ -212,7 +212,7 @@ const getMaterialShortageAlerts = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_orders.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -264,7 +264,7 @@ const getCostVarianceSummary = defineAiTool({
   inputSchema: z.object({
     days: z.number().int().min(1).max(90).default(30),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const since  = new Date(Date.now() - args.days * 86400000).toISOString()
@@ -328,7 +328,7 @@ const getProductionSchedule = defineAiTool({
   inputSchema: z.object({
     days: z.number().int().min(1).max(30).default(7),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const until  = new Date(Date.now() + args.days * 86400000).toISOString()

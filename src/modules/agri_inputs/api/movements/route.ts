@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { AgriInputMovementEntity, AgriInputItemEntity } from '../../data/entities'
 import { inputMovementCreateSchema, inputMovementUpdateSchema } from '../../data/validators'
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../events'
+import { eventsConfig } from '../../../events'
 
 const listSchema = z.object({
   page:          z.coerce.number().min(1).default(1),

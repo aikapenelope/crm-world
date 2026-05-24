@@ -15,7 +15,7 @@ const getActiveFlocks = defineAiTool({
     farm_unit_id: z.string().uuid().optional().describe('Filter by specific farm unit / house'),
     species: z.string().optional().describe('Filter by species (broiler, swine, etc.)'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -99,7 +99,7 @@ const getMortalityAlerts = defineAiTool({
   isMutation: false,
   requiredFeatures: ['agri_units.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -163,7 +163,7 @@ const getFeedCostBreakdown = defineAiTool({
   inputSchema: z.object({
     flock_id: z.string().uuid().optional().describe('Specific flock ID'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -243,7 +243,7 @@ const getVaccinationSchedule = defineAiTool({
   isMutation: false,
   requiredFeatures: ['agri_units.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -299,7 +299,7 @@ const getColdChainStatus = defineAiTool({
   isMutation: false,
   requiredFeatures: ['agri_units.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -345,7 +345,7 @@ const getRecallRisk = defineAiTool({
   isMutation: false,
   requiredFeatures: ['agri_units.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em     = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 

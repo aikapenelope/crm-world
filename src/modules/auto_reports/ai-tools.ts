@@ -16,7 +16,7 @@ const getWorkshopStatus = defineAiTool({
     status: z.enum(['received', 'diagnosing', 'waiting_parts', 'in_progress', 'quality_check', 'ready', 'delivered']).optional(),
     limit: z.number().int().min(1).max(30).default(15),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -67,7 +67,7 @@ const getLowPartsInventory = defineAiTool({
   inputSchema: z.object({
     min_quantity: z.number().int().min(0).default(2).describe('Flag parts with quantity at or below this number'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -105,7 +105,7 @@ const getRevenueByTechnician = defineAiTool({
   inputSchema: z.object({
     delivered_only: z.boolean().default(true).describe('If true, only count delivered/completed orders'),
   }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -154,7 +154,7 @@ const getPendingPickups = defineAiTool({
   isMutation: false,
   requiredFeatures: ['auto_reports.view'],
   inputSchema: z.object({}),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 
@@ -195,7 +195,7 @@ const getOverdueOrders = defineAiTool({
   isMutation: false,
   requiredFeatures: ['auto_reports.view'],
   inputSchema: z.object({}),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
 

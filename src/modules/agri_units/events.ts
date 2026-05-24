@@ -14,7 +14,7 @@ export const eventsConfig = createModuleEvents({
     { id: 'agri_units.flock.terminated_early', label: 'Lote terminado anticipadamente',     entity: 'flock', category: 'lifecycle' },
 
     // Alertas (excludeFromTriggers: false — usuarios pueden crear workflows sobre ellas)
-    { id: 'agri_units.flock.mortality_alert',  label: 'Mortalidad supera umbral diario',    entity: 'flock', category: 'alert',     clientBroadcast: true },
-    { id: 'agri_units.flock.weight_below_target', label: 'Peso por debajo del objetivo',   entity: 'flock', category: 'alert',     clientBroadcast: true },
+    { id: 'agri_units.flock.mortality_alert',  label: 'Mortalidad supera umbral diario',    entity: 'flock', category: 'custom',     clientBroadcast: true },
+    { id: 'agri_units.flock.weight_below_target', label: 'Peso por debajo del objetivo',   entity: 'flock', category: 'custom',     clientBroadcast: true },
   ],
 } as const)

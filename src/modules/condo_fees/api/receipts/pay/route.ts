@@ -4,7 +4,7 @@
  * dashboard and the collections view refresh in real-time.
  */
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../../events'
+import { eventsConfig } from '../../../events'
 
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_fees.collect'] },

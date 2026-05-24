@@ -11,7 +11,7 @@ const getProductionSummary = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_reports.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const since7 = new Date(Date.now() - 7 * 86400000).toISOString()
@@ -71,7 +71,7 @@ const getQualityStatus = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_reports.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString()
@@ -110,7 +110,7 @@ const getInventoryAlerts = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_reports.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const in30 = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0]
@@ -142,7 +142,7 @@ const getMaintenanceStatus = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_reports.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const today = new Date().toISOString().split('T')[0]
@@ -173,7 +173,7 @@ const getImportPipeline = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_reports.view'],
   inputSchema: z.object({}),
-  async handler(_args, ctx) {
+  async handler(_args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const today = new Date().toISOString().split('T')[0]
@@ -217,7 +217,7 @@ const getCostPerformance = defineAiTool({
   isMutation: false,
   requiredFeatures: ['mfg_reports.view'],
   inputSchema: z.object({ days: z.number().int().min(1).max(90).default(30) }),
-  async handler(args, ctx) {
+  async handler(args: any, ctx: any) {
     const em = ctx.container.resolve('em')
     const kysely = (em as any).getKysely()
     const since = new Date(Date.now() - args.days * 86400000).toISOString()
