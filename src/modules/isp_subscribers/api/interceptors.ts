@@ -39,7 +39,8 @@ export const interceptors: ApiInterceptor[] = [
           .where('tenant_id', '=', context.tenantId)
           .executeTakeFirst()
 
-        const seq = String(Number((result as any)?.count ?? 0) + 1).padStart(5, '0')
+        type CountRow = { count: string | number }
+        const seq = String(Number((result as CountRow | undefined)?.count ?? 0) + 1).padStart(5, '0')
         const accountNumber = `ISP-${seq}`
 
         // Inyectar account_number en el body del request

@@ -43,7 +43,9 @@ export async function POST(request: Request, ctx: any) {
   if (!invoice) {
     return Response.json({ error: 'Factura no encontrada' }, { status: 404 })
   }
-  const inv = invoice as any
+  // Kysely selectAll() — define the fields we actually read
+  type InvoiceRow = { status: string; paid_amount_usd: string | null; total_usd: string }
+  const inv = invoice as InvoiceRow
 
   if (inv.status === 'paid' || inv.status === 'cancelled') {
     return Response.json({ error: `La factura ya está en estado: ${inv.status}` }, { status: 409 })
@@ -130,7 +132,8 @@ export async function POST(request: Request, ctx: any) {
       .where('id', '=', data.subscriber_id)
       .executeTakeFirst()
 
-    if ((subscriber as any)?.service_status === 'suspended_overdue') {
+    type SubscriberServiceRow = { service_status: string }
+    if ((subscriber as SubscriberServiceRow | undefined)?.service_status === 'suspended_overdue') {
       await emitLifecycle(eventsConfig, 'isp_billing.reconnect_triggered', scope, {
         subscriber_id: data.subscriber_id,
         invoice_id: data.invoice_id,

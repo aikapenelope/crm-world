@@ -56,7 +56,12 @@ export default async function handler(_payload: any, ctx: any) {
   let cutsTriggered = 0
   let warningsSent = 0
 
-  for (const inv of overdueInvoices as any[]) {
+  type OverdueInvoiceRow = {
+    invoice_id: string; subscriber_id: string; due_date: string
+    balance_usd: string; invoice_number: string; cut_policy_days: number | null
+    service_status: string; account_number: string
+  }
+  for (const inv of overdueInvoices as OverdueInvoiceRow[]) {
     const dueDate = new Date(inv.due_date)
     const daysOverdue = Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
     const cutDays = inv.cut_policy_days ?? 7

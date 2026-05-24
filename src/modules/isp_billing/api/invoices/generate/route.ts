@@ -42,7 +42,8 @@ export async function POST(request: Request, ctx: any) {
       .orderBy('created_at', 'desc')
       .limit(1)
       .executeTakeFirst()
-    if (rateRow) bcvRate = (rateRow as any).rate
+    type RateRow = { rate: string }
+    if (rateRow) bcvRate = (rateRow as RateRow).rate
   } catch {
     // Venezuela rates module might not be available — continue without BCV rate
   }
@@ -72,7 +73,8 @@ export async function POST(request: Request, ctx: any) {
 
   const { v4 } = await import('uuid')
 
-  for (const sub of subscribers as any[]) {
+  type SubscriberBillingRow = { id: string; monthly_price_usd: string; billing_cycle_day: number; cut_policy_days: number }
+  for (const sub of subscribers as SubscriberBillingRow[]) {
     // Verificar si ya existe factura para este abonado y período
     const existing = await kysely
       .selectFrom('isp_invoices')
@@ -102,7 +104,8 @@ export async function POST(request: Request, ctx: any) {
       .select(kysely.fn.count('id').as('count'))
       .where('tenant_id', '=', scope.tenantId)
       .executeTakeFirst()
-    const seq = String(Number((countResult as any)?.count ?? 0) + 1).padStart(5, '0')
+    type CountRow = { count: string | number }
+    const seq = String(Number((countResult as CountRow | undefined)?.count ?? 0) + 1).padStart(5, '0')
     const invoiceNumber = `FAC-${period_month.replace('-', '')}-${seq}`
 
     await kysely.insertInto('isp_invoices').values({

@@ -45,7 +45,10 @@ export async function POST(request: Request, ctx: any) {
     return Response.json({ error: 'Abonado no encontrado' }, { status: 404 })
   }
 
-  const previousStatus = (subscriber as any).service_status
+  type SubscriberRow = { id: string; account_number: string; service_status: string; customer_entity_id: string | null }
+  const sub = subscriber as SubscriberRow
+
+  const previousStatus = sub.service_status
   if (previousStatus === new_status) {
     return Response.json({ error: 'El abonado ya está en ese estado' }, { status: 409 })
   }
@@ -63,7 +66,8 @@ export async function POST(request: Request, ctx: any) {
       .select(['activation_date'])
       .where('id', '=', subscriber_id)
       .executeTakeFirst()
-    if (!(existing as any)?.activation_date) {
+    type ActivationRow = { activation_date: string | null }
+    if (!(existing as ActivationRow | undefined)?.activation_date) {
       updatePayload.activation_date = now
     }
   }
@@ -79,7 +83,7 @@ export async function POST(request: Request, ctx: any) {
   if (eventId) {
     await emitLifecycle(eventsConfig, eventId, scope, {
       subscriber_id,
-      account_number: (subscriber as any).account_number,
+      account_number: sub.account_number,
       previous_status: previousStatus,
       new_status,
       reason: reason ?? null,

@@ -42,10 +42,12 @@ export async function GET(_request: Request, ctx: any) {
   ])
 
   const statusMap: Record<string, number> = {}
-  for (const row of byStatus as any[]) statusMap[row.service_status] = Number(row.count)
+  type StatusRow = { service_status: string; count: string | number }
+  for (const row of byStatus as StatusRow[]) statusMap[row.service_status] = Number(row.count)
 
   const typeMap: Record<string, number> = {}
-  for (const row of byType as any[]) typeMap[row.subscriber_type] = Number(row.count)
+  type TypeRow = { subscriber_type: string; count: string | number }
+  for (const row of byType as TypeRow[]) typeMap[row.subscriber_type] = Number(row.count)
 
   const total = Object.values(statusMap).reduce((a, b) => a + b, 0)
 
@@ -64,7 +66,7 @@ export async function GET(_request: Request, ctx: any) {
       corporate:   typeMap.corporate   ?? 0,
       wholesale:   typeMap.wholesale   ?? 0,
     },
-    new_this_month: Number((newThisMonth as any)?.count ?? 0),
+    new_this_month: Number((newThisMonth as { count?: string | number } | undefined)?.count ?? 0),
   })
 }
 

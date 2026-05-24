@@ -53,8 +53,14 @@ export async function GET(request: Request, ctx: any) {
   const rows = await query.execute()
 
   // Calcular días de atraso y filtrar
-  const overdue = (rows as any[])
-    .map((row: any) => {
+  type OverdueRow = {
+    id: string; account_number: string; subscriber_type: string
+    installation_city: string; monthly_price_usd: string; cut_policy_days: number
+    last_payment_date: string | null; invoice_id: string; invoice_number: string
+    due_date: string; balance_usd: string; invoice_status: string
+  }
+  const overdue = (rows as OverdueRow[])
+    .map((row) => {
       const dueDate = new Date(row.due_date)
       const daysOverdue = Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
       return { ...row, days_overdue: daysOverdue }
