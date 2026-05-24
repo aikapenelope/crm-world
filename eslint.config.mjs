@@ -38,8 +38,17 @@ const ruleOverrides = {
   'react-hooks/static-components': 'off',
 }
 
+// eslint-plugin-react calls context.getFilename() (removed in ESLint v10 flat
+// config) during React version auto-detection. Pinning the version here prevents
+// detectReactVersion() from running and avoids the TypeError at lint time.
+// See: https://github.com/jsx-eslint/eslint-plugin-react/issues/3878
+const reactSettings = {
+  react: { version: '19' },
+}
+
 export default [
   ...nextCoreWebVitals,
   { ignores },
+  { name: 'project/react-settings', settings: reactSettings },
   { name: 'project/rule-overrides', rules: ruleOverrides },
 ]
