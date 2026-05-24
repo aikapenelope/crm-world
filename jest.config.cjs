@@ -75,9 +75,8 @@ module.exports = {
           strict: true,
           skipLibCheck: true,
           verbatimModuleSyntax: false,
-          // Suppress the ts-jest path-alias warning that only applies in the
-          // Next.js bundler context; irrelevant for unit tests.
-          ignoreDeprecations: '6.0',
+          // ignoreDeprecations: '6.0' — only valid with TypeScript 6.x.
+          // crm-world uses TypeScript 5.x ("typescript": "^5.9.3").
         },
       },
     ],
