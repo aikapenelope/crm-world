@@ -113,7 +113,7 @@ export default function WorkOrdersPage() {
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin órdenes'
+          emptyState="Sin órdenes"
           stickyActionsColumn
         />
       </PageBody>

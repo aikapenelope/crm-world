@@ -43,7 +43,7 @@ export default function CreateTechnicianPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nuevo Técnico de Campo</h1>
         <CrudForm
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           cancelHref="/backend/isp-technicians"
           onSubmit={async (values) => {

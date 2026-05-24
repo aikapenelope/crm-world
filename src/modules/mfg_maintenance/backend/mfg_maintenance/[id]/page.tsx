@@ -57,7 +57,7 @@ export default function EquipmentDetailPage() {
 
   const handleComplete = (wo: WoRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
+      context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-maintenance/work-orders-maint', {
           method: 'PUT',
@@ -197,7 +197,7 @@ export default function EquipmentDetailPage() {
               </div>
             )}
             <DataTable entityId="mfg_maintenance.plan" extensionTableId="mfg-maint-plans" data={plans} columns={planCols} isLoading={false}
-              emptyState='Sin planes de mantenimiento' />
+              emptyState="Sin planes de mantenimiento" />
           </div>
 
           {/* Work orders */}
@@ -223,7 +223,7 @@ export default function EquipmentDetailPage() {
               </div>
             )}
             <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maint-wo-history" data={wos} columns={woCols} isLoading={false}
-              emptyState='Sin órdenes de trabajo' stickyActionsColumn />
+              emptyState="Sin órdenes de trabajo" stickyActionsColumn />
           </div>
         </div>
       </PageBody>

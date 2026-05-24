@@ -188,7 +188,7 @@ export default function AgriFeedPage() {
           data={formulas}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin fórmulas de alimento'
+          emptyState="Sin fórmulas de alimento"
           stickyActionsColumn
         />
       </PageBody>

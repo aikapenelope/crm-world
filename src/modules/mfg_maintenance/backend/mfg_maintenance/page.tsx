@@ -63,7 +63,7 @@ export default function MfgMaintenancePage() {
 
   const handleStartWo = (wo: WoRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
+      context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-maintenance/work-orders-maint', { method: 'PUT', body: JSON.stringify({ id: wo.id, status: 'in_progress', started_at: new Date().toISOString() }) })
         flash(`WO ${wo.wo_number} iniciada`, 'success')
@@ -211,17 +211,17 @@ export default function MfgMaintenancePage() {
 
         {activeTab === 'work_orders' && (
           <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maintenance-wos" data={workOrders} columns={woCols} isLoading={isLoading}
-            emptyState='Sin órdenes de trabajo abiertas'
+            emptyState="Sin órdenes de trabajo abiertas"
             stickyActionsColumn />
         )}
         {activeTab === 'equipment' && (
           <DataTable entityId="mfg_maintenance.equipment" extensionTableId="mfg-maintenance-equipment" data={equipment} columns={eqCols} isLoading={isLoading}
-            emptyState='Sin equipos registrados'
+            emptyState="Sin equipos registrados"
             stickyActionsColumn />
         )}
         {activeTab === 'spare_parts' && (
           <DataTable entityId="mfg_maintenance.spare_part" extensionTableId="mfg-maintenance-spares" data={spareParts} columns={spCols} isLoading={isLoading}
-            emptyState='Sin repuestos registrados' />
+            emptyState="Sin repuestos registrados" />
         )}
       </PageBody>
     </Page>

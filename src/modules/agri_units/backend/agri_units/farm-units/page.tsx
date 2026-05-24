@@ -187,7 +187,7 @@ export default function FarmUnitsPage() {
           data={units}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin unidades productivas'
+          emptyState="Sin unidades productivas"
           stickyActionsColumn
         />
       </PageBody>

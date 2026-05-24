@@ -205,7 +205,7 @@ export default function VaccinationsPage() {
           data={records}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin vacunaciones registradas'
+          emptyState="Sin vacunaciones registradas"
           stickyActionsColumn
         />
       </PageBody>

@@ -62,7 +62,7 @@ export default function CreateInspectionPage() {
 
         <CrudForm
           backHref="/backend/auto_inspections"
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Crear Inspección"
           cancelHref="/backend/auto_inspections"

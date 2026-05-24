@@ -125,7 +125,7 @@ export default function SaleInvoicesPage() {
           data={invoices}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin facturas'
+          emptyState="Sin facturas"
           stickyActionsColumn
         />
       </PageBody>

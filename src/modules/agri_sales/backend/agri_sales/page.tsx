@@ -120,7 +120,7 @@ export default function AgriSalesPage() {
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin órdenes de venta'
+          emptyState="Sin órdenes de venta"
           stickyActionsColumn
         />
       </PageBody>

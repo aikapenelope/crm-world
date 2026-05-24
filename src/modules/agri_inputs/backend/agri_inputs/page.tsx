@@ -269,7 +269,7 @@ export default function AgriInputsPage() {
           data={items}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin insumos registrados'
+          emptyState="Sin insumos registrados"
           stickyActionsColumn
         />
       </PageBody>

@@ -279,7 +279,7 @@ export default function BomDetailPage() {
             data={lines}
             columns={lineColumns}
             isLoading={false}
-            emptyState='Sin componentes'
+            emptyState="Sin componentes"
             stickyActionsColumn
           />
         </div>

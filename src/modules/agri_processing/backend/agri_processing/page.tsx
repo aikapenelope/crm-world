@@ -224,7 +224,7 @@ export default function AgriProcessingPage() {
           data={batches}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin lotes de beneficio'
+          emptyState="Sin lotes de beneficio"
           stickyActionsColumn
         />
       </PageBody>

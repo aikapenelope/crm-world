@@ -207,7 +207,7 @@ export default function FeedBatchesPage() {
           data={batches}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin lotes de alimento'
+          emptyState="Sin lotes de alimento"
           stickyActionsColumn
         />
       </PageBody>

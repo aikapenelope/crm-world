@@ -47,7 +47,7 @@ export default function MfgHrPage() {
 
   const handleApproveBonus = (bonus: BonusRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_hr.bonus', recordId: bonus.id },
+      context: { entityId: 'mfg_hr.bonus', recordId: bonus.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-hr/production-bonuses', { method: 'PUT', body: JSON.stringify({ id: bonus.id, status: 'approved' }) })
         flash(`Bono ${bonus.bonus_number} aprobado — Bs ${Number(bonus.bonus_per_worker_bs).toLocaleString('es-VE', { minimumFractionDigits: 2 })} por operario`, 'success')
@@ -117,7 +117,7 @@ export default function MfgHrPage() {
       <RowActions items={[
         ...(row.original.status === 'calculated' ? [{ id: 'approve', label: 'Aprobar bono', onSelect: () => handleApproveBonus(row.original) }] : []),
         ...(row.original.status === 'approved' ? [{ id: 'pay', label: 'Marcar pagado', onSelect: () =>
-          runMutation({ operation: 'update', context: { entityId: 'mfg_hr.bonus', recordId: row.original.id }, operation: async () => {
+          runMutation({ context: { entityId: 'mfg_hr.bonus', recordId: row.original.id }, operation: async () => {
             await apiCallOrThrow('/api/mfg-hr/production-bonuses', { method: 'PUT', body: JSON.stringify({ id: row.original.id, status: 'paid' }) })
             flash(`Bono ${row.original.bonus_number} marcado como pagado`, 'success'); load()
           }}) }] : []),
@@ -205,11 +205,11 @@ export default function MfgHrPage() {
 
         {activeTab === 'workers' && (
           <DataTable entityId="mfg_hr.worker" extensionTableId="mfg-hr-workers" data={workers} columns={workerCols} isLoading={isLoading}
-            emptyState='Sin operarios registrados' />
+            emptyState="Sin operarios registrados" />
         )}
         {activeTab === 'bonuses' && (
           <DataTable entityId="mfg_hr.bonus" extensionTableId="mfg-hr-bonuses" data={bonuses} columns={bonusCols} isLoading={isLoading}
-            emptyState='Sin bonos registrados'
+            emptyState="Sin bonos registrados"
             stickyActionsColumn />
         )}
       </PageBody>

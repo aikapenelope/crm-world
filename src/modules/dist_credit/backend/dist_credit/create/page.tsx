@@ -67,7 +67,7 @@ export default function CreateCreditLimitPage() {
 
         <CrudForm
           backHref="/backend/dist_credit"
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Asignar Crédito"
           cancelHref="/backend/dist_credit"

@@ -50,7 +50,7 @@ export default function MfgDispatchPage() {
 
   const handleConfirm = (so: SoRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_dispatch.sale_order', recordId: so.id },
+      context: { entityId: 'mfg_dispatch.sale_order', recordId: so.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-dispatch/sale-orders', { method: 'PUT', body: JSON.stringify({ id: so.id, status: 'confirmed' }) })
         flash(`Pedido ${so.order_number} confirmado — lotes reservados`, 'success')
@@ -150,7 +150,7 @@ export default function MfgDispatchPage() {
         )}
 
         <DataTable entityId="mfg_dispatch.sale_order" extensionTableId="mfg-dispatch-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState='Sin pedidos industriales'
+          emptyState="Sin pedidos industriales"
           stickyActionsColumn />
       </PageBody>
     </Page>

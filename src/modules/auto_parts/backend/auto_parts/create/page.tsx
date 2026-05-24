@@ -53,7 +53,7 @@ export default function CreatePartPage() {
           </div>
         </div>
         <CrudForm
-          backHref="/backend/auto_parts" fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]} groups={groups}
+          backHref="/backend/auto_parts" fields={[] as any[]} groups={groups}
           submitLabel="Agregar Repuesto" cancelHref="/backend/auto_parts"
           onSubmit={async (values) => {
             await createCrud('auto-parts/parts', {

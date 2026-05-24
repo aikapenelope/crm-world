@@ -199,7 +199,7 @@ export default function HaccpPlansPage() {
           data={plans}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin planes HACCP'
+          emptyState="Sin planes HACCP"
           stickyActionsColumn
         />
       </PageBody>

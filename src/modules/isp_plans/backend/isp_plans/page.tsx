@@ -110,7 +110,7 @@ export default function IspPlansPage() {
           data={plans}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin planes'
+          emptyState="Sin planes"
           stickyActionsColumn
         />
       </PageBody>

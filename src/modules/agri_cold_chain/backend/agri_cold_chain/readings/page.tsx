@@ -285,7 +285,7 @@ export default function TemperatureReadingsPage() {
           data={readings}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin lecturas en este período'
+          emptyState="Sin lecturas en este período"
         />
       </PageBody>
     </Page>

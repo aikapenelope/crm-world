@@ -71,7 +71,7 @@ export default function MfgProcurementPage() {
     if (currentIdx < 0 || currentIdx >= PO_STATUS_FLOW.length - 1) return
     const nextStatus = PO_STATUS_FLOW[currentIdx + 1]
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_procurement.po', recordId: po.id },
+      context: { entityId: 'mfg_procurement.po', recordId: po.id },
       operation: async () => {
         const updateData: Record<string, any> = { id: po.id, status: nextStatus }
         if (nextStatus === 'at_customs') updateData.actual_arrival_port = new Date().toISOString().split('T')[0]
@@ -179,7 +179,7 @@ export default function MfgProcurementPage() {
         )}
 
         <DataTable entityId="mfg_procurement.po" extensionTableId="mfg-procurement-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState='Sin órdenes de compra'
+          emptyState="Sin órdenes de compra"
           stickyActionsColumn />
       </PageBody>
     </Page>

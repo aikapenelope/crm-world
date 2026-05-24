@@ -134,7 +134,7 @@ export default function IspSubscribersPage() {
           data={subscribers}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin abonados'
+          emptyState="Sin abonados"
           stickyActionsColumn
         />
       </PageBody>

@@ -167,7 +167,7 @@ export default function AgriFieldPage() {
           data={cycles}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin ciclos de cultivo'
+          emptyState="Sin ciclos de cultivo"
           stickyActionsColumn
         />
       </PageBody>

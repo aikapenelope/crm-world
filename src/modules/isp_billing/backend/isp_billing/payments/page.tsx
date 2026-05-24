@@ -80,7 +80,7 @@ export default function IspPaymentsPage() {
           data={payments}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin cobros'
+          emptyState="Sin cobros"
         />
       </PageBody>
     </Page>

@@ -109,7 +109,7 @@ export default function IspCpeInventoryPage() {
           data={items}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin equipos'
+          emptyState="Sin equipos"
           stickyActionsColumn
         />
       </PageBody>

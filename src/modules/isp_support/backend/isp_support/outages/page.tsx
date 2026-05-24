@@ -125,7 +125,7 @@ export default function IspOutagesPage() {
           data={outages}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin averías registradas'
+          emptyState="Sin averías registradas"
           stickyActionsColumn
         />
       </PageBody>

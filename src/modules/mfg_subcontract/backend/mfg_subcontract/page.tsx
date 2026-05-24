@@ -61,7 +61,7 @@ export default function MfgSubcontractPage() {
     if (idx < 0 || idx >= SC_STATUS_FLOW.length - 1) return
     const next = SC_STATUS_FLOW[idx + 1]
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_subcontract.order', recordId: order.id },
+      context: { entityId: 'mfg_subcontract.order', recordId: order.id },
       operation: async () => {
         const update: Record<string, any> = { id: order.id, status: next }
         if (next === 'completed') {
@@ -198,7 +198,7 @@ export default function MfgSubcontractPage() {
         )}
 
         <DataTable entityId="mfg_subcontract.order" extensionTableId="mfg-subcontract-orders" data={orders} columns={columns} isLoading={isLoading}
-          emptyState='Sin órdenes de maquila'
+          emptyState="Sin órdenes de maquila"
           stickyActionsColumn />
 
         {/* Materials panel for selected order */}

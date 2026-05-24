@@ -218,7 +218,7 @@ export default function MfgOrdersPage() {
           data={orders}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin órdenes de producción'
+          emptyState="Sin órdenes de producción"
           stickyActionsColumn
         />
       </PageBody>

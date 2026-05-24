@@ -258,7 +258,7 @@ export default function MfgInventoryPage() {
           data={lots}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin lotes de inventario'
+          emptyState="Sin lotes de inventario"
           stickyActionsColumn
         />
       </PageBody>

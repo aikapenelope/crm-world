@@ -52,7 +52,7 @@ export default function DispatchDetailPage() {
 
   const handleConfirmDelivery = (disp: any) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_dispatch.dispatch', recordId: disp.id },
+      context: { entityId: 'mfg_dispatch.dispatch', recordId: disp.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-dispatch/dispatch-orders', { method: 'PUT', body: JSON.stringify({ id: disp.id, status: 'delivered', delivery_date: new Date().toISOString().split('T')[0], customer_signature: true }) })
         await apiCallOrThrow('/api/mfg-dispatch/sale-orders', { method: 'PUT', body: JSON.stringify({ id: params.id, status: 'invoiced', actual_dispatch_date: new Date().toISOString().split('T')[0] }) })

@@ -63,7 +63,7 @@ export default function CreateLeadPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nuevo Lead / Prospecto</h1>
         <CrudForm
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           cancelHref="/backend/isp-sales"
           onSubmit={async (values) => {

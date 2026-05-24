@@ -190,7 +190,7 @@ export default function AgriColdChainPage() {
           data={units}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin unidades de frío registradas'
+          emptyState="Sin unidades de frío registradas"
           stickyActionsColumn
         />
       </PageBody>

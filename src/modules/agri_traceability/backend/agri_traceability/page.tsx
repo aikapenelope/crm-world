@@ -219,7 +219,7 @@ export default function AgriTraceabilityPage() {
             data={recalls}
             columns={recallColumns}
             isLoading={isLoading}
-            emptyState='Sin recalls registrados'
+            emptyState="Sin recalls registrados"
           />
         </div>
       </PageBody>

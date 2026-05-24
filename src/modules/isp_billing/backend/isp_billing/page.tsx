@@ -147,7 +147,7 @@ export default function IspBillingPage() {
           data={invoices}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin facturas'
+          emptyState="Sin facturas"
           stickyActionsColumn
         />
       </PageBody>

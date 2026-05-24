@@ -44,7 +44,7 @@ export default function MfgEnergyPage() {
 
   const handleEndOutage = (outage: OutageRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_energy.outage', recordId: outage.id },
+      context: { entityId: 'mfg_energy.outage', recordId: outage.id },
       operation: async () => {
         const now     = new Date().toISOString()
         const durationMs = Date.now() - new Date(outage.started_at).getTime()
@@ -229,12 +229,12 @@ export default function MfgEnergyPage() {
 
         {activeTab === 'outages' && (
           <DataTable entityId="mfg_energy.outage" extensionTableId="mfg-energy-outages" data={outages} columns={outageCols} isLoading={isLoading}
-            emptyState='Sin cortes registrados'
+            emptyState="Sin cortes registrados"
             stickyActionsColumn />
         )}
         {activeTab === 'consumption' && (
           <DataTable entityId="mfg_energy.consumption" extensionTableId="mfg-energy-consumption" data={consums} columns={consumCols} isLoading={isLoading}
-            emptyState='Sin registros de consumo' />
+            emptyState="Sin registros de consumo" />
         )}
       </PageBody>
     </Page>

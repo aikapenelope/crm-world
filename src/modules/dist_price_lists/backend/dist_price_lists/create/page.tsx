@@ -68,7 +68,7 @@ export default function CreatePriceListPage() {
 
         <CrudForm
           backHref="/backend/dist_price_lists"
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Crear Lista"
           cancelHref="/backend/dist_price_lists"

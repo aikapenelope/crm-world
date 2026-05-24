@@ -363,7 +363,7 @@ export default function FlockDetailPage() {
             data={records}
             columns={weeklyColumns}
             isLoading={false}
-            emptyState='Sin registros semanales'
+            emptyState="Sin registros semanales"
           />
         </div>
       </PageBody>

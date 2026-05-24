@@ -190,7 +190,7 @@ export default function MfgBomPage() {
           data={boms}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin BOMs registrados'
+          emptyState="Sin BOMs registrados"
           stickyActionsColumn
         />
       </PageBody>

@@ -146,7 +146,7 @@ export default function IspNetworkPage() {
           data={nodes}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin nodos'
+          emptyState="Sin nodos"
           stickyActionsColumn
         />
       </PageBody>

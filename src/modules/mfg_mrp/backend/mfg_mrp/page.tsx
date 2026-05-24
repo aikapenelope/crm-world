@@ -70,7 +70,7 @@ export default function MfgMrpPage() {
 
   const handleApproveReq = (req: ReqRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_mrp.requisition', recordId: req.id },
+      context: { entityId: 'mfg_mrp.requisition', recordId: req.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-mrp/purchase-requisitions', { method: 'PUT', body: JSON.stringify({ id: req.id, status: 'approved' }) })
         flash(`Requisición ${req.requisition_number} aprobada`, 'success')
@@ -243,7 +243,7 @@ export default function MfgMrpPage() {
           <div>
             <h3 className="text-sm font-semibold mb-3">Requisiciones de Compra ({requisitions.length})</h3>
             <DataTable entityId="mfg_mrp.requisition" extensionTableId="mfg-mrp-requisitions" data={requisitions} columns={reqnColumns} isLoading={isLoading}
-              emptyState='Sin requisiciones' stickyActionsColumn />
+              emptyState="Sin requisiciones" stickyActionsColumn />
           </div>
         )}
       </PageBody>

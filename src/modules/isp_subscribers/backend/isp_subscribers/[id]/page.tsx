@@ -147,7 +147,7 @@ export default function IspSubscriberDetailPage() {
 
         {activeTab === 'info' && (
           <CrudForm
-            fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+            fields={[] as any[]}
             groups={infoGroups}
             initialValues={subscriber}
             cancelHref="/backend/isp-subscribers"

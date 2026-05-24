@@ -135,7 +135,7 @@ export default function LeadDetailPage() {
         )}
 
         <CrudForm
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           initialValues={lead}
           cancelHref="/backend/isp-sales"

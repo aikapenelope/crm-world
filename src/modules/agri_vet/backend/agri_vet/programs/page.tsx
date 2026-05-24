@@ -182,7 +182,7 @@ export default function VaccinationProgramsPage() {
           data={programs}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin programas de vacunación'
+          emptyState="Sin programas de vacunación"
           stickyActionsColumn
         />
       </PageBody>

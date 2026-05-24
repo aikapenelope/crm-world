@@ -208,7 +208,7 @@ export default function MfgQualityPage() {
           data={ncs}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin no-conformidades'
+          emptyState="Sin no-conformidades"
           stickyActionsColumn
         />
       </PageBody>

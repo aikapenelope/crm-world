@@ -72,7 +72,7 @@ export default function EditTechnicianPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">{tech.name}</h1>
         <CrudForm
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           initialValues={tech}
           cancelHref="/backend/isp-technicians"

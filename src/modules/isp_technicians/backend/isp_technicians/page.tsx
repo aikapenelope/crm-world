@@ -105,7 +105,7 @@ export default function IspTechniciansPage() {
           data={techs}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin técnicos'
+          emptyState="Sin técnicos"
           stickyActionsColumn
         />
       </PageBody>

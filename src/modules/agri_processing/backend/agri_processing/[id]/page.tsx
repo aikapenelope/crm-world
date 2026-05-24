@@ -225,7 +225,7 @@ export default function SlaughterBatchDetailPage() {
             data={lots}
             columns={lotsColumns}
             isLoading={false}
-            emptyState='Sin productos terminados'
+            emptyState="Sin productos terminados"
           />
         </div>
       </PageBody>

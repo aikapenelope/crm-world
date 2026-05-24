@@ -125,7 +125,7 @@ export default function IspSalesPage() {
           data={leads}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin leads'
+          emptyState="Sin leads"
           stickyActionsColumn
         />
       </PageBody>

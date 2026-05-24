@@ -209,7 +209,7 @@ export default function AgriVetPage() {
           data={meds}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin tratamientos registrados'
+          emptyState="Sin tratamientos registrados"
           stickyActionsColumn
         />
       </PageBody>

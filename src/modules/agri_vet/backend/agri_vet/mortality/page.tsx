@@ -125,7 +125,7 @@ export default function MortalityPage() {
           data={records}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin registros de mortalidad'
+          emptyState="Sin registros de mortalidad"
         />
       </PageBody>
     </Page>

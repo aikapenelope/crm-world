@@ -158,7 +158,7 @@ export default function BpmChecklistsPage() {
           data={checklists}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin checklists BPM'
+          emptyState="Sin checklists BPM"
         />
       </PageBody>
     </Page>

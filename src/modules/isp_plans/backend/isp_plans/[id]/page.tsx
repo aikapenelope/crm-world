@@ -97,7 +97,7 @@ export default function EditIspPlanPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Editar: {plan.name}</h1>
         <CrudForm
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           initialValues={plan}
           cancelHref="/backend/isp-plans"

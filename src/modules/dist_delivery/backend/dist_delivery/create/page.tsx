@@ -45,7 +45,7 @@ export default function CreateDeliveryOrderPage() {
 
         <CrudForm
           backHref="/backend/dist_delivery"
-          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+          fields={[] as any[]}
           groups={groups}
           submitLabel="Crear Despacho"
           cancelHref="/backend/dist_delivery"

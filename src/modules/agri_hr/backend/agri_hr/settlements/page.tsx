@@ -176,7 +176,7 @@ export default function SettlementsPage() {
           data={settlements}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin liquidaciones registradas'
+          emptyState="Sin liquidaciones registradas"
           stickyActionsColumn
         />
       </PageBody>

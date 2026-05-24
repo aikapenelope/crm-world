@@ -252,7 +252,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
     <CrudForm
       title=""
       backHref=""
-      fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
+      fields={[] as any[]}
       groups={groups}
       submitLabel="Guardar cambios"
       cancelHref="/backend/properties"

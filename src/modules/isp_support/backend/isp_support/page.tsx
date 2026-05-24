@@ -154,7 +154,7 @@ export default function IspSupportPage() {
           data={tickets}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin tickets'
+          emptyState="Sin tickets"
           stickyActionsColumn
         />
       </PageBody>

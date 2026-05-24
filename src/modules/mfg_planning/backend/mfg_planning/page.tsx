@@ -62,7 +62,7 @@ export default function MfgPlanningPage() {
 
   const handleConfirm = (item: MpsRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_planning.schedule', recordId: item.id },
+      context: { entityId: 'mfg_planning.schedule', recordId: item.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-planning/master-schedule', { method: 'PUT', body: JSON.stringify({ id: item.id, status: 'confirmed' }) })
         flash(`MPS ${item.schedule_number} confirmado`, 'success')
@@ -234,7 +234,7 @@ export default function MfgPlanningPage() {
           <div className="mb-6">
             <h3 className="text-sm font-semibold mb-3">Carga de Capacidad — Semana</h3>
             <DataTable entityId="mfg_planning.capacity" extensionTableId="mfg-planning-capacity" data={capacity} columns={capCols} isLoading={isLoading}
-              emptyState='Sin datos de capacidad' />
+              emptyState="Sin datos de capacidad" />
           </div>
         )}
 
@@ -242,7 +242,7 @@ export default function MfgPlanningPage() {
         <div>
           <h3 className="text-sm font-semibold mb-3">Ítems del MPS ({items.length})</h3>
           <DataTable entityId="mfg_planning.schedule" extensionTableId="mfg-planning-mps" data={items} columns={mpsCols} isLoading={isLoading}
-            emptyState='Sin ítems en el MPS esta semana'
+            emptyState="Sin ítems en el MPS esta semana"
             stickyActionsColumn />
         </div>
       </PageBody>

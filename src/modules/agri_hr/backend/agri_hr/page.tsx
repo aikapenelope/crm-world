@@ -136,7 +136,7 @@ export default function AgriHrPage() {
           data={employees}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin personal registrado'
+          emptyState="Sin personal registrado"
           stickyActionsColumn
         />
       </PageBody>

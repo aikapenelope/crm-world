@@ -102,7 +102,7 @@ export default function CommissionsPage() {
           data={commissions}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin comisiones'
+          emptyState="Sin comisiones"
         />
       </PageBody>
     </Page>

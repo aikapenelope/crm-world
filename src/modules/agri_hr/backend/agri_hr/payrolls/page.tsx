@@ -364,7 +364,7 @@ export default function PayrollsPage() {
           data={payrolls}
           columns={columns}
           isLoading={isLoading}
-          emptyState='Sin nóminas registradas'
+          emptyState="Sin nóminas registradas"
           stickyActionsColumn
         />
       </PageBody>

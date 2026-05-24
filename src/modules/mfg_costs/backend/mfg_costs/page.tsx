@@ -58,7 +58,7 @@ export default function MfgCostsPage() {
 
   const handleCalculate = (orderId: string, orderNumber: string) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_costs.variance', recordId: orderId },
+      context: { entityId: 'mfg_costs.variance', recordId: orderId },
       operation: async () => {
         const res = await apiCallOrThrow<any>(`/api/mfg-costs/calculate-variances?order_id=${orderId}`, { method: 'POST', body: '{}' })
         const d = res.result?.data
@@ -70,7 +70,7 @@ export default function MfgCostsPage() {
 
   const handleApprove = (v: VarRow) => {
     runMutation({
-      operation: 'update', context: { entityId: 'mfg_costs.variance', recordId: v.id },
+      context: { entityId: 'mfg_costs.variance', recordId: v.id },
       operation: async () => {
         await apiCallOrThrow('/api/mfg-costs/cost-variances', { method: 'PUT', body: JSON.stringify({ id: v.id, status: 'approved' }) })
         flash(`Variaciones de ${v.order_number} aprobadas`, 'success')
@@ -173,7 +173,7 @@ export default function MfgCostsPage() {
         )}
 
         <DataTable entityId="mfg_costs.variance" extensionTableId="mfg-costs-variances" data={variances} columns={columns} isLoading={isLoading}
-          emptyState='Sin variaciones calculadas'
+          emptyState="Sin variaciones calculadas"
           stickyActionsColumn />
       </PageBody>
     </Page>
