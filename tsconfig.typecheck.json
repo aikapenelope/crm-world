@@ -2,7 +2,9 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "incremental": false
+    "incremental": false,
+    "plugins": [],
+    "jsx": "react-jsx"
   },
   "include": [
     "next-env.d.ts",
@@ -11,7 +13,8 @@
   ],
   "exclude": [
     "node_modules",
-    "**/*.tsx",
+    "src/**/*.tsx",
+    "src/app/**",
     ".mercato/generated/**"
   ]
 }
