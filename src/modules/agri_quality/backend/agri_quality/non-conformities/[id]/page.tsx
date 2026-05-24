@@ -62,7 +62,7 @@ export default function NonConformityDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-quality')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> No-Conformidades
       </Button>
-      <ErrorMessage message="No-Conformidad no encontrada." />
+      <ErrorMessage label="No-Conformidad no encontrada." />
     </PageBody></Page>
   )
 

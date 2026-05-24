@@ -59,9 +59,8 @@ export default function HaccpPlansPage() {
 
   const handleActivate = (plan: PlanRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_quality.haccp_plan', recordId: plan.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-quality/haccp-plans', {
           method: 'PUT',
           body: JSON.stringify({

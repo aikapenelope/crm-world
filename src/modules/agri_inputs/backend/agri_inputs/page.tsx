@@ -59,9 +59,8 @@ export default function AgriInputsPage() {
 
   const handleAdjust = (itemId: string, qty: string) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_inputs.item', recordId: itemId },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-inputs/movements', {
           method: 'POST',
           body: JSON.stringify({

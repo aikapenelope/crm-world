@@ -64,7 +64,7 @@ export default function MfgMaintenancePage() {
   const handleStartWo = (wo: WoRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-maintenance/work-orders-maint', { method: 'PUT', body: JSON.stringify({ id: wo.id, status: 'in_progress', started_at: new Date().toISOString() }) })
         flash(`WO ${wo.wo_number} iniciada`, 'success')
         load()

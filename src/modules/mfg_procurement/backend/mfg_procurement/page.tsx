@@ -72,7 +72,7 @@ export default function MfgProcurementPage() {
     const nextStatus = PO_STATUS_FLOW[currentIdx + 1]
     runMutation({
       operation: 'update', context: { entityId: 'mfg_procurement.po', recordId: po.id },
-      mutationPayload: async () => {
+      operation: async () => {
         const updateData: Record<string, any> = { id: po.id, status: nextStatus }
         if (nextStatus === 'at_customs') updateData.actual_arrival_port = new Date().toISOString().split('T')[0]
         if (nextStatus === 'delivered') updateData.actual_warehouse_arrival = new Date().toISOString().split('T')[0]

@@ -35,7 +35,7 @@ export default function CreateCountPage() {
       <PageBody>
         <h1 className="text-2xl font-bold mb-6">Planificar Conteo</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           cancelHref="/backend/retail_inventory/counts"
           onSubmit={async (values) => {

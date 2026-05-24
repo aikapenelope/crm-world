@@ -57,7 +57,7 @@ export default function SaleOrderDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-sales')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Órdenes
       </Button>
-      <ErrorMessage message="Orden de venta no encontrada." />
+      <ErrorMessage label="Orden de venta no encontrada." />
     </PageBody></Page>
   )
 

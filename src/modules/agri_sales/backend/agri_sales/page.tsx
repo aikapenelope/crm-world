@@ -47,9 +47,8 @@ export default function AgriSalesPage() {
 
   const handleConfirm = (order: OrderRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_sales.order', recordId: order.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-sales/sale-orders', { method: 'PUT', body: JSON.stringify({ id: order.id, status: 'confirmed' }) })
         flash('Orden confirmada', 'success')
         load()

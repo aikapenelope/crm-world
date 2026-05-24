@@ -101,7 +101,7 @@ export default function CreateStudentPage() {
         <CrudForm
           title="Registrar Estudiante"
           backHref="/backend/students"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Registrar"
           cancelHref="/backend/students"

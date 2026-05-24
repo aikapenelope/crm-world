@@ -76,9 +76,8 @@ export default function BomDetailPage() {
 
   const handleDeleteLine = (line: BomLine) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_bom.line', recordId: line.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-bom/bom-lines', {
           method: 'DELETE',
           body: JSON.stringify({ id: line.id }),
@@ -160,7 +159,7 @@ export default function BomDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-bom')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> BOMs
       </Button>
-      <ErrorMessage message="BOM no encontrado." />
+      <ErrorMessage label="BOM no encontrado." />
     </PageBody></Page>
   )
 

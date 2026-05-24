@@ -45,7 +45,7 @@ export default function MfgEnergyPage() {
   const handleEndOutage = (outage: OutageRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_energy.outage', recordId: outage.id },
-      mutationPayload: async () => {
+      operation: async () => {
         const now     = new Date().toISOString()
         const durationMs = Date.now() - new Date(outage.started_at).getTime()
         const durationHrs = (durationMs / 3600000).toFixed(4)

@@ -103,7 +103,7 @@ export default function CreateWithholdingPage() {
 
         <CrudForm
           backHref="/backend/ve_withholdings"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Registrar Retención"
           cancelHref="/backend/ve_withholdings"

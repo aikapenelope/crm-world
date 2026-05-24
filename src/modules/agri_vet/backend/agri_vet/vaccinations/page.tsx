@@ -64,9 +64,8 @@ export default function VaccinationsPage() {
 
   const handleApply = (row: VacRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_vet.vaccination', recordId: row.id },
-      mutationPayload: async () => {
+      operation: async () => {
         const today = new Date().toISOString().split('T')[0]
         const withdrawalEnd = row.withdrawal_days > 0
           ? new Date(Date.now() + row.withdrawal_days * 86400000).toISOString().split('T')[0]

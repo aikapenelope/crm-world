@@ -79,7 +79,7 @@ export default function AcademyCourseCreatePage() {
         <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo curso</h1>
 
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           onSubmit={async (values) => {
             const res = await createCrud('academy-courses/courses', {

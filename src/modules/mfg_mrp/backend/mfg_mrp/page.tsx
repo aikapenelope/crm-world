@@ -71,7 +71,7 @@ export default function MfgMrpPage() {
   const handleApproveReq = (req: ReqRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_mrp.requisition', recordId: req.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-mrp/purchase-requisitions', { method: 'PUT', body: JSON.stringify({ id: req.id, status: 'approved' }) })
         flash(`Requisición ${req.requisition_number} aprobada`, 'success')
         load(activePlan?.id)

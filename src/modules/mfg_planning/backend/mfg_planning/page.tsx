@@ -63,7 +63,7 @@ export default function MfgPlanningPage() {
   const handleConfirm = (item: MpsRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_planning.schedule', recordId: item.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-planning/master-schedule', { method: 'PUT', body: JSON.stringify({ id: item.id, status: 'confirmed' }) })
         flash(`MPS ${item.schedule_number} confirmado`, 'success')
         load()

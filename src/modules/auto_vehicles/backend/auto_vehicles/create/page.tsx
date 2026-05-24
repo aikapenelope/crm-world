@@ -72,7 +72,7 @@ export default function CreateVehiclePage() {
 
         <CrudForm
           backHref="/backend/auto_vehicles"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Registrar Vehículo"
           cancelHref="/backend/auto_vehicles"

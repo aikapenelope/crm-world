@@ -129,7 +129,7 @@ export default function CreateTaxBookEntryPage() {
 
         <CrudForm
           backHref="/backend/ve_tax_books"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Registrar Entrada"
           cancelHref="/backend/ve_tax_books"

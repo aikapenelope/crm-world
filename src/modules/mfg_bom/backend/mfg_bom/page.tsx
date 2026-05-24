@@ -51,9 +51,8 @@ export default function MfgBomPage() {
 
   const handleActivate = (bom: BomRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_bom.header', recordId: bom.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-bom/bom-headers', {
           method: 'PUT',
           body: JSON.stringify({ id: bom.id, status: 'active', approved_at: new Date().toISOString() }),

@@ -73,9 +73,8 @@ export default function SlaughterBatchDetailPage() {
 
   const handleApproveDispatch = () => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_processing.batch', recordId: batchId },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-processing/slaughter-batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batchId, status: 'approved', dispatch_approved_at: new Date().toISOString() }),
@@ -109,7 +108,7 @@ export default function SlaughterBatchDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-processing')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Beneficios
       </Button>
-      <ErrorMessage message="Lote de beneficio no encontrado." />
+      <ErrorMessage label="Lote de beneficio no encontrado." />
     </PageBody></Page>
   )
 

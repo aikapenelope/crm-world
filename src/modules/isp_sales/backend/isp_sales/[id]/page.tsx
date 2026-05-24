@@ -61,7 +61,7 @@ export default function LeadDetailPage() {
   }
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando lead..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Lead no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Lead no encontrado." /></PageBody></Page>
 
   const groups: CrudFormGroup[] = [
     {
@@ -135,7 +135,7 @@ export default function LeadDetailPage() {
         )}
 
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           initialValues={lead}
           cancelHref="/backend/isp-sales"

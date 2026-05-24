@@ -57,9 +57,8 @@ export default function FeedBatchesPage() {
 
   const handleApprove = (batch: BatchRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_feed.batch', recordId: batch.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-feed/batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batch.id, status: 'approved' }),
@@ -72,9 +71,8 @@ export default function FeedBatchesPage() {
 
   const handleReject = (batch: BatchRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_feed.batch', recordId: batch.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-feed/batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batch.id, status: 'rejected' }),

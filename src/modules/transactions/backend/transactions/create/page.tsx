@@ -109,7 +109,7 @@ export default function CreateTransactionPage() {
         <CrudForm
           title="Registrar Cierre"
           backHref="/backend/transactions"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Registrar Transacción"
           cancelHref="/backend/transactions"

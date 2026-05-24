@@ -66,7 +66,7 @@ export default function CreateTicketPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nuevo Ticket de Soporte</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           cancelHref="/backend/isp-support"
           onSubmit={async (values) => {

@@ -52,7 +52,7 @@ export default function RecallDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-traceability')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Trazabilidad
       </Button>
-      <ErrorMessage message="Recall no encontrado." />
+      <ErrorMessage label="Recall no encontrado." />
     </PageBody></Page>
   )
 

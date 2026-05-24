@@ -66,9 +66,8 @@ export default function AgriProcessingPage() {
     const next = nextStatus[batch.status]
     if (!next) return
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_processing.batch', recordId: batch.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-processing/slaughter-batches', {
           method: 'PUT',
           body: JSON.stringify({ id: batch.id, status: next }),

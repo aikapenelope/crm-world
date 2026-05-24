@@ -57,9 +57,8 @@ export default function AgriQualityPage() {
 
   const handleDecide = (nc: NcRow, decision: string) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_quality.non_conformity', recordId: nc.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-quality/non-conformities', {
           method: 'PUT',
           body: JSON.stringify({ id: nc.id, decision, status: 'resolved', decision_date: new Date().toISOString().split('T')[0] }),

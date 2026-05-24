@@ -32,7 +32,7 @@ export default function EditTechnicianPage() {
   }, [params.id])
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Técnico no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Técnico no encontrado." /></PageBody></Page>
 
   const groups: CrudFormGroup[] = [
     {
@@ -72,7 +72,7 @@ export default function EditTechnicianPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">{tech.name}</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           initialValues={tech}
           cancelHref="/backend/isp-technicians"

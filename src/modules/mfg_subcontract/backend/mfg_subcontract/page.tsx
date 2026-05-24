@@ -62,7 +62,7 @@ export default function MfgSubcontractPage() {
     const next = SC_STATUS_FLOW[idx + 1]
     runMutation({
       operation: 'update', context: { entityId: 'mfg_subcontract.order', recordId: order.id },
-      mutationPayload: async () => {
+      operation: async () => {
         const update: Record<string, any> = { id: order.id, status: next }
         if (next === 'completed') {
           update.actual_delivery = new Date().toISOString().split('T')[0]

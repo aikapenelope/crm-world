@@ -56,9 +56,8 @@ export default function AgriVetPage() {
 
   const handleResolve = (row: MedRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_vet.medication', recordId: row.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-vet/medication-records', {
           method: 'PUT',
           body: JSON.stringify({ id: row.id, resolved: true }),

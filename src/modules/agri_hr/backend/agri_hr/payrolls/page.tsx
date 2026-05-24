@@ -120,9 +120,8 @@ export default function PayrollsPage() {
 
   const handleApprove = (p: PayrollRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.payroll', recordId: p.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/jornalero-payrolls', {
           method: 'PUT',
           body: JSON.stringify({ id: p.id, status: 'approved' }),
@@ -135,9 +134,8 @@ export default function PayrollsPage() {
 
   const handlePay = (p: PayrollRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.payroll', recordId: p.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/jornalero-payrolls', {
           method: 'PUT',
           body: JSON.stringify({ id: p.id, status: 'paid', payment_date: new Date().toISOString().split('T')[0] }),

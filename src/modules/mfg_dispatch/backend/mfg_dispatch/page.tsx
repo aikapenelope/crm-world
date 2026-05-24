@@ -51,7 +51,7 @@ export default function MfgDispatchPage() {
   const handleConfirm = (so: SoRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_dispatch.sale_order', recordId: so.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-dispatch/sale-orders', { method: 'PUT', body: JSON.stringify({ id: so.id, status: 'confirmed' }) })
         flash(`Pedido ${so.order_number} confirmado — lotes reservados`, 'success')
         load()

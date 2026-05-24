@@ -46,9 +46,8 @@ export default function AgriFieldPage() {
 
   const handleHarvest = (cycle: CycleRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_field.cycle', recordId: cycle.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-field/crop-cycles', { method: 'PUT', body: JSON.stringify({ id: cycle.id, status: 'harvested', actual_harvest_date: new Date().toISOString().split('T')[0] }) })
         flash('Ciclo marcado como cosechado', 'success')
         load()

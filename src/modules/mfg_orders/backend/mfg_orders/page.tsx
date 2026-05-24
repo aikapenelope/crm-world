@@ -57,9 +57,8 @@ export default function MfgOrdersPage() {
 
   const handleRelease = (order: OrderRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.production_order', recordId: order.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/production-orders', {
           method: 'PUT',
           body: JSON.stringify({ id: order.id, status: 'released' }),

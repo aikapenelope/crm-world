@@ -55,7 +55,7 @@ export default function SettlementDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-hr/settlements')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Liquidaciones
       </Button>
-      <ErrorMessage message="Liquidación no encontrada." />
+      <ErrorMessage label="Liquidación no encontrada." />
     </PageBody></Page>
   )
 

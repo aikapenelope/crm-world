@@ -76,7 +76,7 @@ export default function ProcurementDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-procurement')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Compras
       </Button>
-      <ErrorMessage message="OC no encontrada." />
+      <ErrorMessage label="OC no encontrada." />
     </PageBody></Page>
   )
 

@@ -73,7 +73,7 @@ export default function RegisterMovementPage() {
 
         <CrudForm
           backHref="/backend/dist_inventory"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Registrar Movimiento"
           cancelHref="/backend/dist_inventory"

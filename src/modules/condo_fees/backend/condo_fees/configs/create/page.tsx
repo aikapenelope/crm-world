@@ -75,7 +75,7 @@ export default function CreateFeeConfigPage() {
       <PageBody>
         <h1 className="text-2xl font-bold mb-6">Nueva Configuración de Cuota</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           cancelHref="/backend/condo_fees"
           onSubmit={async (values) => {

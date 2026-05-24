@@ -79,7 +79,7 @@ export default function CreateServiceOrderPage() {
 
         <CrudForm
           backHref="/backend/auto_service_orders"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Crear Orden"
           cancelHref="/backend/auto_service_orders"

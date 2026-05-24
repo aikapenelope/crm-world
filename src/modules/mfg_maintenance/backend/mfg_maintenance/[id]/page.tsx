@@ -58,7 +58,7 @@ export default function EquipmentDetailPage() {
   const handleComplete = (wo: WoRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_maintenance.wo', recordId: wo.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-maintenance/work-orders-maint', {
           method: 'PUT',
           body: JSON.stringify({ id: wo.id, status: 'completed', completed_at: new Date().toISOString() }),
@@ -75,7 +75,7 @@ export default function EquipmentDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-maintenance')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Mantenimiento
       </Button>
-      <ErrorMessage message="Equipo no encontrado." />
+      <ErrorMessage label="Equipo no encontrado." />
     </PageBody></Page>
   )
 

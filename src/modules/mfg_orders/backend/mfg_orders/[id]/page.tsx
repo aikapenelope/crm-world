@@ -78,9 +78,8 @@ export default function OrderDetailPage() {
 
   const handleStartOp = (op: OpRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.operation', recordId: op.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/order-operations', {
           method: 'PUT',
           body: JSON.stringify({ id: op.id, status: 'in_progress', actual_start: new Date().toISOString() }),
@@ -93,9 +92,8 @@ export default function OrderDetailPage() {
 
   const handleCompleteOp = (op: OpRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.operation', recordId: op.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/order-operations', {
           method: 'PUT',
           body: JSON.stringify({ id: op.id, status: 'completed', actual_end: new Date().toISOString() }),
@@ -110,9 +108,8 @@ export default function OrderDetailPage() {
     const durationMs = Date.now() - new Date(dt.started_at).getTime()
     const durationHrs = (durationMs / 3600000).toFixed(4)
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_orders.downtime', recordId: dt.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-orders/downtimes', {
           method: 'PUT',
           body: JSON.stringify({ id: dt.id, ended_at: new Date().toISOString(), duration_hrs: durationHrs }),
@@ -129,7 +126,7 @@ export default function OrderDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-orders')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Órdenes
       </Button>
-      <ErrorMessage message="Orden de producción no encontrada." />
+      <ErrorMessage label="Orden de producción no encontrada." />
     </PageBody></Page>
   )
 

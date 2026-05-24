@@ -59,7 +59,7 @@ export default function MfgCostsPage() {
   const handleCalculate = (orderId: string, orderNumber: string) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_costs.variance', recordId: orderId },
-      mutationPayload: async () => {
+      operation: async () => {
         const res = await apiCallOrThrow<any>(`/api/mfg-costs/calculate-variances?order_id=${orderId}`, { method: 'POST', body: '{}' })
         const d = res.result?.data
         flash(`Variaciones calculadas para ${orderNumber}: USD ${d?.total_variance_usd} (${d?.favorable ? 'favorable' : 'desfavorable'})`, d?.favorable ? 'success' : 'warning')
@@ -71,7 +71,7 @@ export default function MfgCostsPage() {
   const handleApprove = (v: VarRow) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_costs.variance', recordId: v.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-costs/cost-variances', { method: 'PUT', body: JSON.stringify({ id: v.id, status: 'approved' }) })
         flash(`Variaciones de ${v.order_number} aprobadas`, 'success')
         load()

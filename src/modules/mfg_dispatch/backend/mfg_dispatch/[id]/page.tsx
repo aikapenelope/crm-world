@@ -53,7 +53,7 @@ export default function DispatchDetailPage() {
   const handleConfirmDelivery = (disp: any) => {
     runMutation({
       operation: 'update', context: { entityId: 'mfg_dispatch.dispatch', recordId: disp.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-dispatch/dispatch-orders', { method: 'PUT', body: JSON.stringify({ id: disp.id, status: 'delivered', delivery_date: new Date().toISOString().split('T')[0], customer_signature: true }) })
         await apiCallOrThrow('/api/mfg-dispatch/sale-orders', { method: 'PUT', body: JSON.stringify({ id: params.id, status: 'invoiced', actual_dispatch_date: new Date().toISOString().split('T')[0] }) })
         flash('Entrega confirmada — pedido marcado como facturado', 'success')
@@ -68,7 +68,7 @@ export default function DispatchDetailPage() {
       <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/mfg-dispatch')} className="mb-4">
         <ArrowLeft className="mr-2 size-4" /> Despacho
       </Button>
-      <ErrorMessage message="Pedido no encontrado." />
+      <ErrorMessage label="Pedido no encontrado." />
     </PageBody></Page>
   )
 

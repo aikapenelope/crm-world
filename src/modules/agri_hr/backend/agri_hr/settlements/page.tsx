@@ -50,9 +50,8 @@ export default function SettlementsPage() {
 
   const handleApprove = (s: SettlementRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.settlement', recordId: s.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/producer-settlements', {
           method: 'PUT',
           body: JSON.stringify({ id: s.id, status: 'approved', approved_at: new Date().toISOString() }),
@@ -65,9 +64,8 @@ export default function SettlementsPage() {
 
   const handlePay = (s: SettlementRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_hr.settlement', recordId: s.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-hr/producer-settlements', {
           method: 'PUT',
           body: JSON.stringify({ id: s.id, status: 'paid', payment_date: new Date().toISOString().split('T')[0] }),

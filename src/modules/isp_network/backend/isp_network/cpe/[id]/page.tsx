@@ -32,7 +32,7 @@ export default function EditCpePage() {
   }, [params.id])
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="Equipo no encontrado." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="Equipo no encontrado." /></PageBody></Page>
 
   const groups: CrudFormGroup[] = [
     {
@@ -79,7 +79,7 @@ export default function EditCpePage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">{cpe.brand} {cpe.model}</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           initialValues={cpe}
           cancelHref="/backend/isp-network/cpe"

@@ -99,7 +99,7 @@ export default function CreatePropertyPage() {
         <CrudForm
           title="Nueva Propiedad"
           backHref="/backend/properties"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Crear Propiedad"
           cancelHref="/backend/properties"

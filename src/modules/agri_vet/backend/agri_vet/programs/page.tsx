@@ -49,9 +49,8 @@ export default function VaccinationProgramsPage() {
 
   const handleToggle = (prog: ProgramRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_vet.vaccination_program', recordId: prog.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-vet/vaccination-programs', {
           method: 'PUT',
           body: JSON.stringify({ id: prog.id, is_active: !prog.is_active }),

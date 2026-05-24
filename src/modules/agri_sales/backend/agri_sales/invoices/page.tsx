@@ -42,9 +42,8 @@ export default function SaleInvoicesPage() {
 
   const handleMarkPaid = (inv: InvoiceRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'agri_sales.invoice', recordId: inv.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/agri-sales/sale-invoices', {
           method: 'PUT',
           body: JSON.stringify({ id: inv.id, status: 'paid', paid_amount_usd: inv.total_usd, paid_at: new Date().toISOString() }),

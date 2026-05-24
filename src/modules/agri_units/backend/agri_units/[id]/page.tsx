@@ -133,7 +133,7 @@ export default function FlockDetailPage() {
         <Button type="button" variant="ghost" size="sm" onClick={() => router.push('/backend/agri-units')} className="mb-4">
           <ArrowLeft className="mr-2 size-4" /> Lotes
         </Button>
-        <ErrorMessage message="Lote no encontrado o sin acceso." />
+        <ErrorMessage label="Lote no encontrado o sin acceso." />
       </PageBody>
     </Page>
   )

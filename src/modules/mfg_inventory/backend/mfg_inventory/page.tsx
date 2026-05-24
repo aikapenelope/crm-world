@@ -59,9 +59,8 @@ export default function MfgInventoryPage() {
 
   const handleRelease = (lot: LotRow) => {
     runMutation({
-      operation: 'update',
       context: { entityId: 'mfg_inventory.lot', recordId: lot.id },
-      mutationPayload: async () => {
+      operation: async () => {
         await apiCallOrThrow('/api/mfg-inventory/stock-movements', {
           method: 'POST',
           body: JSON.stringify({ lot_id: lot.id, movement_type: 'quarantine_release', quantity: '0', reference_type: 'manual', reason: 'Liberado manualmente de cuarentena' }),

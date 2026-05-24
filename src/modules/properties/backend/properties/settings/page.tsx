@@ -73,7 +73,7 @@ export default function SettingsPage() {
         <CrudForm
           title="Configuración de Real Estate"
           backHref="/backend/properties"
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           submitLabel="Guardar configuración"
           cancelHref="/backend/properties"

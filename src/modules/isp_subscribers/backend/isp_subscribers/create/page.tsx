@@ -93,7 +93,7 @@ export default function CreateIspSubscriberPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nuevo Abonado</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           cancelHref="/backend/isp-subscribers"
           onSubmit={async (values) => {

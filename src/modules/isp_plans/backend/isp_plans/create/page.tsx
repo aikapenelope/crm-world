@@ -84,7 +84,7 @@ export default function CreateIspPlanPage() {
         </Button>
         <h1 className="text-2xl font-bold mb-6">Nuevo Plan de Servicio</h1>
         <CrudForm
-          fields={[]}
+          fields={[] as import("@open-mercato/ui/backend/CrudForm").CrudField[]}
           groups={groups}
           cancelHref="/backend/isp-plans"
           onSubmit={async (values) => {

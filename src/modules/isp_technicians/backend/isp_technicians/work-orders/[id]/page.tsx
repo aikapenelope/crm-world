@@ -59,7 +59,7 @@ export default function WorkOrderDetailPage() {
   }
 
   if (state === 'loading') return <Page><PageBody><LoadingMessage label="Cargando..." /></PageBody></Page>
-  if (state === 'notFound') return <Page><PageBody><ErrorMessage message="OT no encontrada." /></PageBody></Page>
+  if (state === 'notFound') return <Page><PageBody><ErrorMessage label="OT no encontrada." /></PageBody></Page>
 
   const isActive = ['pending', 'scheduled', 'in_progress'].includes(order.status)
 
