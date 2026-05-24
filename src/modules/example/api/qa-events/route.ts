@@ -116,7 +116,7 @@ export const openApi: OpenApiRouteDoc = {
           schema: z.object({
             items: z.array(z.object({
               event: z.string(),
-              payload: z.record(z.string(), z.unknown())),
+              payload: z.record(z.string(), z.unknown()),
               capturedAt: z.string(),
             })),
           }),
