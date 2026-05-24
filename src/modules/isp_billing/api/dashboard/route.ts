@@ -57,8 +57,12 @@ export async function GET(_request: Request, ctx: any) {
       .executeTakeFirst(),
   ])
 
+  type StatusRow   = { status: string; count: string | number; total_usd: string | null; balance_usd: string | null }
+  type MethodRow   = { payment_method: string; count: string | number; total_usd: string | null }
+  type MonthlyRow  = { billed_usd: string | null; collected_usd: string | null; pending_usd: string | null }
+
   const statusMap: Record<string, { count: number; total_usd: number; balance_usd: number }> = {}
-  for (const row of byStatus as any[]) {
+  for (const row of byStatus as StatusRow[]) {
     statusMap[row.status] = {
       count: Number(row.count),
       total_usd: parseFloat(row.total_usd ?? '0'),
@@ -67,14 +71,14 @@ export async function GET(_request: Request, ctx: any) {
   }
 
   const methodMap: Record<string, { count: number; total_usd: number }> = {}
-  for (const row of paymentsByMethod as any[]) {
+  for (const row of paymentsByMethod as MethodRow[]) {
     methodMap[row.payment_method] = {
       count: Number(row.count),
       total_usd: parseFloat(row.total_usd ?? '0'),
     }
   }
 
-  const mt = monthlyTotals as any
+  const mt = monthlyTotals as MonthlyRow | undefined
 
   return Response.json({
     this_month: {
