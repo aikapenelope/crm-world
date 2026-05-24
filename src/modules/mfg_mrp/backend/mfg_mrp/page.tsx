@@ -5,6 +5,7 @@ import { Page, PageBody, PageHeader } from '@open-mercato/ui/backend/Page'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { RowActions } from '@open-mercato/ui/backend/RowActions'
 import { apiCall, apiCallOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
+import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@open-mercato/ui/primitives/select'
@@ -14,7 +15,8 @@ import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuarde
 import { Play, AlertTriangle, Plus } from 'lucide-react'
 import type { ColumnDef } from '@tanstack/react-table'
 
-type PlanRow  = { id: string; plan_number: string; period_start: string; period_end: string; status: string; last_run_summary: any }
+type MrpRunSummary = { run_at: string; orders_exploded: number; materials_analyzed: number; requisitions_created: number }
+type PlanRow  = { id: string; plan_number: string; period_start: string; period_end: string; status: string; last_run_summary: MrpRunSummary | null }
 type ReqRow   = { id: string; requisition_number: string; material_code: string; material_name: string; quantity: string; uom: string; required_by_date: string; suggested_po_date: string; is_imported: boolean; status: string }
 type ReqmtRow = { id: string; material_code: string; material_name: string; gross_requirement: string; stock_on_hand: string; net_requirement: string; uom: string; required_by_date: string; suggested_po_date: string; lead_time_days: number; is_imported: boolean; status: string }
 
@@ -199,14 +201,20 @@ export default function MfgMrpPage() {
         {showPlanForm && (
           <div className="mb-6 border border-border rounded-lg p-4 bg-background">
             <h3 className="text-sm font-semibold mb-3">Crear Plan de Producción</h3>
-            <CrudForm{...({} as any)} entityId="mfg_mrp.plan" apiPath="/api/mfg-mrp/production-plans" mode="create"
+            <CrudForm
               fields={[
                 { type: 'text' as const,  id: 'plan_number',  label: 'Número de Plan (PLAN-2026-XX)', required: true },
                 { type: 'date' as const,  id: 'period_start', label: 'Inicio del período', required: true },
                 { type: 'date' as const,  id: 'period_end',   label: 'Fin del período', required: true },
                 { type: 'textarea' as const, id: 'notes',     label: 'Notas' },
               ]}
-              onSuccess={() => { flash('Plan creado — ejecuta el MRP para calcular necesidades', 'success'); setPlanForm(false); load() }}
+              cancelHref="/backend/mfg_mrp"
+              onSubmit={async (values) => {
+                await createCrud('mfg-mrp/production-plans', values)
+                flash('Plan creado — ejecuta el MRP para calcular necesidades', 'success')
+                setPlanForm(false)
+                load()
+              }}
             />
           </div>
         )}
@@ -214,10 +222,10 @@ export default function MfgMrpPage() {
         {activePlan?.last_run_summary && (
           <div className="mb-4 p-3 bg-muted/20 rounded-lg">
             <div className="text-xs text-muted-foreground">
-              Última corrida: {new Date((activePlan.last_run_summary as any).run_at).toLocaleString('es-VE')}
-              {' · '}{(activePlan.last_run_summary as any).orders_exploded} órdenes
-              {' · '}{(activePlan.last_run_summary as any).materials_analyzed} materiales
-              {' · '}{(activePlan.last_run_summary as any).requisitions_created} requisiciones generadas
+              Última corrida: {new Date(activePlan.last_run_summary.run_at).toLocaleString('es-VE')}
+              {' · '}{activePlan.last_run_summary.orders_exploded} órdenes
+              {' · '}{activePlan.last_run_summary.materials_analyzed} materiales
+              {' · '}{activePlan.last_run_summary.requisitions_created} requisiciones generadas
             </div>
           </div>
         )}
