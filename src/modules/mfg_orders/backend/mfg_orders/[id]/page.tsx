@@ -297,7 +297,6 @@ export default function OrderDetailPage() {
           )}
           <DataTable
             entityId="mfg_orders.operation"
-            extensionTableId="mfg-order-operations"
             data={operations}
             columns={opColumns}
             isLoading={false}
@@ -352,7 +351,6 @@ export default function OrderDetailPage() {
           {downtimes.length > 0 ? (
             <DataTable
               entityId="mfg_orders.downtime"
-              extensionTableId="mfg-order-downtimes"
               data={downtimes}
               columns={dtColumns}
               isLoading={false}

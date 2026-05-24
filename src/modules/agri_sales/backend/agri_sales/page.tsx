@@ -116,7 +116,6 @@ export default function AgriSalesPage() {
       <PageBody>
         <DataTable
           entityId="agri_sales.order"
-          extensionTableId="agri-sales-orders-list"
           data={orders}
           columns={columns}
           isLoading={isLoading}

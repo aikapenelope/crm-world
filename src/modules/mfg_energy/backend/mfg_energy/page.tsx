@@ -228,12 +228,12 @@ export default function MfgEnergyPage() {
         </div>
 
         {activeTab === 'outages' && (
-          <DataTable entityId="mfg_energy.outage" extensionTableId="mfg-energy-outages" data={outages} columns={outageCols} isLoading={isLoading}
+          <DataTable entityId="mfg_energy.outage" data={outages} columns={outageCols} isLoading={isLoading}
             emptyState="Sin cortes registrados"
             stickyActionsColumn />
         )}
         {activeTab === 'consumption' && (
-          <DataTable entityId="mfg_energy.consumption" extensionTableId="mfg-energy-consumption" data={consums} columns={consumCols} isLoading={isLoading}
+          <DataTable entityId="mfg_energy.consumption" data={consums} columns={consumCols} isLoading={isLoading}
             emptyState="Sin registros de consumo" />
         )}
       </PageBody>

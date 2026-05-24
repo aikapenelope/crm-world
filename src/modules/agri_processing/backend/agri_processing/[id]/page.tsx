@@ -221,7 +221,6 @@ export default function SlaughterBatchDetailPage() {
           <h3 className="text-sm font-semibold mb-3">Lotes de Producto Terminado ({lots.length})</h3>
           <DataTable
             entityId="agri_processing.lot"
-            extensionTableId="agri-processing-lots-by-batch"
             data={lots}
             columns={lotsColumns}
             isLoading={false}

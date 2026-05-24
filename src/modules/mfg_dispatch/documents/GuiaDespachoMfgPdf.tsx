@@ -154,11 +154,11 @@ export function GuiaDespachoMfgPdf({ data: d }: { data: GuiaDespachoMfgData }) {
             </View>
           )}
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Responsable de Almacén', name: '' },
             { label: 'Conductor / Transportista', name: d.driver_name ?? '' },
             { label: 'Recibido por el Cliente', name: '' },
-          ]} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

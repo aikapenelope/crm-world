@@ -178,7 +178,7 @@ export default function MfgProcurementPage() {
           </div>
         )}
 
-        <DataTable entityId="mfg_procurement.po" extensionTableId="mfg-procurement-orders" data={orders} columns={columns} isLoading={isLoading}
+        <DataTable entityId="mfg_procurement.po" data={orders} columns={columns} isLoading={isLoading}
           emptyState="Sin órdenes de compra"
           stickyActionsColumn />
       </PageBody>

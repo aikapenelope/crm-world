@@ -106,7 +106,6 @@ export default function IspPlansPage() {
       <PageBody>
         <DataTable
           entityId="isp_plans.service_plan"
-          extensionTableId="isp-plans-list"
           data={plans}
           columns={columns}
           isLoading={isLoading}

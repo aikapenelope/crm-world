@@ -205,7 +205,6 @@ export default function AgriVetPage() {
 
         <DataTable
           entityId="agri_vet.medication"
-          extensionTableId="agri-vet-medications-list"
           data={meds}
           columns={columns}
           isLoading={isLoading}

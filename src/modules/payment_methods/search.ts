@@ -33,8 +33,8 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: lines,
         presenter: {
-          title: (norm(r.name) as string | undefined) ?? 'Método de pago',
-          subtitle: [norm(r.code), norm(r.currency)].filter(Boolean).join(' · ') || undefined,
+          title: (norm(r.name as string) as string | undefined) ?? 'Método de pago',
+          subtitle: [norm(r.code as string), norm(r.currency as string)].filter(Boolean).join(' · ') || undefined,
           icon: 'credit-card',
         },
         links: [{ href: '/backend/payment-methods', label: 'Ver métodos de pago', kind: 'primary' }],
@@ -44,8 +44,8 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: (norm(r.name) as string | undefined) ?? 'Método de pago',
-        subtitle: (norm(r.code) as string | undefined) ?? undefined,
+        title: (norm(r.name as string) as string | undefined) ?? 'Método de pago',
+        subtitle: (norm(r.code as string) as string | undefined) ?? undefined,
         icon: 'credit-card',
       }
     },

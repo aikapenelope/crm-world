@@ -30,9 +30,9 @@ export const searchConfig: SearchModuleConfig = {
       return {
         text: [String(r.title)],
         presenter: {
-          title: (norm(r.title) as string | undefined) ?? 'Plantilla',
+          title: (norm(r.title as string) as string | undefined) ?? 'Plantilla',
           icon: 'file-text',
-          badge: (norm(r.doc_type) as string | undefined) ?? undefined,
+          badge: (norm(r.doc_type as string) as string | undefined) ?? undefined,
         },
         links: [{ href: '/backend/school-docs', label: 'Ver constancias', kind: 'primary' }],
         checksumSource: { title: r.title, updated_at: r.updated_at },
@@ -41,7 +41,7 @@ export const searchConfig: SearchModuleConfig = {
     formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
       const r = ctx.record
       return {
-        title: (norm(r.title) as string | undefined) ?? 'Plantilla',
+        title: (norm(r.title as string) as string | undefined) ?? 'Plantilla',
         icon: 'file-text',
       }
     },

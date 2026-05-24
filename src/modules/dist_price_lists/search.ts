@@ -11,7 +11,7 @@ export const searchConfig: SearchModuleConfig = {
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
         const r = ctx.record
         if (!r.name) return null
-        return { text: [String(r.name), norm(r.code) ?? '', norm(r.description) ?? ''].filter(Boolean), presenter: { title: (norm(r.name) as string | undefined) ?? 'Lista de precios', subtitle: (norm(r.code) as string | undefined) ?? undefined, icon: 'tag' }, links: [{ href: '/backend/dist_price_lists', label: 'Ver listas', kind: 'primary' }], checksumSource: { name: r.name, code: r.code, updated_at: r.updated_at } }
+        return { text: [String(r.name), norm(r.code as string) ?? '', norm(r.description as string) ?? ''].filter(Boolean), presenter: { title: (norm(r.name as string) as string | undefined) ?? 'Lista de precios', subtitle: (norm(r.code as string) as string | undefined) ?? undefined, icon: 'tag' }, links: [{ href: '/backend/dist_price_lists', label: 'Ver listas', kind: 'primary' }], checksumSource: { name: r.name, code: r.code, updated_at: r.updated_at } }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => ({ title: norm(ctx.record.name) ?? 'Lista de precios', subtitle: norm(ctx.record.code) ?? undefined, icon: 'tag' }),
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => '/backend/dist_price_lists',

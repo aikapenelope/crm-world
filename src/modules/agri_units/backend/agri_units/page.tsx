@@ -159,7 +159,6 @@ export default function AgriUnitsPage() {
       <PageBody>
         <DataTable
           entityId="agri_units.flock"
-          extensionTableId="agri-flocks-list"
           data={flocks}
           columns={columns}
           isLoading={isLoading}

@@ -154,7 +154,6 @@ export default function BpmChecklistsPage() {
         )}
         <DataTable
           entityId="agri_quality.bpm_checklist"
-          extensionTableId="agri-quality-bpm-list"
           data={checklists}
           columns={columns}
           isLoading={isLoading}

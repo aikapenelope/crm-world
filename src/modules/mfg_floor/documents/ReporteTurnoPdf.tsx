@@ -143,10 +143,10 @@ export function ReporteTurnoPdf({ data: d }: { data: ReporteTurnoData }) {
             </Section>
           )}
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Supervisor de Turno', name: d.supervisor_name ?? '' },
             { label: 'Gerente de Producción', name: '' },
-          ]} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

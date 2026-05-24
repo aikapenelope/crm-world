@@ -214,7 +214,6 @@ export default function MfgOrdersPage() {
 
         <DataTable
           entityId="mfg_orders.production_order"
-          extensionTableId="mfg-orders-list"
           data={orders}
           columns={columns}
           isLoading={isLoading}

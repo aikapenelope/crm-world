@@ -121,7 +121,6 @@ export default function SaleInvoicesPage() {
       <PageBody>
         <DataTable
           entityId="agri_sales.invoice"
-          extensionTableId="agri-sales-invoices-list"
           data={invoices}
           columns={columns}
           isLoading={isLoading}

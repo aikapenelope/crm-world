@@ -121,7 +121,6 @@ export default function IspOutagesPage() {
 
         <DataTable
           entityId="isp_support.outage"
-          extensionTableId="isp-outages-list"
           data={outages}
           columns={columns}
           isLoading={isLoading}

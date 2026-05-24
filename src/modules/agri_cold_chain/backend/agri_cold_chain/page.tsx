@@ -186,7 +186,6 @@ export default function AgriColdChainPage() {
 
         <DataTable
           entityId="agri_cold_chain.storage_unit"
-          extensionTableId="agri-cold-chain-units-list"
           data={units}
           columns={columns}
           isLoading={isLoading}

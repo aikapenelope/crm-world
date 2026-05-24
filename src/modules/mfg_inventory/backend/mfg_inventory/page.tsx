@@ -254,7 +254,6 @@ export default function MfgInventoryPage() {
 
         <DataTable
           entityId="mfg_inventory.lot"
-          extensionTableId="mfg-inventory-lots-list"
           data={lots}
           columns={columns}
           isLoading={isLoading}

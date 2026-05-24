@@ -50,8 +50,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: (norm(r.payment_number) as string | undefined) ?? 'Pago',
-            subtitle: METHOD_LABELS[String(r.payment_method ?? '')] ?? norm(r.payment_method) ?? undefined,
+            title: (norm(r.payment_number as string) as string | undefined) ?? 'Pago',
+            subtitle: METHOD_LABELS[String(r.payment_method ?? '')] ?? norm(r.payment_method as string) ?? undefined,
             icon: 'dollar-sign',
             badge: statusLabel,
           },
@@ -69,7 +69,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.payment_number) as string | undefined) ?? 'Pago',
+          title: (norm(r.payment_number as string) as string | undefined) ?? 'Pago',
           subtitle: METHOD_LABELS[String(r.payment_method ?? '')] ?? undefined,
           icon: 'dollar-sign',
           badge: statusLabel,

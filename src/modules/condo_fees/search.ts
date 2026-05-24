@@ -50,11 +50,11 @@ export const searchConfig: SearchModuleConfig = {
 
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         const presenter: SearchResultPresenter = {
-          title: (norm(r.receipt_number) as string | undefined) ?? 'Recibo',
+          title: (norm(r.receipt_number as string) as string | undefined) ?? 'Recibo',
           subtitle: [
-            norm(r.owner_name),
-            norm(r.unit_number) ? `Unidad ${r.unit_number}` : null,
-            norm(r.period_month),
+            norm(r.owner_name as string),
+            norm(r.unit_number as string) ? `Unidad ${r.unit_number}` : null,
+            norm(r.period_month as string),
           ].filter(Boolean).join(' · ') || undefined,
           icon: 'receipt',
           badge: statusLabel,
@@ -79,8 +79,8 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.receipt_number) as string | undefined) ?? 'Recibo',
-          subtitle: [norm(r.owner_name), norm(r.unit_number) ? `Unidad ${r.unit_number}` : null]
+          title: (norm(r.receipt_number as string) as string | undefined) ?? 'Recibo',
+          subtitle: [norm(r.owner_name as string), norm(r.unit_number as string) ? `Unidad ${r.unit_number}` : null]
             .filter(Boolean).join(' · ') || undefined,
           icon: 'receipt',
           badge: statusLabel,
@@ -116,8 +116,8 @@ export const searchConfig: SearchModuleConfig = {
         return {
           text: lines,
           presenter: {
-            title: (norm(r.name) as string | undefined) ?? 'Configuración de cuota',
-            subtitle: (norm(r.period_month) as string | undefined) ?? undefined,
+            title: (norm(r.name as string) as string | undefined) ?? 'Configuración de cuota',
+            subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined,
             icon: 'settings',
             badge: String(r.fee_type ?? ''),
           },
@@ -129,8 +129,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.name) as string | undefined) ?? 'Configuración de cuota',
-          subtitle: (norm(r.period_month) as string | undefined) ?? undefined,
+          title: (norm(r.name as string) as string | undefined) ?? 'Configuración de cuota',
+          subtitle: (norm(r.period_month as string) as string | undefined) ?? undefined,
           icon: 'settings',
           badge: String(r.fee_type ?? ''),
         }

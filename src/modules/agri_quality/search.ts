@@ -25,15 +25,15 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.nc_number) return null
         const statusLabel = NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.nc_number) ?? '', norm(r.description) ?? ''].filter(Boolean),
-          presenter: { title: (norm(r.nc_number) as string | undefined) ?? 'No-conformidad', subtitle: norm(r.description)?.slice(0, 80) ?? undefined, icon: 'file-warning', badge: statusLabel },
+          text: [norm(r.nc_number as string) ?? '', norm(r.description as string) ?? ''].filter(Boolean),
+          presenter: { title: (norm(r.nc_number as string) as string | undefined) ?? 'No-conformidad', subtitle: norm(r.description as string)?.slice(0, 80) ?? undefined, icon: 'file-warning', badge: statusLabel },
           links: [{ href: `/backend/agri-quality/non-conformities/${r.id}`, label: 'Ver NC', kind: 'primary' }],
           checksumSource: { nc_number: r.nc_number, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: (norm(r.nc_number) as string | undefined) ?? 'NC', subtitle: NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''), icon: 'file-warning', badge: NC_STATUS[String(r.status ?? '')] ?? '' }
+        return { title: (norm(r.nc_number as string) as string | undefined) ?? 'NC', subtitle: NC_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''), icon: 'file-warning', badge: NC_STATUS[String(r.status ?? '')] ?? '' }
       },
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-quality/non-conformities/${ctx.record.id}`,
     },

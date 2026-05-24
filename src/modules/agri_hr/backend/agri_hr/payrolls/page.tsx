@@ -360,7 +360,6 @@ export default function PayrollsPage() {
 
         <DataTable
           entityId="agri_hr.payroll"
-          extensionTableId="agri-hr-payrolls-list"
           data={payrolls}
           columns={columns}
           isLoading={isLoading}

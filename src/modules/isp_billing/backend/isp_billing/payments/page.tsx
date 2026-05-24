@@ -76,7 +76,6 @@ export default function IspPaymentsPage() {
       <PageBody>
         <DataTable
           entityId="isp_billing.payment"
-          extensionTableId="isp-payments-list"
           data={payments}
           columns={columns}
           isLoading={isLoading}

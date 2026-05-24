@@ -163,7 +163,6 @@ export default function AgriFieldPage() {
 
         <DataTable
           entityId="agri_field.cycle"
-          extensionTableId="agri-field-cycles-list"
           data={cycles}
           columns={columns}
           isLoading={isLoading}

@@ -143,7 +143,6 @@ export default function IspBillingPage() {
       <PageBody>
         <DataTable
           entityId="isp_billing.invoice"
-          extensionTableId="isp-invoices-list"
           data={invoices}
           columns={columns}
           isLoading={isLoading}

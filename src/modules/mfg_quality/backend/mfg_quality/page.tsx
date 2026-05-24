@@ -204,7 +204,6 @@ export default function MfgQualityPage() {
 
         <DataTable
           entityId="mfg_quality.nc"
-          extensionTableId="mfg-quality-ncs"
           data={ncs}
           columns={columns}
           isLoading={isLoading}

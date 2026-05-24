@@ -184,7 +184,6 @@ export default function AgriFeedPage() {
 
         <DataTable
           entityId="agri_feed.formula"
-          extensionTableId="agri-feed-formulas-list"
           data={formulas}
           columns={columns}
           isLoading={isLoading}

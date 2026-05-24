@@ -25,10 +25,10 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.recall_number) return null
         const statusLabel = RECALL_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.recall_number) ?? '', norm(r.lot_number) ?? ''].filter(Boolean),
+          text: [norm(r.recall_number as string) ?? '', norm(r.lot_number as string) ?? ''].filter(Boolean),
           presenter: {
-            title: (norm(r.recall_number) as string | undefined) ?? 'Recall',
-            subtitle: `Lote: ${norm(r.lot_number) ?? '—'} · Clase ${r.recall_class}`,
+            title: (norm(r.recall_number as string) as string | undefined) ?? 'Recall',
+            subtitle: `Lote: ${norm(r.lot_number as string) ?? '—'} · Clase ${r.recall_class}`,
             icon: 'alert-triangle',
             badge: statusLabel,
           },
@@ -38,7 +38,7 @@ export const searchConfig: SearchModuleConfig = {
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: (norm(r.recall_number) as string | undefined) ?? 'Recall', subtitle: `Clase ${r.recall_class}`, icon: 'alert-triangle', badge: RECALL_STATUS[String(r.status ?? '')] ?? String(r.status ?? '') }
+        return { title: (norm(r.recall_number as string) as string | undefined) ?? 'Recall', subtitle: `Clase ${r.recall_class}`, icon: 'alert-triangle', badge: RECALL_STATUS[String(r.status ?? '')] ?? String(r.status ?? '') }
       },
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-traceability`,
     },

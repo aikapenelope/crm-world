@@ -140,7 +140,7 @@ export default function FeedBatchesPage() {
           items={[
             ...(row.original.status === 'pending_analysis' ? [
               { id: 'approve', label: 'Aprobar lote',  onSelect: () => handleApprove(row.original) },
-              { id: 'reject',  label: 'Rechazar lote', variant: 'destructive' as const, onSelect: () => handleReject(row.original) },
+              { id: 'reject',  label: 'Rechazar lote'as const, onSelect: () => handleReject(row.original) },
             ] : []),
             { id: 'edit', label: 'Editar', onSelect: () => {} },
           ]}
@@ -203,7 +203,6 @@ export default function FeedBatchesPage() {
 
         <DataTable
           entityId="agri_feed.batch"
-          extensionTableId="agri-feed-batches-list"
           data={batches}
           columns={columns}
           isLoading={isLoading}

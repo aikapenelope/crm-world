@@ -157,11 +157,11 @@ export function WorkOrderMaintPdf({ data: d }: { data: WorkOrderMaintPdfData }) 
             ))}
           </Section>
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Técnico Ejecutor', name: d.assigned_to_name ?? '' },
             { label: 'Supervisor de Mantenimiento', name: '' },
             { label: 'Operador del Equipo (verificación)', name: '' },
-          ]} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

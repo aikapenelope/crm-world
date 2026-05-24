@@ -109,7 +109,6 @@ export default function WorkOrdersPage() {
       <PageBody>
         <DataTable
           entityId="isp_technicians.work_order"
-          extensionTableId="isp-work-orders-list"
           data={orders}
           columns={columns}
           isLoading={isLoading}

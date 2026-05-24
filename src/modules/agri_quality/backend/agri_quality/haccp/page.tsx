@@ -195,7 +195,6 @@ export default function HaccpPlansPage() {
 
         <DataTable
           entityId="agri_quality.haccp_plan"
-          extensionTableId="agri-quality-haccp-list"
           data={plans}
           columns={columns}
           isLoading={isLoading}

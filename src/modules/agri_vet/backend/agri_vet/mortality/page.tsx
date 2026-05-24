@@ -121,7 +121,6 @@ export default function MortalityPage() {
         )}
         <DataTable
           entityId="agri_vet.mortality"
-          extensionTableId="agri-vet-mortality-list"
           data={records}
           columns={columns}
           isLoading={isLoading}

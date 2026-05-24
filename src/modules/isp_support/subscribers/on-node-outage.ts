@@ -44,7 +44,7 @@ export default async function handler(payload: any, ctx: any) {
   // Generar número de avería
   const countResult = await kysely
     .selectFrom('isp_outages')
-    .select(kysely.fn.count<number>('id').as('count'))
+    .select(kysely.fn.count('id').as('count'))
     .where('tenant_id', '=', scope.tenantId)
     .executeTakeFirst()
   const seq = String(Number((countResult as any)?.count ?? 0) + 1).padStart(4, '0')
@@ -72,7 +72,7 @@ export default async function handler(payload: any, ctx: any) {
   // Generar número de ticket
   const tktCount = await kysely
     .selectFrom('isp_support_tickets')
-    .select(kysely.fn.count<number>('id').as('count'))
+    .select(kysely.fn.count('id').as('count'))
     .where('tenant_id', '=', scope.tenantId)
     .executeTakeFirst()
   const tktSeq = String(Number((tktCount as any)?.count ?? 0) + 1).padStart(5, '0')

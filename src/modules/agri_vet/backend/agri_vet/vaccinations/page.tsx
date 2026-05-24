@@ -201,7 +201,6 @@ export default function VaccinationsPage() {
         )}
         <DataTable
           entityId="agri_vet.vaccination"
-          extensionTableId="agri-vet-vaccinations-list"
           data={records}
           columns={columns}
           isLoading={isLoading}

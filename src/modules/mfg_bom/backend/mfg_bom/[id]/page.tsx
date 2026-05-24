@@ -147,7 +147,7 @@ export default function BomDetailPage() {
       id: 'actions',
       cell: ({ row }) => bom?.status === 'draft' ? (
         <RowActions items={[
-          { id: 'delete', label: 'Eliminar componente', variant: 'destructive' as const, onSelect: () => handleDeleteLine(row.original) },
+          { id: 'delete', label: 'Eliminar componente'as const, onSelect: () => handleDeleteLine(row.original) },
         ]} />
       ) : null,
     },
@@ -275,7 +275,6 @@ export default function BomDetailPage() {
           <h3 className="text-sm font-semibold mb-3">Componentes ({lines.length})</h3>
           <DataTable
             entityId="mfg_bom.line"
-            extensionTableId="mfg-bom-lines"
             data={lines}
             columns={lineColumns}
             isLoading={false}

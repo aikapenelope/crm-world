@@ -122,11 +122,11 @@ export function DespachoPdf({ data: d }: { data: DespachoPdfData }) {
             </View>
           </Section>
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Inspector Sanitario', name: d.approved_by ?? '' },
             { label: 'Responsable de Despacho', name: '' },
             { label: 'Conductor / Transportista', name: d.driver_name ?? '' },
-          ] as any} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

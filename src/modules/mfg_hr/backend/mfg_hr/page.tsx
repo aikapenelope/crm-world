@@ -204,11 +204,11 @@ export default function MfgHrPage() {
         </div>
 
         {activeTab === 'workers' && (
-          <DataTable entityId="mfg_hr.worker" extensionTableId="mfg-hr-workers" data={workers} columns={workerCols} isLoading={isLoading}
+          <DataTable entityId="mfg_hr.worker" data={workers} columns={workerCols} isLoading={isLoading}
             emptyState="Sin operarios registrados" />
         )}
         {activeTab === 'bonuses' && (
-          <DataTable entityId="mfg_hr.bonus" extensionTableId="mfg-hr-bonuses" data={bonuses} columns={bonusCols} isLoading={isLoading}
+          <DataTable entityId="mfg_hr.bonus" data={bonuses} columns={bonusCols} isLoading={isLoading}
             emptyState="Sin bonos registrados"
             stickyActionsColumn />
         )}

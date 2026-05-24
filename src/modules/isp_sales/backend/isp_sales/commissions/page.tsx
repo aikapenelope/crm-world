@@ -98,7 +98,6 @@ export default function CommissionsPage() {
       <PageBody>
         <DataTable
           entityId="isp_sales.commission"
-          extensionTableId="isp-commissions-list"
           data={commissions}
           columns={columns}
           isLoading={isLoading}

@@ -183,7 +183,6 @@ export default function FarmUnitsPage() {
         )}
         <DataTable
           entityId="agri_units.farm_unit"
-          extensionTableId="agri-farm-units-list"
           data={units}
           columns={columns}
           isLoading={isLoading}

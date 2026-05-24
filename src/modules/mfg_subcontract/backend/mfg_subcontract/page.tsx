@@ -197,7 +197,7 @@ export default function MfgSubcontractPage() {
           </div>
         )}
 
-        <DataTable entityId="mfg_subcontract.order" extensionTableId="mfg-subcontract-orders" data={orders} columns={columns} isLoading={isLoading}
+        <DataTable entityId="mfg_subcontract.order" data={orders} columns={columns} isLoading={isLoading}
           emptyState="Sin órdenes de maquila"
           stickyActionsColumn />
 

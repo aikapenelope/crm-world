@@ -149,7 +149,7 @@ export default function MfgDispatchPage() {
           </div>
         )}
 
-        <DataTable entityId="mfg_dispatch.sale_order" extensionTableId="mfg-dispatch-orders" data={orders} columns={columns} isLoading={isLoading}
+        <DataTable entityId="mfg_dispatch.sale_order" data={orders} columns={columns} isLoading={isLoading}
           emptyState="Sin pedidos industriales"
           stickyActionsColumn />
       </PageBody>

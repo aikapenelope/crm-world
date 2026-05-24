@@ -121,7 +121,6 @@ export default function IspSalesPage() {
       <PageBody>
         <DataTable
           entityId="isp_sales.lead"
-          extensionTableId="isp-leads-list"
           data={leads}
           columns={columns}
           isLoading={isLoading}

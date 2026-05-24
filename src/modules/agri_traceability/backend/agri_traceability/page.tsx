@@ -215,7 +215,6 @@ export default function AgriTraceabilityPage() {
           )}
           <DataTable
             entityId="agri_traceability.recall"
-            extensionTableId="agri-traceability-recalls-list"
             data={recalls}
             columns={recallColumns}
             isLoading={isLoading}

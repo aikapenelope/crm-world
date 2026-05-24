@@ -233,7 +233,7 @@ export default function MfgMrpPage() {
                 ))}
               </div>
             </div>
-            <DataTable entityId="mfg_mrp.requirement" extensionTableId="mfg-mrp-requirements" data={filteredReqs} columns={reqmtColumns} isLoading={isLoading}
+            <DataTable entityId="mfg_mrp.requirement" data={filteredReqs} columns={reqmtColumns} isLoading={isLoading}
               emptyState={{ title: reqFilter === 'risk' ? 'Sin materiales en riesgo' : 'Sin necesidades', description: 'Ejecuta el MRP para calcular las necesidades.' }} />
           </div>
         )}
@@ -242,7 +242,7 @@ export default function MfgMrpPage() {
         {requisitions.length > 0 && (
           <div>
             <h3 className="text-sm font-semibold mb-3">Requisiciones de Compra ({requisitions.length})</h3>
-            <DataTable entityId="mfg_mrp.requisition" extensionTableId="mfg-mrp-requisitions" data={requisitions} columns={reqnColumns} isLoading={isLoading}
+            <DataTable entityId="mfg_mrp.requisition" data={requisitions} columns={reqnColumns} isLoading={isLoading}
               emptyState="Sin requisiciones" stickyActionsColumn />
           </div>
         )}

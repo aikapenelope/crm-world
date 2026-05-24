@@ -85,7 +85,7 @@ export const searchConfig: SearchModuleConfig = {
 
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         const presenter: SearchResultPresenter = {
-          title: (norm(r.order_number) as string | undefined) ?? 'Orden de servicio',
+          title: (norm(r.order_number as string) as string | undefined) ?? 'Orden de servicio',
           subtitle: vehicleLabel ? `${vehicleLabel} · ${statusLabel}` : statusLabel || undefined,
           icon: 'wrench',
           badge: statusLabel,
@@ -109,7 +109,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.order_number) as string | undefined) ?? 'Orden de servicio',
+          title: (norm(r.order_number as string) as string | undefined) ?? 'Orden de servicio',
           subtitle: statusLabel || undefined,
           icon: 'wrench',
           badge: statusLabel,

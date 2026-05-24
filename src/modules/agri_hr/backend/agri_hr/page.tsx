@@ -132,7 +132,6 @@ export default function AgriHrPage() {
         )}
         <DataTable
           entityId="agri_hr.employee"
-          extensionTableId="agri-hr-employees-list"
           data={employees}
           columns={columns}
           isLoading={isLoading}

@@ -172,7 +172,7 @@ export default function MfgCostsPage() {
           </div>
         )}
 
-        <DataTable entityId="mfg_costs.variance" extensionTableId="mfg-costs-variances" data={variances} columns={columns} isLoading={isLoading}
+        <DataTable entityId="mfg_costs.variance" data={variances} columns={columns} isLoading={isLoading}
           emptyState="Sin variaciones calculadas"
           stickyActionsColumn />
       </PageBody>

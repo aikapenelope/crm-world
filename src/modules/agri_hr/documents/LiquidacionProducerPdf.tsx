@@ -164,11 +164,11 @@ export function LiquidacionProducerPdf({ data: d }: { data: LiquidacionProducerD
             )}
           </Section>
 
-          <SignatureBlock lines={[
+          <>{[
             { label: 'Técnico de Campo', name: '' },
             { label: 'Gerente de Producción', name: '' },
             { label: 'Productor Integrado', name: d.producer_name },
-          ] as any} />
+          ].map((s: any, i: number) => <SignatureBlock key={i} label={s.label} name={s.name} />)}</>
         </View>
 
         <DocFooter generatedAt={new Date().toLocaleDateString('es-VE')} />

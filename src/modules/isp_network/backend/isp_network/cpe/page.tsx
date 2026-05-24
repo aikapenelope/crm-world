@@ -105,7 +105,6 @@ export default function IspCpeInventoryPage() {
       <PageBody>
         <DataTable
           entityId="isp_network.cpe"
-          extensionTableId="isp-cpe-list"
           data={items}
           columns={columns}
           isLoading={isLoading}

@@ -119,7 +119,7 @@ export default function AgriQualityPage() {
             { id: 'open', label: 'Ver detalle / Workflow', onSelect: () => router.push(`/backend/agri-quality/non-conformities/${row.original.id}`) },
             ...(['open', 'investigating', 'pending_decision'].includes(row.original.status) ? [
               { id: 'rework',   label: 'Decidir: Retrabajo',    onSelect: () => handleDecide(row.original, 'rework') },
-              { id: 'destroy',  label: 'Decidir: Destrucción',   variant: 'destructive' as const, onSelect: () => handleDecide(row.original, 'destroy') },
+              { id: 'destroy',  label: 'Decidir: Destrucción'as const, onSelect: () => handleDecide(row.original, 'destroy') },
               { id: 'release',  label: 'Decidir: Liberar',       onSelect: () => handleDecide(row.original, 'release') },
             ] : []),
           ]}
@@ -211,7 +211,6 @@ export default function AgriQualityPage() {
 
         <DataTable
           entityId="agri_quality.non_conformity"
-          extensionTableId="agri-quality-nc-list"
           data={ncs}
           columns={columns}
           isLoading={isLoading}

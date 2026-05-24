@@ -142,7 +142,6 @@ export default function IspNetworkPage() {
       <PageBody>
         <DataTable
           entityId="isp_network.node"
-          extensionTableId="isp-network-nodes-list"
           data={nodes}
           columns={columns}
           isLoading={isLoading}

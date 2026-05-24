@@ -172,7 +172,6 @@ export default function SettlementsPage() {
 
         <DataTable
           entityId="agri_hr.settlement"
-          extensionTableId="agri-hr-settlements-list"
           data={settlements}
           columns={columns}
           isLoading={isLoading}

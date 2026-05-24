@@ -33,14 +33,14 @@ export const searchConfig: SearchModuleConfig = {
         if (r.engine_type) lines.push(`Motor: ${r.engine_type}`)
         if (!lines.length) return null
 
-        const title = [norm(r.brand), norm(r.model), norm(r.year)].filter(Boolean).join(' ')
-        const subtitle = [norm(r.plate), norm(r.owner_name), norm(r.color)].filter(Boolean).join(' · ')
+        const title = [norm(r.brand as string), norm(r.model as string), norm(r.year as string)].filter(Boolean).join(' ')
+        const subtitle = [norm(r.plate as string), norm(r.owner_name as string), norm(r.color as string)].filter(Boolean).join(' · ')
 
         const presenter: SearchResultPresenter = {
           title: title || 'Vehículo',
           subtitle: subtitle || undefined,
           icon: 'car',
-          badge: (norm(r.plate) as string | undefined) ?? undefined,
+          badge: (norm(r.plate as string) as string | undefined) ?? undefined,
         }
 
         return {
@@ -53,12 +53,12 @@ export const searchConfig: SearchModuleConfig = {
 
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        const title = [norm(r.brand), norm(r.model), norm(r.year)].filter(Boolean).join(' ')
+        const title = [norm(r.brand as string), norm(r.model as string), norm(r.year as string)].filter(Boolean).join(' ')
         return {
           title: title || 'Vehículo',
-          subtitle: [norm(r.plate), norm(r.owner_name)].filter(Boolean).join(' · ') || undefined,
+          subtitle: [norm(r.plate as string), norm(r.owner_name as string)].filter(Boolean).join(' · ') || undefined,
           icon: 'car',
-          badge: (norm(r.plate) as string | undefined) ?? undefined,
+          badge: (norm(r.plate as string) as string | undefined) ?? undefined,
         }
       },
 

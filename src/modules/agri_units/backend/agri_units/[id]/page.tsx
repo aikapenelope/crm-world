@@ -359,7 +359,6 @@ export default function FlockDetailPage() {
           <h3 className="text-sm font-semibold mb-3">Registros Semanales ({records.length})</h3>
           <DataTable
             entityId="agri_units.flock_weekly_record"
-            extensionTableId="agri-flock-weekly-records"
             data={records}
             columns={weeklyColumns}
             isLoading={false}

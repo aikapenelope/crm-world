@@ -130,7 +130,6 @@ export default function IspSubscribersPage() {
       <PageBody>
         <DataTable
           entityId="isp_subscribers.subscriber"
-          extensionTableId="isp-subscribers-list"
           data={subscribers}
           columns={columns}
           isLoading={isLoading}

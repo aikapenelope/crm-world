@@ -28,10 +28,10 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.lot_number) return null
         const statusLabel = LOT_STATUS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.lot_number) ?? '', norm(r.material_code) ?? '', norm(r.material_name) ?? ''].filter(Boolean),
+          text: [norm(r.lot_number as string) ?? '', norm(r.material_code as string) ?? '', norm(r.material_name as string) ?? ''].filter(Boolean),
           presenter: {
-            title: `${norm(r.lot_number)} — ${norm(r.material_code) ?? ''}`,
-            subtitle: `${norm(r.material_name) ?? ''} · ${r.quantity} ${r.uom}`,
+            title: `${norm(r.lot_number as string)} — ${norm(r.material_code as string) ?? ''}`,
+            subtitle: `${norm(r.material_name as string) ?? ''} · ${r.quantity} ${r.uom}`,
             icon: 'package',
             badge: statusLabel,
           },
@@ -42,8 +42,8 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         return {
-          title: (norm(r.lot_number) as string | undefined) ?? 'Lote',
-          subtitle: (norm(r.material_name) as string | undefined) ?? undefined,
+          title: (norm(r.lot_number as string) as string | undefined) ?? 'Lote',
+          subtitle: (norm(r.material_name as string) as string | undefined) ?? undefined,
           icon: 'package',
           badge: LOT_STATUS[String(r.status ?? '')] ?? String(r.status ?? ''),
         }

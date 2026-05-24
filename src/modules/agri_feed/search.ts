@@ -41,10 +41,10 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.name) return null
         const typeLabel = FORMULA_TYPE_LABELS[String(r.formula_type ?? '')] ?? String(r.formula_type ?? '')
         return {
-          text: [norm(r.name) ?? '', typeLabel].filter(Boolean),
+          text: [norm(r.name as string) ?? '', typeLabel].filter(Boolean),
           presenter: {
-            title: (norm(r.name) as string | undefined) ?? 'Fórmula',
-            subtitle: [typeLabel, r.species !== 'all' ? (norm(r.species) ?? undefined) : undefined].filter(Boolean).join(' · ') || undefined,
+            title: (norm(r.name as string) as string | undefined) ?? 'Fórmula',
+            subtitle: [typeLabel, r.species !== 'all' ? (norm(r.species as string) ?? undefined) : undefined].filter(Boolean).join(' · ') || undefined,
             icon: 'wheat',
             badge: r.is_active ? 'Activa' : 'Inactiva',
           },
@@ -57,7 +57,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const typeLabel = FORMULA_TYPE_LABELS[String(r.formula_type ?? '')] ?? String(r.formula_type ?? '')
         return {
-          title: (norm(r.name) as string | undefined) ?? 'Fórmula',
+          title: (norm(r.name as string) as string | undefined) ?? 'Fórmula',
           subtitle: typeLabel,
           icon: 'wheat',
           badge: r.is_active ? 'Activa' : 'Inactiva',
@@ -86,10 +86,10 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.batch_number) return null
         const statusLabel = BATCH_STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          text: [norm(r.batch_number) ?? '', norm(r.supplier_lot_number) ?? ''].filter(Boolean),
+          text: [norm(r.batch_number as string) ?? '', norm(r.supplier_lot_number as string) ?? ''].filter(Boolean),
           presenter: {
-            title: (norm(r.batch_number) as string | undefined) ?? 'Lote',
-            subtitle: [`${r.quantity_tons} t`, norm(r.source_type) === 'purchased' ? 'Comprado' : 'Producción propia'].filter(Boolean).join(' · '),
+            title: (norm(r.batch_number as string) as string | undefined) ?? 'Lote',
+            subtitle: [`${r.quantity_tons} t`, norm(r.source_type as string) === 'purchased' ? 'Comprado' : 'Producción propia'].filter(Boolean).join(' · '),
             icon: 'package',
             badge: statusLabel,
           },
@@ -102,7 +102,7 @@ export const searchConfig: SearchModuleConfig = {
         const r = ctx.record
         const statusLabel = BATCH_STATUS_LABELS[String(r.status ?? '')] ?? String(r.status ?? '')
         return {
-          title: (norm(r.batch_number) as string | undefined) ?? 'Lote',
+          title: (norm(r.batch_number as string) as string | undefined) ?? 'Lote',
           subtitle: `${r.quantity_tons} t`,
           icon: 'package',
           badge: statusLabel,

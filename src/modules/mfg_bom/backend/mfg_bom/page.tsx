@@ -186,7 +186,6 @@ export default function MfgBomPage() {
 
         <DataTable
           entityId="mfg_bom.header"
-          extensionTableId="mfg-bom-list"
           data={boms}
           columns={columns}
           isLoading={isLoading}

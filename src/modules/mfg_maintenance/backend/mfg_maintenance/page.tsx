@@ -210,17 +210,17 @@ export default function MfgMaintenancePage() {
         </div>
 
         {activeTab === 'work_orders' && (
-          <DataTable entityId="mfg_maintenance.wo" extensionTableId="mfg-maintenance-wos" data={workOrders} columns={woCols} isLoading={isLoading}
+          <DataTable entityId="mfg_maintenance.wo" data={workOrders} columns={woCols} isLoading={isLoading}
             emptyState="Sin órdenes de trabajo abiertas"
             stickyActionsColumn />
         )}
         {activeTab === 'equipment' && (
-          <DataTable entityId="mfg_maintenance.equipment" extensionTableId="mfg-maintenance-equipment" data={equipment} columns={eqCols} isLoading={isLoading}
+          <DataTable entityId="mfg_maintenance.equipment" data={equipment} columns={eqCols} isLoading={isLoading}
             emptyState="Sin equipos registrados"
             stickyActionsColumn />
         )}
         {activeTab === 'spare_parts' && (
-          <DataTable entityId="mfg_maintenance.spare_part" extensionTableId="mfg-maintenance-spares" data={spareParts} columns={spCols} isLoading={isLoading}
+          <DataTable entityId="mfg_maintenance.spare_part" data={spareParts} columns={spCols} isLoading={isLoading}
             emptyState="Sin repuestos registrados" />
         )}
       </PageBody>

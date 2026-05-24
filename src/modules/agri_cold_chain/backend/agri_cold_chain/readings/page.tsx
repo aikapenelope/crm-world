@@ -281,7 +281,6 @@ export default function TemperatureReadingsPage() {
         {/* Readings table */}
         <DataTable
           entityId="agri_cold_chain.temperature_log"
-          extensionTableId="agri-cold-chain-readings-list"
           data={readings}
           columns={columns}
           isLoading={isLoading}

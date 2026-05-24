@@ -150,7 +150,6 @@ export default function IspSupportPage() {
       <PageBody>
         <DataTable
           entityId="isp_support.ticket"
-          extensionTableId="isp-tickets-list"
           data={tickets}
           columns={columns}
           isLoading={isLoading}

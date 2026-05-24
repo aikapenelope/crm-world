@@ -178,7 +178,6 @@ export default function VaccinationProgramsPage() {
 
         <DataTable
           entityId="agri_vet.vaccination_program"
-          extensionTableId="agri-vet-programs-list"
           data={programs}
           columns={columns}
           isLoading={isLoading}

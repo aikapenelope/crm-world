@@ -220,7 +220,6 @@ export default function AgriProcessingPage() {
 
         <DataTable
           entityId="agri_processing.slaughter_batch"
-          extensionTableId="agri-processing-batches-list"
           data={batches}
           columns={columns}
           isLoading={isLoading}

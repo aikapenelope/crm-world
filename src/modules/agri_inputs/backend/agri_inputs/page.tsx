@@ -265,7 +265,6 @@ export default function AgriInputsPage() {
 
         <DataTable
           entityId="agri_inputs.item"
-          extensionTableId="agri-inputs-items-list"
           data={items}
           columns={columns}
           isLoading={isLoading}
