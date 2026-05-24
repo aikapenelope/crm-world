@@ -9,9 +9,9 @@ export const searchConfig: SearchModuleConfig = {
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
         const r = ctx.record; if (!r.order_number) return null
         const variance = Number(r.total_variance_usd)
-        return { text: [norm(r.order_number as string) ?? '', norm(r.product_code as string) ?? ''].filter(Boolean), presenter: { title: (norm(r.order_number as string) as string | undefined) ?? 'Orden', subtitle: `Variación: USD ${variance.toFixed(2)} (${variance > 0 ? 'desfavorable' : 'favorable'})`, icon: 'dollar-sign', badge: r.status }, links: [{ href: '/backend/mfg-costs', label: 'Ver costos', kind: 'primary' }], checksumSource: { order_number: r.order_number, status: r.status, updated_at: r.updated_at } }
+        return { text: [norm(r.order_number as string) ?? '', norm(r.product_code as string) ?? ''].filter(Boolean), presenter: { title: (norm(r.order_number as string) as string | undefined) ?? 'Orden', subtitle: `Variación: USD ${variance.toFixed(2)} (${variance > 0 ? 'desfavorable' : 'favorable'})`, icon: 'dollar-sign', badge: r.status as string | undefined }, links: [{ href: '/backend/mfg-costs', label: 'Ver costos', kind: 'primary' }], checksumSource: { order_number: r.order_number, status: r.status, updated_at: r.updated_at } }
       },
-      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: (norm(r.order_number as string) as string | undefined) ?? 'Variación', subtitle: (norm(r.product_code as string) as string | undefined) ?? undefined, icon: 'dollar-sign', badge: r.status } },
+      formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => { const r = ctx.record; return { title: (norm(r.order_number as string) as string | undefined) ?? 'Variación', subtitle: (norm(r.product_code as string) as string | undefined) ?? undefined, icon: 'dollar-sign', badge: r.status as string | undefined } },
       resolveUrl: async (): Promise<string | null> => '/backend/mfg-costs',
     },
   ],

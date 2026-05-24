@@ -67,7 +67,7 @@ export default function EditCpePage() {
     },
     {
       id: 'notes', title: 'Notas',
-      fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
+      fields: [{ id: 'notes', label: 'Notas', type: 'textarea' }],
     },
   ]
 

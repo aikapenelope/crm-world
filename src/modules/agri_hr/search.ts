@@ -24,7 +24,7 @@ export const searchConfig: SearchModuleConfig = {
         const typeLabel = EMP_TYPE[String(r.employee_type ?? '')] ?? String(r.employee_type ?? '')
         return {
           text: [fullName, norm(r.cedula as string) ?? '', typeLabel].filter(Boolean),
-          presenter: { title: fullName, subtitle: [norm(r.position as string), typeLabel].filter(Boolean).join(' · '), icon: 'user', badge: r.status === 'active' ? 'Activo' : 'Inactivo' },
+          presenter: { title: fullName, subtitle: [norm(r.position as string), typeLabel].filter(Boolean).join(' · '), icon: 'user', badge: r.status as string | undefined === 'active' ? 'Activo' : 'Inactivo' },
           links: [{ href: `/backend/agri-hr`, label: 'Ver personal', kind: 'primary' }],
           checksumSource: { first_name: r.first_name, last_name: r.last_name, status: r.status, updated_at: r.updated_at },
         }
@@ -32,7 +32,7 @@ export const searchConfig: SearchModuleConfig = {
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
         const fullName = [norm(r.first_name as string), norm(r.last_name as string)].filter(Boolean).join(' ')
-        return { title: fullName, subtitle: EMP_TYPE[String(r.employee_type ?? '')] ?? String(r.employee_type ?? ''), icon: 'user', badge: r.status === 'active' ? 'Activo' : 'Inactivo' }
+        return { title: fullName, subtitle: EMP_TYPE[String(r.employee_type ?? '')] ?? String(r.employee_type ?? ''), icon: 'user', badge: r.status as string | undefined === 'active' ? 'Activo' : 'Inactivo' }
       },
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-hr`,
     },

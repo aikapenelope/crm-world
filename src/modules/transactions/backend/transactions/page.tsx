@@ -86,7 +86,7 @@ export default function TransactionsPage() {
 
   const handleDelete = React.useCallback(
     async (row: TransactionRow) => {
-      const confirmed = await confirmDialog({ label: '¿Eliminar esta transacción?', variant: 'destructive' })
+      const confirmed = await confirmDialog({ title: '¿Eliminar esta transacción?', variant: 'destructive' })
       if (!confirmed) return
       const call = await apiCall('/api/transactions/transactions', {
         method: 'DELETE',

@@ -45,7 +45,7 @@ export const searchConfig: SearchModuleConfig = {
           presenter: {
             title: (norm(r.name as string) as string | undefined) ?? 'Insumo',
             subtitle: [typeLabel, norm(r.category as string)].filter(Boolean).join(' · ') || undefined,
-            icon: r.input_type === 'vaccine' ? 'syringe' : r.input_type === 'medication' ? 'pill' : 'package',
+            icon: r.input_type as string | undefined === 'vaccine' ? 'syringe' : r.input_type === 'medication' ? 'pill' : 'package',
             badge,
           },
           links: [{ href: `/backend/agri-inputs/${r.id}`, label: 'Ver insumo', kind: 'primary' }],
@@ -59,7 +59,7 @@ export const searchConfig: SearchModuleConfig = {
         return {
           title: (norm(r.name as string) as string | undefined) ?? 'Insumo',
           subtitle: typeLabel,
-          icon: r.input_type === 'vaccine' ? 'syringe' : 'pill',
+          icon: r.input_type as string | undefined === 'vaccine' ? 'syringe' : 'pill',
           badge: r.is_active ? 'Activo' : 'Inactivo',
         }
       },

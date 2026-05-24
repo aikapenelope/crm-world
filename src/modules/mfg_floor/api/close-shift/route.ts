@@ -19,7 +19,7 @@
  *   3. Emitir evento shift.closed → notificación al gerente de planta
  */
 import { emitLifecycle } from '@/lib/emit-lifecycle'
-import { eventsConfig } from '../events'
+import { eventsConfig } from '../../events'
 import { v4 } from 'uuid'
 
 export const metadata = {

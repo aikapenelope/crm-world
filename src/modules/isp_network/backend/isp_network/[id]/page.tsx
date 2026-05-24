@@ -84,7 +84,7 @@ export default function EditIspNetworkNodePage() {
     },
     {
       id: 'notes', title: 'Notas',
-      fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
+      fields: [{ id: 'notes', label: 'Notas internas', type: 'textarea' }],
     },
   ]
 

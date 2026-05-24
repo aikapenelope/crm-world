@@ -63,7 +63,7 @@ export const searchConfig: SearchModuleConfig = {
             title: (norm(r.name as string) as string | undefined) ?? 'Unidad productiva',
             subtitle: typeLabel,
             icon: 'warehouse',
-            badge: r.status === 'active' ? 'Activo' : r.status === 'maintenance' ? 'Mantenimiento' : 'Inactivo',
+            badge: r.status as string | undefined === 'active' ? 'Activo' : r.status === 'maintenance' ? 'Mantenimiento' : 'Inactivo',
           },
           links: [{ href: `/backend/agri-units/farm-units/${r.id}`, label: 'Ver unidad', kind: 'primary' }],
           checksumSource: { name: r.name, status: r.status, updated_at: r.updated_at },
@@ -77,7 +77,7 @@ export const searchConfig: SearchModuleConfig = {
           title: (norm(r.name as string) as string | undefined) ?? 'Unidad productiva',
           subtitle: typeLabel,
           icon: 'warehouse',
-          badge: r.status === 'active' ? 'Activo' : 'Inactivo',
+          badge: r.status as string | undefined === 'active' ? 'Activo' : 'Inactivo',
         }
       },
 

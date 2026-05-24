@@ -111,11 +111,11 @@ function ControlChart({
         })}
 
         {/* Control + spec limits */}
-        {hLine(usl,  '#ef4444', '4 2', 'USL')}
-        {hLine(lsl,  '#ef4444', '4 2', 'LSL')}
-        {hLine(ucl,  '#f97316', '3 2', 'UCL')}
-        {hLine(lcl,  '#f97316', '3 2', 'LCL')}
-        {hLine(cl,   '#3b82f6', undefined, 'CL')}
+        {hLine(usl ?? null,  '#ef4444', '4 2', 'USL')}
+        {hLine(lsl ?? null,  '#ef4444', '4 2', 'LSL')}
+        {hLine(ucl ?? null,  '#f97316', '3 2', 'UCL')}
+        {hLine(lcl ?? null,  '#f97316', '3 2', 'LCL')}
+        {hLine(cl ?? null,   '#3b82f6', undefined, 'CL')}
 
         {/* Data line */}
         <path d={pathD} stroke="#6b7280" strokeWidth={1.2} fill="none" />

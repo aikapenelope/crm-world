@@ -23,14 +23,14 @@ export const searchConfig: SearchModuleConfig = {
         if (!r.name) return null
         return {
           text: [norm(r.name as string) ?? ''],
-          presenter: { title: (norm(r.name as string) as string | undefined) ?? 'Parcela', subtitle: `${r.area_hectares} ha`, icon: 'map', badge: r.status === 'active' ? 'Activa' : 'Inactiva' },
+          presenter: { title: (norm(r.name as string) as string | undefined) ?? 'Parcela', subtitle: `${r.area_hectares} ha`, icon: 'map', badge: r.status as string | undefined === 'active' ? 'Activa' : 'Inactiva' },
           links: [{ href: `/backend/agri-field`, label: 'Ver campo', kind: 'primary' }],
           checksumSource: { name: r.name, status: r.status, updated_at: r.updated_at },
         }
       },
       formatResult: async (ctx: SearchBuildContext): Promise<SearchResultPresenter | null> => {
         const r = ctx.record
-        return { title: (norm(r.name as string) as string | undefined) ?? 'Parcela', subtitle: `${r.area_hectares} ha`, icon: 'map', badge: r.status === 'active' ? 'Activa' : 'Inactiva' }
+        return { title: (norm(r.name as string) as string | undefined) ?? 'Parcela', subtitle: `${r.area_hectares} ha`, icon: 'map', badge: r.status as string | undefined === 'active' ? 'Activa' : 'Inactiva' }
       },
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-field`,
     },
@@ -43,7 +43,7 @@ export const searchConfig: SearchModuleConfig = {
         const cropLabel = CROP_TYPE[String(r.crop_type ?? '')] ?? String(r.crop_type ?? '')
         return {
           text: [cropLabel, norm(r.crop_variety as string) ?? ''].filter(Boolean),
-          presenter: { title: `${cropLabel}${r.crop_variety ? ` (${r.crop_variety})` : ''}`, subtitle: new Date(r.planting_date as string).toLocaleDateString(), icon: 'sprout', badge: r.status === 'harvested' ? 'Cosechado' : r.status === 'active' ? 'Activo' : String(r.status) },
+          presenter: { title: `${cropLabel}${r.crop_variety ? ` (${r.crop_variety})` : ''}`, subtitle: new Date(r.planting_date as string).toLocaleDateString(), icon: 'sprout', badge: r.status as string | undefined === 'harvested' ? 'Cosechado' : r.status === 'active' ? 'Activo' : String(r.status) },
           links: [{ href: `/backend/agri-field`, label: 'Ver campo', kind: 'primary' }],
           checksumSource: { crop_type: r.crop_type, status: r.status, updated_at: r.updated_at },
         }
