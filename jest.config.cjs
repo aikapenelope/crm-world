@@ -14,14 +14,25 @@
  *   Unit tests live next to the module code they test.
  *   Integration tests (.spec.ts under __integration__/) run via Playwright.
  *
- * transformIgnorePatterns: allow ts-jest to compile @mikro-orm and @open-mercato.
- *   @mikro-orm — ESM-only, needs CJS shim for import.meta.
- *   @open-mercato — packages are transpilePackages in next.config.ts and may
- *                   ship TypeScript source alongside their dist/ build.
+ * transformIgnorePatterns: allow ts-jest to compile @mikro-orm, @open-mercato,
+ *   kysely, and meilisearch.
+ *   @mikro-orm  — ESM-only, needs CJS shim for import.meta.
+ *   @open-mercato — packages ship TypeScript source via transpilePackages.
+ *   kysely      — ESM-only; worker/service tests that import files using
+ *                 Kysely typings would fail with SyntaxError without this.
+ *                 Mirrors the open-mercato/open-mercato pattern exactly.
+ *   meilisearch — ESM-only; same issue if a test file (or a module it imports)
+ *                 references search helpers.
  *
  * moduleNameMapper: maps @/* to src/ (matching tsconfig.json paths).
- *   @open-mercato/* packages resolve from node_modules (installed dist/);
- *   no monorepo source-mapping needed in a standalone app.
+ *   @open-mercato/* packages resolve from node_modules (installed dist/).
+ *   Two extra aliases align with the OM monorepo and enable future handler tests:
+ *   - @/generated/* short form: the monorepo also maps this; avoids mismatches
+ *     when test code uses the short import path instead of @/.mercato/generated/*.
+ *   - @open-mercato/core/generated/*: in a standalone app the generated registry
+ *     files (entities.ids.generated, modules.generated) live in .mercato/generated/
+ *     (written by `yarn generate`). Mapping the core package path here lets tests
+ *     resolve those imports without needing `{ virtual: true }` on every mock.
  *
  * setupFiles: jest.setup.ts  — injects env vars before any module is imported.
  * passWithNoTests: true       — CI does not fail when a new module has no tests yet.
@@ -50,7 +61,17 @@ module.exports = {
     // Mirror tsconfig.json paths so imports resolve the same way in tests.
     '^@/\\.mercato/generated/(.*)$': '<rootDir>/.mercato/generated/$1',
     '^@/\\.mercato/(.*)$':           '<rootDir>/.mercato/$1',
-    '^@/(.*)$':                       '<rootDir>/src/$1',
+
+    // Short alias used by some OM test patterns (@/generated/* without the
+    // .mercato prefix). Points to the same generated output directory.
+    '^@/generated/(.*)$':            '<rootDir>/.mercato/generated/$1',
+
+    // Core generated registry files live in .mercato/generated/ in a
+    // standalone app (written by `yarn generate`). Map the OM package path so
+    // handler tests can import or mock them without a virtual module workaround.
+    '^@open-mercato/core/generated/(.*)$': '<rootDir>/.mercato/generated/$1',
+
+    '^@/(.*)$':                      '<rootDir>/src/$1',
   },
 
   // ── Transformer ──────────────────────────────────────────────────────────
@@ -84,12 +105,14 @@ module.exports = {
 
   // ── Transform scope ───────────────────────────────────────────────────────
   // Compile node_modules that ship ESM or use import.meta:
-  //   @mikro-orm  — ESM-only with import.meta.resolve()
+  //   @mikro-orm   — ESM-only with import.meta.resolve()
   //   @open-mercato — may ship TypeScript source via transpilePackages
+  //   kysely       — ESM-only; used indirectly by workers/services via getKysely()
+  //   meilisearch  — ESM-only; used indirectly by search helpers
   // Everything else in node_modules is loaded as-is (ships CJS).
-  // Pattern mirrors open-mercato/open-mercato apps/mercato/jest.config.cjs.
+  // Pattern mirrors open-mercato/open-mercato apps/mercato/jest.config.cjs exactly.
   transformIgnorePatterns: [
-    '/node_modules/(?!(@mikro-orm|@open-mercato)/)',
+    '/node_modules/(?!(@mikro-orm|kysely|meilisearch|@open-mercato)/)',
     '\\.pnp\\.[^\\/]+$',
   ],
 
