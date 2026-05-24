@@ -127,7 +127,7 @@ export default function HaccpPlansPage() {
           items={[
             {
               id: 'edit',
-              label: 'Editar PCCs',
+              title: 'Editar PCCs',
               onSelect: () => router.push(`/backend/agri-quality/haccp/${row.original.id}`),
             },
             ...(row.original.status === 'draft'
@@ -169,8 +169,8 @@ export default function HaccpPlansPage() {
               apiPath="/api/agri-quality/haccp-plans"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'name',       label: 'Nombre del Plan',  required: true },
-                { type: 'select' as const, name: 'process',    label: 'Proceso Productivo', required: true,
+                { type: 'text' as const,   id: 'name',       label: 'Nombre del Plan',  required: true },
+                { type: 'select' as const, id: 'process',    label: 'Proceso Productivo', required: true,
                   options: [
                     { value: 'beneficio',     label: 'Beneficio avícola' },
                     { value: 'procesamiento', label: 'Procesamiento / cortes' },
@@ -178,12 +178,12 @@ export default function HaccpPlansPage() {
                     { value: 'despacho',      label: 'Despacho / distribución' },
                     { value: 'general',       label: 'General (toda la planta)' },
                   ]},
-                { type: 'text' as const,   name: 'version',    label: 'Versión', },
-                { type: 'text' as const,   name: 'approved_by', label: 'Aprobado por (nombre/cargo)' },
-                { type: 'textarea' as const, name: 'notes',    label: 'Alcance y descripción' },
+                { type: 'text' as const,   id: 'version',    label: 'Versión', },
+                { type: 'text' as const,   id: 'approved_by', label: 'Aprobado por (nombre/cargo)' },
+                { type: 'textarea' as const, id: 'notes',    label: 'Alcance y descripción' },
               ]}
               groups={[
-                { id: 'general', label: 'Identificación', fields: ['name', 'process', 'version', 'approved_by', 'notes'] },
+                { id: 'general', title: 'Identificación', fields: ['name', 'process', 'version', 'approved_by', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Plan HACCP creado — ahora agrega los PCCs en el detalle del plan', 'success')

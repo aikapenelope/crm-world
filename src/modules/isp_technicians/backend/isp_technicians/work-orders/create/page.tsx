@@ -26,7 +26,7 @@ export default function CreateWorkOrderPage() {
       id: 'basic', title: 'Orden de trabajo',
       fields: [
         {
-          id: 'type', label: 'Tipo de visita', type: 'select', required: true,
+          id: 'type', title: 'Tipo de visita', type: 'select', required: true,
           options: [
             { value: 'installation', label: 'Instalación nueva' },
             { value: 'repair', label: 'Reparación / Avería' },
@@ -37,36 +37,36 @@ export default function CreateWorkOrderPage() {
           defaultValue: 'installation',
         },
         {
-          id: 'priority', label: 'Prioridad', type: 'select',
+          id: 'priority', title: 'Prioridad', type: 'select',
           options: [
             { value: 'low', label: 'Baja' }, { value: 'normal', label: 'Normal' },
             { value: 'high', label: 'Alta' }, { value: 'urgent', label: 'Urgente' },
           ],
           defaultValue: 'normal',
         },
-        { id: 'technician_id', label: 'Técnico asignado', type: 'select', options: techOptions },
+        { id: 'technician_id', title: 'Técnico asignado', type: 'select', options: techOptions },
       ],
     },
     {
       id: 'schedule', title: 'Programación',
       fields: [
-        { id: 'scheduled_date', label: 'Fecha de visita', type: 'date' },
-        { id: 'scheduled_time', label: 'Ventana horaria', type: 'text', placeholder: '08:00-10:00' },
+        { id: 'scheduled_date', title: 'Fecha de visita', type: 'date' },
+        { id: 'scheduled_time', title: 'Ventana horaria', type: 'text', placeholder: '08:00-10:00' },
       ],
     },
     {
       id: 'location', title: 'Ubicación',
       fields: [
-        { id: 'address', label: 'Dirección de la visita', type: 'text', required: true },
-        { id: 'instructions', label: 'Instrucciones para el técnico', type: 'textarea',
+        { id: 'address', title: 'Dirección de la visita', type: 'text', required: true },
+        { id: 'instructions', title: 'Instrucciones para el técnico', type: 'textarea',
           placeholder: 'Ej: Llevar ONT Huawei HG8145, cliente en piso 3, llamar antes de llegar' },
       ],
     },
     {
       id: 'links', title: 'Vínculos',
       fields: [
-        { id: 'subscriber_id', label: 'ID del abonado (UUID)', type: 'text' },
-        { id: 'ticket_id', label: 'ID del ticket (UUID)', type: 'text' },
+        { id: 'subscriber_id', title: 'ID del abonado (UUID)', type: 'text' },
+        { id: 'ticket_id', title: 'ID del ticket (UUID)', type: 'text' },
       ],
     },
   ]

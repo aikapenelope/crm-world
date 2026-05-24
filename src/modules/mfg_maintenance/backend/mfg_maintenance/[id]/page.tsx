@@ -186,11 +186,11 @@ export default function EquipmentDetailPage() {
                 <CrudForm entityId="mfg_maintenance.plan" apiPath="/api/mfg-maintenance/maintenance-plans" mode="create"
                   initial={{ equipment_id: params.id, equipment_code: eq.equipment_code }}
                   fields={[
-                    { type: 'text' as const,   name: 'plan_name',           label: 'Nombre del plan (ej: Cambio de aceite cada 500h)', required: true },
-                    { type: 'select' as const, name: 'trigger_type',        label: 'Tipo de trigger', required: true, options: [{ value: 'days', label: 'Días calendario' }, { value: 'hours', label: 'Horas de operación' }, { value: 'cycles', label: 'Ciclos de producción' }] },
-                    { type: 'text' as const,   name: 'trigger_interval',    label: 'Intervalo (ej: 30, 500, 2000)', required: true },
-                    { type: 'text' as const,   name: 'estimated_duration_hrs', label: 'Duración estimada (horas)' },
-                    { type: 'text' as const,   name: 'required_technician_skill', label: 'Perfil técnico requerido (ej: Electricista)' },
+                    { type: 'text' as const,   id: 'plan_name',           label: 'Nombre del plan (ej: Cambio de aceite cada 500h)', required: true },
+                    { type: 'select' as const, id: 'trigger_type',        label: 'Tipo de trigger', required: true, options: [{ value: 'days', label: 'Días calendario' }, { value: 'hours', label: 'Horas de operación' }, { value: 'cycles', label: 'Ciclos de producción' }] },
+                    { type: 'text' as const,   id: 'trigger_interval',    label: 'Intervalo (ej: 30, 500, 2000)', required: true },
+                    { type: 'text' as const,   id: 'estimated_duration_hrs', label: 'Duración estimada (horas)' },
+                    { type: 'text' as const,   id: 'required_technician_skill', label: 'Perfil técnico requerido (ej: Electricista)' },
                   ]}
                   onSuccess={() => { flash('Plan de mantenimiento agregado', 'success'); setPF(false); load() }}
                 />
@@ -213,10 +213,10 @@ export default function EquipmentDetailPage() {
                 <CrudForm entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
                   initial={{ equipment_id: params.id, equipment_code: eq.equipment_code, equipment_name: eq.name, work_type: 'corrective', priority: 'high' }}
                   fields={[
-                    { type: 'text' as const,     name: 'wo_number',        label: 'N° WO (WO-MAINT-2026-XXX)', required: true },
-                    { type: 'textarea' as const, name: 'description',      label: 'Descripción de la tarea', required: true },
-                    { type: 'textarea' as const, name: 'fault_description', label: 'Descripción de la falla reportada', required: true },
-                    { type: 'select' as const,   name: 'priority',         label: 'Prioridad', options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }] },
+                    { type: 'text' as const,     id: 'wo_number',        label: 'N° WO (WO-MAINT-2026-XXX)', required: true },
+                    { type: 'textarea' as const, id: 'description',      label: 'Descripción de la tarea', required: true },
+                    { type: 'textarea' as const, id: 'fault_description', label: 'Descripción de la falla reportada', required: true },
+                    { type: 'select' as const,   id: 'priority',         label: 'Prioridad', options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }] },
                   ]}
                   onSuccess={() => { flash('WO correctiva creada', 'success'); setWF(false); load() }}
                 />

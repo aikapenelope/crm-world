@@ -157,13 +157,13 @@ export default function MfgHrPage() {
             <h3 className="text-sm font-semibold mb-3">Registrar Operario</h3>
             <CrudForm entityId="mfg_hr.worker" apiPath="/api/mfg-hr/workers" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'employee_code',       label: 'Código de empleado (OP-001)', required: true },
-                { type: 'text' as const,   name: 'full_name',           label: 'Nombre completo', required: true },
-                { type: 'text' as const,   name: 'cedula',              label: 'Cédula de identidad' },
-                { type: 'select' as const, name: 'shift_type',          label: 'Turno asignado', required: true, options: [{ value: 'morning', label: 'Mañana (6-2)' }, { value: 'afternoon', label: 'Tarde (2-10)' }, { value: 'night', label: 'Noche (10-6) +30% LOTTT' }, { value: 'rotating', label: 'Rotativo' }] },
-                { type: 'select' as const, name: 'work_center_id',      label: 'Línea / Centro principal', options: wcOptions },
-                { type: 'text' as const,   name: 'hourly_rate_bs',      label: 'Tarifa por hora (Bs)' },
-                { type: 'date' as const,   name: 'hire_date',           label: 'Fecha de ingreso' },
+                { type: 'text' as const,   id: 'employee_code',       label: 'Código de empleado (OP-001)', required: true },
+                { type: 'text' as const,   id: 'full_name',           label: 'Nombre completo', required: true },
+                { type: 'text' as const,   id: 'cedula',              label: 'Cédula de identidad' },
+                { type: 'select' as const, id: 'shift_type',          label: 'Turno asignado', required: true, options: [{ value: 'morning', label: 'Mañana (6-2)' }, { value: 'afternoon', label: 'Tarde (2-10)' }, { value: 'night', label: 'Noche (10-6) +30% LOTTT' }, { value: 'rotating', label: 'Rotativo' }] },
+                { type: 'select' as const, id: 'work_center_id',      label: 'Línea / Centro principal', options: wcOptions },
+                { type: 'text' as const,   id: 'hourly_rate_bs',      label: 'Tarifa por hora (Bs)' },
+                { type: 'date' as const,   id: 'hire_date',           label: 'Fecha de ingreso' },
               ]}
               onSuccess={() => { flash('Operario registrado', 'success'); setWF(false); load() }}
             />
@@ -177,19 +177,19 @@ export default function MfgHrPage() {
             <CrudForm entityId="mfg_hr.bonus" apiPath="/api/mfg-hr/production-bonuses" mode="create"
               initial={{ status: 'calculated' }}
               fields={[
-                { type: 'text' as const,   name: 'bonus_number',       label: 'Número de bono (BONUS-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'work_center_id',     label: 'Línea / Centro', options: wcOptions },
-                { type: 'select' as const, name: 'shift_type',         label: 'Turno', options: [{ value: 'morning', label: 'Mañana' }, { value: 'afternoon', label: 'Tarde' }, { value: 'night', label: 'Noche' }] },
-                { type: 'date' as const,   name: 'period_start',       label: 'Inicio del período', required: true },
-                { type: 'date' as const,   name: 'period_end',         label: 'Fin del período', required: true },
-                { type: 'text' as const,   name: 'planned_quantity',   label: 'Producción planificada (cuota)', required: true },
-                { type: 'text' as const,   name: 'actual_quantity',    label: 'Producción real lograda', required: true },
-                { type: 'text' as const,   name: 'uom',                label: 'Unidad (kg, unidades...)' },
-                { type: 'text' as const,   name: 'achievement_pct',    label: '% logrado (real/plan × 100)', required: true },
-                { type: 'text' as const,   name: 'bonus_amount_bs',    label: 'Monto total del bono (Bs)', required: true },
-                { type: 'number' as const, name: 'workers_count',      label: 'Número de operarios a repartir', required: true },
-                { type: 'text' as const,   name: 'bonus_per_worker_bs', label: 'Bono por operario (Bs)', required: true },
-                { type: 'textarea' as const, name: 'notes',            label: 'Notas / criterio del bono' },
+                { type: 'text' as const,   id: 'bonus_number',       label: 'Número de bono (BONUS-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'work_center_id',     label: 'Línea / Centro', options: wcOptions },
+                { type: 'select' as const, id: 'shift_type',         label: 'Turno', options: [{ value: 'morning', label: 'Mañana' }, { value: 'afternoon', label: 'Tarde' }, { value: 'night', label: 'Noche' }] },
+                { type: 'date' as const,   id: 'period_start',       label: 'Inicio del período', required: true },
+                { type: 'date' as const,   id: 'period_end',         label: 'Fin del período', required: true },
+                { type: 'text' as const,   id: 'planned_quantity',   label: 'Producción planificada (cuota)', required: true },
+                { type: 'text' as const,   id: 'actual_quantity',    label: 'Producción real lograda', required: true },
+                { type: 'text' as const,   id: 'uom',                label: 'Unidad (kg, unidades...)' },
+                { type: 'text' as const,   id: 'achievement_pct',    label: '% logrado (real/plan × 100)', required: true },
+                { type: 'text' as const,   id: 'bonus_amount_bs',    label: 'Monto total del bono (Bs)', required: true },
+                { type: 'number' as const, id: 'workers_count',      label: 'Número de operarios a repartir', required: true },
+                { type: 'text' as const,   id: 'bonus_per_worker_bs', label: 'Bono por operario (Bs)', required: true },
+                { type: 'textarea' as const, id: 'notes',            label: 'Notas / criterio del bono' },
               ]}
               onSuccess={() => { flash('Bono calculado — pendiente de aprobación', 'success'); setBF(false); load() }}
             />

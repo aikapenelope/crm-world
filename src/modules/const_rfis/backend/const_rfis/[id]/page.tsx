@@ -19,7 +19,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, Clock, CheckCircle2, AlertTriangle } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 
 type RFI = {
   id: string

@@ -221,8 +221,8 @@ export default function AcademyGroupDetailPage() {
         <div className="border-b mb-6">
           <div className="flex gap-0">
             {([
-              { id: 'sessions', label: `Sesiones (${sessions.length})` },
-              { id: 'students', label: `Alumnos (${enrollments.length})` },
+              { id: 'sessions', title: `Sesiones (${sessions.length})` },
+              { id: 'students', title: `Alumnos (${enrollments.length})` },
               { id: 'whatsapp', label: '💬 WhatsApp' },
             ] as const).map(t => (
               <Button

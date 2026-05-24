@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['agri_quality.edit'],
   pageTitle: 'Detalle Plan HACCP',
-  hidden: true,
+  navHidden: true,
 }

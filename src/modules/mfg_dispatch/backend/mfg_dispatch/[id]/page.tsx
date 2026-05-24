@@ -130,13 +130,13 @@ export default function DispatchDetailPage() {
                 <CrudForm entityId="mfg_dispatch.sale_order_line" apiPath="/api/mfg-dispatch/sale-order-lines" mode="create"
                   initial={{ sale_order_id: params.id, line_number: lines.length + 1 }}
                   fields={[
-                    { type: 'text' as const, name: 'product_code',   label: 'Código producto', required: true },
-                    { type: 'text' as const, name: 'product_name',   label: 'Nombre producto', required: true },
-                    { type: 'text' as const, name: 'quantity',       label: 'Cantidad', required: true },
-                    { type: 'text' as const, name: 'uom',            label: 'Unidad', required: true },
-                    { type: 'text' as const, name: 'unit_price_usd', label: 'Precio unitario (USD)', required: true },
-                    { type: 'text' as const, name: 'total_price_usd', label: 'Total (USD)', required: true },
-                    { type: 'text' as const, name: 'lot_number',     label: 'Número de lote de PT' },
+                    { type: 'text' as const, id: 'product_code',   label: 'Código producto', required: true },
+                    { type: 'text' as const, id: 'product_name',   label: 'Nombre producto', required: true },
+                    { type: 'text' as const, id: 'quantity',       label: 'Cantidad', required: true },
+                    { type: 'text' as const, id: 'uom',            label: 'Unidad', required: true },
+                    { type: 'text' as const, id: 'unit_price_usd', label: 'Precio unitario (USD)', required: true },
+                    { type: 'text' as const, id: 'total_price_usd', label: 'Total (USD)', required: true },
+                    { type: 'text' as const, id: 'lot_number',     label: 'Número de lote de PT' },
                   ]}
                   onSubmit={async (v) => {
                     await apiCallOrThrow('/api/mfg-dispatch/sale-order-lines', { method: 'POST', body: JSON.stringify({ ...v, sale_order_id: params.id }) })
@@ -195,12 +195,12 @@ export default function DispatchDetailPage() {
                 <CrudForm entityId="mfg_dispatch.dispatch_order" apiPath="/api/mfg-dispatch/dispatch-orders" mode="create"
                   initial={{ sale_order_id: params.id, sale_order_number: so.order_number, customer_name: so.customer_name, dispatch_date: new Date().toISOString().split('T')[0], requires_temperature_control: so.requires_temperature_control }}
                   fields={[
-                    { type: 'text' as const,   name: 'dispatch_number',  label: 'Número guía (DISP-2026-XXX)', required: true },
-                    { type: 'text' as const,   name: 'carrier_name',     label: 'Transporte / Empresa de carga' },
-                    { type: 'text' as const,   name: 'vehicle_plate',    label: 'Placa del vehículo (AA-123-BC)' },
-                    { type: 'text' as const,   name: 'driver_name',      label: 'Nombre del conductor' },
-                    { type: 'date' as const,   name: 'dispatch_date',    label: 'Fecha de despacho' },
-                    { type: 'text' as const,   name: 'temperature_range', label: 'Rango de temperatura (si aplica)' },
+                    { type: 'text' as const,   id: 'dispatch_number',  label: 'Número guía (DISP-2026-XXX)', required: true },
+                    { type: 'text' as const,   id: 'carrier_name',     label: 'Transporte / Empresa de carga' },
+                    { type: 'text' as const,   id: 'vehicle_plate',    label: 'Placa del vehículo (AA-123-BC)' },
+                    { type: 'text' as const,   id: 'driver_name',      label: 'Nombre del conductor' },
+                    { type: 'date' as const,   id: 'dispatch_date',    label: 'Fecha de despacho' },
+                    { type: 'text' as const,   id: 'temperature_range', label: 'Rango de temperatura (si aplica)' },
                   ]}
                   onSuccess={() => { flash('Guía de despacho emitida', 'success'); setDF(false); load() }}
                 />

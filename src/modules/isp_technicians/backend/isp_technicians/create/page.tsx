@@ -16,22 +16,22 @@ export default function CreateTechnicianPage() {
     {
       id: 'basic', title: 'Datos del técnico',
       fields: [
-        { id: 'name', label: 'Nombre completo', type: 'text', required: true },
-        { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true, placeholder: '+58 412-555-0100' },
-        { id: 'coverage_zone', label: 'Zona de cobertura', type: 'text', placeholder: 'Zona Norte Caracas' },
-        { id: 'vehicle_plate', label: 'Placa del vehículo', type: 'text', placeholder: 'ABC123' },
+        { id: 'name', title: 'Nombre completo', type: 'text', required: true },
+        { id: 'phone', title: 'Teléfono / WhatsApp', type: 'text', required: true, placeholder: '+58 412-555-0100' },
+        { id: 'coverage_zone', title: 'Zona de cobertura', type: 'text', placeholder: 'Zona Norte Caracas' },
+        { id: 'vehicle_plate', title: 'Placa del vehículo', type: 'text', placeholder: 'ABC123' },
       ],
     },
     {
       id: 'compensation', title: 'Compensación',
       fields: [
-        { id: 'fuel_allowance_usd', label: 'Asignación mensual gasolina (USD)', type: 'text', placeholder: '30.00' },
-        { id: 'commission_per_install', label: 'Comisión por instalación (USD)', type: 'text', placeholder: '5.00' },
+        { id: 'fuel_allowance_usd', title: 'Asignación mensual gasolina (USD)', type: 'text', placeholder: '30.00' },
+        { id: 'commission_per_install', title: 'Comisión por instalación (USD)', type: 'text', placeholder: '5.00' },
       ],
     },
     {
       id: 'notes', title: 'Notas',
-      fields: [{ id: 'notes', label: 'Notas', type: 'textarea' }],
+      fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]
 

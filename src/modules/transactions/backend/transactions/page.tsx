@@ -150,7 +150,7 @@ export default function TransactionsPage() {
   const filterDefs = React.useMemo<FilterDef[]>(
     () => [
       {
-        id: 'transaction_type', label: 'Tipo', type: 'select',
+        id: 'transaction_type', title: 'Tipo', type: 'select',
         options: [
           { label: 'Todos', value: '' },
           { label: 'Venta', value: 'sale' },
@@ -158,7 +158,7 @@ export default function TransactionsPage() {
         ],
       },
       {
-        id: 'status', label: 'Estado', type: 'select',
+        id: 'status', title: 'Estado', type: 'select',
         options: [
           { label: 'Todos', value: '' },
           { label: 'Pendiente', value: 'pending' },

@@ -8,7 +8,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { StatusBadge } from '@open-mercato/ui/primitives/status-badge'
 import { LoadingMessage, ErrorMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 
 type PageState = 'loading' | 'notFound' | 'ready'
 

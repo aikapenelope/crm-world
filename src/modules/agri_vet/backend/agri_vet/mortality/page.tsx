@@ -98,10 +98,10 @@ export default function MortalityPage() {
               apiPath="/api/agri-vet/mortality-records"
               mode="create"
               fields={[
-                { type: 'select' as const,   name: 'flock_id',    label: 'Lote de Aves', required: true, options: flockOptions },
-                { type: 'date' as const,     name: 'record_date', label: 'Fecha',        required: true },
-                { type: 'number' as const,   name: 'count',       label: 'Número de Muertes', required: true },
-                { type: 'select' as const,   name: 'cause',       label: 'Causa',        required: true,
+                { type: 'select' as const,   id: 'flock_id',    label: 'Lote de Aves', required: true, options: flockOptions },
+                { type: 'date' as const,     id: 'record_date', label: 'Fecha',        required: true },
+                { type: 'number' as const,   id: 'count',       label: 'Número de Muertes', required: true },
+                { type: 'select' as const,   id: 'cause',       label: 'Causa',        required: true,
                   options: [
                     { value: 'sanitary',              label: 'Sanitaria' },
                     { value: 'heat_stress',           label: 'Golpe de calor' },
@@ -109,11 +109,11 @@ export default function MortalityPage() {
                     { value: 'low_weight_selection',  label: 'Selección por bajo peso' },
                     { value: 'other',                 label: 'Otra causa' },
                   ]},
-                { type: 'textarea' as const, name: 'cause_detail', label: 'Detalle de la Causa' },
-                { type: 'textarea' as const, name: 'notes',        label: 'Observaciones' },
+                { type: 'textarea' as const, id: 'cause_detail', label: 'Detalle de la Causa' },
+                { type: 'textarea' as const, id: 'notes',        label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'record', label: 'Registro', fields: ['flock_id', 'record_date', 'count', 'cause', 'cause_detail', 'notes'] },
+                { id: 'record', title: 'Registro', fields: ['flock_id', 'record_date', 'count', 'cause', 'cause_detail', 'notes'] },
               ]}
               onSuccess={() => { flash('Mortalidad registrada', 'success'); setShowForm(false); load() }}
             />

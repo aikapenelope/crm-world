@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['mfg_bom.view'],
   pageTitle: 'Detalle BOM',
-  hidden: true,
+  navHidden: true,
 }

@@ -109,8 +109,8 @@ export default function UmesExtensionsPage() {
 
   const formFields = React.useMemo<CrudField[]>(
     () => [
-      { id: 'title', label: t('example.umes.extensions.form.title', 'Title'), type: 'text', required: true },
-      { id: 'note', label: t('example.umes.extensions.form.note', 'Note'), type: 'textarea' },
+      { id: 'title', title: t('example.umes.extensions.form.title', 'Title'), type: 'text', required: true },
+      { id: 'note', title: t('example.umes.extensions.form.note', 'Note'), type: 'textarea' },
     ],
     [t],
   )

@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_routes.manage'],
   pageTitle: 'Nueva Ruta',
   pageTitleKey: 'dist_routes.create.title',
-  hidden: true,
+  navHidden: true,
 }

@@ -38,53 +38,53 @@ export default function EditIspNetworkNodePage() {
     {
       id: 'basic', title: 'Básico',
       fields: [
-        { id: 'name', label: 'Nombre del nodo', type: 'text', required: true },
+        { id: 'name', title: 'Nombre del nodo', type: 'text', required: true },
         {
-          id: 'node_type', label: 'Tipo', type: 'select', required: true,
+          id: 'node_type', title: 'Tipo', type: 'select', required: true,
           options: [
             { value: 'pop_principal', label: 'POP Principal' }, { value: 'nodo_distribucion', label: 'Distribución' },
             { value: 'nodo_acceso', label: 'Acceso' }, { value: 'repetidora', label: 'Repetidora' },
           ],
         },
         {
-          id: 'status', label: 'Estado operativo', type: 'select', required: true,
+          id: 'status', title: 'Estado operativo', type: 'select', required: true,
           options: [
             { value: 'active', label: 'Activo' }, { value: 'degraded', label: 'Degradado' },
             { value: 'offline', label: 'Caído' }, { value: 'maintenance', label: 'Mantenimiento' },
           ],
         },
-        { id: 'city', label: 'Ciudad', type: 'text', required: true },
-        { id: 'address', label: 'Dirección física', type: 'text' },
+        { id: 'city', title: 'Ciudad', type: 'text', required: true },
+        { id: 'address', title: 'Dirección física', type: 'text' },
       ],
     },
     {
       id: 'equip', title: 'Equipo',
       fields: [
-        { id: 'equipment_model', label: 'Equipo instalado', type: 'text' },
-        { id: 'equipment_serial', label: 'Serie del equipo', type: 'text' },
-        { id: 'total_capacity_mbps', label: 'Capacidad total (Mbps)', type: 'number' },
-        { id: 'used_capacity_mbps', label: 'Uso actual (Mbps)', type: 'number' },
+        { id: 'equipment_model', title: 'Equipo instalado', type: 'text' },
+        { id: 'equipment_serial', title: 'Serie del equipo', type: 'text' },
+        { id: 'total_capacity_mbps', title: 'Capacidad total (Mbps)', type: 'number' },
+        { id: 'used_capacity_mbps', title: 'Uso actual (Mbps)', type: 'number' },
       ],
     },
     {
       id: 'power', title: 'Energía',
       fields: [
-        { id: 'power_provider', label: 'Fuente de energía', type: 'text' },
-        { id: 'has_generator', label: 'Tiene generador', type: 'checkbox' },
-        { id: 'battery_hours', label: 'Horas autonomía UPS', type: 'number' },
+        { id: 'power_provider', title: 'Fuente de energía', type: 'text' },
+        { id: 'has_generator', title: 'Tiene generador', type: 'checkbox' },
+        { id: 'battery_hours', title: 'Horas autonomía UPS', type: 'number' },
       ],
     },
     {
       id: 'monitor', title: 'Monitoreo',
       fields: [
-        { id: 'monitoring_host', label: 'Host en Zabbix/PRTG', type: 'text' },
-        { id: 'coordinates_lat', label: 'Latitud GPS', type: 'text' },
-        { id: 'coordinates_lng', label: 'Longitud GPS', type: 'text' },
+        { id: 'monitoring_host', title: 'Host en Zabbix/PRTG', type: 'text' },
+        { id: 'coordinates_lat', title: 'Latitud GPS', type: 'text' },
+        { id: 'coordinates_lng', title: 'Longitud GPS', type: 'text' },
       ],
     },
     {
       id: 'notes', title: 'Notas',
-      fields: [{ id: 'notes', label: 'Notas internas', type: 'textarea' }],
+      fields: [{ id: 'notes', title: 'Notas internas', type: 'textarea' }],
     },
   ]
 

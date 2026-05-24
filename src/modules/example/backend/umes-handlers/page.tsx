@@ -312,13 +312,13 @@ export default function UmesHandlersPage() {
     () => [
       {
         id: 'title',
-        label: t('example.umes.handlers.fields.title'),
+        title: t('example.umes.handlers.fields.title'),
         type: 'text',
         required: true,
       },
       {
         id: 'note',
-        label: t('example.umes.handlers.fields.note'),
+        title: t('example.umes.handlers.fields.note'),
         type: 'text',
       },
     ],

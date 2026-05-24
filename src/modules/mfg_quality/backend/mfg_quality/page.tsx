@@ -165,8 +165,8 @@ export default function MfgQualityPage() {
               mode="create"
               initial={{ status: 'open' }}
               fields={[
-                { type: 'text' as const,   name: 'nc_number',    label: 'Número de NC (NC-MFG-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'source',       label: 'Origen de la detección', required: true,
+                { type: 'text' as const,   id: 'nc_number',    label: 'Número de NC (NC-MFG-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'source',       label: 'Origen de la detección', required: true,
                   options: [
                     { value: 'receiving',       label: 'Recepción de materia prima' },
                     { value: 'in_process',      label: 'Durante el proceso productivo' },
@@ -174,24 +174,24 @@ export default function MfgQualityPage() {
                     { value: 'customer_return', label: 'Devolución de cliente' },
                     { value: 'audit',           label: 'Auditoría interna/externa' },
                   ]},
-                { type: 'text' as const,   name: 'product_code', label: 'Código del producto/material afectado' },
-                { type: 'textarea' as const, name: 'description', label: 'Descripción de la desviación', required: true },
-                { type: 'select' as const, name: 'severity',     label: 'Severidad', required: true,
+                { type: 'text' as const,   id: 'product_code', label: 'Código del producto/material afectado' },
+                { type: 'textarea' as const, id: 'description', label: 'Descripción de la desviación', required: true },
+                { type: 'select' as const, id: 'severity',     label: 'Severidad', required: true,
                   options: [
                     { value: 'critical', label: 'Crítica — riesgo de inocuidad/seguridad' },
                     { value: 'major',    label: 'Mayor — incumple especificación' },
                     { value: 'minor',    label: 'Menor — desviación cosmética o marginal' },
                   ]},
-                { type: 'text' as const,   name: 'quantity_affected', label: 'Cantidad afectada' },
-                { type: 'text' as const,   name: 'uom',               label: 'Unidad de medida' },
-                { type: 'text' as const,   name: 'lot_number',        label: 'Número de lote afectado' },
-                { type: 'text' as const,   name: 'cost_nc_usd',       label: 'Costo estimado de la NC (USD)' },
-                { type: 'textarea' as const, name: 'notes',           label: 'Observaciones iniciales' },
+                { type: 'text' as const,   id: 'quantity_affected', label: 'Cantidad afectada' },
+                { type: 'text' as const,   id: 'uom',               label: 'Unidad de medida' },
+                { type: 'text' as const,   id: 'lot_number',        label: 'Número de lote afectado' },
+                { type: 'text' as const,   id: 'cost_nc_usd',       label: 'Costo estimado de la NC (USD)' },
+                { type: 'textarea' as const, id: 'notes',           label: 'Observaciones iniciales' },
               ]}
               groups={[
-                { id: 'basic',    label: 'Identificación', fields: ['nc_number', 'source', 'product_code', 'lot_number'] },
-                { id: 'desc',     label: 'Descripción',    fields: ['description', 'severity', 'quantity_affected', 'uom'] },
-                { id: 'cost',     label: 'Costo / Notas',  fields: ['cost_nc_usd', 'notes'] },
+                { id: 'basic',    title: 'Identificación', fields: ['nc_number', 'source', 'product_code', 'lot_number'] },
+                { id: 'desc',     title: 'Descripción',    fields: ['description', 'severity', 'quantity_affected', 'uom'] },
+                { id: 'cost',     title: 'Costo / Notas',  fields: ['cost_nc_usd', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('No-Conformidad registrada', 'success')

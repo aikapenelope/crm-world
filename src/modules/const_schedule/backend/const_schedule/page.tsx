@@ -9,7 +9,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, Flag, AlertTriangle, CalendarPlus } from 'lucide-react'
-import { calendarLinks } from '@app/lib/calendar-links'
+import { calendarLinks } from '@/lib/calendar-links'
 
 type GanttTask = {
   id: string

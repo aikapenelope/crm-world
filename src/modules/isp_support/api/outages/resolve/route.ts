@@ -5,7 +5,7 @@
  * cierra todos los tickets vinculados a esta avería, y emite el evento
  * de resolución (clientBroadcast para que el portal del abonado se actualice).
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 import { resolveOutageSchema } from '../../../data/validators'
 

@@ -19,7 +19,7 @@
  * Usage
  * -----
  * ```typescript
- * import { emitLifecycle } from '@app/lib/emit-lifecycle'
+ * import { emitLifecycle } from '@/lib/emit-lifecycle'
  * import { eventsConfig } from '../../events'
  *
  * // Inside a custom POST/PUT handler, after the DB mutation succeeds:

@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_credit.cobro'],
   pageTitle: 'Cobro WhatsApp',
   pageTitleKey: 'dist_credit.cobro.title',
-  hidden: true,
+  navHidden: true,
 }

@@ -158,23 +158,23 @@ export default function MfgBomPage() {
               apiPath="/api/mfg-bom/bom-headers"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'product_code',       label: 'Código de Producto', required: true },
-                { type: 'text' as const,   name: 'product_name',       label: 'Nombre del Producto', required: true },
-                { type: 'select' as const, name: 'bom_type',           label: 'Tipo de BOM', required: true,
+                { type: 'text' as const,   id: 'product_code',       label: 'Código de Producto', required: true },
+                { type: 'text' as const,   id: 'product_name',       label: 'Nombre del Producto', required: true },
+                { type: 'select' as const, id: 'bom_type',           label: 'Tipo de BOM', required: true,
                   options: [
                     { value: 'discrete', label: 'Discreto (lista de componentes)' },
                     { value: 'process',  label: 'Por Procesos (receta con rendimiento)' },
                   ]},
-                { type: 'text' as const,   name: 'base_quantity',      label: 'Cantidad Base (ej: 1000)' },
-                { type: 'text' as const,   name: 'base_uom',           label: 'Unidad (kg, units, liters)', required: true },
-                { type: 'text' as const,   name: 'expected_yield_pct', label: 'Rendimiento Esperado (%) — solo para "Por Procesos"' },
-                { type: 'text' as const,   name: 'version',            label: 'Versión (ej: 1.0)' },
-                { type: 'textarea' as const, name: 'notes',            label: 'Notas / Alcance del BOM' },
+                { type: 'text' as const,   id: 'base_quantity',      label: 'Cantidad Base (ej: 1000)' },
+                { type: 'text' as const,   id: 'base_uom',           label: 'Unidad (kg, units, liters)', required: true },
+                { type: 'text' as const,   id: 'expected_yield_pct', label: 'Rendimiento Esperado (%) — solo para "Por Procesos"' },
+                { type: 'text' as const,   id: 'version',            label: 'Versión (ej: 1.0)' },
+                { type: 'textarea' as const, id: 'notes',            label: 'Notas / Alcance del BOM' },
               ]}
               groups={[
-                { id: 'product',  label: 'Producto',    fields: ['product_code', 'product_name', 'bom_type'] },
-                { id: 'output',   label: 'Producción',  fields: ['base_quantity', 'base_uom', 'expected_yield_pct'] },
-                { id: 'meta',     label: 'Versión',     fields: ['version', 'notes'] },
+                { id: 'product',  title: 'Producto',    fields: ['product_code', 'product_name', 'bom_type'] },
+                { id: 'output',   title: 'Producción',  fields: ['base_quantity', 'base_uom', 'expected_yield_pct'] },
+                { id: 'meta',     title: 'Versión',     fields: ['version', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('BOM creado — ahora agrega los componentes en el detalle', 'success')

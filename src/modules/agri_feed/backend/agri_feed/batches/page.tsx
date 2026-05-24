@@ -171,28 +171,28 @@ export default function FeedBatchesPage() {
               apiPath="/api/agri-feed/batches"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'batch_number',        label: 'Número de Lote',         required: true },
-                { type: 'select' as const, name: 'formula_id',          label: 'Fórmula',                required: true, options: formulas },
-                { type: 'date' as const,   name: 'batch_date',          label: 'Fecha',                  required: true },
-                { type: 'text' as const,   name: 'quantity_tons',       label: 'Cantidad (toneladas)',    required: true },
-                { type: 'select' as const, name: 'source_type',         label: 'Origen',
+                { type: 'text' as const,   id: 'batch_number',        label: 'Número de Lote',         required: true },
+                { type: 'select' as const, id: 'formula_id',          label: 'Fórmula',                required: true, options: formulas },
+                { type: 'date' as const,   id: 'batch_date',          label: 'Fecha',                  required: true },
+                { type: 'text' as const,   id: 'quantity_tons',       label: 'Cantidad (toneladas)',    required: true },
+                { type: 'select' as const, id: 'source_type',         label: 'Origen',
                   options: [
                     { value: 'purchased',       label: 'Comprado a terceros' },
                     { value: 'own_production',  label: 'Producción propia' },
                   ]},
-                { type: 'text' as const,   name: 'supplier_invoice',    label: 'Factura del Proveedor' },
-                { type: 'text' as const,   name: 'supplier_lot_number', label: 'Lote del Proveedor' },
-                { type: 'text' as const,   name: 'protein_result_pct',  label: 'Proteína Real (%)' },
-                { type: 'text' as const,   name: 'moisture_result_pct', label: 'Humedad (%)' },
-                { type: 'text' as const,   name: 'aflatoxin_ppb',       label: 'Aflatoxinas (ppb) — Límite: 20 ppb' },
-                { type: 'text' as const,   name: 'cost_per_ton_usd',    label: 'Costo Real (USD/ton)' },
-                { type: 'textarea' as const, name: 'notes',             label: 'Observaciones' },
+                { type: 'text' as const,   id: 'supplier_invoice',    label: 'Factura del Proveedor' },
+                { type: 'text' as const,   id: 'supplier_lot_number', label: 'Lote del Proveedor' },
+                { type: 'text' as const,   id: 'protein_result_pct',  label: 'Proteína Real (%)' },
+                { type: 'text' as const,   id: 'moisture_result_pct', label: 'Humedad (%)' },
+                { type: 'text' as const,   id: 'aflatoxin_ppb',       label: 'Aflatoxinas (ppb) — Límite: 20 ppb' },
+                { type: 'text' as const,   id: 'cost_per_ton_usd',    label: 'Costo Real (USD/ton)' },
+                { type: 'textarea' as const, id: 'notes',             label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'general',   label: 'General',     fields: ['batch_number', 'formula_id', 'batch_date', 'quantity_tons', 'source_type'] },
-                { id: 'supplier',  label: 'Proveedor',   fields: ['supplier_invoice', 'supplier_lot_number'] },
-                { id: 'analysis',  label: 'Análisis QC', fields: ['protein_result_pct', 'moisture_result_pct', 'aflatoxin_ppb'] },
-                { id: 'cost',      label: 'Costo',       fields: ['cost_per_ton_usd', 'notes'] },
+                { id: 'general',   title: 'General',     fields: ['batch_number', 'formula_id', 'batch_date', 'quantity_tons', 'source_type'] },
+                { id: 'supplier',  title: 'Proveedor',   fields: ['supplier_invoice', 'supplier_lot_number'] },
+                { id: 'analysis',  title: 'Análisis QC', fields: ['protein_result_pct', 'moisture_result_pct', 'aflatoxin_ppb'] },
+                { id: 'cost',      title: 'Costo',       fields: ['cost_per_ton_usd', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Lote registrado', 'success')

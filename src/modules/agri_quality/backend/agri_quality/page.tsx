@@ -179,8 +179,8 @@ export default function AgriQualityPage() {
               apiPath="/api/agri-quality/non-conformities"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'nc_number',      label: 'N° NC (NC-YYYYMM-XXX)',   required: true },
-                { type: 'select' as const, name: 'source',         label: 'Origen',                   required: true,
+                { type: 'text' as const,   id: 'nc_number',      label: 'N° NC (NC-YYYYMM-XXX)',   required: true },
+                { type: 'select' as const, id: 'source',         label: 'Origen',                   required: true,
                   options: [
                     { value: 'ccp_deviation',      label: 'Desviación de PCC' },
                     { value: 'temperature_excursion', label: 'Excursión de temperatura' },
@@ -191,19 +191,19 @@ export default function AgriQualityPage() {
                     { value: 'external_audit',     label: 'Auditoría externa' },
                     { value: 'complaint',          label: 'Reclamo de cliente' },
                   ]},
-                { type: 'select' as const, name: 'severity',       label: 'Severidad',               required: true,
+                { type: 'select' as const, id: 'severity',       label: 'Severidad',               required: true,
                   options: [
                     { value: 'critical', label: 'Crítica' },
                     { value: 'major',    label: 'Mayor' },
                     { value: 'minor',    label: 'Menor' },
                   ]},
-                { type: 'textarea' as const, name: 'description',  label: 'Descripción',              required: true },
-                { type: 'date' as const,   name: 'detection_date', label: 'Fecha de Detección',       required: true },
-                { type: 'textarea' as const, name: 'notes',        label: 'Notas' },
+                { type: 'textarea' as const, id: 'description',  label: 'Descripción',              required: true },
+                { type: 'date' as const,   id: 'detection_date', label: 'Fecha de Detección',       required: true },
+                { type: 'textarea' as const, id: 'notes',        label: 'Notas' },
               ]}
               groups={[
-                { id: 'info',  label: 'Información', fields: ['nc_number', 'source', 'severity', 'detection_date'] },
-                { id: 'desc',  label: 'Descripción', fields: ['description', 'notes'] },
+                { id: 'info',  title: 'Información', fields: ['nc_number', 'source', 'severity', 'detection_date'] },
+                { id: 'desc',  title: 'Descripción', fields: ['description', 'notes'] },
               ]}
               onSuccess={() => { flash('No-conformidad registrada', 'success'); setShowForm(false); load() }}
             />

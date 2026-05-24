@@ -1,5 +1,5 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
-import { seedModuleWorkflow } from '@app/lib/workflows/seed-workflow'
+import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {

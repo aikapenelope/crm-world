@@ -38,29 +38,29 @@ export default function EditTechnicianPage() {
     {
       id: 'basic', title: 'Datos del técnico',
       fields: [
-        { id: 'name', label: 'Nombre completo', type: 'text', required: true },
-        { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true },
+        { id: 'name', title: 'Nombre completo', type: 'text', required: true },
+        { id: 'phone', title: 'Teléfono / WhatsApp', type: 'text', required: true },
         {
-          id: 'status', label: 'Estado', type: 'select', required: true,
+          id: 'status', title: 'Estado', type: 'select', required: true,
           options: [
             { value: 'available', label: 'Disponible' }, { value: 'on_route', label: 'En ruta' },
             { value: 'on_site', label: 'En sitio' }, { value: 'off_duty', label: 'No disponible' },
           ],
         },
-        { id: 'coverage_zone', label: 'Zona de cobertura', type: 'text' },
-        { id: 'vehicle_plate', label: 'Placa del vehículo', type: 'text' },
+        { id: 'coverage_zone', title: 'Zona de cobertura', type: 'text' },
+        { id: 'vehicle_plate', title: 'Placa del vehículo', type: 'text' },
       ],
     },
     {
       id: 'compensation', title: 'Compensación',
       fields: [
-        { id: 'fuel_allowance_usd', label: 'Asignación mensual gasolina (USD)', type: 'text' },
-        { id: 'commission_per_install', label: 'Comisión por instalación (USD)', type: 'text' },
+        { id: 'fuel_allowance_usd', title: 'Asignación mensual gasolina (USD)', type: 'text' },
+        { id: 'commission_per_install', title: 'Comisión por instalación (USD)', type: 'text' },
       ],
     },
     {
       id: 'notes', title: 'Notas',
-      fields: [{ id: 'notes', label: 'Notas', type: 'textarea' }],
+      fields: [{ id: 'notes', title: 'Notas', type: 'textarea' }],
     },
   ]
 

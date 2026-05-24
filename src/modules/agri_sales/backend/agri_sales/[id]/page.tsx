@@ -134,17 +134,17 @@ export default function SaleOrderDetailPage() {
               entityId="agri_sales.dispatch"
               mode="create"
               fields={[
-                { type: 'text' as const,    name: 'dispatch_number',  label: 'N° Guía (GD-2026-XXX)', required: true },
-                { type: 'date' as const,    name: 'dispatch_date',    label: 'Fecha de Despacho',     required: true },
-                { type: 'text' as const,    name: 'vehicle_plate',    label: 'Placa del Vehículo' },
-                { type: 'text' as const,    name: 'driver_name',      label: 'Nombre del Chofer' },
-                { type: 'text' as const,    name: 'loading_temp_c',   label: 'Temp. de Carga (°C)' },
-                { type: 'text' as const,    name: 'total_weight_kg',  label: 'Peso Total (kg)', required: true },
-                { type: 'textarea' as const, name: 'notes',           label: 'Observaciones' },
+                { type: 'text' as const,    id: 'dispatch_number',  label: 'N° Guía (GD-2026-XXX)', required: true },
+                { type: 'date' as const,    id: 'dispatch_date',    label: 'Fecha de Despacho',     required: true },
+                { type: 'text' as const,    id: 'vehicle_plate',    label: 'Placa del Vehículo' },
+                { type: 'text' as const,    id: 'driver_name',      label: 'Nombre del Chofer' },
+                { type: 'text' as const,    id: 'loading_temp_c',   label: 'Temp. de Carga (°C)' },
+                { type: 'text' as const,    id: 'total_weight_kg',  label: 'Peso Total (kg)', required: true },
+                { type: 'textarea' as const, id: 'notes',           label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'dispatch', label: 'Despacho', fields: ['dispatch_number', 'dispatch_date', 'vehicle_plate', 'driver_name', 'loading_temp_c', 'total_weight_kg'] },
-                { id: 'notes',    label: 'Notas',    fields: ['notes'] },
+                { id: 'dispatch', title: 'Despacho', fields: ['dispatch_number', 'dispatch_date', 'vehicle_plate', 'driver_name', 'loading_temp_c', 'total_weight_kg'] },
+                { id: 'notes',    title: 'Notas',    fields: ['notes'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/agri-sales/sale-dispatches', {
@@ -167,19 +167,19 @@ export default function SaleOrderDetailPage() {
               entityId="agri_sales.invoice"
               mode="create"
               fields={[
-                { type: 'text' as const,  name: 'invoice_number',  label: 'N° Factura (FAC-2026-XXXX)', required: true },
-                { type: 'text' as const,  name: 'control_number',  label: 'N° Control SENIAT' },
-                { type: 'date' as const,  name: 'issue_date',      label: 'Fecha de Emisión',           required: true },
-                { type: 'date' as const,  name: 'due_date',        label: 'Fecha de Vencimiento',       required: true },
-                { type: 'text' as const,  name: 'subtotal_usd',    label: 'Subtotal (USD)',              required: true },
-                { type: 'text' as const,  name: 'total_usd',       label: 'Total (USD)',                 required: true },
-                { type: 'text' as const,  name: 'iva_amount_ves',  label: 'IVA (VES)' },
-                { type: 'text' as const,  name: 'bcv_rate',        label: 'Tasa BCV del día' },
-                { type: 'text' as const,  name: 'igtf_amount_usd', label: 'IGTF en USD (3% si pago en divisa)' },
+                { type: 'text' as const,  id: 'invoice_number',  label: 'N° Factura (FAC-2026-XXXX)', required: true },
+                { type: 'text' as const,  id: 'control_number',  label: 'N° Control SENIAT' },
+                { type: 'date' as const,  id: 'issue_date',      label: 'Fecha de Emisión',           required: true },
+                { type: 'date' as const,  id: 'due_date',        label: 'Fecha de Vencimiento',       required: true },
+                { type: 'text' as const,  id: 'subtotal_usd',    label: 'Subtotal (USD)',              required: true },
+                { type: 'text' as const,  id: 'total_usd',       label: 'Total (USD)',                 required: true },
+                { type: 'text' as const,  id: 'iva_amount_ves',  label: 'IVA (VES)' },
+                { type: 'text' as const,  id: 'bcv_rate',        label: 'Tasa BCV del día' },
+                { type: 'text' as const,  id: 'igtf_amount_usd', label: 'IGTF en USD (3% si pago en divisa)' },
               ]}
               groups={[
-                { id: 'invoice', label: 'Factura',    fields: ['invoice_number', 'control_number', 'issue_date', 'due_date'] },
-                { id: 'amounts', label: 'Montos',     fields: ['subtotal_usd', 'total_usd', 'iva_amount_ves', 'bcv_rate', 'igtf_amount_usd'] },
+                { id: 'invoice', title: 'Factura',    fields: ['invoice_number', 'control_number', 'issue_date', 'due_date'] },
+                { id: 'amounts', title: 'Montos',     fields: ['subtotal_usd', 'total_usd', 'iva_amount_ves', 'bcv_rate', 'igtf_amount_usd'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/agri-sales/sale-invoices', {

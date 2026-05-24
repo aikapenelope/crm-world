@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['auto_vehicles.create'],
   pageTitle: 'Registrar Vehículo',
   pageTitleKey: 'auto_vehicles.create.title',
-  hidden: true,
+  navHidden: true,
 }

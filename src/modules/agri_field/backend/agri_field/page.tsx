@@ -110,17 +110,17 @@ export default function AgriFieldPage() {
               apiPath="/api/agri-field/field-plots"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'name',              label: 'Nombre de la Parcela', required: true },
-                { type: 'text' as const,   name: 'area_hectares',     label: 'Área (hectáreas)',      required: true },
-                { type: 'select' as const, name: 'irrigation_system', label: 'Sistema de Riego',
+                { type: 'text' as const,   id: 'name',              label: 'Nombre de la Parcela', required: true },
+                { type: 'text' as const,   id: 'area_hectares',     label: 'Área (hectáreas)',      required: true },
+                { type: 'select' as const, id: 'irrigation_system', label: 'Sistema de Riego',
                   options: [
                     { value: 'drip', label: 'Goteo' }, { value: 'sprinkler', label: 'Aspersión' },
                     { value: 'flood', label: 'Gravedad/Inundación' }, { value: 'rainfed', label: 'Solo lluvia' },
                   ]},
-                { type: 'text' as const,   name: 'soil_type',         label: 'Tipo de Suelo' },
-                { type: 'text' as const,   name: 'location_gps',      label: 'GPS (lat,lng)' },
+                { type: 'text' as const,   id: 'soil_type',         label: 'Tipo de Suelo' },
+                { type: 'text' as const,   id: 'location_gps',      label: 'GPS (lat,lng)' },
               ]}
-              groups={[{ id: 'general', label: 'General', fields: ['name', 'area_hectares', 'irrigation_system', 'soil_type', 'location_gps'] }]}
+              groups={[{ id: 'general', title: 'General', fields: ['name', 'area_hectares', 'irrigation_system', 'soil_type', 'location_gps'] }]}
               onSuccess={() => { flash('Parcela registrada', 'success'); setPlotForm(false); load() }}
             />
           </div>
@@ -134,28 +134,28 @@ export default function AgriFieldPage() {
               apiPath="/api/agri-field/crop-cycles"
               mode="create"
               fields={[
-                { type: 'select' as const, name: 'field_plot_id',         label: 'Parcela',             required: true, options: plots },
-                { type: 'select' as const, name: 'crop_type',             label: 'Cultivo',             required: true,
+                { type: 'select' as const, id: 'field_plot_id',         label: 'Parcela',             required: true, options: plots },
+                { type: 'select' as const, id: 'crop_type',             label: 'Cultivo',             required: true,
                   options: [
                     { value: 'maize', label: 'Maíz' }, { value: 'soybean', label: 'Soya' },
                     { value: 'sorghum', label: 'Sorgo' }, { value: 'sunflower', label: 'Girasol' }, { value: 'other', label: 'Otro' },
                   ]},
-                { type: 'text' as const,   name: 'crop_variety',          label: 'Variedad / Híbrido' },
-                { type: 'date' as const,   name: 'planting_date',         label: 'Fecha de Siembra',   required: true },
-                { type: 'date' as const,   name: 'expected_harvest_date', label: 'Cosecha Estimada' },
-                { type: 'text' as const,   name: 'expected_yield_tons_ha', label: 'Rendimiento Esperado (ton/ha)' },
-                { type: 'select' as const, name: 'destination',           label: 'Destino',
+                { type: 'text' as const,   id: 'crop_variety',          label: 'Variedad / Híbrido' },
+                { type: 'date' as const,   id: 'planting_date',         label: 'Fecha de Siembra',   required: true },
+                { type: 'date' as const,   id: 'expected_harvest_date', label: 'Cosecha Estimada' },
+                { type: 'text' as const,   id: 'expected_yield_tons_ha', label: 'Rendimiento Esperado (ton/ha)' },
+                { type: 'select' as const, id: 'destination',           label: 'Destino',
                   options: [
                     { value: 'own_feed', label: 'Alimento propio' },
                     { value: 'sale', label: 'Venta' },
                     { value: 'storage', label: 'Almacenamiento' },
                   ]},
-                { type: 'textarea' as const, name: 'notes', label: 'Notas' },
+                { type: 'textarea' as const, id: 'notes', label: 'Notas' },
               ]}
               groups={[
-                { id: 'general',  label: 'General',   fields: ['field_plot_id', 'crop_type', 'crop_variety'] },
-                { id: 'schedule', label: 'Fechas',    fields: ['planting_date', 'expected_harvest_date'] },
-                { id: 'yield',    label: 'Producción', fields: ['expected_yield_tons_ha', 'destination', 'notes'] },
+                { id: 'general',  title: 'General',   fields: ['field_plot_id', 'crop_type', 'crop_variety'] },
+                { id: 'schedule', title: 'Fechas',    fields: ['planting_date', 'expected_harvest_date'] },
+                { id: 'yield',    title: 'Producción', fields: ['expected_yield_tons_ha', 'destination', 'notes'] },
               ]}
               onSuccess={() => { flash('Ciclo de cultivo creado', 'success'); setCycleForm(false); load() }}
             />

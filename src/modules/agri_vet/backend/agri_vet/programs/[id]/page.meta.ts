@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['agri_vet.edit'],
   pageTitle: 'Detalle Programa Vacunación',
-  hidden: true,
+  navHidden: true,
 }

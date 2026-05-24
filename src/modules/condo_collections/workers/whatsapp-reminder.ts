@@ -5,7 +5,7 @@
  * condo_collections.debtor.detected (clientBroadcast: true) so the
  * collections dashboard alert counter refreshes in real-time.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

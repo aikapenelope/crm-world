@@ -9,7 +9,7 @@
  * Same approximate name-matching logic as on-vaccination-applied.ts.
  * Movement type = 'consumption', reference_type = 'medication_record'.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 import { v4 } from 'uuid'
 

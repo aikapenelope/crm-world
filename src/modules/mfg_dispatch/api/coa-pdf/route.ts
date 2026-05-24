@@ -5,7 +5,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { CoaPdf, type CoaPdfData, type QaResult } from '../../documents/CoaPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['mfg_dispatch.view'] },

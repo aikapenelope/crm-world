@@ -7,7 +7,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { ArrowLeft } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 
 type CreditLimit = {
   id: string

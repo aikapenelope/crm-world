@@ -5,7 +5,7 @@
  * Emits condo_fees.receipt.overdue (clientBroadcast: true) per receipt so
  * the collections dashboard alert counter increments in real-time.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

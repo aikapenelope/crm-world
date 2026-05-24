@@ -79,7 +79,7 @@ export default function IspCpeInventoryPage() {
         <RowActions items={[
           { id: 'edit', label: 'Editar', onSelect: () => router.push(`/backend/isp-network/cpe/${row.original.id}`) },
           {
-            id: 'delete', label: 'Eliminar', destructive: true,
+            id: 'delete', title: 'Eliminar', destructive: true,
             onSelect: async () => {
               await deleteCrud('isp-network/cpe', row.original.id)
               flash('Equipo eliminado', 'success')

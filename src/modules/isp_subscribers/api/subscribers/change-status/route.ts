@@ -5,7 +5,7 @@
  * Emite el evento correspondiente para que otros módulos reaccionen
  * (isp_billing para corte/reconexión, notify para notificaciones al abonado).
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 import { changeStatusSchema } from '../../../data/validators'
 

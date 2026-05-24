@@ -25,23 +25,23 @@ export default function CreateLeadPage() {
     {
       id: 'contact', title: 'Datos del prospecto',
       fields: [
-        { id: 'name', label: 'Nombre completo', type: 'text', required: true },
-        { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', required: true, placeholder: '+58 412-555-0100' },
-        { id: 'email', label: 'Email (opcional)', type: 'text', placeholder: 'correo@ejemplo.com' },
+        { id: 'name', title: 'Nombre completo', type: 'text', required: true },
+        { id: 'phone', title: 'Teléfono / WhatsApp', type: 'text', required: true, placeholder: '+58 412-555-0100' },
+        { id: 'email', title: 'Email (opcional)', type: 'text', placeholder: 'correo@ejemplo.com' },
       ],
     },
     {
       id: 'location', title: 'Ubicación del servicio',
       fields: [
-        { id: 'address', label: 'Dirección de instalación', type: 'text', required: true },
-        { id: 'city', label: 'Ciudad', type: 'text', required: true },
+        { id: 'address', title: 'Dirección de instalación', type: 'text', required: true },
+        { id: 'city', title: 'Ciudad', type: 'text', required: true },
       ],
     },
     {
       id: 'sales', title: 'Información comercial',
       fields: [
         {
-          id: 'source', label: 'Canal de entrada', type: 'select', required: true,
+          id: 'source', title: 'Canal de entrada', type: 'select', required: true,
           options: [
             { value: 'whatsapp', label: 'WhatsApp' }, { value: 'instagram', label: 'Instagram' },
             { value: 'referral', label: 'Referido' }, { value: 'website', label: 'Sitio web' },
@@ -49,8 +49,8 @@ export default function CreateLeadPage() {
           ],
           defaultValue: 'whatsapp',
         },
-        { id: 'interested_plan_id', label: 'Plan de interés', type: 'select', options: planOptions },
-        { id: 'notes', label: 'Notas', type: 'textarea' },
+        { id: 'interested_plan_id', title: 'Plan de interés', type: 'select', options: planOptions },
+        { id: 'notes', title: 'Notas', type: 'textarea' },
       ],
     },
   ]

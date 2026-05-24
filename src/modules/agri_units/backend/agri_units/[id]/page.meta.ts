@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['agri_units.view'],
   pageTitle: 'Detalle de Lote',
-  hidden: true,
+  navHidden: true,
 }

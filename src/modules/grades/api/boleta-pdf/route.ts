@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { BoletinEscolar, type BoletinPDFData } from '../../documents/BoletinEscolar'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 const GRADE_LABELS: Record<string, string> = {
   maternal: 'Maternal', preescolar_1: 'Preescolar I', preescolar_2: 'Preescolar II',

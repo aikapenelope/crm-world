@@ -15,7 +15,7 @@
  *
  * Reference: .ai/specs/2026-05-26-isp-telecom-vertical.md §Módulo 5
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

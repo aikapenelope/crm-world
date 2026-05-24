@@ -10,7 +10,7 @@ import { LoadingMessage, ErrorMessage } from '@open-mercato/ui/backend/detail'
 import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { ArrowLeft, Plus } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 
 type PageState = 'loading' | 'notFound' | 'ready'
 
@@ -192,12 +192,12 @@ export default function ProcurementDetailPage() {
                 <CrudForm entityId="mfg_procurement.po_line" apiPath="/api/mfg-procurement/po-lines" mode="create"
                   initial={{ po_id: params.id, line_number: lines.length + 1 }}
                   fields={[
-                    { type: 'text' as const, name: 'material_code', label: 'Código material', required: true },
-                    { type: 'text' as const, name: 'material_name', label: 'Nombre material', required: true },
-                    { type: 'text' as const, name: 'quantity',      label: 'Cantidad', required: true },
-                    { type: 'text' as const, name: 'uom',           label: 'Unidad', required: true },
-                    { type: 'text' as const, name: 'unit_price',    label: 'Precio unitario (USD)', required: true },
-                    { type: 'text' as const, name: 'total_price',   label: 'Total (USD)', required: true },
+                    { type: 'text' as const, id: 'material_code', label: 'Código material', required: true },
+                    { type: 'text' as const, id: 'material_name', label: 'Nombre material', required: true },
+                    { type: 'text' as const, id: 'quantity',      label: 'Cantidad', required: true },
+                    { type: 'text' as const, id: 'uom',           label: 'Unidad', required: true },
+                    { type: 'text' as const, id: 'unit_price',    label: 'Precio unitario (USD)', required: true },
+                    { type: 'text' as const, id: 'total_price',   label: 'Total (USD)', required: true },
                   ]}
                   onSubmit={async (values) => {
                     await apiCallOrThrow('/api/mfg-procurement/po-lines', { method: 'POST', body: JSON.stringify({ ...values, po_id: params.id }) })

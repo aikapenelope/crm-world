@@ -184,18 +184,18 @@ export default function MfgMaintenancePage() {
             <h3 className="text-sm font-semibold mb-3">Crear Orden de Trabajo de Mantenimiento</h3>
             <CrudForm entityId="mfg_maintenance.wo" apiPath="/api/mfg-maintenance/work-orders-maint" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'wo_number',       label: 'Número WO (WO-MAINT-2026-XXX)', required: true },
-                { type: 'text' as const,   name: 'equipment_code',  label: 'Código de Equipo', required: true },
-                { type: 'text' as const,   name: 'equipment_name',  label: 'Nombre del Equipo', required: true },
-                { type: 'select' as const, name: 'work_type',       label: 'Tipo', required: true, options: [{ value: 'preventive', label: 'Preventivo' }, { value: 'corrective', label: 'Correctivo' }, { value: 'predictive', label: 'Predictivo' }] },
-                { type: 'select' as const, name: 'priority',        label: 'Prioridad', required: true, options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }, { value: 'low', label: 'Baja' }] },
-                { type: 'textarea' as const, name: 'description',   label: 'Descripción de la tarea', required: true },
-                { type: 'textarea' as const, name: 'fault_description', label: 'Descripción de la falla (si es correctivo)' },
-                { type: 'date' as const,   name: 'scheduled_date',  label: 'Fecha programada' },
+                { type: 'text' as const,   id: 'wo_number',       label: 'Número WO (WO-MAINT-2026-XXX)', required: true },
+                { type: 'text' as const,   id: 'equipment_code',  label: 'Código de Equipo', required: true },
+                { type: 'text' as const,   id: 'equipment_name',  label: 'Nombre del Equipo', required: true },
+                { type: 'select' as const, id: 'work_type',       label: 'Tipo', required: true, options: [{ value: 'preventive', label: 'Preventivo' }, { value: 'corrective', label: 'Correctivo' }, { value: 'predictive', label: 'Predictivo' }] },
+                { type: 'select' as const, id: 'priority',        label: 'Prioridad', required: true, options: [{ value: 'critical', label: 'Crítico' }, { value: 'high', label: 'Alta' }, { value: 'medium', label: 'Media' }, { value: 'low', label: 'Baja' }] },
+                { type: 'textarea' as const, id: 'description',   label: 'Descripción de la tarea', required: true },
+                { type: 'textarea' as const, id: 'fault_description', label: 'Descripción de la falla (si es correctivo)' },
+                { type: 'date' as const,   id: 'scheduled_date',  label: 'Fecha programada' },
               ]}
               groups={[
-                { id: 'basic', label: 'Identificación', fields: ['wo_number', 'equipment_code', 'equipment_name', 'work_type', 'priority'] },
-                { id: 'desc',  label: 'Descripción',    fields: ['description', 'fault_description', 'scheduled_date'] },
+                { id: 'basic', title: 'Identificación', fields: ['wo_number', 'equipment_code', 'equipment_name', 'work_type', 'priority'] },
+                { id: 'desc',  title: 'Descripción',    fields: ['description', 'fault_description', 'scheduled_date'] },
               ]}
               onSuccess={() => { flash('Orden de trabajo creada', 'success'); setWoForm(false); load() }}
             />

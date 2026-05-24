@@ -4,7 +4,7 @@
  * Emits condo_fees.receipts.generated (clientBroadcast: true) so the
  * receipts list and fee config status refresh instantly in the browser.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 export const metadata = {
   POST: { requireAuth: true, requireFeatures: ['condo_fees.generate'] },

@@ -13,7 +13,7 @@ import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, Zap } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'ready'
@@ -281,10 +281,10 @@ export default function OrderDetailPage() {
                 mode="create"
                 initial={{ order_id: params.id, operation_number: operations.length + 1 }}
                 fields={[
-                  { type: 'number' as const, name: 'operation_number',     label: 'N° de secuencia', required: true },
-                  { type: 'text' as const,   name: 'operation_name',       label: 'Nombre de la operación', required: true },
-                  { type: 'select' as const, name: 'work_center_id',       label: 'Centro de trabajo / línea', options: wcOptions },
-                  { type: 'text' as const,   name: 'planned_duration_hrs', label: 'Tiempo estándar (horas)', required: true },
+                  { type: 'number' as const, id: 'operation_number',     label: 'N° de secuencia', required: true },
+                  { type: 'text' as const,   id: 'operation_name',       label: 'Nombre de la operación', required: true },
+                  { type: 'select' as const, id: 'work_center_id',       label: 'Centro de trabajo / línea', options: wcOptions },
+                  { type: 'text' as const,   id: 'planned_duration_hrs', label: 'Tiempo estándar (horas)', required: true },
                 ]}
                 onSubmit={async (values) => {
                   await apiCallOrThrow('/api/mfg-orders/order-operations', {
@@ -325,7 +325,7 @@ export default function OrderDetailPage() {
                 mode="create"
                 initial={{ order_id: params.id, started_at: new Date().toISOString().slice(0, 16) }}
                 fields={[
-                  { type: 'select' as const, name: 'cause_category', label: 'Categoría del paro', required: true,
+                  { type: 'select' as const, id: 'cause_category', label: 'Categoría del paro', required: true,
                     options: [
                       { value: 'electrical_cut',    label: '⚡ Corte eléctrico externo (CORPOELEC)' },
                       { value: 'mechanical_failure', label: 'Falla mecánica' },
@@ -336,8 +336,8 @@ export default function OrderDetailPage() {
                       { value: 'operator_absence',  label: 'Ausencia de operador' },
                       { value: 'other',             label: 'Otro motivo' },
                     ]},
-                  { type: 'textarea' as const, name: 'cause_description', label: 'Descripción de la causa', required: true },
-                  { type: 'datetime-local' as const, name: 'started_at', label: 'Hora de inicio', required: true },
+                  { type: 'textarea' as const, id: 'cause_description', label: 'Descripción de la causa', required: true },
+                  { type: 'datetime-local' as const, id: 'started_at', label: 'Hora de inicio', required: true },
                 ]}
                 onSubmit={async (values) => {
                   const isForceMajeure = values.cause_category === 'electrical_cut'

@@ -130,8 +130,8 @@ export default function AcademyPaymentsPage() {
         <div className="border-b mb-6">
           <div className="flex gap-0">
             {[
-              { id: 'payments', label: `Historial (${payments.length})` },
-              { id: 'cobro', label: `WhatsApp Cobro (${debtors.length})` },
+              { id: 'payments', title: `Historial (${payments.length})` },
+              { id: 'cobro', title: `WhatsApp Cobro (${debtors.length})` },
             ].map(t => (
               <Button
                 key={t.id}

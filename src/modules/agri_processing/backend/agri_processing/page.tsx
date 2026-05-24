@@ -146,7 +146,7 @@ export default function AgriProcessingPage() {
         return (
           <RowActions items={[
             { id: 'open', label: 'Ver detalle', onSelect: () => router.push(`/backend/agri-processing/${row.original.id}`) },
-            ...(next[row.original.status] ? [{ id: 'advance', label: nextLabel[row.original.status] ?? 'Avanzar estado', onSelect: () => handleAdvanceStatus(row.original) }] : []),
+            ...(next[row.original.status] ? [{ id: 'advance', title: nextLabel[row.original.status] ?? 'Avanzar estado', onSelect: () => handleAdvanceStatus(row.original) }] : []),
           ]} />
         )
       },
@@ -200,19 +200,19 @@ export default function AgriProcessingPage() {
               apiPath="/api/agri-processing/slaughter-batches"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'batch_number',    label: 'N° Lote (BENEF-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'flock_id',        label: 'Lote de Aves',             required: true, options: flockOptions },
-                { type: 'date' as const,   name: 'slaughter_date',  label: 'Fecha de Beneficio',       required: true },
-                { type: 'number' as const, name: 'birds_in',        label: 'Aves Ingresadas',          required: true },
-                { type: 'text' as const,   name: 'live_weight_kg',  label: 'Peso Vivo Total (kg)',     required: true },
-                { type: 'number' as const, name: 'birds_processed', label: 'Aves Beneficiadas',        required: true },
-                { type: 'number' as const, name: 'condemned_count', label: 'Decomisos' },
-                { type: 'text' as const,   name: 'condemned_reason',label: 'Causa del Decomiso' },
-                { type: 'textarea' as const, name: 'notes',         label: 'Observaciones' },
+                { type: 'text' as const,   id: 'batch_number',    label: 'N° Lote (BENEF-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'flock_id',        label: 'Lote de Aves',             required: true, options: flockOptions },
+                { type: 'date' as const,   id: 'slaughter_date',  label: 'Fecha de Beneficio',       required: true },
+                { type: 'number' as const, id: 'birds_in',        label: 'Aves Ingresadas',          required: true },
+                { type: 'text' as const,   id: 'live_weight_kg',  label: 'Peso Vivo Total (kg)',     required: true },
+                { type: 'number' as const, id: 'birds_processed', label: 'Aves Beneficiadas',        required: true },
+                { type: 'number' as const, id: 'condemned_count', label: 'Decomisos' },
+                { type: 'text' as const,   id: 'condemned_reason',label: 'Causa del Decomiso' },
+                { type: 'textarea' as const, id: 'notes',         label: 'Observaciones' },
               ]}
               groups={[
-                { id: 'counts', label: 'Conteos',   fields: ['batch_number', 'flock_id', 'slaughter_date', 'birds_in', 'live_weight_kg', 'birds_processed'] },
-                { id: 'quality', label: 'Calidad',  fields: ['condemned_count', 'condemned_reason', 'notes'] },
+                { id: 'counts', title: 'Conteos',   fields: ['batch_number', 'flock_id', 'slaughter_date', 'birds_in', 'live_weight_kg', 'birds_processed'] },
+                { id: 'quality', title: 'Calidad',  fields: ['condemned_count', 'condemned_reason', 'notes'] },
               ]}
               onSuccess={() => { flash('Lote de beneficio registrado', 'success'); setShowForm(false); load() }}
             />

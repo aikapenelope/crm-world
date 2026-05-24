@@ -6,7 +6,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { InformeSemanalPdf, type InformeSemanalData } from '../../documents/InformeSemanalPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['agri_units.view'] },

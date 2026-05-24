@@ -6,7 +6,7 @@
  */
 import { MfgStockMovementEntity } from '../../data/entities'
 import { stockMovementCreateSchema } from '../../data/validators'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { z } from 'zod'

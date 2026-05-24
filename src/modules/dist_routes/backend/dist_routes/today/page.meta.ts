@@ -3,5 +3,5 @@ export const metadata = {
   requireFeatures: ['dist_routes.visit'],
   pageTitle: 'Mi Día',
   pageTitleKey: 'dist_routes.today.title',
-  hidden: true,
+  navHidden: true,
 }

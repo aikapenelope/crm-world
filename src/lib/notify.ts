@@ -7,7 +7,7 @@
  * WhatsApp Business API, se agrega un adapter sin tocar los módulos que ya usan notify().
  *
  * Uso:
- *   import { notifySubscriber } from '@app/lib/notify'
+ *   import { notifySubscriber } from '@/lib/notify'
  *   await notifySubscriber(ctx, subscriberId, { message: '...', channels: ['email', 'portal'] })
  *
  * Ref. arquitectura: docs/REALTIME.md, docs/AGM.md §9 Eventos

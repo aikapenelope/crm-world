@@ -2,5 +2,5 @@ export const metadata = {
   requireAuth: true,
   requireFeatures: ['condo_accounting.view'],
   pageTitle: 'Detalle de Movimiento',
-  hidden: true,
+  navHidden: true,
 }

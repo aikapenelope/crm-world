@@ -187,22 +187,22 @@ export default function MfgOrdersPage() {
               apiPath="/api/mfg-orders/production-orders"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'order_number',     label: 'Número de Orden (PO-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'bom_id',           label: 'BOM / Fórmula del Producto', required: true, options: bomOptions },
-                { type: 'text' as const,   name: 'product_code',     label: 'Código del Producto', required: true },
-                { type: 'text' as const,   name: 'product_name',     label: 'Nombre del Producto', required: true },
-                { type: 'text' as const,   name: 'planned_quantity', label: 'Cantidad a Producir', required: true },
-                { type: 'text' as const,   name: 'uom',              label: 'Unidad de Medida', required: true },
-                { type: 'select' as const, name: 'work_center_id',   label: 'Línea / Centro de Trabajo', options: wcOptions },
-                { type: 'datetime-local' as const, name: 'scheduled_start', label: 'Inicio Planificado' },
-                { type: 'datetime-local' as const, name: 'scheduled_end',   label: 'Fin Planificado' },
-                { type: 'text' as const,   name: 'planned_cost_usd', label: 'Costo Estándar Planificado (USD)' },
-                { type: 'textarea' as const, name: 'notes',          label: 'Notas' },
+                { type: 'text' as const,   id: 'order_number',     label: 'Número de Orden (PO-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'bom_id',           label: 'BOM / Fórmula del Producto', required: true, options: bomOptions },
+                { type: 'text' as const,   id: 'product_code',     label: 'Código del Producto', required: true },
+                { type: 'text' as const,   id: 'product_name',     label: 'Nombre del Producto', required: true },
+                { type: 'text' as const,   id: 'planned_quantity', label: 'Cantidad a Producir', required: true },
+                { type: 'text' as const,   id: 'uom',              label: 'Unidad de Medida', required: true },
+                { type: 'select' as const, id: 'work_center_id',   label: 'Línea / Centro de Trabajo', options: wcOptions },
+                { type: 'datetime-local' as const, id: 'scheduled_start', label: 'Inicio Planificado' },
+                { type: 'datetime-local' as const, id: 'scheduled_end',   label: 'Fin Planificado' },
+                { type: 'text' as const,   id: 'planned_cost_usd', label: 'Costo Estándar Planificado (USD)' },
+                { type: 'textarea' as const, id: 'notes',          label: 'Notas' },
               ]}
               groups={[
-                { id: 'product',   label: 'Producto',    fields: ['order_number', 'bom_id', 'product_code', 'product_name'] },
-                { id: 'qty',       label: 'Producción',  fields: ['planned_quantity', 'uom', 'work_center_id'] },
-                { id: 'schedule',  label: 'Cronograma',  fields: ['scheduled_start', 'scheduled_end', 'planned_cost_usd', 'notes'] },
+                { id: 'product',   title: 'Producto',    fields: ['order_number', 'bom_id', 'product_code', 'product_name'] },
+                { id: 'qty',       title: 'Producción',  fields: ['planned_quantity', 'uom', 'work_center_id'] },
+                { id: 'schedule',  title: 'Cronograma',  fields: ['scheduled_start', 'scheduled_end', 'planned_cost_usd', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Orden de producción creada', 'success')

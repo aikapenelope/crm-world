@@ -15,30 +15,30 @@ export default function AcademyInstructorCreatePage() {
   const groups: CrudFormGroup[] = [
     {
       id: 'personal',
-      label: 'Datos del instructor',
+      title: 'Datos del instructor',
       fields: [
-        { id: 'name', label: 'Nombre completo', type: 'text', required: true },
-        { id: 'email', label: 'Email', type: 'text', placeholder: 'instructor@email.com' },
-        { id: 'phone', label: 'Teléfono / WhatsApp', type: 'text', placeholder: '+58 412 000 0000' },
-        { id: 'specialty', label: 'Especialidad', type: 'text',
+        { id: 'name', title: 'Nombre completo', type: 'text', required: true },
+        { id: 'email', title: 'Email', type: 'text', placeholder: 'instructor@email.com' },
+        { id: 'phone', title: 'Teléfono / WhatsApp', type: 'text', placeholder: '+58 412 000 0000' },
+        { id: 'specialty', title: 'Especialidad', type: 'text',
           placeholder: 'Ej: Inglés americano, Repostería francesa' },
-        { id: 'bio', label: 'Biografía corta', type: 'textarea',
+        { id: 'bio', title: 'Biografía corta', type: 'textarea',
           placeholder: 'Resumen de experiencia y certificaciones...' },
       ],
     },
     {
       id: 'work',
-      label: 'Condiciones de trabajo',
+      title: 'Condiciones de trabajo',
       fields: [
-        { id: 'hourly_rate_usd', label: 'Tarifa por hora (USD)', type: 'number',
+        { id: 'hourly_rate_usd', title: 'Tarifa por hora (USD)', type: 'number',
           placeholder: '15.00' },
-        { id: 'modalities', label: 'Modalidades que puede enseñar', type: 'multiselect',
+        { id: 'modalities', title: 'Modalidades que puede enseñar', type: 'multiselect',
           options: [
             { value: 'in_person', label: 'Presencial' },
             { value: 'online', label: 'Online' },
             { value: 'hybrid', label: 'Híbrida' },
           ] },
-        { id: 'is_active', label: 'Activo', type: 'checkbox', defaultValue: true },
+        { id: 'is_active', title: 'Activo', type: 'checkbox', defaultValue: true },
       ],
     },
   ]

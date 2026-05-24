@@ -7,7 +7,7 @@
  * y notificar a los abonados afectados.
  */
 import { z } from 'zod'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 
 const bodySchema = z.object({

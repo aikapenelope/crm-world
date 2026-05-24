@@ -10,13 +10,13 @@ export default function CreateTodoPage() {
   const fields = React.useMemo<CrudField[]>(() => [
     {
       id: 'title',
-      label: t('example.todos.form.fields.title.label'),
+      title: t('example.todos.form.fields.title.label'),
       type: 'text',
       required: true,
       placeholder: t('example.todos.form.fields.title.placeholder'),
     },
-    { id: 'is_done', label: t('example.todos.form.fields.isDone.label'), type: 'checkbox' },
-    { id: 'cf_blocked', label: t('example.todos.table.column.blocked'), type: 'checkbox' },
+    { id: 'is_done', title: t('example.todos.form.fields.isDone.label'), type: 'checkbox' },
+    { id: 'cf_blocked', title: t('example.todos.table.column.blocked'), type: 'checkbox' },
   ], [t])
   const groups = React.useMemo<CrudFormGroup[]>(() => [
     { id: 'details', title: t('example.todos.form.groups.details'), column: 1, fields: ['title'] },

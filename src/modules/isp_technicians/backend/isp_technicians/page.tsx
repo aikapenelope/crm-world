@@ -71,7 +71,7 @@ export default function IspTechniciansPage() {
         <RowActions items={[
           { id: 'edit', label: 'Editar', onSelect: () => router.push(`/backend/isp-technicians/${row.original.id}`) },
           {
-            id: 'delete', label: 'Eliminar', destructive: true,
+            id: 'delete', title: 'Eliminar', destructive: true,
             onSelect: async () => { await deleteCrud('isp-technicians/technicians', row.original.id); flash('Técnico eliminado', 'success'); load() },
           },
         ]} />

@@ -3,7 +3,7 @@
  * Emits condo_fees.receipt.paid (clientBroadcast: true) so the receipts
  * dashboard and the collections view refresh in real-time.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 
 export const metadata = {

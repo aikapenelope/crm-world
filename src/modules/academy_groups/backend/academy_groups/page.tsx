@@ -44,10 +44,10 @@ const DAY_SHORT: Record<string, string> = {
 }
 
 const KANBAN_COLUMNS = [
-  { id: 'scheduled', label: 'Programados', color: 'border-border bg-muted/30' },
-  { id: 'in_progress', label: 'En Curso', color: 'border-primary/30 bg-primary/5' },
-  { id: 'completed', label: 'Completados', color: 'border-border bg-muted/10' },
-  { id: 'cancelled', label: 'Cancelados', color: 'border-destructive/20 bg-destructive/5' },
+  { id: 'scheduled', title: 'Programados', color: 'border-border bg-muted/30' },
+  { id: 'in_progress', title: 'En Curso', color: 'border-primary/30 bg-primary/5' },
+  { id: 'completed', title: 'Completados', color: 'border-border bg-muted/10' },
+  { id: 'cancelled', title: 'Cancelados', color: 'border-destructive/20 bg-destructive/5' },
 ]
 
 // ─── Kanban card ──────────────────────────────────────────────────────────────

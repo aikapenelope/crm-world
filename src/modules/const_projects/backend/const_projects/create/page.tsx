@@ -15,10 +15,10 @@ export default function CreateProjectPage() {
       id: 'identity',
       title: 'Identificación del proyecto',
       fields: [
-        { id: 'name', label: 'Nombre del proyecto', type: 'text', required: true },
-        { id: 'code', label: 'Código', type: 'text', required: true, placeholder: 'PRO-001' },
+        { id: 'name', title: 'Nombre del proyecto', type: 'text', required: true },
+        { id: 'code', title: 'Código', type: 'text', required: true, placeholder: 'PRO-001' },
         {
-          id: 'project_type', label: 'Tipo', type: 'select', defaultValue: 'residential',
+          id: 'project_type', title: 'Tipo', type: 'select', defaultValue: 'residential',
           options: [
             { value: 'residential', label: 'Residencial' },
             { value: 'commercial', label: 'Comercial' },
@@ -28,7 +28,7 @@ export default function CreateProjectPage() {
           ],
         },
         {
-          id: 'status', label: 'Estado inicial', type: 'select', defaultValue: 'prospect',
+          id: 'status', title: 'Estado inicial', type: 'select', defaultValue: 'prospect',
           options: [
             { value: 'prospect', label: 'Prospecto' },
             { value: 'bidding', label: 'En licitación' },
@@ -42,9 +42,9 @@ export default function CreateProjectPage() {
       id: 'client',
       title: 'Cliente',
       fields: [
-        { id: 'client_name', label: 'Nombre del cliente', type: 'text', required: true },
+        { id: 'client_name', title: 'Nombre del cliente', type: 'text', required: true },
         {
-          id: 'client_type', label: 'Tipo de cliente', type: 'select', defaultValue: 'private',
+          id: 'client_type', title: 'Tipo de cliente', type: 'select', defaultValue: 'private',
           options: [
             { value: 'private', label: 'Privado' },
             { value: 'public', label: 'Público / Gobierno' },
@@ -57,18 +57,18 @@ export default function CreateProjectPage() {
       id: 'location',
       title: 'Ubicación',
       fields: [
-        { id: 'city', label: 'Ciudad', type: 'text' },
-        { id: 'state', label: 'Estado', type: 'text' },
-        { id: 'location', label: 'Dirección / sector', type: 'text' },
+        { id: 'city', title: 'Ciudad', type: 'text' },
+        { id: 'state', title: 'Estado', type: 'text' },
+        { id: 'location', title: 'Dirección / sector', type: 'text' },
       ],
     },
     {
       id: 'contract',
       title: 'Contrato',
       fields: [
-        { id: 'contract_number', label: 'Número de contrato', type: 'text' },
+        { id: 'contract_number', title: 'Número de contrato', type: 'text' },
         {
-          id: 'contract_type', label: 'Tipo de contrato', type: 'select', defaultValue: 'fixed_price',
+          id: 'contract_type', title: 'Tipo de contrato', type: 'select', defaultValue: 'fixed_price',
           options: [
             { value: 'fixed_price', label: 'Precio fijo' },
             { value: 'cost_plus', label: 'Costo más margen' },
@@ -76,24 +76,24 @@ export default function CreateProjectPage() {
             { value: 'time_materials', label: 'Tiempo y materiales' },
           ],
         },
-        { id: 'contract_amount', label: 'Monto del contrato', type: 'text', placeholder: '0.00' },
+        { id: 'contract_amount', title: 'Monto del contrato', type: 'text', placeholder: '0.00' },
         {
-          id: 'currency', label: 'Moneda', type: 'select', defaultValue: 'USD',
+          id: 'currency', title: 'Moneda', type: 'select', defaultValue: 'USD',
           options: [{ value: 'USD', label: 'USD' }, { value: 'VES', label: 'VES' }],
         },
-        { id: 'advance_percent', label: 'Anticipo (%)', type: 'number', defaultValue: '0' },
-        { id: 'retention_percent', label: 'Retención (%)', type: 'number', defaultValue: '10' },
+        { id: 'advance_percent', title: 'Anticipo (%)', type: 'number', defaultValue: '0' },
+        { id: 'retention_percent', title: 'Retención (%)', type: 'number', defaultValue: '10' },
       ],
     },
     {
       id: 'schedule',
       title: 'Cronograma y equipo',
       fields: [
-        { id: 'start_date', label: 'Fecha de inicio', type: 'date' },
-        { id: 'planned_end_date', label: 'Fecha de fin planificada', type: 'date' },
-        { id: 'project_manager', label: 'Gerente de proyecto', type: 'text' },
-        { id: 'site_supervisor', label: 'Residente de obra', type: 'text' },
-        { id: 'description', label: 'Descripción', type: 'textarea' },
+        { id: 'start_date', title: 'Fecha de inicio', type: 'date' },
+        { id: 'planned_end_date', title: 'Fecha de fin planificada', type: 'date' },
+        { id: 'project_manager', title: 'Gerente de proyecto', type: 'text' },
+        { id: 'site_supervisor', title: 'Residente de obra', type: 'text' },
+        { id: 'description', title: 'Descripción', type: 'textarea' },
       ],
     },
   ]

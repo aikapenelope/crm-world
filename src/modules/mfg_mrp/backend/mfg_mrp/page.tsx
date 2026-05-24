@@ -201,10 +201,10 @@ export default function MfgMrpPage() {
             <h3 className="text-sm font-semibold mb-3">Crear Plan de Producción</h3>
             <CrudForm entityId="mfg_mrp.plan" apiPath="/api/mfg-mrp/production-plans" mode="create"
               fields={[
-                { type: 'text' as const,  name: 'plan_number',  label: 'Número de Plan (PLAN-2026-XX)', required: true },
-                { type: 'date' as const,  name: 'period_start', label: 'Inicio del período', required: true },
-                { type: 'date' as const,  name: 'period_end',   label: 'Fin del período', required: true },
-                { type: 'textarea' as const, name: 'notes',     label: 'Notas' },
+                { type: 'text' as const,  id: 'plan_number',  label: 'Número de Plan (PLAN-2026-XX)', required: true },
+                { type: 'date' as const,  id: 'period_start', label: 'Inicio del período', required: true },
+                { type: 'date' as const,  id: 'period_end',   label: 'Fin del período', required: true },
+                { type: 'textarea' as const, id: 'notes',     label: 'Notas' },
               ]}
               onSuccess={() => { flash('Plan creado — ejecuta el MRP para calcular necesidades', 'success'); setPlanForm(false); load() }}
             />

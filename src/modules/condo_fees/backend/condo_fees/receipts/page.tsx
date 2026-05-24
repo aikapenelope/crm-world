@@ -10,7 +10,7 @@ import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
 import { ArrowLeft, DollarSign, CalendarPlus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { calendarLinks, dueDateEvent } from '@app/lib/calendar-links'
+import { calendarLinks, dueDateEvent } from '@/lib/calendar-links'
 
 type ReceiptRow = {
   id: string

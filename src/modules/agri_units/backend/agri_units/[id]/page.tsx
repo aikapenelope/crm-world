@@ -268,9 +268,9 @@ export default function FlockDetailPage() {
                 { type: 'textarea', name: 'health_observations',      label: 'Observaciones sanitarias' },
               ]}
               groups={[
-                { id: 'counts',      label: 'Conteos',        fields: ['week_number', 'record_date', 'live_count', 'weekly_mortality', 'cumulative_mortality'] },
-                { id: 'production',  label: 'Producción',     fields: ['avg_body_weight_g', 'weekly_feed_kg', 'cumulative_feed_kg'] },
-                { id: 'environment', label: 'Ambiente',       fields: ['house_temp_avg_c', 'house_humidity_avg_pct', 'water_consumption_liters', 'health_observations'] },
+                { id: 'counts',      title: 'Conteos',        fields: ['week_number', 'record_date', 'live_count', 'weekly_mortality', 'cumulative_mortality'] },
+                { id: 'production',  title: 'Producción',     fields: ['avg_body_weight_g', 'weekly_feed_kg', 'cumulative_feed_kg'] },
+                { id: 'environment', title: 'Ambiente',       fields: ['house_temp_avg_c', 'house_humidity_avg_pct', 'water_consumption_liters', 'health_observations'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/agri-units/flock-weekly-records', {

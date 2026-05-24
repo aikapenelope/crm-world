@@ -15,7 +15,7 @@ import { CrudForm } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useGuardedMutation } from '@open-mercato/ui/backend/injection/useGuardedMutation'
 import { ArrowLeft, Plus, Trash2, CheckCircle, GitBranch } from 'lucide-react'
-import { WorkflowApprovalWidget } from '@app/lib/workflows/WorkflowApprovalWidget'
+import { WorkflowApprovalWidget } from '@/lib/workflows/WorkflowApprovalWidget'
 import type { ColumnDef } from '@tanstack/react-table'
 
 type PageState = 'loading' | 'notFound' | 'ready'
@@ -225,25 +225,25 @@ export default function BomDetailPage() {
               mode="create"
               initial={{ bom_id: params.id, line_number: lines.length + 1 }}
               fields={[
-                { type: 'text' as const,   name: 'component_code',   label: 'Código del Componente', required: true },
-                { type: 'text' as const,   name: 'component_name',   label: 'Nombre del Componente', required: true },
-                { type: 'select' as const, name: 'component_type',   label: 'Tipo de Componente', required: true,
+                { type: 'text' as const,   id: 'component_code',   label: 'Código del Componente', required: true },
+                { type: 'text' as const,   id: 'component_name',   label: 'Nombre del Componente', required: true },
+                { type: 'select' as const, id: 'component_type',   label: 'Tipo de Componente', required: true,
                   options: [
                     { value: 'raw_material', label: 'Materia Prima' },
                     { value: 'packaging',    label: 'Material de Empaque' },
                     { value: 'subassembly',  label: 'Subconjunto (tiene su propio BOM)' },
                     { value: 'consumable',   label: 'Consumible de proceso' },
                   ]},
-                { type: 'text' as const,   name: 'quantity',         label: 'Cantidad por base del BOM', required: true },
-                { type: 'text' as const,   name: 'uom',              label: 'Unidad de Medida', required: true },
-                { type: 'text' as const,   name: 'scrap_pct',        label: 'Merma del proceso (%)' },
-                { type: 'number' as const, name: 'lead_offset_days', label: 'Días de anticipación para solicitar' },
-                { type: 'textarea' as const, name: 'notes',          label: 'Notas / Especificaciones' },
+                { type: 'text' as const,   id: 'quantity',         label: 'Cantidad por base del BOM', required: true },
+                { type: 'text' as const,   id: 'uom',              label: 'Unidad de Medida', required: true },
+                { type: 'text' as const,   id: 'scrap_pct',        label: 'Merma del proceso (%)' },
+                { type: 'number' as const, id: 'lead_offset_days', label: 'Días de anticipación para solicitar' },
+                { type: 'textarea' as const, id: 'notes',          label: 'Notas / Especificaciones' },
               ]}
               groups={[
-                { id: 'component', label: 'Componente',   fields: ['component_code', 'component_name', 'component_type'] },
-                { id: 'quantity',  label: 'Cantidad',     fields: ['quantity', 'uom', 'scrap_pct', 'lead_offset_days'] },
-                { id: 'notes',     label: 'Notas',        fields: ['notes'] },
+                { id: 'component', title: 'Componente',   fields: ['component_code', 'component_name', 'component_type'] },
+                { id: 'quantity',  title: 'Cantidad',     fields: ['quantity', 'uom', 'scrap_pct', 'lead_offset_days'] },
+                { id: 'notes',     title: 'Notas',        fields: ['notes'] },
               ]}
               onSubmit={async (values) => {
                 await apiCallOrThrow('/api/mfg-bom/bom-lines', {

@@ -221,28 +221,28 @@ export default function MfgInventoryPage() {
               mode="create"
               initial={{ status: 'quarantine', entry_date: new Date().toISOString().split('T')[0] }}
               fields={[
-                { type: 'text' as const,   name: 'material_code',       label: 'Código del Material', required: true },
-                { type: 'text' as const,   name: 'material_name',       label: 'Nombre del Material', required: true },
-                { type: 'select' as const, name: 'material_type',       label: 'Tipo', required: true,
+                { type: 'text' as const,   id: 'material_code',       label: 'Código del Material', required: true },
+                { type: 'text' as const,   id: 'material_name',       label: 'Nombre del Material', required: true },
+                { type: 'select' as const, id: 'material_type',       label: 'Tipo', required: true,
                   options: [
                     { value: 'raw_material', label: 'Materia Prima' },
                     { value: 'packaging',    label: 'Material de Empaque' },
                     { value: 'finished_goods', label: 'Producto Terminado' },
                   ]},
-                { type: 'text' as const,   name: 'lot_number',          label: 'Número de Lote Interno', required: true },
-                { type: 'text' as const,   name: 'supplier_lot_number', label: 'Lote del Proveedor (trazabilidad)' },
-                { type: 'text' as const,   name: 'quantity',            label: 'Cantidad recibida', required: true },
-                { type: 'text' as const,   name: 'uom',                 label: 'Unidad de Medida', required: true },
-                { type: 'text' as const,   name: 'unit_cost_usd',       label: 'Costo Unitario (USD)' },
-                { type: 'date' as const,   name: 'expiry_date',         label: 'Fecha de Vencimiento' },
-                { type: 'select' as const, name: 'location_id',        label: 'Ubicación en Almacén',
+                { type: 'text' as const,   id: 'lot_number',          label: 'Número de Lote Interno', required: true },
+                { type: 'text' as const,   id: 'supplier_lot_number', label: 'Lote del Proveedor (trazabilidad)' },
+                { type: 'text' as const,   id: 'quantity',            label: 'Cantidad recibida', required: true },
+                { type: 'text' as const,   id: 'uom',                 label: 'Unidad de Medida', required: true },
+                { type: 'text' as const,   id: 'unit_cost_usd',       label: 'Costo Unitario (USD)' },
+                { type: 'date' as const,   id: 'expiry_date',         label: 'Fecha de Vencimiento' },
+                { type: 'select' as const, id: 'location_id',        label: 'Ubicación en Almacén',
                   options: locationOptions },
-                { type: 'textarea' as const, name: 'notes',            label: 'Notas de recepción' },
+                { type: 'textarea' as const, id: 'notes',            label: 'Notas de recepción' },
               ]}
               groups={[
-                { id: 'material', label: 'Material',     fields: ['material_code', 'material_name', 'material_type'] },
-                { id: 'lot',      label: 'Lote',         fields: ['lot_number', 'supplier_lot_number', 'quantity', 'uom', 'unit_cost_usd'] },
-                { id: 'storage',  label: 'Almacenamiento', fields: ['expiry_date', 'location_id', 'notes'] },
+                { id: 'material', title: 'Material',     fields: ['material_code', 'material_name', 'material_type'] },
+                { id: 'lot',      title: 'Lote',         fields: ['lot_number', 'supplier_lot_number', 'quantity', 'uom', 'unit_cost_usd'] },
+                { id: 'storage',  title: 'Almacenamiento', fields: ['expiry_date', 'location_id', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Material recibido en cuarentena — pendiente de inspección QC', 'info')

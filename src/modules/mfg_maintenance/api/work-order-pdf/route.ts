@@ -5,7 +5,7 @@
 import { renderToStream } from '@react-pdf/renderer'
 import * as React from 'react'
 import { WorkOrderMaintPdf, type WorkOrderMaintPdfData, type SparePart } from '../../documents/WorkOrderMaintPdf'
-import { loadOrgBranding } from '@app/lib/pdf/org-branding'
+import { loadOrgBranding } from '@/lib/pdf/org-branding'
 
 export const metadata = {
   GET: { requireAuth: true, requireFeatures: ['mfg_maintenance.view'] },

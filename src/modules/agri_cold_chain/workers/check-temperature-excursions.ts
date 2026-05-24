@@ -13,7 +13,7 @@
  * min_alert_minutes threshold (default 15 min) absorbs short outages
  * without saturating notifications.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

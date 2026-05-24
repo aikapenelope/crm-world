@@ -12,7 +12,7 @@
  * Bimoneda venezolana: intenta leer el tipo BCV del módulo venezuela_rates.
  * Si no está disponible, usa el último tipo registrado en standard_costs.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 import { v4 } from 'uuid'
 

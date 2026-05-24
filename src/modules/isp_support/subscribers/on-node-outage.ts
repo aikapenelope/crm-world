@@ -7,7 +7,7 @@
  * Esta automatización elimina el proceso manual de crear tickets cuando
  * cae un nodo — el ISP solo tiene que ir al panel y ver qué pasó.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

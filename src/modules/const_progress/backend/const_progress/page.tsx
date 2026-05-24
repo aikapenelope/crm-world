@@ -10,7 +10,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, CheckCircle, Send, ArrowLeft, CalendarPlus } from 'lucide-react'
-import { calendarLinks } from '@app/lib/calendar-links'
+import { calendarLinks } from '@/lib/calendar-links'
 
 type ValuationRow = {
   id: string

@@ -3,5 +3,5 @@ export const metadata: PageMetadata = {
   requireAuth: true,
   requireFeatures: ['mfg_quality.view'],
   pageTitle: 'Detalle No-Conformidad',
-  hidden: true,
+  navHidden: true,
 }

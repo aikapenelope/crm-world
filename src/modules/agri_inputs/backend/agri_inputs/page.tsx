@@ -82,8 +82,8 @@ export default function AgriInputsPage() {
   const expiringCount    = items.filter(i => i.expiry_date && i.expiry_date <= in30Days && i.expiry_date >= today).length
 
   const formFields = [
-    { type: 'text' as const,   name: 'name',              label: 'Nombre',                    required: true },
-    { type: 'select' as const, name: 'input_type',        label: 'Tipo de Insumo',             required: true,
+    { type: 'text' as const,   id: 'name',              label: 'Nombre',                    required: true },
+    { type: 'select' as const, id: 'input_type',        label: 'Tipo de Insumo',             required: true,
       options: [
         { value: 'medication',   label: 'Medicamento Veterinario' },
         { value: 'vaccine',      label: 'Vacuna' },
@@ -91,24 +91,24 @@ export default function AgriInputsPage() {
         { value: 'agrochemical', label: 'Agroquímico' },
         { value: 'material',     label: 'Material de Granja' },
       ]},
-    { type: 'text' as const,   name: 'category',          label: 'Categoría (libre)' },
-    { type: 'select' as const, name: 'unit',              label: 'Unidad de Medida',
+    { type: 'text' as const,   id: 'category',          label: 'Categoría (libre)' },
+    { type: 'select' as const, id: 'unit',              label: 'Unidad de Medida',
       options: [
         { value: 'doses', label: 'Dosis' }, { value: 'ml', label: 'Mililitros' },
         { value: 'liters', label: 'Litros' }, { value: 'kg', label: 'Kilogramos' },
         { value: 'g', label: 'Gramos' }, { value: 'units', label: 'Unidades' },
       ]},
-    { type: 'text' as const,   name: 'insai_registry',    label: 'Registro INSAI' },
-    { type: 'text' as const,   name: 'active_ingredient', label: 'Principio Activo' },
-    { type: 'text' as const,   name: 'manufacturer',      label: 'Fabricante' },
-    { type: 'text' as const,   name: 'lot_number',        label: 'Número de Lote' },
-    { type: 'date' as const,   name: 'expiry_date',       label: 'Fecha de Vencimiento' },
-    { type: 'text' as const,   name: 'storage_temp_min',  label: 'Temp. Mín. Almacenamiento (°C)' },
-    { type: 'text' as const,   name: 'storage_temp_max',  label: 'Temp. Máx. Almacenamiento (°C)' },
-    { type: 'text' as const,   name: 'min_stock',         label: 'Stock Mínimo' },
-    { type: 'text' as const,   name: 'reorder_quantity',  label: 'Cantidad de Reposición' },
-    { type: 'text' as const,   name: 'unit_cost_usd',     label: 'Costo Unitario (USD)' },
-    { type: 'textarea' as const, name: 'notes',           label: 'Notas' },
+    { type: 'text' as const,   id: 'insai_registry',    label: 'Registro INSAI' },
+    { type: 'text' as const,   id: 'active_ingredient', label: 'Principio Activo' },
+    { type: 'text' as const,   id: 'manufacturer',      label: 'Fabricante' },
+    { type: 'text' as const,   id: 'lot_number',        label: 'Número de Lote' },
+    { type: 'date' as const,   id: 'expiry_date',       label: 'Fecha de Vencimiento' },
+    { type: 'text' as const,   id: 'storage_temp_min',  label: 'Temp. Mín. Almacenamiento (°C)' },
+    { type: 'text' as const,   id: 'storage_temp_max',  label: 'Temp. Máx. Almacenamiento (°C)' },
+    { type: 'text' as const,   id: 'min_stock',         label: 'Stock Mínimo' },
+    { type: 'text' as const,   id: 'reorder_quantity',  label: 'Cantidad de Reposición' },
+    { type: 'text' as const,   id: 'unit_cost_usd',     label: 'Costo Unitario (USD)' },
+    { type: 'textarea' as const, id: 'notes',           label: 'Notas' },
   ]
 
   const columns: ColumnDef<InputRow>[] = [
@@ -253,11 +253,11 @@ export default function AgriInputsPage() {
               initial={editing ?? undefined}
               fields={formFields}
               groups={[
-                { id: 'general',     label: 'General',          fields: ['name', 'input_type', 'category', 'unit'] },
-                { id: 'regulatory',  label: 'Datos Regulatorios', fields: ['insai_registry', 'active_ingredient', 'manufacturer', 'lot_number', 'expiry_date'] },
-                { id: 'storage',     label: 'Almacenamiento',   fields: ['storage_temp_min', 'storage_temp_max'] },
-                { id: 'stock',       label: 'Stock',            fields: ['min_stock', 'reorder_quantity', 'unit_cost_usd'] },
-                { id: 'notes',       label: 'Notas',            fields: ['notes'] },
+                { id: 'general',     title: 'General',          fields: ['name', 'input_type', 'category', 'unit'] },
+                { id: 'regulatory',  title: 'Datos Regulatorios', fields: ['insai_registry', 'active_ingredient', 'manufacturer', 'lot_number', 'expiry_date'] },
+                { id: 'storage',     title: 'Almacenamiento',   fields: ['storage_temp_min', 'storage_temp_max'] },
+                { id: 'stock',       title: 'Stock',            fields: ['min_stock', 'reorder_quantity', 'unit_cost_usd'] },
+                { id: 'notes',       title: 'Notas',            fields: ['notes'] },
               ]}
               onSuccess={() => { flash(editing ? 'Insumo actualizado' : 'Insumo registrado', 'success'); setShowForm(false); setEditing(null); load() }}
             />

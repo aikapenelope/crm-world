@@ -4,7 +4,7 @@
  * updates the badge from "Pendiente" to "Respondida" instantly on all
  * connected browsers of this tenant.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 import { answerRFISchema } from '../../../data/validators'
 

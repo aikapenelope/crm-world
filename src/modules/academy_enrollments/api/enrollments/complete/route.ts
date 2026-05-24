@@ -5,7 +5,7 @@
  * - Increments group's enrolled_count (if not already counted)
  * - Creates a pending certificate record (returns certificate_id)
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 
 export const metadata = {

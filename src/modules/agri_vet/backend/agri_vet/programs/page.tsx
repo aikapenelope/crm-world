@@ -109,12 +109,12 @@ export default function VaccinationProgramsPage() {
           items={[
             {
               id: 'edit',
-              label: 'Editar calendario',
+              title: 'Editar calendario',
               onSelect: () => router.push(`/backend/agri-vet/programs/${row.original.id}`),
             },
             {
               id: 'toggle',
-              label: row.original.is_active ? 'Desactivar' : 'Activar',
+              title: row.original.is_active ? 'Desactivar' : 'Activar',
               onSelect: () => handleToggle(row.original),
             },
           ]}
@@ -153,8 +153,8 @@ export default function VaccinationProgramsPage() {
               apiPath="/api/agri-vet/vaccination-programs"
               mode="create"
               fields={[
-                { type: 'text' as const,   name: 'name',    label: 'Nombre del Programa', required: true },
-                { type: 'select' as const, name: 'species', label: 'Especie', required: true,
+                { type: 'text' as const,   id: 'name',    label: 'Nombre del Programa', required: true },
+                { type: 'select' as const, id: 'species', label: 'Especie', required: true,
                   options: [
                     { value: 'broiler', label: 'Pollo de Engorde (broiler)' },
                     { value: 'layer',   label: 'Gallina Ponedora' },
@@ -163,10 +163,10 @@ export default function VaccinationProgramsPage() {
                     { value: 'bovine',  label: 'Bovino' },
                     { value: 'all',     label: 'General (todas las especies)' },
                   ]},
-                { type: 'textarea' as const, name: 'notes', label: 'Descripción / referencias del programa' },
+                { type: 'textarea' as const, id: 'notes', label: 'Descripción / referencias del programa' },
               ]}
               groups={[
-                { id: 'info', label: 'Identificación', fields: ['name', 'species', 'notes'] },
+                { id: 'info', title: 'Identificación', fields: ['name', 'species', 'notes'] },
               ]}
               onSuccess={() => {
                 flash('Programa creado — ahora agrega las vacunas en el detalle del programa', 'success')

@@ -125,7 +125,7 @@ export default function MfgProcurementPage() {
       <RowActions items={[
         { id: 'view',   label: 'Ver detalle / CIF',    onSelect: () => router.push(`/backend/mfg-procurement/${row.original.id}`) },
         ...(PO_STATUS_FLOW.includes(row.original.status) && row.original.status !== 'delivered' ? [
-          { id: 'advance', label: `→ ${PO_STATUS_LABEL[PO_STATUS_FLOW[PO_STATUS_FLOW.indexOf(row.original.status) + 1]] ?? 'Siguiente'}`, onSelect: () => handleAdvance(row.original) },
+          { id: 'advance', title: `→ ${PO_STATUS_LABEL[PO_STATUS_FLOW[PO_STATUS_FLOW.indexOf(row.original.status) + 1]] ?? 'Siguiente'}`, onSelect: () => handleAdvance(row.original) },
         ] : []),
       ]} />
     )},
@@ -162,16 +162,16 @@ export default function MfgProcurementPage() {
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2"><Ship className="size-4" /> Crear Orden de Compra</h3>
             <CrudForm entityId="mfg_procurement.po" apiPath="/api/mfg-procurement/purchase-orders" mode="create"
               fields={[
-                { type: 'text' as const,   name: 'po_number',          label: 'Número OC (PO-IMP-2026-XXX)', required: true },
-                { type: 'select' as const, name: 'supplier_id',        label: 'Proveedor', required: true, options: supplierOptions },
-                { type: 'text' as const,   name: 'supplier_name',      label: 'Nombre del proveedor', required: true },
-                { type: 'select' as const, name: 'po_type',            label: 'Tipo', required: true, options: [{ value: 'national', label: 'Nacional' }, { value: 'international', label: 'Internacional (importación)' }] },
-                { type: 'text' as const,   name: 'subtotal_fob',       label: 'Valor FOB (USD)', required: true },
-                { type: 'select' as const, name: 'incoterm',           label: 'Incoterm', options: [{ value: 'FOB', label: 'FOB' }, { value: 'CIF', label: 'CIF' }, { value: 'EXW', label: 'EXW' }, { value: 'DAP', label: 'DAP' }] },
-                { type: 'text' as const,   name: 'country_of_origin',  label: 'País de origen' },
-                { type: 'date' as const,   name: 'estimated_ship_date', label: 'Fecha embarque estimada' },
-                { type: 'date' as const,   name: 'estimated_warehouse_arrival', label: 'ETA almacén estimada' },
-                { type: 'text' as const,   name: 'bcv_rate_at_order',  label: 'Tasa BCV al hacer la OC (Bs/USD)' },
+                { type: 'text' as const,   id: 'po_number',          label: 'Número OC (PO-IMP-2026-XXX)', required: true },
+                { type: 'select' as const, id: 'supplier_id',        label: 'Proveedor', required: true, options: supplierOptions },
+                { type: 'text' as const,   id: 'supplier_name',      label: 'Nombre del proveedor', required: true },
+                { type: 'select' as const, id: 'po_type',            label: 'Tipo', required: true, options: [{ value: 'national', label: 'Nacional' }, { value: 'international', label: 'Internacional (importación)' }] },
+                { type: 'text' as const,   id: 'subtotal_fob',       label: 'Valor FOB (USD)', required: true },
+                { type: 'select' as const, id: 'incoterm',           label: 'Incoterm', options: [{ value: 'FOB', label: 'FOB' }, { value: 'CIF', label: 'CIF' }, { value: 'EXW', label: 'EXW' }, { value: 'DAP', label: 'DAP' }] },
+                { type: 'text' as const,   id: 'country_of_origin',  label: 'País de origen' },
+                { type: 'date' as const,   id: 'estimated_ship_date', label: 'Fecha embarque estimada' },
+                { type: 'date' as const,   id: 'estimated_warehouse_arrival', label: 'ETA almacén estimada' },
+                { type: 'text' as const,   id: 'bcv_rate_at_order',  label: 'Tasa BCV al hacer la OC (Bs/USD)' },
               ]}
               onSuccess={() => { flash('OC creada', 'success'); setForm(false); load() }}
             />

@@ -3,7 +3,7 @@
  * Emits const_progress.valuation.approved (clientBroadcast: true) so
  * the project team sees the approval status change live — no refresh needed.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../../events'
 
 export const metadata = {

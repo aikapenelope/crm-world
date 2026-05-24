@@ -20,7 +20,7 @@
  *   Importado: 60 días (trámite divisas + embarque + flete + aduana + transporte)
  */
 
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 import { v4 } from 'uuid'
 

@@ -9,7 +9,7 @@ import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
 import { z } from 'zod'
 import { AgriCcpMonitoringRecordEntity, AgriNonConformityEntity } from '../../data/entities'
 import { ccpMonitoringRecordCreateSchema, ccpMonitoringRecordUpdateSchema } from '../../data/validators'
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../../events'
 
 const listSchema = z.object({

@@ -135,14 +135,14 @@ export default function MfgDispatchPage() {
             <CrudForm entityId="mfg_dispatch.sale_order" apiPath="/api/mfg-dispatch/sale-orders" mode="create"
               initial={{ currency: 'USD', iva_pct: '16.00' }}
               fields={[
-                { type: 'text' as const,   name: 'order_number',           label: 'Número de Pedido (SO-MFG-2026-XXX)', required: true },
-                { type: 'text' as const,   name: 'customer_name',          label: 'Nombre del Cliente', required: true },
-                { type: 'text' as const,   name: 'customer_rif',           label: 'RIF del Cliente (J-12345678-9)' },
-                { type: 'select' as const, name: 'currency',               label: 'Moneda', options: [{ value: 'USD', label: 'USD (Dólares)' }, { value: 'VES', label: 'VES (Bolívares)' }] },
-                { type: 'select' as const, name: 'payment_method',         label: 'Método de pago', options: [{ value: 'zelle', label: 'Zelle' }, { value: 'binance', label: 'Binance Pay' }, { value: 'efectivo_usd', label: 'Efectivo USD' }, { value: 'transferencia', label: 'Transferencia' }, { value: 'pago_movil', label: 'Pago Móvil' }] },
-                { type: 'date' as const,   name: 'scheduled_dispatch_date', label: 'Fecha de despacho solicitada' },
-                { type: 'text' as const,   name: 'delivery_address',       label: 'Dirección de entrega' },
-                { type: 'textarea' as const, name: 'notes',                label: 'Notas' },
+                { type: 'text' as const,   id: 'order_number',           label: 'Número de Pedido (SO-MFG-2026-XXX)', required: true },
+                { type: 'text' as const,   id: 'customer_name',          label: 'Nombre del Cliente', required: true },
+                { type: 'text' as const,   id: 'customer_rif',           label: 'RIF del Cliente (J-12345678-9)' },
+                { type: 'select' as const, id: 'currency',               label: 'Moneda', options: [{ value: 'USD', label: 'USD (Dólares)' }, { value: 'VES', label: 'VES (Bolívares)' }] },
+                { type: 'select' as const, id: 'payment_method',         label: 'Método de pago', options: [{ value: 'zelle', label: 'Zelle' }, { value: 'binance', label: 'Binance Pay' }, { value: 'efectivo_usd', label: 'Efectivo USD' }, { value: 'transferencia', label: 'Transferencia' }, { value: 'pago_movil', label: 'Pago Móvil' }] },
+                { type: 'date' as const,   id: 'scheduled_dispatch_date', label: 'Fecha de despacho solicitada' },
+                { type: 'text' as const,   id: 'delivery_address',       label: 'Dirección de entrega' },
+                { type: 'textarea' as const, id: 'notes',                label: 'Notas' },
               ]}
               onSuccess={() => { flash('Pedido creado', 'success'); setForm(false); load() }}
             />

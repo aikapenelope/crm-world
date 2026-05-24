@@ -14,7 +14,7 @@
  *
  * The worker is idempotent — running it multiple times won't double-process.
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {

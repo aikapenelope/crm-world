@@ -112,7 +112,7 @@ export default function IspNetworkPage() {
         <RowActions items={[
           { id: 'edit', label: 'Editar', onSelect: () => router.push(`/backend/isp-network/${row.original.id}`) },
           {
-            id: 'report_outage', label: 'Reportar avería',
+            id: 'report_outage', title: 'Reportar avería',
             onSelect: () => reportOutage(row.original.id, row.original.name),
           },
         ]} />

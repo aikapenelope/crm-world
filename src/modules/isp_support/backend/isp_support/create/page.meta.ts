@@ -1,2 +1,2 @@
 import type { PageMetadata } from '@open-mercato/shared/modules/registry'
-export const metadata: PageMetadata = { requireAuth: true, requireFeatures: ['isp_support.create'], pageTitle: 'Nuevo Ticket', hidden: true }
+export const metadata: PageMetadata = { requireAuth: true, requireFeatures: ['isp_support.create'], pageTitle: 'Nuevo Ticket', navHidden: true }

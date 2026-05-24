@@ -15,17 +15,17 @@ export default function CreateCountPage() {
       id: 'count',
       title: 'Nuevo Conteo de Inventario',
       fields: [
-        { id: 'branch_id', label: 'Sucursal (ID)', type: 'text', required: true, placeholder: 'UUID de la sucursal' },
+        { id: 'branch_id', title: 'Sucursal (ID)', type: 'text', required: true, placeholder: 'UUID de la sucursal' },
         {
-          id: 'count_type', label: 'Tipo de Conteo', type: 'select', defaultValue: 'full',
+          id: 'count_type', title: 'Tipo de Conteo', type: 'select', defaultValue: 'full',
           options: [
             { value: 'full', label: 'Completo' },
             { value: 'partial', label: 'Parcial' },
             { value: 'spot_check', label: 'Verificación Rápida' },
           ],
         },
-        { id: 'planned_date', label: 'Fecha Planificada', type: 'date', required: true },
-        { id: 'notes', label: 'Notas', type: 'textarea', placeholder: 'Instrucciones para el conteo...' },
+        { id: 'planned_date', title: 'Fecha Planificada', type: 'date', required: true },
+        { id: 'notes', title: 'Notas', type: 'textarea', placeholder: 'Instrucciones para el conteo...' },
       ],
     },
   ]

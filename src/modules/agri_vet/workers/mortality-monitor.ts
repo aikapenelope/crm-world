@@ -12,7 +12,7 @@
  * - Reads agri_flocks (agri_units module) via Kysely — no direct entity import
  * - Reads agri_vet_mortality_records (own module)
  */
-import { emitLifecycle } from '@app/lib/emit-lifecycle'
+import { emitLifecycle } from '@/lib/emit-lifecycle'
 import { eventsConfig } from '../events'
 
 export const metadata = {
