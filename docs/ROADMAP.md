@@ -270,39 +270,58 @@ Spec completo en `.ai/specs/2026-05-26-manufactura-industrial.md`.
 
 > Orden sugerido basado en impacto y dependencias técnicas.
 
-### Phase 25 — Tests unitarios para módulos custom (PRIORIDAD ALTA)
+### Phase 25 — Tests unitarios para módulos custom (EN PROGRESO 🔄)
 
 > **Infraestructura lista**: `jest.config.cjs` alineado con OM oficial (PR #92).
-> Los 7 tests existentes son de alta calidad y sirven de referencia de patrón.
+> **Progreso actual**: 26 módulos con tests · 899 assertions · CI verde en todos los sprints.
 
-**Por qué ahora**: El CI tiene los 3 jobs verdes y los tipos están limpios. El
-paso crítico siguiente es coverage de tests. Solo tienen tests los módulos:
-`properties`, `ve_fiscal`, `matching`, `mfg_bom`, `mfg_orders`, `mfg_mrp`.
-Los otros **105+ módulos no tienen ningún test**.
+**Progreso por sprints** (divididos en 11 sprints atómicos por vertical):
 
-**Objetivo**: Al menos 1 `validators.spec.ts` por vertical con lógica de negocio.
+| Sprint | Módulos | Tests | PR | Estado |
+|--------|---------|-------|-----|--------|
+| **T1 — Venezuela base** | `payment_methods`, `ve_tax_books`, `ve_withholdings` | 101 | #94 | ✅ MERGED |
+| **T2 — ISP completo** | `isp_billing`, `isp_subscribers`, `isp_plans`, `isp_network`, `isp_support`, `isp_technicians`, `isp_sales` | 223 | #95 | ✅ MERGED |
+| **T3 — Agro producción** | `agri_units`, `agri_feed`, `agri_hr`, `agri_vet`, `agri_inputs` | 181 | #96 | ✅ MERGED |
+| **T4 — Agro industrial** | `agri_processing`, `agri_cold_chain`, `agri_quality`, `agri_sales`, `agri_field`, `agri_traceability` | 186 | #97 | ✅ MERGED |
+| **T5 — Manufactura α** | `mfg_inventory`, `mfg_quality`, `mfg_floor`, `mfg_planning`, `mfg_costs`, `mfg_energy` | — | — | ⏳ PENDIENTE |
+| **T6 — Manufactura β** | `mfg_maintenance`, `mfg_procurement`, `mfg_dispatch`, `mfg_hr`, `mfg_subcontract` | — | — | ⏳ PENDIENTE |
+| **T7 — Construcción** | 8 × `const_*` | — | — | ⏳ PENDIENTE |
+| **T8 — Distribución** | 6 × `dist_*` | — | — | ⏳ PENDIENTE |
+| **T9 — Retail + Condo** | 7 × `retail_*` + 6 × `condo_*` | — | — | ⏳ PENDIENTE |
+| **T10 — Educación** | `students`, `enrollment`, `tuition`, `grades`, `attendance`, 3 × `school_*` | — | — | ⏳ PENDIENTE |
+| **T11 — Academia + Auto + Varios** | 5 × `academy_*`, 5 × `auto_*`, `transactions`, `bank_reconciliation`, `market_intelligence` | — | — | ⏳ PENDIENTE |
 
-**Patrón establecido** (ver tests existentes como referencia):
+**Estado global**: 21 módulos cubiertos (T1-T4) · 59 módulos pendientes (T5-T11) · 899 tests.
+
+**Patrón establecido** — cada spec sigue exactamente este patrón:
 ```
 src/modules/<module>/__tests__/validators.spec.ts
 ```
 
-Cada test debe cubrir:
+Cada test cubre:
 - `createSchema.safeParse(validPayload)` → success con defaults correctos
 - Campos requeridos faltantes → failure
-- Cada valor de enum inválido → failure
+- Cada enum inválido → failure con `test.each`
 - Reglas de negocio venezolanas (RIF, IVA, IGTF, LOTTT, tasas BCV, etc.)
 - `updateSchema.safeParse({})` → success (partial update acepta vacío)
 
-**Prioridad de módulos** (por riesgo de negocio):
-
-1. **Venezuela transversal** — `venezuela_rates`, `payment_methods` (7 métodos VE)
-2. **ISP** — `isp_billing`, `isp_subscribers` (facturación, estados de servicio)
-3. **Agro** — `agri_units`, `agri_feed`, `agri_hr` (FCA/IEP, LOTTT, liquidaciones)
-4. **Construcción** — `const_progress`, `const_budget` (valuaciones, partidas)
-5. **Distribución** — `dist_credit`, `dist_delivery` (límites de crédito, remisiones)
-6. **Educación** — `tuition`, `enrollment` (aranceles, inscripciones)
-7. **Resto** por vertical hasta completar los 112 módulos
+**Regla de oro post-T4**: Antes de cada commit de tests, ejecutar el script de auditoría
+para detectar campos inexistentes (`result.data.FIELD` que no están en el schema):
+```bash
+python3 -c "
+import re, glob
+for f in glob.glob('src/modules/*/__tests__/validators.spec.ts'):
+    mod = f.replace('/__tests__/validators.spec.ts','')
+    vf = f'{mod}/data/validators.ts'
+    try:
+        test_fields = set(re.findall(r'result\.data\.([a-z_]+)', open(f).read()))
+        vfields = set(re.findall(r'(?:^|,|\(|\{)\s*([a-z_]+):\s*z\.', open(vf).read(), re.M))
+        unknown = test_fields - vfields
+        if unknown: print(f'MISMATCH {mod.split(\"/\")[-1]}: {sorted(unknown)}')
+    except: pass
+print('Audit done')
+"
+```
 
 ---
 
@@ -390,7 +409,7 @@ coverageThreshold: {
 
 | Item | Prioridad | Estado |
 |------|-----------|--------|
-| Tests unitarios validators (105+ módulos sin tests) | **ALTA** | Phase 25 — próxima prioridad |
+| Tests unitarios validators (59 módulos pendientes T5-T11) | **ALTA** | Phase 25 — EN PROGRESO (21/80 módulos, 899 tests) |
 | Integration tests (properties spec no corre en CI) | **ALTA** | Phase 28 — activar spec existente |
 | Upgrade OM v0.6.2 + TypeScript 6 | **MEDIA** | Phase 26 |
 | `yarn build` validado en CI (next build completo) | **MEDIA** | Sin phase asignada |
