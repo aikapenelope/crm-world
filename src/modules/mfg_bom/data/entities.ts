@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -126,6 +126,7 @@ export class MfgBomHeaderEntity {
  * disponibilidad de este componente. Para componentes no críticos,
  * la orden puede abrirse con stock parcial.
  */
+@Index({ name: 'idx_mfg_bom_lines_bom', properties: ['tenant_id', 'bom_id'] })
 @Entity({ tableName: 'mfg_bom_lines' })
 export class MfgBomLineEntity {
   @PrimaryKey({ type: 'uuid' })

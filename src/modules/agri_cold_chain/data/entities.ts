@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -100,6 +100,8 @@ export class AgriColdStorageUnitEntity {
  * El worker check-temperature-excursions.ts evalúa si hay excursiones
  * consecutivas por más de min_alert_minutes y dispara alertas.
  */
+/** Índice crítico: queries IoT filtran por unidad + timestamp reciente para detectar excursiones */
+@Index({ name: 'idx_agri_temp_logs_unit_time', properties: ['tenant_id', 'cold_storage_unit_id', 'recorded_at'] })
 @Entity({ tableName: 'agri_temperature_logs' })
 export class AgriTemperatureLogEntity {
   @PrimaryKey({ type: 'uuid' })

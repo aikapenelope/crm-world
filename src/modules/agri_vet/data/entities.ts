@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -175,6 +175,8 @@ export class AgriVetVaccinationRecordEntity {
  * determina la fecha más temprana en que el lote puede ir a beneficio
  * sin violar las normas del INSAI y los requisitos de los clientes.
  */
+/** Índice crítico: verificación de períodos de retiro antes de despacho */
+@Index({ name: 'idx_agri_medication_flock_withdrawal', properties: ['tenant_id', 'flock_id', 'withdrawal_end_date'] })
 @Entity({ tableName: 'agri_vet_medication_records' })
 export class AgriVetMedicationRecordEntity {
   @PrimaryKey({ type: 'uuid' })

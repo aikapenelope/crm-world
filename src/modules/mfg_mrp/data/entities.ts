@@ -1,4 +1,4 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/decorators/legacy'
+import { Entity, PrimaryKey, Property, Index } from '@mikro-orm/decorators/legacy'
 import { v4 } from 'uuid'
 
 // =============================================================================
@@ -82,6 +82,7 @@ export class MfgProductionPlanEntity {
  *   required_by_date = cuándo se necesita en planta
  *   suggested_po_date = required_by_date - lead_time_days → cuándo hay que ordenar
  */
+@Index({ name: 'idx_mfg_mrp_requirements_plan', properties: ['tenant_id', 'plan_id'] })
 @Entity({ tableName: 'mfg_mrp_requirements' })
 export class MfgMrpRequirementEntity {
   @PrimaryKey({ type: 'uuid' })
