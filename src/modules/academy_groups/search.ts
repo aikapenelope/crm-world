@@ -57,7 +57,7 @@ export const searchConfig: SearchModuleConfig = {
 
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => {
         const id = ctx.record.id
-        return id ? `/backend/academy_groups/${{encodeURIComponent(String(id))}}`  : '/backend/academy_groups/'
+        return id ? `/backend/academy_groups/${encodeURIComponent(String(id))}`  : '/backend/academy_groups/'
       },
     },
   ],

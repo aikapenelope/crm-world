@@ -17,5 +17,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/ve-tax-reports',
   },
+]
 
 export default notificationTypes

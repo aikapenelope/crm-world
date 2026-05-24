@@ -27,5 +27,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/dist-delivery',
   },
+]
 
 export default notificationTypes

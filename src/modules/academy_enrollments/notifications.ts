@@ -27,5 +27,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/academy-enrollments',
   },
+]
 
 export default notificationTypes

@@ -37,5 +37,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/isp-network',
   },
+]
 
 export default notificationTypes

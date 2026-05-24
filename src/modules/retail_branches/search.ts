@@ -58,7 +58,7 @@ export const searchConfig: SearchModuleConfig = {
 
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => {
         const id = ctx.record.id
-        return id ? `/backend/retail_branches/${{encodeURIComponent(String(id))}}`  : '/backend/retail_branches/'
+        return id ? `/backend/retail_branches/${encodeURIComponent(String(id))}`  : '/backend/retail_branches/'
       },
     },
   ],

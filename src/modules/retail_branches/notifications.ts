@@ -27,5 +27,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/retail-branches',
   },
+]
 
 export default notificationTypes

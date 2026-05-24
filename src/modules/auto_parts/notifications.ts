@@ -17,5 +17,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/auto-parts',
   },
+]
 
 export default notificationTypes

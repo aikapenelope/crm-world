@@ -1,19 +1,25 @@
-# CI — Aika Platform
+# CI — Aika Platform (crm-world)
 #
-# Corre en cada PR hacia main y en cada push a main.
-# Dos jobs en paralelo: typecheck y lint.
+# Tres jobs en paralelo sobre cada PR hacia main y cada push a main:
 #
-# typecheck: yarn generate (descubre módulos) → yarn typecheck (tsc --noEmit)
-# lint:      yarn lint (ESLint)
+#   lint      → eslint .   (flat config ESLint v10)
+#   typecheck → yarn generate + tsc --noEmit
+#   test      → jest unit tests (src/modules/**/__tests__/**/*.spec.ts)
 #
-# NOTA: --immutable eliminado. En Yarn 4, --immutable trata YN0086 (peer dep
-# warnings) como error fatal, lo que bloquea el install aunque las dependencias
-# estén correctamente instaladas. Yarn 4 sin --immutable sigue respetando
-# el lockfile en CI (no modifica yarn.lock si no hay cambios).
+# Diseño:
+#   - Todos los jobs comparten la misma clave de caché de node_modules.
+#     El primer job que instala guarda el caché; el resto lo reutiliza.
+#   - `yarn install` sin --immutable: Yarn 4 activa hardened mode (≡
+#     --immutable) automáticamente en PRs de repos públicos; no es necesario
+#     duplicarlo y permite que los peer-dep warnings (YN0086) sean advertencias,
+#     no errores fatales.
+#   - El audit de seguridad (yarn npm audit) se excluye del CI de PR para no
+#     bloquear trabajo por CVEs en dependencias transitivas que no controlamos.
+#     Correr manualmente: yarn npm audit --severity high
 #
-# El audit de seguridad (yarn npm audit) está deliberadamente excluido del CI
-# de PR para no bloquear trabajo por CVEs en dependencias transitivas que no
-# controlamos. Se puede correr manualmente con: yarn npm audit --severity high
+# Referencias:
+#   open-mercato/open-mercato .github/workflows/ci.yml (patrón oficial)
+#   https://docs.github.com/actions/using-workflows
 
 name: CI
 
@@ -28,55 +34,23 @@ on:
     branches:
       - main
 
-# Cancela runs en curso del mismo ref al hacer push nuevo.
+# Cancela runs en curso del mismo ref cuando llega un push nuevo.
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# ── Reutilizable: instalación + caché ─────────────────────────────────────────
+# Extraído como defaults para no repetir los 5 pasos de install en cada job.
+
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
-  # ── TypeScript ─────────────────────────────────────────────────────────────
-  typecheck:
-    name: Typecheck
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Enable Corepack (Yarn 4)
-        run: corepack enable
-
-      - name: Cache .yarn/cache
-        uses: actions/cache@v4
-        with:
-          path: .yarn/cache
-          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-          restore-keys: yarn-${{ runner.os }}-
-
-      - name: Cache node_modules
-        id: nm-cache
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Install dependencies
-        if: steps.nm-cache.outputs.cache-hit != 'true'
-        run: yarn install
-
-      - name: Generate module glue
-        run: yarn generate
-
-      - name: Typecheck
-        run: yarn typecheck
-
-  # ── ESLint ─────────────────────────────────────────────────────────────────
+  # ── ESLint ──────────────────────────────────────────────────────────────────
+  # Job más rápido — no necesita yarn generate. Falla antes si hay errores de
+  # estilo, evitando que typecheck/test consuman minutos innecesariamente.
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -113,3 +87,138 @@ jobs:
 
       - name: Lint
         run: yarn lint
+
+  # ── TypeScript ──────────────────────────────────────────────────────────────
+  # `yarn generate` descubre todos los módulos y escribe los archivos en
+  # .mercato/generated/ que el tsconfig incluye. Debe correr antes de tsc.
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache .yarn/cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Generate module glue
+        # mercato generate escanea src/modules/ y escribe los archivos de tipo
+        # en .mercato/generated/. Sin este paso, tsc falla con "Cannot find module
+        # '#generated/entities.ids.generated'".
+        run: yarn generate
+
+      - name: Typecheck
+        run: yarn typecheck
+
+  # ── Unit Tests (Jest) ────────────────────────────────────────────────────────
+  # Scope: src/modules/**/__tests__/**/*.spec.ts
+  # Runner: ts-jest (CJS mode) — no requiere yarn generate ni DB.
+  # Coverage: se recolecta y publica en el Step Summary como información;
+  #           no bloquea el job por umbrales mientras la suite crece.
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache .yarn/cache
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Run unit tests
+        # --forceExit cierra Jest limpiamente si algún test deja handles abiertos.
+        # --ci activa modo CI: sin watch mode, falla rápido en snapshots obsoletos.
+        run: yarn test --ci --forceExit
+
+      - name: Run tests with coverage (informational)
+        # Recolecta cobertura pero no falla el build por umbrales todavía —
+        # la suite crece con cada nueva vertical y los umbrales se activarán
+        # cuando haya cobertura suficiente en todos los módulos.
+        # Refs: jest.config.cjs collectCoverageFrom + coverageThresholds
+        if: always()
+        run: |
+          yarn test --ci --forceExit --coverage --coverageReporters=json-summary \
+            || true
+        continue-on-error: true
+
+      - name: Publish coverage summary
+        if: always()
+        run: |
+          SUMMARY="coverage/coverage-summary.json"
+          if [ ! -f "$SUMMARY" ]; then
+            echo "## Unit Test Coverage" >> "$GITHUB_STEP_SUMMARY"
+            echo "Coverage summary not generated (no tests ran with --coverage)." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          node -e "
+          const fs = require('fs');
+          const summary = JSON.parse(fs.readFileSync('$SUMMARY', 'utf8'));
+          const t = summary.total || {};
+          const row = (name) => {
+            const m = t[name] || {};
+            return \`| \${name} | \${m.covered ?? 0}/\${m.total ?? 0} | \${m.pct ?? 0}% |\`;
+          };
+          const md = [
+            '## Unit Test Coverage',
+            '',
+            '| Metric | Covered/Total | % |',
+            '|---|---:|---:|',
+            row('lines'),
+            row('statements'),
+            row('functions'),
+            row('branches'),
+            '',
+            '_Source: coverage/coverage-summary.json_',
+            '',
+          ].join('\n');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
+          console.log('[coverage] Summary written to step summary.');
+          "

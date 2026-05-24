@@ -27,5 +27,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/bank-reconciliation',
   },
+]
 
 export default notificationTypes

@@ -17,5 +17,6 @@ export const notificationTypes: NotificationTypeDefinition[] = [
     actions: [],
     linkHref: '/backend/condo-accounting',
   },
+]
 
 export default notificationTypes
