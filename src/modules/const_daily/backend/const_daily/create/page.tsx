@@ -71,7 +71,7 @@ export default function CreateDailyReportPage() {
       return
     }
 
-    const reportId = (reportResult.result as any)?.id
+    const reportId = reportResult.result?.id
 
     // Save labor and activities
     await Promise.all([

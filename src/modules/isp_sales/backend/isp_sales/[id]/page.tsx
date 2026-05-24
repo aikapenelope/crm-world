@@ -45,13 +45,12 @@ export default function LeadDetailPage() {
     if (!lead?.city || checking) return
     setChecking(true)
     try {
-      const res = await apiCallOrThrow('/api/isp-sales/leads/check-coverage', {
+      const res = await apiCallOrThrow<{ coverage_status: string; zone_name?: string }>('/api/isp-sales/leads/check-coverage', {
         method: 'POST',
         body: JSON.stringify({ lead_id: params.id, city: lead.city }),
       })
-      const data = res.result as any
-      if (data.coverage_status === 'covered') {
-        flash(`✓ Cobertura disponible en ${data.zone_name}`, 'success')
+      if (res.result?.coverage_status === 'covered') {
+        flash(`✓ Cobertura disponible en ${res.result.zone_name ?? ''}`, 'success')
       } else {
         flash('Sin cobertura en esta zona. El lead queda en lista de espera.', 'warning')
       }

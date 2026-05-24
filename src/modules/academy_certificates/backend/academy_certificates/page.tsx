@@ -44,12 +44,12 @@ export default function AcademyCertificatesPage() {
 
   async function handleIssue(certId: string) {
     setIssuingId(certId)
-    const res = await apiCall('/api/academy-certificates/certificates/issue', {
+    const res = await apiCall<{ certificate_number?: string }>('/api/academy-certificates/certificates/issue', {
       method: 'POST',
       body: JSON.stringify({ certificate_id: certId }),
     })
     if (res.ok) {
-      flash(`Certificado emitido: ${(res.result as any)?.certificate_number}`, 'success')
+      flash(`Certificado emitido: ${res.result?.certificate_number ?? ''}`, 'success')
       await load()
     } else {
       flash('Error al emitir certificado', 'error')

@@ -95,12 +95,12 @@ export default function AcademyGroupDetailPage() {
 
   async function handleGenerateSessions() {
     setGenerating(true)
-    const res = await apiCall('/api/academy-groups/groups/generate-sessions', {
+    const res = await apiCall<{ generated?: number }>('/api/academy-groups/groups/generate-sessions', {
       method: 'POST',
       body: JSON.stringify({ group_id: groupId }),
     })
     if (res.ok) {
-      flash(`Sesiones generadas: ${(res.result as any)?.generated ?? 0} nuevas`, 'success')
+      flash(`Sesiones generadas: ${res.result?.generated ?? 0} nuevas`, 'success')
       await load()
     } else {
       flash('Error al generar sesiones', 'error')

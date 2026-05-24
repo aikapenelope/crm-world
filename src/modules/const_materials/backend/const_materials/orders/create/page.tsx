@@ -90,7 +90,7 @@ export default function CreateMaterialOrderPage() {
       return
     }
 
-    const orderId = (orderResult.result as any)?.id
+    const orderId = orderResult.result?.id
 
     for (const line of lines.filter((l) => l.material_name)) {
       await apiCall('/api/const-materials/order-lines', {

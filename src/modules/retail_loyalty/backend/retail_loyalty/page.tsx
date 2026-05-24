@@ -29,7 +29,7 @@ export default function RetailLoyaltyPage() {
       )
       // Build stats from accounts list (simplified)
       setStats({
-        total_members: call.ok ? (call.result as any)?.items?.length ?? 0 : 0,
+        total_members: call.ok ? (call.result?.items?.length ?? 0) : 0,
         total_points_issued: 0,
         total_points_redeemed: 0,
         active_campaigns: 0,
