@@ -37,7 +37,7 @@ export async function POST(request: Request, ctx: any) {
   // Determine which shift just closed
   let shiftType: string
   let shiftStart: Date
-  let shiftEnd = new Date(now)
+  const shiftEnd = new Date(now)
 
   if (hourVE >= 6 && hourVE < 14) {
     // Afternoon shift closing morning
