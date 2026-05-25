@@ -6,6 +6,16 @@ const allowedDevOrigins = isDevelopment ? resolveAllowedDevOrigins() : []
 
 const nextConfig: NextConfig = {
   distDir: '.mercato/next',
+  // TypeScript is validated in CI (yarn typecheck job with NODE_OPTIONS=--max-old-space-size=6144).
+  // Skipping it during Docker build to prevent OOM in containers limited to 4 GB heap.
+  // The CI typecheck gate ensures no type errors reach production.
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  // ESLint is run in CI as a separate job. Skip it during next build to save memory.
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     serverMinification: false,
     turbopackMinify: false,
