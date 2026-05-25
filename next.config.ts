@@ -12,10 +12,8 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // ESLint is run in CI as a separate job. Skip it during next build to save memory.
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // Note: ESLint during next build is not configurable via eslint.ignoreDuringBuilds
+  // in Next.js 16 (property removed from NextConfig). ESLint runs as a separate CI job.
   experimental: {
     serverMinification: false,
     turbopackMinify: false,
