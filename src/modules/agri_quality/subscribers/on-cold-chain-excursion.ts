@@ -13,6 +13,11 @@
  *
  * Cross-module: reads agri_cold_storage_units, agri_storage_lot_records,
  * agri_temperature_logs via Kysely.
+ *
+ * NOTE: Previously misplaced in workers/ — subscribers must live in subscribers/.
+ * The generator (packages/cli/src/lib/generators/scanner.ts) only auto-discovers
+ * subscribers from the subscribers/ folder. Files in workers/ with metadata.event
+ * are silently ignored by the module registry generator.
  */
 import { AgriNonConformityEntity } from '../data/entities'
 import { emitLifecycle } from '@/lib/emit-lifecycle'
@@ -25,7 +30,10 @@ export const metadata = {
 }
 
 export default async function handler(payload: any, ctx: any) {
-  const em     = ctx.container.resolve('em')
+  // ctx.resolve is the correct DI API for subscriber handlers.
+  // The event system injects { resolve } into ctx — same as workers.
+  // ctx.container does NOT exist on subscriber context.
+  const em     = ctx.resolve('em')
   const kysely = (em as any).getKysely()
 
   const tenantId       = payload.tenantId
@@ -78,13 +86,15 @@ export default async function handler(payload: any, ctx: any) {
   em.persist(nc)
   await em.flush()
 
-  // Update any storage lot records in this unit that have non_conformity_id = 'pending'
+  // Update storage lot records that were flagged as pending NC creation (non_conformity_id IS NULL)
+  // by the check-temperature-excursions worker. See B4 fix in agri_cold_chain worker.
   await kysely
     .updateTable('agri_storage_lot_records')
     .set({ non_conformity_id: nc.id, updated_at: new Date() })
     .where('cold_storage_unit_id', '=', unitId)
     .where('tenant_id', '=', tenantId)
-    .where('non_conformity_id', '=', 'pending')
+    .where('non_conformity_id', 'is', null)
+    .where('status', '=', 'active')
     .execute()
 
   await emitLifecycle(eventsConfig, 'agri_quality.nc.created', { tenantId, organizationId }, {

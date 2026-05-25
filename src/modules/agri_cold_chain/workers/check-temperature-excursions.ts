@@ -81,14 +81,10 @@ export default async function handler(_payload: any, ctx: any) {
       },
     )
 
-    // Mark any active storage lots in this unit with non_conformity flag
-    await kysely
-      .updateTable('agri_storage_lot_records')
-      .set({ non_conformity_id: 'pending', updated_at: new Date() })
-      .where('cold_storage_unit_id', '=', unit.id)
-      .where('tenant_id', '=', unit.tenant_id)
-      .where('status', '=', 'active')
-      .execute()
+    // The agri_quality subscriber (subscribers/on-cold-chain-excursion.ts) handles
+    // NonConformity creation and storage-lot linking when it receives this event.
+    // It uses unit_id from the event payload plus WHERE non_conformity_id IS NULL
+    // for idempotent NC assignment — no sentinel needed here.
 
     alertsTriggered++
   }

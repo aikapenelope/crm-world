@@ -425,6 +425,149 @@ Antes de escribir cualquier "rejects X" test, verificar en `data/validators.ts`:
 
 ---
 
+## 15. Workers y Subscribers — Contrato del contexto DI
+
+> Auditado el 2026-05-26 contra el código fuente de OM (`packages/cli/src/mercato.ts:1344`).
+
+### Problema encontrado
+Varios workers usaban `ctx.container.resolve('em')` en lugar de `ctx.resolve('em')`.
+El CLI de OM NO inyecta un `.container` en el contexto del worker — inyecta `resolve` directamente:
+
+```typescript
+// packages/cli/src/mercato.ts línea 1344 (fuente de verdad)
+await worker.handler(job, { ...ctx, resolve: container.resolve.bind(container) })
+//                          ↑                ↑ ctx.resolve — NO ctx.container
+```
+
+### Regla: Workers usan `ctx.resolve()`, API routes usan `ctx.container.resolve()`
+
+```typescript
+// ✅ CORRECTO — worker/subscriber
+export default async function handler(job: any, ctx: any) {
+  const em = ctx.resolve('em')
+  const kysely = (em as any).getKysely()
+}
+
+// ❌ INCORRECTO en workers/subscribers — ctx.container no existe
+export default async function handler(job: any, ctx: any) {
+  const em = ctx.container.resolve('em')  // TypeError at runtime
+}
+
+// ✅ CORRECTO — API route (ctx diferente, inyectado por Next.js middleware de OM)
+export async function GET(request: Request, ctx: any) {
+  const em = ctx.container.resolve('em')
+}
+```
+
+### Primer argumento del worker handler
+
+El CLI llama al handler con `(job: QueuedJob<T>, ctx)` donde `job` es el wrapper completo:
+```typescript
+type QueuedJob<T> = {
+  id: string
+  payload: T        // ← datos reales aquí
+  createdAt: string
+  metadata?: Record<string, unknown>
+}
+```
+
+Si el worker recibe payload per-tenant, acceder con `job.payload.tenantId` (NO `job.tenantId`).
+Los workers globales (schedulers que procesan todos los tenants) ignoran el payload y usan
+`ctx.resolve('em')` para obtener su propio scope desde cada fila de la query.
+
+### Referencia verificada en OM core
+
+```typescript
+// packages/core/src/modules/data_sync/workers/sync-scheduled.ts
+type HandlerContext = JobContext & { resolve: <T>(name: string) => T }
+
+export default async function handle(job: QueuedJob<Payload>, ctx: HandlerContext) {
+  const em = ctx.resolve<EntityManager>('em')  // ← correcto
+}
+```
+
+---
+
+## 16. Subscribers — ubicación y contrato
+
+> Auditado el 2026-05-26 contra `packages/cli/src/lib/generators/scanner.ts`.
+
+### Problema encontrado
+Un subscriber (`on-cold-chain-excursion.ts`) estaba en `workers/` en vez de `subscribers/`.
+El scanner de OM solo descubre subscribers en `src/modules/<id>/subscribers/*.ts`.
+Archivos con `metadata.event` en `workers/` son ignorados silenciosamente — el generador
+espera `metadata.queue` en workers, no `metadata.event`.
+
+### Regla: Subscribers van en `subscribers/`, workers van en `workers/`
+
+| Tipo | Directorio | metadata requerida |
+|------|-----------|-------------------|
+| Subscriber | `subscribers/*.ts` | `{ event: string, persistent?: boolean, id?: string }` |
+| Worker | `workers/*.ts` | `{ queue: string, id?: string, concurrency?: number }` |
+
+Si un archivo tiene `metadata.event` pero está en `workers/`, **nunca será registrado**.
+
+```typescript
+// ✅ CORRECTO — src/modules/my_module/subscribers/on-something.ts
+export const metadata = {
+  event: 'other_module.entity.action',
+  persistent: true,
+  id: 'my_module.on-something',
+}
+export default async function handler(payload: any, ctx: any) {
+  const em = ctx.resolve('em')  // mismo patrón que workers
+}
+
+// ❌ INCORRECTO — subscriber en workers/
+// src/modules/my_module/workers/on-something.ts  ← nunca será registrado
+export const metadata = {
+  event: 'other_module.entity.action',  // ← tiene event pero está en workers/
+  ...
+}
+```
+
+---
+
+## 17. Columnas UUID — nunca usar strings no-UUID como sentinel
+
+### Problema encontrado
+Un worker usaba `.set({ non_conformity_id: 'pending' })` en una columna `type: 'uuid'`.
+PostgreSQL rechaza valores no-UUID en columnas UUID con error de constraint.
+
+### Regla: Usa `null` como sentinel en columnas UUID nullable
+
+```typescript
+// ✅ CORRECTO — null como "pendiente de asignar"
+await kysely
+  .updateTable('my_records')
+  .set({ related_id: null })         // ← sentinel: null
+  .where('status', '=', 'active')
+  .execute()
+
+// Subscriber/query posterior:
+.where('related_id', 'is', null)     // ← IS NULL, no = null
+
+// ❌ INCORRECTO — string en columna UUID
+await kysely
+  .updateTable('my_records')
+  .set({ related_id: 'pending' })    // ← falla en PostgreSQL
+  .execute()
+```
+
+Si necesitas más estados que `null`/`<uuid>`, añade una columna booleana o enum separada.
+
+---
+
+## Historial de incidentes (continuación)
+
+| Fecha | Problema | Causa | Fix |
+|-------|----------|-------|-----|
+| 2026-05-26 | Workers fallan silenciosamente (no ejecutan lógica) | `ctx.container.resolve()` en lugar de `ctx.resolve()` | PR fix-worker-ctx |
+| 2026-05-26 | Subscriber nunca registrado — NC de temperatura nunca creadas | Archivo en `workers/` con `metadata.event` en lugar de `subscribers/` | PR fix-worker-ctx |
+| 2026-05-26 | PostgreSQL error en update de cadena de frío | `non_conformity_id: 'pending'` en columna UUID | PR fix-worker-ctx |
+
+---
+
 ## 13. di.ts — DEBE exportar `register`
 
 ### Problema encontrado
