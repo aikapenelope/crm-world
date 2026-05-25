@@ -1,1 +1,1 @@
-export * from '../src/lib/workflows/definitions'
+export * from '../../src/lib/workflows/definitions'
