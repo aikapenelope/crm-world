@@ -1,6 +1,6 @@
 # CI — crm-world (Standalone Open Mercato Application)
 #
-# Three parallel jobs on every PR to main and every push to main.
+# Four parallel jobs on every PR to main and every push to main.
 #
 # ┌─────────────┬──────────────────────────────────────────────────────────┐
 # │ Job         │ What it validates                                         │
@@ -8,6 +8,7 @@
 # │ lint        │ ESLint on src/modules (pure TypeScript business logic)    │
 # │ typecheck   │ tsc --noEmit on all production code (*.ts + *.tsx)       │
 # │ test        │ Jest unit tests (src/modules/**/__tests__/**/*.spec.ts)   │
+# │ build       │ next build completo — detecta roturas de Turbopack/bundler│
 # └─────────────┴──────────────────────────────────────────────────────────┘
 #
 # Design notes
@@ -37,6 +38,12 @@
 # • Security audit (yarn npm audit) is intentionally excluded from PR CI to
 #   avoid blocking work on CVEs in transitive dependencies we do not control.
 #   Run manually: yarn npm audit --severity high
+#
+# • build job runs yarn generate + next build (Turbopack production build).
+#   Uses a minimal .env (dummy values) so Next.js can complete the build without
+#   a real database. TypeScript errors are suppressed (typescript.ignoreBuildErrors
+#   = true in next.config.ts) since typecheck validates TS separately.
+#   NODE_OPTIONS=--max-old-space-size=4096 matches the production Docker limit.
 #
 # References
 # ──────────
@@ -236,3 +243,70 @@ jobs:
             row('lines'), row('statements'), row('functions'), row('branches'), '',
           ].join('\n'))
           "
+
+  # ── Build ────────────────────────────────────────────────────────────────────
+  # Full Next.js production build (yarn generate + next build via Turbopack).
+  # Catches bundler/import errors that tsc --noEmit misses (e.g. Turbopack
+  # "Module not found" for JSON imports, new URL() patterns, missing lib proxies).
+  #
+  # Uses a minimal .env with dummy values so Next.js can build without a real
+  # database. TypeScript errors are intentionally ignored (typescript.ignoreBuildErrors
+  # = true in next.config.ts) — type validation is the typecheck job's responsibility.
+  #
+  # NODE_OPTIONS=--max-old-space-size=4096 mirrors the production Docker container
+  # limit so OOM failures in CI predict production behaviour accurately.
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+      NODE_ENV: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache Yarn packages
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Create minimal .env for build
+        # Provides dummy values required by next.config.ts and the generator.
+        # No real database is needed — the build only compiles pages, not data.
+        run: |
+          cat > .env << 'EOF'
+          DATABASE_URL=postgres://postgres:ci@localhost:5432/ci-build
+          JWT_SECRET=ci-jwt-secret-not-real
+          APP_URL=https://ci.example.com
+          NEXT_TELEMETRY_DISABLED=1
+          TENANT_DATA_ENCRYPTION=false
+          OM_SEARCH_ENABLED=false
+          OM_DISABLE_VECTOR_SEARCH_AUTOINDEXING=true
+          AUTO_SPAWN_WORKERS=false
+          EOF
+
+      - name: Build
+        # yarn build = yarn generate + next build
+        # typescript.ignoreBuildErrors=true in next.config.ts → TS errors don't fail
+        # Turbopack/bundler errors (missing modules, bad imports) DO fail the build
+        run: yarn build

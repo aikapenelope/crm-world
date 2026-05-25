@@ -1,7 +1,7 @@
 # Roadmap — Aika Platform
 
-> Última actualización: 24 Mayo 2026 — CI verde ✅ · TypeScript limpio ✅ · Phase 25 COMPLETA ✅ (80 módulos, ~3.246 tests)
-> Stack: Open Mercato v0.6.1 · Next.js 16 · Hetzner CX43 Helsinki · Coolify 4.0
+> Última actualización: 25 Mayo 2026 — CI verde ✅ · TypeScript limpio ✅ · Phase 25 COMPLETA ✅ (80 módulos, ~3.246 tests)
+> Stack: Open Mercato v0.6.2 · Next.js 16.2.6 · TypeScript 5.9.3 · Hetzner CX43 Helsinki · Coolify 4.0
 > Deploy URL: mercato.novaincs.com · Panel: deploy.novaincs.com
 > CI: github.com/aikapenelope/crm-world/actions — Lint ✅ Typecheck ✅ Unit Tests ✅
 
@@ -458,8 +458,8 @@ coverageThreshold: { global: { branches: 70, functions: 80, lines: 80, statement
 | Tests unitarios validators (T1-T11) | ~~ALTA~~ | Phase 25 — **COMPLETA ✅** (80/80 módulos, ~3.246 tests) |
 | Vertical presets + organización super admin | **ALTA** | Phase 30 — pendiente (ver §30 abajo) |
 | Integration tests (properties spec no corre en CI) | **ALTA** | Phase 28 — activar spec existente |
-| Upgrade OM v0.6.2 + TypeScript 6 | **MEDIA** | Phase 26 |
-| `yarn build` validado en CI (next build completo) | **MEDIA** | Sin phase asignada |
+| Upgrade OM v0.6.2 + TypeScript 6 | ~~MEDIA~~ | **PARCIAL ✅** — OM 0.6.2 + Next 16.2.6 mergeados (PR #116). TypeScript se mantiene en 5.9.3 (compatible, TS6 = Phase 26) |
+| `yarn build` validado en CI (next build completo) | **MEDIA** | **COMPLETO ✅** — ver Phase 32 |
 | Security audit en CI (`yarn npm audit --severity high`) | **MEDIA** | Sin phase asignada |
 | i18n sync en CI (226 archivos JSON, 4 locales) | **MEDIA** | Sin phase asignada |
 | Migrations formales por módulo | Media | Solo necesario al cambiar entidades en producción |
@@ -502,6 +502,36 @@ Auditoría completa de 108 módulos custom contra los requisitos de Open Mercato
 **Gaps de baja prioridad (no bloquean producción):**
 - `academy_attendance`: sin `search.ts` (registros de asistencia no requieren full-text)
 - `ve_fiscal`: sin `search.ts` (módulo de constantes/config, no de CRUD)
+
+---
+
+### Phase 32 — Producción estabilizada (25 Mayo 2026) ✅
+
+> Sesión de emergencia: la app llevaba 5 días con build roto y la vertical Agroalimentario nunca había cargado en producción. Resuelto en una sola sesión con 10 PRs (#108–#117).
+
+**Bugs críticos corregidos:**
+
+| PR | Bug | Impacto |
+|----|-----|---------|
+| #108 | 12 módulos `agri_*` ausentes en `modules.ts` | Vertical Agroalimentario offline desde Phase 23 |
+| #109 | `new URL(import.meta.url)` rompía Turbopack | 100+ deploys fallidos desde el 20 mayo |
+| #110 | Workflow definitions como TypeScript registry | Solución definitiva al problema de esbuild + Turbopack |
+| #111 | `typescript.ignoreBuildErrors` en next.config.ts | OOM con 4GB heap después de Turbopack compile OK |
+| #112–#114 | Proxies `lib/→src/lib/` para CLI esbuild | `sync-role-acls` y `cache flush` estaban rotos |
+| #115 | Entidades MikroORM duplicadas (`academy_instructors`, `academy_sessions`) | App no arrancaba en restart loop |
+| #116 | Upgrade OM 0.6.1→0.6.2, Next 16.2.4→16.2.6 | Mejoras de seguridad, Turbopack cache fix, AI |
+| #117 | `eslint.ignoreDuringBuilds` removido de NextConfig | Error TS2353 en typecheck CI |
+
+**Comandos post-deploy ejecutados (SSH a producción):**
+```bash
+yarn mercato auth sync-role-acls --all-tenants   # agri features → todos los tenants
+yarn mercato configs cache structural --all-tenants  # nav cache purgado
+docker system prune -af                           # ~86GB recuperados (94GB→32GB)
+```
+
+**`yarn build` en CI (Phase 32 bonus):**
+- Añadido job `Build` al CI que valida el Docker build completo antes de mergear
+- Evita que futuros "build roto" pasen desapercibidos durante días
 
 ### Notas operacionales
 
