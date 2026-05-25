@@ -1,3 +1,22 @@
+# syntax=docker/dockerfile:1.4
+# ↑ Enables full BuildKit cache mount syntax (--mount=type=cache).
+#   Requires DOCKER_BUILDKIT=1 (set by Coolify automatically).
+#
+# Cache strategy
+# ──────────────
+# Two persistent cache mounts survive across builds (NOT cleared by docker image prune):
+#   yarn-berry-cache   → /root/.yarn/berry/cache
+#                        Yarn 4 global package archive. Reused across all stages.
+#                        Benefit: yarn install goes from ~60s → ~10s when yarn.lock unchanged.
+#   nextjs-build-cache → /app/.mercato/next/cache
+#                        Turbopack incremental compilation artefacts.
+#                        Benefit: yarn build goes from ~7min → ~2-3min on subsequent deploys.
+#
+# The mounts are ONLY cleared by `docker buildx prune` or `docker system prune --volumes`.
+# Regular `docker system prune` (without --volumes) does NOT clear them.
+# Note: `docker system prune -af` DOES clear them (the -a flag clears all build cache).
+# For routine disk cleanup use: docker image prune -af (keeps build cache intact).
+
 FROM node:24-alpine AS builder
 
 ENV NEXT_TELEMETRY_DISABLED=1 \
@@ -10,7 +29,7 @@ RUN apk add --no-cache python3 make g++ ca-certificates openssl
 RUN corepack enable && corepack prepare yarn@4.12.0 --activate
 
 COPY package.json yarn.lock .yarnrc.yml ./
-RUN if grep -Eq 'http://(localhost|127\\.0\\.0\\.1):' .yarnrc.yml; then \
+RUN if grep -Eq 'http://(localhost|127\.0\.0\.1):' .yarnrc.yml; then \
       sed \
         -e "s#http://localhost:#http://${OPEN_MERCATO_DOCKER_REGISTRY_HOST}:#g" \
         -e "s#http://127.0.0.1:#http://${OPEN_MERCATO_DOCKER_REGISTRY_HOST}:#g" \
@@ -20,13 +39,22 @@ RUN if grep -Eq 'http://(localhost|127\\.0\\.0\\.1):' .yarnrc.yml; then \
       fi; \
       mv .yarnrc.yml.container .yarnrc.yml; \
     fi
-RUN yarn install
+
+# Cache the Yarn 4 global package archive so reinstalls are fast even when yarn.lock changes.
+RUN --mount=type=cache,id=yarn-berry-cache,target=/root/.yarn/berry/cache \
+    yarn install
 
 COPY . .
 RUN yarn generate
+
 # Limit Node.js heap to 4GB to avoid OOM in constrained Docker environments
 ENV NODE_OPTIONS="--max-old-space-size=4096"
-RUN NODE_ENV=production yarn build
+
+# Cache the Turbopack/Next.js incremental build artefacts.
+# On the first build this mount is empty; subsequent builds reuse compiled modules.
+# Result: ~7 min → ~2-3 min on deployments that don't touch every module.
+RUN --mount=type=cache,id=nextjs-build-cache,target=/app/.mercato/next/cache \
+    NODE_ENV=production yarn build
 
 FROM node:24-alpine AS dev
 
@@ -41,7 +69,7 @@ RUN apk add --no-cache python3 make g++ ca-certificates openssl
 RUN corepack enable && corepack prepare yarn@4.12.0 --activate
 
 COPY package.json yarn.lock .yarnrc.yml ./
-RUN if grep -Eq 'http://(localhost|127\\.0\\.0\\.1):' .yarnrc.yml; then \
+RUN if grep -Eq 'http://(localhost|127\.0\.0\.1):' .yarnrc.yml; then \
       sed \
         -e "s#http://localhost:#http://${OPEN_MERCATO_DOCKER_REGISTRY_HOST}:#g" \
         -e "s#http://127.0.0.1:#http://${OPEN_MERCATO_DOCKER_REGISTRY_HOST}:#g" \
@@ -51,7 +79,9 @@ RUN if grep -Eq 'http://(localhost|127\\.0\\.0\\.1):' .yarnrc.yml; then \
       fi; \
       mv .yarnrc.yml.container .yarnrc.yml; \
     fi
-RUN yarn install
+# Reuse the same Yarn cache populated by the builder stage.
+RUN --mount=type=cache,id=yarn-berry-cache,target=/root/.yarn/berry/cache \
+    yarn install
 
 COPY . .
 
@@ -79,7 +109,7 @@ RUN apk add --no-cache ca-certificates openssl
 RUN corepack enable && corepack prepare yarn@4.12.0 --activate
 
 COPY package.json yarn.lock .yarnrc.yml ./
-RUN if grep -Eq 'http://(localhost|127\\.0\\.0\\.1):' .yarnrc.yml; then \
+RUN if grep -Eq 'http://(localhost|127\.0\.0\.1):' .yarnrc.yml; then \
       sed \
         -e "s#http://localhost:#http://${OPEN_MERCATO_DOCKER_REGISTRY_HOST}:#g" \
         -e "s#http://127.0.0.1:#http://${OPEN_MERCATO_DOCKER_REGISTRY_HOST}:#g" \
@@ -89,7 +119,9 @@ RUN if grep -Eq 'http://(localhost|127\\.0\\.0\\.1):' .yarnrc.yml; then \
       fi; \
       mv .yarnrc.yml.container .yarnrc.yml; \
     fi
-RUN yarn workspaces focus --all --production
+# Production deps only; reuses the same Yarn cache to avoid re-downloading packages.
+RUN --mount=type=cache,id=yarn-berry-cache,target=/root/.yarn/berry/cache \
+    yarn workspaces focus --all --production
 
 COPY --from=builder /app/.mercato/next ./.mercato/next
 COPY --from=builder /app/public ./public
