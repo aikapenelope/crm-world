@@ -1,0 +1,68 @@
+# mercato-app.yaml — Traefik explicit service override for mercato.novaincs.com
+#
+# CONTEXT: Deploy this file to /data/coolify/proxy/dynamic/mercato-app.yaml on the
+# production server (65.108.61.137). Traefik uses providers.file.watch=true, so it
+# hot-reloads immediately without restart.
+#
+# WHY THIS FILE IS NEEDED:
+# The app container is attached to TWO Docker networks by Coolify:
+#   1. dnts5dsaufpulbz33dp7vwmp (Coolify deployment network) — Traefik IS here
+#   2. dnts5dsaufpulbz33dp7vwmp_mercato-network-fullapp — Traefik is NOT here
+#
+# Traefik's Docker provider auto-discovers both IPs and creates a round-robin
+# load balancer between them. The fullapp network IP (10.0.3.x) is unreachable
+# by Traefik, causing ~50% of requests to timeout at 30 seconds → HTTP 504.
+#
+# FIX STRATEGY:
+# This file defines explicit routers (priority=200 > Docker provider default=100)
+# that route to a service using Docker DNS name "app" (compose service name).
+# The DNS name is stable across container restarts and always resolves to the
+# IP on the network shared with Traefik (10.0.2.x).
+#
+# INCIDENT: 2026-05-25 — mercato.novaincs.com returning 504 for all HTTPS requests.
+# Diagnosis: root cause was multi-network routing ambiguity in Traefik.
+# Fix applied: network disconnect (immediate) + this file (durable).
+#
+# PERMANENT FIX (do in Coolify UI):
+#   Application → Settings → Docker Labels → Add:
+#   traefik.docker.network=dnts5dsaufpulbz33dp7vwmp
+#
+# This file is a defense-in-depth layer that works even without the Coolify label.
+
+http:
+  routers:
+    mercato-https-stable:
+      entryPoints:
+        - https
+      rule: 'Host(`mercato.novaincs.com`) && PathPrefix(`/`)'
+      service: mercato-app-stable
+      tls:
+        certResolver: letsencrypt
+      middlewares:
+        - gzip
+      # Priority 200 > Docker provider default (100) — this route wins
+      priority: 200
+
+    mercato-http-stable:
+      entryPoints:
+        - http
+      rule: 'Host(`mercato.novaincs.com`) && PathPrefix(`/`)'
+      service: mercato-app-stable
+      middlewares:
+        - redirect-to-https
+      priority: 200
+
+  services:
+    mercato-app-stable:
+      loadBalancer:
+        servers:
+          # Docker compose DNS name for the app service.
+          # Resolves to the container's IP on the shared Coolify deployment network.
+          # Stable across container restarts (Docker DNS tracks service name, not IP).
+          - url: "http://app:3000"
+        healthCheck:
+          path: /
+          interval: "10s"
+          timeout: "3s"
+          # 3s timeout marks unreachable backends fast (vs Traefik's 30s default).
+          # Prevents 30-second 504s if a backend becomes unreachable.

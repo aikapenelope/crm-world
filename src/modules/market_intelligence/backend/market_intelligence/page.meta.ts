@@ -2,9 +2,10 @@ import type { PageMetadata } from '@open-mercato/shared/modules/registry'
 
 export const metadata: PageMetadata = {
   title: 'Tasación',
-  group: 'Real Estate',
+  pageGroup: 'Inmobiliaria',
+  pageGroupKey: 'nav.group.realestate',
   icon: 'trending-up',
-  order: 50,
+  pageOrder: 50,
   requireAuth: true,
   requireFeatures: ['market_intelligence.view'],
 }

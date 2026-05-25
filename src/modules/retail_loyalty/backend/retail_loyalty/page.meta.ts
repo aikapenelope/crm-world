@@ -12,7 +12,7 @@ export const metadata = {
   pageTitle: 'Fidelización',
   pageTitleKey: 'retail_loyalty.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_loyalty.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 130,
   icon: loyaltyIcon,

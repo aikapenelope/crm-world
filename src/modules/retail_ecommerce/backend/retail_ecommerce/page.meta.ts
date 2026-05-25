@@ -14,7 +14,7 @@ export const metadata = {
   pageTitle: 'E-commerce',
   pageTitleKey: 'retail_ecommerce.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_ecommerce.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 150,
   icon: ecommerceIcon,

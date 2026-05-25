@@ -14,7 +14,7 @@ export const metadata = {
   pageTitle: 'Inventario Retail',
   pageTitleKey: 'retail_inventory.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_inventory.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 120,
   icon: inventoryIcon,

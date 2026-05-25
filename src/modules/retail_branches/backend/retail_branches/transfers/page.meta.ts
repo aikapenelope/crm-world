@@ -15,7 +15,7 @@ export const metadata = {
   pageTitle: 'Transferencias',
   pageTitleKey: 'retail_branches.nav.transfers',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_branches.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 110,
   icon: transferIcon,

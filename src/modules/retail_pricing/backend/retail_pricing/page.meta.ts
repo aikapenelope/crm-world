@@ -13,7 +13,7 @@ export const metadata = {
   pageTitle: 'Pricing',
   pageTitleKey: 'retail_pricing.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_pricing.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 170,
   icon: pricingIcon,

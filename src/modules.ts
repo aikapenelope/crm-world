@@ -62,6 +62,9 @@ export const enabledModules: ModuleEntry[] = [
   // { id: 'example', from: '@app' }, // disabled in production — dev/demo module only
   { id: 'ratelimit_probe', from: '@app' },
 
+  // Aika: Vertical Presets — superadmin assigns vertical per tenant (Level 1 onboarding)
+  { id: 'vertical_presets', from: '@app' },
+
   // Aika: Regional modules (apply to all tenants)
   { id: 'venezuela_rates', from: '@app' },
   { id: 'payment_methods', from: '@app' },

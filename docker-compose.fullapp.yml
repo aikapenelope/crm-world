@@ -79,6 +79,25 @@ services:
         condition: service_healthy
     networks:
       - mercato-network-fullapp
+    labels:
+      # ── Traefik multi-network fix ──────────────────────────────────────────
+      # Coolify attaches this container to TWO networks:
+      #   1. dnts5dsaufpulbz33dp7vwmp      (Coolify deployment) — Traefik IS here
+      #   2. dnts5dsaufpulbz33dp7vwmp_mercato-network-fullapp   — Traefik NOT here
+      #
+      # Without traefik.docker.network, Traefik round-robins both IPs.
+      # The fullapp IP (10.0.3.x) times out after 30s → HTTP 504.
+      #
+      # traefik.docker.network tells Traefik to ONLY use the specified network's IP.
+      # The Coolify deployment network ID is stable for this application instance.
+      # Update this value if the app is ever deleted+recreated in Coolify.
+      - "traefik.docker.network=dnts5dsaufpulbz33dp7vwmp"
+      #
+      # Health check: fail unreachable backends in 3s instead of Traefik's 30s default.
+      # Acts as a fast-fail safety net if multi-network ambiguity ever recurs.
+      - "traefik.http.services.mercato-app.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.mercato-app.loadbalancer.healthcheck.interval=10s"
+      - "traefik.http.services.mercato-app.loadbalancer.healthcheck.timeout=3s"
 
   postgres:
     image: pgvector/pgvector:pg17-trixie
