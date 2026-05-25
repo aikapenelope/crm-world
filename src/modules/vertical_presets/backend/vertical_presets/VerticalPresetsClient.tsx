@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
-import { flash } from '@open-mercato/ui/backend/flash'
+import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import type { VerticalDefinition } from '../../data/verticals'
