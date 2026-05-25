@@ -94,6 +94,7 @@ RUN yarn workspaces focus --all --production
 COPY --from=builder /app/.mercato/next ./.mercato/next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/src ./src
+COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/types ./types
 COPY --from=builder /app/.mercato ./.mercato
 COPY --from=builder /app/next.config.ts ./next.config.ts
