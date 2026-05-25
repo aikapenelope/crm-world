@@ -1,1 +1,1 @@
-export * from '../src/lib/workflows/seed-workflow'
+export * from '../../src/lib/workflows/seed-workflow'

@@ -1,1 +1,1 @@
-export * from '../src/lib/pdf/org-branding'
+export * from '../../src/lib/pdf/org-branding'
