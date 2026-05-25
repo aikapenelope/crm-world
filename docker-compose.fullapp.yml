@@ -79,6 +79,22 @@ services:
         condition: service_healthy
     networks:
       - mercato-network-fullapp
+    labels:
+      # Traefik multi-network fix: when Coolify deploys this compose, the app ends up
+      # on TWO networks (Coolify deployment network + mercato-network-fullapp). Traefik
+      # auto-discovers both IPs and round-robins — the fullapp IP is unreachable by
+      # Traefik → every-other request 504s in 30s.
+      #
+      # REQUIRED ACTION in Coolify UI after each deployment:
+      #   Application → Custom Labels → Add:
+      #     traefik.docker.network=<coolify-deployment-network-id>
+      #   Example: traefik.docker.network=dnts5dsaufpulbz33dp7vwmp
+      #
+      # The labels below reduce the blast radius from 30s to 3s if the
+      # multi-network issue ever recurs (health check marks dead backends fast).
+      - "traefik.http.services.mercato-app.loadbalancer.healthcheck.path=/"
+      - "traefik.http.services.mercato-app.loadbalancer.healthcheck.interval=10s"
+      - "traefik.http.services.mercato-app.loadbalancer.healthcheck.timeout=3s"
 
   postgres:
     image: pgvector/pgvector:pg17-trixie
