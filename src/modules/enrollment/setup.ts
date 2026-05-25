@@ -1,6 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
-import inscripcionDef from '../examples/inscripcion-escolar.json'
+import { inscripcionEscolar as inscripcionDef } from '@/lib/workflows/definitions'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {

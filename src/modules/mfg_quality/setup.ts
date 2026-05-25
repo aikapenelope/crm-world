@@ -1,6 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
-import ncDispositionDef from '../examples/nc-disposition-v1.json'
+import { ncDispositionV1 as ncDispositionDef } from '@/lib/workflows/definitions'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {
