@@ -1,5 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
+import purchaseAuthDef from '../examples/purchase-authorization-v1.json'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: { admin: ['mfg_procurement.*'], employee: ['mfg_procurement.view', 'mfg_procurement.track'] },
@@ -12,7 +13,7 @@ export const setup: ModuleSetupConfig = {
     await seedModuleWorkflow(
       ctx.em as any,
       scope,
-      new URL('../examples/purchase-authorization-v1.json', import.meta.url),
+      purchaseAuthDef,
     )
   },
 }
