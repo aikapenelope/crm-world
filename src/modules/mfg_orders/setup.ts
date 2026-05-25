@@ -1,5 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
+import downtimeDef from '../examples/downtime-escalation-v1.json'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {
@@ -16,7 +17,7 @@ export const setup: ModuleSetupConfig = {
     await seedModuleWorkflow(
       ctx.em as any,
       scope,
-      new URL('../examples/downtime-escalation-v1.json', import.meta.url),
+      downtimeDef,
     )
   },
 }

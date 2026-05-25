@@ -2,56 +2,51 @@
  * Workflow seed helper for Aika Platform custom modules.
  *
  * Mirrors the pattern in Open Mercato's packages/core/src/modules/workflows/lib/seeds.ts:
- * reads a workflow definition JSON file from the calling module's examples/ directory,
- * and upserts the WorkflowDefinition entity for the current tenant/org scope.
+ * reads a workflow definition JSON and upserts the WorkflowDefinition entity
+ * for the current tenant/org scope.
  *
  * Usage in a module's setup.ts:
  *
  *   import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
+ *   import workflowDef from '../examples/my-workflow.json'
  *
  *   export const setup: ModuleSetupConfig = {
  *     seedDefaults: async (ctx) => {
  *       const scope = { tenantId: ctx.tenantId, organizationId: ctx.organizationId }
- *       await seedModuleWorkflow(ctx.em, scope, new URL('../examples/my-workflow.json', import.meta.url))
+ *       await seedModuleWorkflow(ctx.em, scope, workflowDef)
  *     },
  *   }
  */
 import type { EntityManager } from '@mikro-orm/postgresql'
-import * as fs from 'fs'
-import { fileURLToPath } from 'node:url'
 
 export type WorkflowSeedScope = {
   tenantId: string
   organizationId: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type WorkflowDefinitionJson = Record<string, any>
+
 /**
- * Seed a single workflow definition from a JSON file URL.
+ * Seed a single workflow definition from a statically-imported JSON object.
  *
- * @param em       MikroORM EntityManager
- * @param scope    Tenant + org scope
- * @param fileUrl  URL of the JSON file — use `new URL('../examples/workflow.json', import.meta.url)`
+ * @param em    MikroORM EntityManager
+ * @param scope Tenant + org scope
+ * @param seed  Parsed workflow definition JSON — use `import def from '../examples/workflow.json'`
  */
 export async function seedModuleWorkflow(
   em: EntityManager,
   scope: WorkflowSeedScope,
-  fileUrl: URL,
+  seed: WorkflowDefinitionJson,
 ): Promise<void> {
   // Dynamically import WorkflowDefinition to avoid bundling OM internals at module load time
   const { WorkflowDefinition } = await import(
     '@open-mercato/core/modules/workflows/data/entities'
   )
 
-  const filePath = fileURLToPath(fileUrl)
-  if (!fs.existsSync(filePath)) {
-    console.warn(`[workflow-seed] File not found, skipping: ${filePath}`)
-    return
-  }
-
-  const seed = JSON.parse(fs.readFileSync(filePath, 'utf8'))
   const workflowId: string = seed.workflowId
   if (!workflowId) {
-    throw new Error(`[workflow-seed] Missing workflowId in ${filePath}`)
+    throw new Error(`[workflow-seed] Missing workflowId in workflow definition`)
   }
 
   const existing = await em.findOne(WorkflowDefinition, {
