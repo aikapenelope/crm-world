@@ -1,6 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
-import liquidacionDef from '../examples/liquidacion-productor-v1.json'
+import { liquidacionProductorV1 as liquidacionDef } from '@/lib/workflows/definitions'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {

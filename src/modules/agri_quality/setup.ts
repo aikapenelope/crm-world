@@ -1,6 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
-import ncCcpDef from '../examples/no-conformidad-ccp.json'
+import { noConformidadCcp as ncCcpDef } from '@/lib/workflows/definitions'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {

@@ -1,6 +1,6 @@
 import type { ModuleSetupConfig } from '@open-mercato/shared/modules/setup'
 import { seedModuleWorkflow } from '@/lib/workflows/seed-workflow'
-import recallDef from '../examples/recall-v1.json'
+import { recallV1 as recallDef } from '@/lib/workflows/definitions'
 
 export const setup: ModuleSetupConfig = {
   defaultRoleFeatures: {
