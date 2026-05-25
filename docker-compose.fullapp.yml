@@ -80,18 +80,21 @@ services:
     networks:
       - mercato-network-fullapp
     labels:
-      # Traefik multi-network fix: when Coolify deploys this compose, the app ends up
-      # on TWO networks (Coolify deployment network + mercato-network-fullapp). Traefik
-      # auto-discovers both IPs and round-robins — the fullapp IP is unreachable by
-      # Traefik → every-other request 504s in 30s.
+      # ── Traefik multi-network fix ──────────────────────────────────────────
+      # Coolify attaches this container to TWO networks:
+      #   1. dnts5dsaufpulbz33dp7vwmp      (Coolify deployment) — Traefik IS here
+      #   2. dnts5dsaufpulbz33dp7vwmp_mercato-network-fullapp   — Traefik NOT here
       #
-      # REQUIRED ACTION in Coolify UI after each deployment:
-      #   Application → Custom Labels → Add:
-      #     traefik.docker.network=<coolify-deployment-network-id>
-      #   Example: traefik.docker.network=dnts5dsaufpulbz33dp7vwmp
+      # Without traefik.docker.network, Traefik round-robins both IPs.
+      # The fullapp IP (10.0.3.x) times out after 30s → HTTP 504.
       #
-      # The labels below reduce the blast radius from 30s to 3s if the
-      # multi-network issue ever recurs (health check marks dead backends fast).
+      # traefik.docker.network tells Traefik to ONLY use the specified network's IP.
+      # The Coolify deployment network ID is stable for this application instance.
+      # Update this value if the app is ever deleted+recreated in Coolify.
+      - "traefik.docker.network=dnts5dsaufpulbz33dp7vwmp"
+      #
+      # Health check: fail unreachable backends in 3s instead of Traefik's 30s default.
+      # Acts as a fast-fail safety net if multi-network ambiguity ever recurs.
       - "traefik.http.services.mercato-app.loadbalancer.healthcheck.path=/"
       - "traefik.http.services.mercato-app.loadbalancer.healthcheck.interval=10s"
       - "traefik.http.services.mercato-app.loadbalancer.healthcheck.timeout=3s"
