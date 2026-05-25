@@ -16,7 +16,7 @@ export const metadata = {
 }
 
 export default async function handler(_payload: any, ctx: any) {
-  const em = ctx.container.resolve('em')
+  const em = ctx.resolve('em')
   const kysely = (em as any).getKysely()
   const now = new Date()
   const today = now.toISOString().split('T')[0]

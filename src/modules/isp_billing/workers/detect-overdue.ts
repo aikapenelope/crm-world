@@ -23,20 +23,25 @@ export const metadata = {
   concurrency: 1,
 }
 
-export default async function handler(_payload: any, ctx: any) {
-  const em = ctx.container.resolve('em')
-  const scope = { tenantId: _payload.tenantId, organizationId: _payload.organizationId }
+export default async function handler(_job: any, ctx: any) {
+  // ctx.resolve is injected by the CLI worker runner (mercato.ts).
+  // ctx.container does NOT exist on the worker context — see packages/cli/src/mercato.ts.
+  const em = ctx.resolve('em')
   const kysely = (em as any).getKysely()
 
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  // Facturas pendientes/partial cuya due_date ya pasó
+  // Global scheduled job — processes all active tenants.
+  // Consistent with tuition/workers/overdue-checker.ts and dist_credit/workers/overdue-checker.ts.
+  // Scope per-invoice is derived from each row's tenant_id/organization_id.
   const overdueInvoices = await kysely
     .selectFrom('isp_invoices as inv')
     .innerJoin('isp_subscribers as s', 's.id', 'inv.subscriber_id')
     .select([
       'inv.id as invoice_id',
+      'inv.tenant_id',
+      'inv.organization_id',
       'inv.subscriber_id',
       'inv.due_date',
       'inv.balance_usd',
@@ -45,7 +50,6 @@ export default async function handler(_payload: any, ctx: any) {
       's.service_status',
       's.account_number',
     ])
-    .where('inv.tenant_id', '=', scope.tenantId)
     .where('inv.deleted_at', 'is', null)
     .where('inv.status', 'in', ['pending', 'partial'])
     .where('inv.due_date', '<', today.toISOString().split('T')[0])
@@ -57,11 +61,13 @@ export default async function handler(_payload: any, ctx: any) {
   let warningsSent = 0
 
   type OverdueInvoiceRow = {
-    invoice_id: string; subscriber_id: string; due_date: string
-    balance_usd: string; invoice_number: string; cut_policy_days: number | null
+    invoice_id: string; tenant_id: string; organization_id: string
+    subscriber_id: string; due_date: string; balance_usd: string
+    invoice_number: string; cut_policy_days: number | null
     service_status: string; account_number: string
   }
   for (const inv of overdueInvoices as OverdueInvoiceRow[]) {
+    const scope = { tenantId: inv.tenant_id, organizationId: inv.organization_id }
     const dueDate = new Date(inv.due_date)
     const daysOverdue = Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
     const cutDays = inv.cut_policy_days ?? 7
@@ -92,7 +98,7 @@ export default async function handler(_payload: any, ctx: any) {
   }
 
   console.log(
-    `[isp_billing:detect-overdue] tenant=${scope.tenantId} ` +
+    `[isp_billing:detect-overdue] ` +
     `checked=${overdueInvoices.length} cuts=${cutsTriggered} warnings=${warningsSent}`,
   )
 
