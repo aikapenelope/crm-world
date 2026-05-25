@@ -14,7 +14,7 @@ export const metadata = {
   pageTitle: 'Compras',
   pageTitleKey: 'retail_purchasing.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_purchasing.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 160,
   icon: purchasingIcon,

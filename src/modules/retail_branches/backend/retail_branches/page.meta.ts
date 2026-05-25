@@ -13,7 +13,7 @@ export const metadata = {
   pageTitle: 'Sucursales',
   pageTitleKey: 'retail_branches.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_branches.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 100,
   icon: branchesIcon,

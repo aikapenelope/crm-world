@@ -13,7 +13,7 @@ export const metadata = {
   pageTitle: 'Devoluciones',
   pageTitleKey: 'retail_returns.nav.title',
   pageGroup: 'Retail',
-  pageGroupKey: 'retail_returns.nav.group',
+  pageGroupKey: 'retail.nav.group',
   pagePriority: 50,
   pageOrder: 140,
   icon: returnsIcon,

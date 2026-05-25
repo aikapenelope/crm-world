@@ -2,9 +2,10 @@ import type { PageMetadata } from '@open-mercato/shared/modules/registry'
 
 export const metadata: PageMetadata = {
   title: 'Configuración',
-  group: 'Real Estate',
+  pageGroup: 'Inmobiliaria',
+  pageGroupKey: 'nav.group.realestate',
   icon: 'settings',
-  order: 50,
+  pageOrder: 50,
   requireAuth: true,
   requireFeatures: ['properties.edit'],
 }

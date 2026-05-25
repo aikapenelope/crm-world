@@ -1,10 +1,10 @@
 import type { PageMetadata } from '@open-mercato/shared/modules/registry'
 
 export const metadata: PageMetadata = {
-  title: 'Cursos',
+  title: 'Vertical de Negocio',
   requireAuth: true,
-  requireFeatures: ['academy_courses.view'],
-  pageGroup: 'Academia',
-  pageGroupKey: 'nav.group.academy',
+  requireFeatures: ['vertical_presets.view'],
+  pageGroup: 'Super Admin',
+  pageGroupKey: 'nav.group.superadmin',
   pageOrder: 10,
 }
