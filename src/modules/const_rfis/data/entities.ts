@@ -11,7 +11,7 @@ export enum SubmittalType { SHOP_DRAWING = 'shop_drawing', PRODUCT_DATA = 'produ
 export enum SubmittalStatus { DRAFT = 'draft', SUBMITTED = 'submitted', UNDER_REVIEW = 'under_review', APPROVED = 'approved', APPROVED_AS_NOTED = 'approved_as_noted', REVISE_RESUBMIT = 'revise_resubmit', REJECTED = 'rejected' }
 
 @Entity({ tableName: 'const_rfis' })
-export class ConstRFIEntity {
+export class ConstRfiEntity {
   @PrimaryKey({ type: 'uuid' })
   id: string = v4()
   @Property({ type: 'text' }) tenant_id!: string
