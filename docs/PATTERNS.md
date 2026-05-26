@@ -632,3 +632,143 @@ export function register(_: AppContainer) {
 ```
 
 Incluso si el módulo no registra servicios, la función `register` vacía DEBE existir.
+
+---
+
+## 19. Agregar `deleted_at` a entidad existente con datos en producción
+
+### Problema
+Cuando se agrega `deleted_at` a una entidad cuya tabla ya existe en producción con datos,
+`yarn db:generate` no puede ejecutarse directamente en el repo local (sin DB). El flujo
+requiere generar la migration en el container de producción.
+
+### Regla: Flujo para agregar deleted_at a entidad existente
+
+```bash
+# 1. Editar data/entities.ts localmente
+@Property({ type: 'timestamptz', nullable: true })
+deleted_at?: Date | null
+
+# 2. Copiar entity al container de producción
+docker cp ./src/modules/<mod>/data/entities.ts $CONTAINER:/app/src/modules/<mod>/data/entities.ts
+
+# 3. Ejecutar db:generate en container (genera solo el diff)
+docker exec -w /app $CONTAINER yarn db:generate
+
+# 4. Verificar que generó solo ALTER TABLE ... ADD COLUMN (no noise)
+# La migration debe ser:
+#   alter table "<tabla>" add "<col>" timestamptz null;
+# con su correspondiente down():
+#   alter table "<tabla>" drop column "<col>";
+
+# 5. Copiar migration + snapshot al repo
+docker exec $CONTAINER tar -czf /tmp/mig.tar.gz -C /app/src/modules/<mod>/migrations .
+scp root@VPS:/tmp/mig.tar.gz /tmp/mig.tar.gz
+tar -xzf /tmp/mig.tar.gz -C src/modules/<mod>/migrations/
+
+# 6. Aplicar en producción antes del merge
+docker exec -w /app $CONTAINER yarn db:migrate
+
+# 7. Commitear entity change + migration + snapshot en el MISMO commit
+```
+
+**Verificación crítica antes de commitear:**
+- `yarn db:generate` SOLO genera migration para el módulo modificado (no noise de otros módulos)
+- El SQL del `up()` es solo `ADD COLUMN ... NULL` (nullable, safe para producción con datos)
+- El snapshot actualizado contiene la nueva columna
+
+### Referencia
+- `packages/core/AGENTS.md:533`: "Include `deleted_at timestamptz null` for soft delete"
+- `packages/cli/AGENTS.md`: Default workflow para entity changes
+
+---
+
+## 20. CI fallos por infraestructura vs código
+
+### Problema encontrado
+Los CI checks de GitHub Actions pueden fallar con errores como:
+```
+remote: Your account is suspended.
+fatal: unable to access '...': The requested URL returned error: 403
+```
+Esto ocurre en el paso `actions/checkout@v4` — el código NUNCA llega a ejecutarse.
+Es un problema de infraestructura (cuenta GitHub suspendida, red, permisos), NO un error de código.
+
+### Cómo distinguir infraestructura vs código
+
+| Síntoma | Causa probable |
+|---------|----------------|
+| TODOS los jobs fallan en `actions/checkout@v4` con HTTP 403 | Cuenta suspendida / permisos |
+| Solo algunos jobs fallan (lint pasa, typecheck falla) | Error de código TypeScript |
+| `Your account is suspended` en el log | Cuenta GitHub suspendida |
+| `yarn: command not found` o `Module not found` | Cache de Node.js expirado |
+| Tests fallan con assertion errors | Error de código real |
+
+### Solución
+
+Si CI falla por infraestructura:
+1. Verificar el log: buscar `suspended`, `403`, `unable to access`
+2. Si es infraestructura: hacer **code review manual** del PR
+3. Re-trigger CI con commit vacío:
+   ```bash
+   git commit --allow-empty -m "ci: re-trigger CI — previous run failed due to <causa>"
+   git push
+   ```
+4. Si es error de código: corregir y hacer push normal
+
+**Nunca asumir que CI falla = código roto.** Siempre leer el log completo.
+
+---
+
+## 21. CrudFormGroup: usar `title` no `label`
+
+### Problema encontrado (PR #134)
+Algunos módulos usaban `label:` en lugar de `title:` en la definición de grupos de `CrudForm`:
+```typescript
+// ❌ INCORRECTO
+{ id: 'part', column: 1, label: 'Datos del repuesto', fields: [...] }
+
+// ✅ CORRECTO
+{ id: 'part', column: 1, title: 'Datos del repuesto', fields: [...] }
+```
+
+### Regla (PATTERNS.md §10 — ya documentado)
+"CrudForm: grupos usan `title:` (no `label:`)"
+
+Revisado en COMPLIANCE_CHECKLIST.md como issue detectado en audit de cada vertical.
+
+---
+
+## 22. Colores de marca de terceros en className vs style
+
+### Problema (PR #134 — `auto_service_orders/detail`)
+WhatsApp usa `#25D366` como color de marca. Poner esto en `className` viola `ds-rules.md`:
+```
+NEVER hardcode hex/rgb values in className
+```
+
+### Solución documentada
+Para colores de marca de terceros (WhatsApp, Stripe, etc.) que no tienen token semántico:
+```tsx
+// ✅ CORRECTO — inline style (exento de la regla de className)
+<Button
+  type="button"
+  style={{ backgroundColor: '#25D366', color: 'white' }}
+  className="hover:opacity-90"
+>
+  WhatsApp
+</Button>
+
+// ❌ INCORRECTO — hex en className
+<Button className="bg-[#25D366] hover:bg-[#25D366]/90 text-white">
+  WhatsApp
+</Button>
+```
+
+**Regla:** La restricción `NEVER hardcode hex in className` aplica a `className`. Inline `style={{}}` es aceptable para colores de marca de terceros documentados. Agregar comentario explicando la excepción.
+
+| Fecha | Problema | Causa | Fix |
+|-------|----------|-------|-----|
+| 2026-05-26 | CI falló con 403 en checkout | Cuenta GitHub suspendida durante el run | Re-trigger con commit vacío |
+| 2026-05-26 | `label:` en CrudFormGroup genera grupo sin título visible | API usa `title:`, no `label:` | Cambiar a `title:` |
+| 2026-05-26 | `bg-[#25D366]` viola ds-rules | Hex en className | Mover a `style={{}}` |
