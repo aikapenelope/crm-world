@@ -1,0 +1,20 @@
+import { Migration } from '@mikro-orm/migrations';
+
+export class Migration20260526092600_mfg_orders extends Migration {
+
+  override up(): void | Promise<void> {
+    this.addSql(`create table "mfg_order_material_issues" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "order_id" uuid not null, "bom_line_id" uuid null, "component_code" text not null, "component_name" text not null, "planned_quantity" numeric(14,6) not null, "issued_quantity" numeric(14,6) not null, "uom" text not null, "lot_id" uuid null, "lot_number" text null, "issue_date" date not null, "issued_by" uuid null, "notes" text null, "created_at" timestamptz not null, primary key ("id"));`);
+
+    this.addSql(`create table "mfg_order_operations" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "order_id" uuid not null, "operation_number" smallint not null, "operation_name" text not null, "work_center_id" uuid null, "work_center_name" text null, "planned_duration_hrs" numeric(8,4) not null, "actual_duration_hrs" numeric(8,4) null, "planned_start" timestamptz null, "actual_start" timestamptz null, "actual_end" timestamptz null, "status" text not null default 'pending', "operator_id" uuid null, "quantity_produced" numeric(12,4) null, "quantity_rejected" numeric(12,4) not null default '0.0000', "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+    this.addSql(`create index "idx_mfg_operations_order" on "mfg_order_operations" ("tenant_id", "order_id");`);
+
+    this.addSql(`create table "mfg_production_downtimes" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "order_id" uuid null, "operation_id" uuid null, "work_center_id" uuid null, "work_center_name" text null, "started_at" timestamptz not null, "ended_at" timestamptz null, "duration_hrs" numeric(8,4) null, "cause_category" text not null, "cause_description" text not null, "impact_description" text null, "reported_by" uuid null, "resolved_by" uuid null, "resolution_notes" text null, "is_force_majeure" boolean not null default false, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+    this.addSql(`create index "idx_mfg_downtimes_wc_time" on "mfg_production_downtimes" ("tenant_id", "work_center_id", "started_at");`);
+
+    this.addSql(`create table "mfg_production_orders" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "order_number" text not null, "bom_id" uuid not null, "product_id" uuid not null, "product_code" text not null, "product_name" text not null, "planned_quantity" numeric(12,4) not null, "actual_quantity" numeric(12,4) null, "rejected_quantity" numeric(12,4) not null default '0.0000', "uom" text not null, "production_lot_number" text null, "work_center_id" uuid null, "work_center_name" text null, "scheduled_start" timestamptz null, "scheduled_end" timestamptz null, "actual_start" timestamptz null, "actual_end" timestamptz null, "status" text not null default 'planned', "planned_cost_usd" numeric(14,4) null, "actual_cost_usd" numeric(14,4) null, "mps_id" uuid null, "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, "deleted_at" timestamptz null, primary key ("id"));`);
+    this.addSql(`create index "idx_mfg_orders_status_schedule" on "mfg_production_orders" ("tenant_id", "status", "scheduled_start");`);
+
+    this.addSql(`create table "mfg_work_centers" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "code" text not null, "name" text not null, "type" text not null default 'line', "capacity_hrs_per_shift" numeric(5,2) not null default '8.00', "efficiency_pct" numeric(5,2) not null default '100.00', "cost_per_hr_usd" numeric(8,4) null, "is_active" boolean not null default true, "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, "deleted_at" timestamptz null, primary key ("id"));`);
+  }
+
+}

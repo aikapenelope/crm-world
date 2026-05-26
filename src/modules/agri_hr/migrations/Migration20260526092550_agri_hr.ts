@@ -1,0 +1,13 @@
+import { Migration } from '@mikro-orm/migrations';
+
+export class Migration20260526092550_agri_hr extends Migration {
+
+  override up(): void | Promise<void> {
+    this.addSql(`create table "agri_employees" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "first_name" text not null, "last_name" text not null, "cedula" text null, "employee_type" text not null default 'fixed', "department" text null, "position" text null, "hire_date" date not null, "salary_usd" numeric(10,2) null, "base_jornal_usd" numeric(8,2) null, "base_destajo_usd" numeric(8,4) null, "destajo_unit" text null, "bank_name" text null, "bank_account" text null, "status" text not null default 'active', "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, "deleted_at" timestamptz null, primary key ("id"));`);
+
+    this.addSql(`create table "agri_jornalero_payrolls" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "employee_id" uuid not null, "period_start" date not null, "period_end" date not null, "days_worked" int null, "units_worked" numeric(10,3) null, "gross_usd" numeric(10,2) not null, "vacation_provision_usd" numeric(10,4) not null default '0.0000', "bonus_provision_usd" numeric(10,4) not null default '0.0000', "severance_provision_usd" numeric(10,4) not null default '0.0000', "total_provisions_usd" numeric(10,4) not null default '0.0000', "net_usd" numeric(10,2) not null, "status" text not null default 'draft', "payment_date" date null, "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+
+    this.addSql(`create table "agri_producer_settlements" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "producer_id" uuid not null, "farm_unit_id" uuid not null, "flock_id" uuid not null, "cycle_start_date" date not null, "cycle_end_date" date not null, "initial_birds" int not null, "final_birds" int not null, "actual_fca" numeric(6,3) not null, "actual_avg_weight_kg" numeric(6,3) not null, "actual_mortality_pct" numeric(5,2) not null, "target_fca" numeric(6,3) not null, "target_weight_kg" numeric(6,3) not null, "price_per_kg_usd" numeric(8,4) not null, "base_payment_usd" numeric(12,2) not null, "fca_bonus_usd" numeric(10,2) not null default '0.00', "weight_bonus_usd" numeric(10,2) not null default '0.00', "fca_penalty_usd" numeric(10,2) not null default '0.00', "total_payment_usd" numeric(12,2) not null, "status" text not null default 'calculated', "approved_by" uuid null, "approved_at" timestamptz null, "payment_date" date null, "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+  }
+
+}
