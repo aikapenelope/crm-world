@@ -6,8 +6,7 @@ const routeMetadata = { GET: { requireAuth: true, requireFeatures: ['mfg_dispatc
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgSaleOrderLineMfgEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: MfgSaleOrderLineMfgEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_dispatch:sale_order_line' },
   list: { schema: z.object({ sale_order_id: z.string().uuid().optional(), pageSize: z.coerce.number().min(1).max(200).default(100) }).passthrough() },
   create: { schema: saleOrderLineCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

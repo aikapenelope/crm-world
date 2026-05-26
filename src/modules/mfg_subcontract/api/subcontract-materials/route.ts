@@ -6,8 +6,7 @@ const routeMetadata = { GET: { requireAuth: true, requireFeatures: ['mfg_subcont
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgSubcontractMaterialEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: MfgSubcontractMaterialEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_subcontract:material' },
   list: { schema: z.object({ subcontract_order_id: z.string().uuid().optional(), pageSize: z.coerce.number().min(1).max(200).default(100) }).passthrough() },
   create: { schema: subcontractMaterialCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

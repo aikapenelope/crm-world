@@ -17,8 +17,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: AgriBpmChecklistEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: AgriBpmChecklistEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'agri_quality:bpm_checklist' },
   list: { schema: listSchema },
   create: { schema: bpmChecklistCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

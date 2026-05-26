@@ -6,8 +6,7 @@ const routeMetadata = { GET: { requireAuth: true, requireFeatures: ['mfg_hr.view
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgProductionBonusEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: MfgProductionBonusEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_hr:production_bonus' },
   list: { schema: z.object({ page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(100).default(50), status: z.string().optional(), work_center_id: z.string().uuid().optional() }).passthrough() },
   create: { schema: productionBonusCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

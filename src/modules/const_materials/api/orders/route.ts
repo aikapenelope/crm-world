@@ -20,8 +20,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: ConstMaterialOrderEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: ConstMaterialOrderEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'const_materials.order' },
   list: { schema: listSchema },
   create: { schema: createOrderSchema, mapToEntity: (input: any) => ({ ...input, order_number: `OC-${Date.now().toString(36).toUpperCase().slice(-5)}` }) },

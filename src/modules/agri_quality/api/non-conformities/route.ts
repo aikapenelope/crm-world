@@ -18,8 +18,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: AgriNonConformityEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: AgriNonConformityEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'agri_quality:non_conformity' },
   list: { schema: listSchema },
   create: { schema: nonConformityCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

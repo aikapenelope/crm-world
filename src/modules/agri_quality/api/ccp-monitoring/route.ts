@@ -26,8 +26,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: AgriCcpMonitoringRecordEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: AgriCcpMonitoringRecordEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'agri_quality:ccp_monitoring' },
   list: { schema: listSchema },
   create: { schema: ccpMonitoringRecordCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

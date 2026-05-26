@@ -20,8 +20,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: ConstSubcontractorEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: ConstSubcontractorEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'const_subcon.subcontractor' },
   list: { schema: listSchema },
   create: { schema: createSubcontractorSchema, mapToEntity: (input: any) => ({ ...input }) },

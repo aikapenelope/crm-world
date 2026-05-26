@@ -6,8 +6,7 @@ const routeMetadata = { GET: { requireAuth: true, requireFeatures: ['mfg_plannin
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgEnergyWindowEntity, idField: 'id', orgField: 'organization_id',
-      softDeleteField: null,, tenantField: 'tenant_id' },
+  orm: { entity: MfgEnergyWindowEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_planning:energy_window' },
   list: { schema: z.object({ zone: z.string().optional(), restriction_type: z.string().optional(), pageSize: z.coerce.number().min(1).max(200).default(100) }).passthrough() },
   create: { schema: energyWindowCreateSchema, mapToEntity: (input: any) => ({ ...input }) },
