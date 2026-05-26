@@ -25,6 +25,13 @@ const crud = makeCrudRoute({
     idField: 'id',
     tenantField: 'tenant_id',
     orgField: 'organization_id',
+    // MatchResultEntity is append-only (no deleted_at column).
+    // Pass null to disable the implicit soft-delete filter (WHERE deletedAt IS NULL)
+    // that makeCrudRoute adds by default. Without this, MikroORM generates a query
+    // referencing a non-existent column → DB error → HTTP 500.
+    // Documented in makeCrudRoute factory.ts:149:
+    //   softDeleteField?: string | null  // default: 'deletedAt'; pass null to disable
+    softDeleteField: null,
   },
   indexer: { entityType: 'matching.match' },
   list: { schema: listSchema },
