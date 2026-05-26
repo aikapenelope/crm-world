@@ -121,11 +121,11 @@ USE:   text-status-error-text, bg-status-success-bg,
 |------|---------|:------:|
 | T2 `deleted_at` | Ninguna entidad Tipo A | — |
 | T2 `sdf:undef` | Ningún route con `undefined` | — |
-| T3 i18n | `properties` 3 páginas, `market_intelligence` 1, `matching` 1, `mercadolibre_sync` 1 | 🔴 |
-| T4 icons | `properties/properties`, `properties/settings`, `market_intelligence`, `matching`, `mercadolibre_sync` | 🔴 |
+| T3 i18n | `properties` 3 páginas, `market_intelligence` 1, `matching` 1, `mercadolibre_sync` 1 | ✅ PR #133 |
+| T4 icons | `properties/properties`, `properties/settings`, `market_intelligence`, `matching`, `mercadolibre_sync` | ✅ PR #133 |
 | T5 colors | Ninguno | — |
 
-**PR objetivo:** 1 PR `feat(real-estate): compliance TODO 3+4`
+**PR:** #133 — `feat(real-estate): compliance TODO 3+4 — i18n + icons`
 
 ---
 
@@ -136,11 +136,11 @@ USE:   text-status-error-text, bg-status-success-bg,
 |------|---------|:------:|
 | T2 `deleted_at` | Ninguna entidad Tipo A | — |
 | T2 `sdf:undef` | Ninguno | — |
-| T3 i18n | `auto_inspections` 2, `auto_parts` 2, `auto_reports` 1, `auto_service_orders` 5, `auto_vehicles` 3 | 🔴 |
+| T3 i18n | `auto_inspections` 2, `auto_parts` 2, `auto_reports` 1, `auto_service_orders` 5, `auto_vehicles` 3 | ✅ PR #134 |
 | T4 icons | Ninguno | — |
 | T5 colors | Ninguno | — |
 
-**PR objetivo:** 1 PR `feat(auto): compliance TODO 3`
+**PR:** #134 — `feat(auto): compliance TODO 3 + fixes — i18n, label→title, WhatsApp hex`
 
 ---
 
@@ -149,13 +149,14 @@ USE:   text-status-error-text, bg-status-success-bg,
 
 | TODO | Detalle | Estado |
 |------|---------|:------:|
-| T2 `deleted_at` | `ve_fiscal` → `ve_fiscal_configs` (Tipo A, config editable) | 🔴 |
+| T2 `deleted_at` | `ve_fiscal` → `ve_fiscal_configs` (Tipo A, config editable) | ✅ PR #135 |
 | T2 `sdf:undef` | Ninguno | — |
-| T3 i18n | `ve_tax_books` 2, `ve_tax_reports` 1, `ve_withholdings` 2 | 🔴 |
+| T3 i18n | `ve_tax_books` 2, `ve_withholdings` 2 | ✅ PR #135 |
 | T4 icons | Ninguno | — |
 | T5 colors | Ninguno | — |
 
-**PR objetivo:** 1 PR `feat(ve-fiscal): compliance TODO 2+3`
+**PR:** #135 — `feat(ve-fiscal): compliance TODO 2+3 — deleted_at + i18n + migration`
+**Nota CI:** El primer run de CI falló por suspensión temporal de cuenta GitHub (HTTP 403 en checkout). El código fue verificado manualmente — sin issues. CI re-triggered con commit vacío.
 
 ---
 
@@ -164,13 +165,13 @@ USE:   text-status-error-text, bg-status-success-bg,
 
 | TODO | Detalle | Estado |
 |------|---------|:------:|
-| T2 `deleted_at` | `attendance` → `attendance_records`; `vertical_presets` → `tenant_verticals` | 🔴 |
+| T2 `deleted_at` | `attendance` → `attendance_records`; `vertical_presets` → `tenant_verticals` | ✅ PR #136 |
 | T2 `sdf:undef` | Ninguno | — |
-| T3 i18n | `attendance` 3, `transactions` 2, `payment_methods` 1, `bank_reconciliation` 2 | 🔴 |
-| T4 icons | `transactions/transactions` → icon: `'handshake'` | 🔴 |
+| T3 i18n | `attendance` 3, `transactions` 2, `payment_methods` 1, `bank_reconciliation` 2 | ✅ PR #136 |
+| T4 icons | `transactions/transactions` → icon: `'handshake'` | ✅ PR #136 |
 | T5 colors | Ninguno | — |
 
-**PR objetivo:** 1 PR `feat(core-other): compliance TODO 2+3+4`
+**PR:** #136 — `feat(core-other): compliance TODO 2+3+4 — deleted_at, i18n, icon, Checkbox`
 
 ---
 
@@ -334,10 +335,10 @@ USE:   text-status-error-text, bg-status-success-bg,
 
 | Vertical | T2 `deleted_at` | T2 `sdf:undef` | T3 i18n | T4 icons | T5 colors | PR estado |
 |----------|:-:|:-:|:-:|:-:|:-:|:---------:|
-| 🏠 Real Estate | — | — | 6 pág | 5 meta | — | 🔴 pendiente |
-| 🚗 Auto | — | — | 12 pág | — | — | 🔴 pendiente |
-| 🇻🇪 VE Fiscal | 1 ent | — | 4 pág | — | — | 🔴 pendiente |
-| 🔧 Core/Other | 2 ent | — | 8 pág | 1 meta | — | 🔴 pendiente |
+| 🏠 Real Estate | — | — | 6 pág | 5 meta | — | 🟡 PR #133 open |
+| 🚗 Auto | — | — | 12 pág | — | — | 🟡 PR #134 open |
+| 🇻🇪 VE Fiscal | 1 ent | — | 4 pág | — | — | 🟡 PR #135 open |
+| 🔧 Core/Other | 2 ent | — | 8 pág | 1 meta | — | 🟡 PR #136 open |
 | 📚 Academy | — | — | 12 pág | — | 1 arch | 🔴 pendiente |
 | 📦 Distribution | — | — | 16 pág | — | — | 🔴 pendiente |
 | 🎓 Education | 2 ent | — | 22 pág | — | — | 🔴 pendiente |
