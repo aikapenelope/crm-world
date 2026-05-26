@@ -15,7 +15,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'auto_vehicles:vehicle',
+      entityId: 'auto_vehicles:auto_vehicle',
       enabled: true,
       priority: 20,
 
