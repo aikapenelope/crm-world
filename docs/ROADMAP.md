@@ -408,46 +408,410 @@ coverageThreshold: {
 
 ### Phase 30 — Vertical Presets + Organización Super Admin
 
-> **Motivación**: La plataforma tiene 112 módulos en 12 verticales. Desde el super admin
-> el onboarding de un nuevo tenant es complejo: hay que habilitar módulos, configurar roles
-> y seleccionar la vertical manualmente. Esta phase introduce presets por vertical y
-> reorganiza el super admin para que sea intuitivo.
+> **Estado**: PARCIALMENTE IMPLEMENTADO (PRs #121, #122 — 26 Mayo 2026)
 
-**Qué se va a construir:**
+**Completado:**
+- [x] **Sidebar organizado por vertical** — `pageGroup`/`pageGroupKey` unificados en Academy (6 módulos), Retail (7 módulos), Real Estate (6 módulos). PR #121.
+- [x] **Módulo `vertical_presets`** — Entidad `TenantVerticalEntity`, 12 verticales definidas como TypeScript objects, API `GET/PUT /api/vertical-presets/tenant-vertical`, UI superadmin con grid de cards. PR #121.
+- [x] **Incidente Traefik 504** resuelto: multi-network routing fix (PR #122 + config producción). Ver `docker/traefik/mercato-app.yaml`.
 
-1. **`vertical_presets` module** — Módulo propio de crm-world que:
-   - Define las 12 verticales con nombre, ícono, descripción y lista de módulos incluidos
-   - Expone `/api/vertical_presets` para listar verticales disponibles
-   - Expone `/api/vertical_presets/[id]/apply` para aplicar un preset a un tenant
-     (activa features por vertical vía `sync-role-acls`, corre `seedDefaults` de cada módulo)
-   - Sidebar del admin agrupado por vertical (usando `useInjectedMenuItems`)
-
-2. **Flujo de creación de tenant mejorado** — Extender el onboarding wizard:
-   - Paso 0: Selección de vertical (tarjetas con nombre + módulos incluidos)
-   - El `onTenantCreated` de `vertical_presets` activa automáticamente las features del preset
-   - Botón "Agregar módulo" post-creación vía el preset
-
-3. **Sidebar super admin agrupado** — Agrupar los 112 módulos en la sidebar por vertical:
-   - Cada grupo colapsable: Manufactura (16), Construcción (8), Distribución (8), etc.
-   - Implementado via `widgets/injection-table.ts` en `vertical_presets`
-
-**Cómo funciona la activación/desactivación de módulos por tenant en OM:**
-- Los módulos en `modules.ts` están todos activos a nivel de **app**
-- La granularidad **por tenant** se logra via RBAC: `defaultRoleFeatures` en `setup.ts`
-- Para "deshabilitar un módulo para un tenant" → revocar las features de sus roles
-- Para "habilitar" → ejecutar `yarn mercato auth sync-role-acls --tenant <id>` con el preset
-
-**Prerequisitos:** Phase 25 ✅, `ve_tenant_defaults` ✅
+**Pendiente (Phase 30 continuación):**
+- [ ] Wizard de creación de tenant con selector de vertical (UI paso a paso)
+- [ ] `seedDefaults` condicionales por vertical (que solo corran los datos del vertical seleccionado)
+- [ ] `/api/vertical_presets/[id]/apply` — activar features + seedDefaults del vertical post-creación
 
 ---
-
-### Phase 31 — Coverage Threshold en CI
-
-Una vez Phase 30 completada (activación de Phase 29):
 
 ```js
 coverageThreshold: { global: { branches: 70, functions: 80, lines: 80, statements: 80 } }
 ```
+
+---
+
+### Phase 33 — Detail Pages para módulos críticos sin `[id]`
+
+> **Motivación**: ~50 módulos no tienen página de detalle `[id]`. Los más usados en producción
+> tienen listas que no permiten ver ni editar un registro individual.
+
+**Sprint A — Real Estate + Retail (más usados):**
+- [ ] `transactions/[id]` — Detalle de transacción: partes, documentos, comisión, timeline
+- [ ] `retail_loyalty/[id]` — Perfil del socio: puntos acumulados, historial de canje, tier
+
+**Sprint B — ISP operacional:**
+- [ ] `isp_subscribers/billing` — Vista desglosada de facturas de un abonado (ya existe listado)
+- [ ] `dist_credit/[id]` — Límite + historial + autorización de crédito
+
+**Sprint C — Educación:**
+- [ ] `tuition/receipts/[id]` — Recibo detallado de pago escolar (ya tiene PDF, falta detail page UI)
+- [ ] `grades/[id]` — Boletín interactivo del alumno (ya existe PDF pero no UI de edición)
+
+**Prerequisito:** ninguno. Cada página es autónoma.
+
+---
+
+### Phase 34 — AI Agents: Vertical ISP + gaps críticos
+
+> **Motivación**: ISP es la vertical con 0/9 módulos con AI agent. Es la más operativa
+> y tiene los casos de uso más valiosos (detección de patrones de mora, análisis de red, etc.).
+> La IA está habilitada en la app — solo faltan los archivos `ai-agents.ts` + `ai-tools.ts`.
+
+> **Nota sobre PII Encryption + IA**: La encriptación es completamente transparente para
+> el framework de AI agents. Los tools usan `findWithDecryption()` en lugar de `em.find()` —
+> reciben datos en texto plano. La IA puede leer y escribir campos encriptados sin restricción.
+> El ORM subscriber encripta automáticamente antes de guardar. Cambio de 1 línea por tool.
+
+**Sprint ISP — "Gerente de ISP" en `isp_subscribers`:**
+- [ ] AI Agent: `isp.manager_assistant` (read-only, chat mode)
+  - Tool `isp.get_subscriber_summary` — estado, plan, balance, historial de pagos
+  - Tool `isp.get_overdue_analysis` — morosos por zona, días vencidos, proyección de cortes
+  - Tool `isp.get_network_status` — nodos caídos, CPEs offline, incidencias abiertas
+  - Tool `isp.get_billing_dashboard` — recaudación del mes, facturas pendientes, cobros por método
+  - Tool `isp.get_technician_performance` — órdenes completadas, tiempo promedio, zona
+- [ ] `<AiChat>` embebido en `isp_subscribers/backend` (header de la lista)
+
+**Sprint RE — Refuerzo inmobiliaria:**
+- [ ] `transactions/ai-agents.ts` — Tool `re.get_transaction_pipeline`: cierres en proceso, comisiones por cobrar, tiempo promedio de cierre
+
+**Sprint Education — Análisis escolar:**
+- [ ] `students/ai-agents.ts` — `edu.get_academic_overview`: promedios por grado, alumnos en riesgo (notas < umbral), cobranza pendiente
+
+**Sprint Manufacturing — Completar cobertura:**
+- [ ] `mfg_floor/ai-agents.ts` — `mfg.floor_assistant`: OEE en tiempo real por línea, análisis paros CORPOELEC vs internos, capacidad disponible hoy
+
+**Prerequisito:** Al menos 1 AI provider key configurada en Coolify (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY` o `GOOGLE_GENERATIVE_AI_API_KEY`).
+
+---
+
+### Phase 35 — Dashboard Widgets por vertical
+
+> **Motivación**: 9 verticales no tienen ningún widget de dashboard. El dashboard es lo
+> primero que el admin ve al entrar — actualmente está vacío para manufactura, ISP,
+> distribución, construcción, condominios, automotriz, retail, agro y academia.
+> OM provee el sistema de widgets configurables por tenant; solo hay que implementarlos.
+
+**Formato de cada widget** (patrón OM documentado):
+```
+src/modules/<module>/widgets/dashboard/<widget-name>/
+├── config.ts      — metadatos: id, título, tamaño, settings
+├── widget.ts      — DashboardWidgetModule con lazyDashboardWidget()
+└── widget.client.tsx — componente React (datos via apiCall)
+```
+
+**Sprint A — ISP (mayor impacto operativo):**
+- [ ] `isp_billing/widgets/dashboard/billing-summary/` — Facturas del mes: emitidas, cobradas, vencidas, % cobro
+- [ ] `isp_subscribers/widgets/dashboard/subscriber-stats/` — Abonados activos, suspendidos, nuevos esta semana
+
+**Sprint B — Manufacturing:**
+- [ ] `mfg_orders/widgets/dashboard/production-overview/` — Órdenes en progreso, OEE hoy, paros activos (CORPOELEC badge)
+- [ ] `mfg_inventory/widgets/dashboard/inventory-alerts/` — MP bajo mínimo, lotes próximos a vencer (FEFO)
+
+**Sprint C — Agro:**
+- [ ] `agri_units/widgets/dashboard/harvest-program/` — Flocks activos con semáforo FCA/IEP/retiro (ya existe la UI, extraer como widget)
+- [ ] `agri_cold_chain/widgets/dashboard/cold-chain-status/` — Cuartos activos con temperatura en tiempo real, excursiones últimas 24h
+
+**Sprint D — Resto de verticales (1 widget por vertical):**
+- [ ] `const_projects/widgets/dashboard/projects-overview/` — Proyectos activos, % avance promedio, RFIs abiertos
+- [ ] `dist_routes/widgets/dashboard/routes-today/` — Rutas del día, despachos completados, cobertura %
+- [ ] `condo_fees/widgets/dashboard/fees-summary/` — Cuotas del mes: emitidas, cobradas, morosas
+- [ ] `academy_courses/widgets/dashboard/academy-overview/` — Cursos activos, alumnos inscritos, pagos pendientes
+- [ ] `auto_service_orders/widgets/dashboard/workshop-status/` — Órdenes en taller hoy, por entregar, tiempo promedio
+- [ ] `retail_branches/widgets/dashboard/retail-summary/` — Ventas del día, sucursal con mayor actividad, alertas de stock
+
+---
+
+### Phase 36 — PII Encryption (Datos Sensibles)
+
+> **Motivación**: Cero módulos usan el sistema de encriptación de OM. Los datos personales
+> de estudiantes, abonados ISP y clientes están en texto plano en PostgreSQL.
+>
+> **La IA NO pierde funcionalidad**: `findWithDecryption()` devuelve texto plano al AI tool.
+> El ORM subscriber encripta automáticamente al escribir. La IA opera igual que hoy,
+> pero PostgreSQL almacena los datos encriptados. Cambio de 1 línea por query en ai-tools.
+
+**Qué encriptar (prioridad por regulación/riesgo):**
+
+| Módulo | Campos PII | Por qué |
+|--------|-----------|---------|
+| `students` | `first_name`, `last_name`, `cedula`+hash, `phone`, `email`+hash | Menores de edad, obligatorio LOPD VE |
+| `isp_subscribers` | `first_name`, `last_name`, `cedula`+hash, `phone`, `email`+hash, `address` | Datos de cliente con contrato de servicio |
+| `isp_billing` | `photo_receipt_url` | Comprobantes de pago (datos bancarios visibles) |
+| `auto_service_orders` | Los datos del cliente vienen del CRM (`customers` de OM) — ya encriptados |
+
+**Implementación por módulo** (patrón documentado en AGM.md §10):
+```typescript
+// src/modules/students/encryption.ts
+export const defaultEncryptionMaps: ModuleEncryptionMap[] = [{
+  entityId: 'students:student',
+  fields: [
+    { field: 'first_name' },
+    { field: 'last_name' },
+    { field: 'cedula', hashField: 'cedula_hash' }, // equality lookup
+    { field: 'phone' },
+    { field: 'email', hashField: 'email_hash' },
+  ],
+}]
+```
+
+**Actualización en AI tools** (si existen tools que lean estos campos):
+```typescript
+// Antes:
+const students = await em.find(StudentEntity, { tenant_id: tenantId } as any)
+// Después (1 línea de cambio):
+const students = await findWithDecryption(em, StudentEntity, { tenant_id: tenantId } as any, undefined, scope)
+// La IA recibe exactamente los mismos datos en texto plano — cero impacto funcional
+```
+
+**Backfill de datos existentes:**
+```bash
+yarn mercato entities seed-encryption --tenant <tenantId> --organization <orgId>
+```
+
+**Prerequisitos:** Phase 36 requiere que los módulos estén en producción con datos (pueden tener datos sin encriptar que se backfillean). No requiere migrations (encriptación se aplica en capa de aplicación, no de schema).
+
+---
+
+### Phase 37 — Widget Injection Cross-Module
+
+> **Motivación**: OM permite inyectar UI de un módulo en las páginas de otro sin acoplamiento.
+> Solo el módulo `example` usa esta capacidad. Los casos de uso reales son muy valiosos:
+> el admin ve información relacionada sin navegar entre módulos.
+
+**Patrón OM** (AGM.md §Widget Injection):
+```
+src/modules/<module>/widgets/injection/<widget-name>/
+├── widget.ts          — headless: declara slot, datos, acciones
+└── widget.client.tsx  — React component si necesita UI
+widgets/injection-table.ts — mapeo widget → slot
+```
+
+**Sprint A — ISP: billing en subscriber detail:**
+- [ ] `isp_billing` inyecta en `data-table:isp_subscribers.subscriber` → columna "Balance" + badge estado de deuda
+- [ ] Slot: `data-table:isp_subscribers.subscriber:columns` — muestra saldo pendiente en la lista de abonados
+- [ ] Slot: `data-table:isp_subscribers.subscriber:row-actions` — acción "Registrar pago" directo desde la lista
+
+**Sprint B — Manufacturing: costos en orden:**
+- [ ] `mfg_costs` inyecta en página `mfg_orders/[id]` → tab "Costos" con variaciones (precio/cantidad/MO)
+- [ ] Slot: `admin.page:/backend/mfg-orders/[id]:before` — badge de costo real vs estándar en el header
+
+**Sprint C — Fiscal: retenciones en facturas:**
+- [ ] `ve_withholdings` inyecta en `agri_sales` y `mfg_dispatch` → sección "Retenciones aplicables" en la factura
+- [ ] `ve_fiscal` inyecta validación RIF en formulario de creación de cliente del CRM
+
+**Sprint D — Real Estate: publicación:**
+- [ ] `property_publishing` inyecta en `properties/[id]` → sección "Publicaciones activas" (MercadoLibre, Instagram, etc.)
+- [ ] `mercadolibre_sync` inyecta estado de sincronización en la ficha de cada propiedad
+
+---
+
+### Phase 38 — Custom Fields (`ce.ts`) para entidades configurables
+
+> **Motivación**: OM tiene un sistema completo de Custom Fields que permite a cada tenant
+> agregar sus propios campos a entidades existentes SIN tocar código. Solo el módulo
+> `example` lo usa. Es una de las funcionalidades más poderosas de OM y más valoradas
+> por los clientes: cada empresa tiene sus propias necesidades de datos.
+
+**Patrón OM** (AGM.md §Custom Fields):
+```typescript
+// src/modules/properties/ce.ts
+import type { CustomEntitySpec } from '@open-mercato/shared/modules/entities'
+
+export const entities: CustomEntitySpec[] = [{
+  entityId: E.properties.property,  // usa E.module.entity generado
+  label: 'Propiedad',
+  fields: [
+    { key: 'floor', kind: 'integer', label: 'Piso', formEditable: true, filterable: true },
+    { key: 'parking_covered', kind: 'boolean', label: 'Estacionamiento techado', formEditable: true },
+    { key: 'condo_fee_usd', kind: 'decimal', label: 'Cuota de condominio (USD)', formEditable: true },
+  ],
+}]
+```
+
+**Módulos prioritarios para ce.ts:**
+
+| Módulo | Campos customizables de alto valor |
+|--------|-----------------------------------|
+| `properties` | Piso, tipo de vista, amenidades, cuota de mantenimiento |
+| `isp_subscribers` | Equipo asignado (modelo ONT/router), contrato número, sector técnico |
+| `students` | Alergias, contacto de emergencia, necesidades especiales |
+| `auto_vehicles` | Color, número de chasis, año modelo, kilometraje actual |
+| `mfg_orders` | Código de lote del cliente, número de orden del comprador |
+| `academy_courses` | Modalidad (presencial/online/híbrido), código externo certificación |
+
+**Por qué es valioso**: Cada cliente que instale la vertical inmobiliaria tendrá sus propios
+campos adicionales. Sin `ce.ts`, necesitan un PR para cada campo nuevo. Con `ce.ts`, el admin
+los configura en UI sin código.
+
+---
+
+### Phase 39 — Real-time UI con `useAppEvent`
+
+> **Motivación**: 46 módulos declaran `clientBroadcast: true` en sus eventos, lo que significa
+> que el servidor emite SSE al browser cuando hay cambios. Sin embargo, la mayoría de las
+> páginas de lista no usan `useAppEvent` para recargarse automáticamente.
+> Resultado: el admin tiene que presionar F5 para ver cambios que ya ocurrieron.
+
+**Patrón OM** (AGM.md §useAppEvent):
+```typescript
+// En la lista de tickets de soporte ISP:
+import { useAppEvent } from '@open-mercato/ui/backend/injection/useAppEvent'
+
+useAppEvent('isp_support.ticket.*', () => {
+  refetchTickets()  // se recarga cuando cualquier ticket cambia en tiempo real
+}, [refetchTickets])
+```
+
+**Páginas críticas para real-time:**
+
+| Módulo | Evento a escuchar | Acción en UI |
+|--------|------------------|--------------|
+| `isp_support` | `isp_support.ticket.*` | Refetch lista de tickets al resolver/crear desde otro terminal |
+| `isp_subscribers` | `isp_subscribers.subscriber.suspended_overdue` | Badge "Suspendido" aparece en tiempo real al corte automático |
+| `mfg_orders` | `mfg_orders.downtime.started` | Alert banner cuando un paro inicia en planta |
+| `mfg_floor` | `mfg_orders.released` | Lista de órdenes activas se actualiza cuando el supervisor libera |
+| `agri_cold_chain` | `agri_cold_chain.temperature.excursion` | Alert en el dashboard de cadena de frío |
+| `agri_units` | `agri_units.*` | KPIs de flocks actualizados en tiempo real |
+| `const_progress` | `const_progress.item.*` | Porcentaje de avance del proyecto se actualiza en tiempo real |
+
+---
+
+### Phase 40 — Progress Tracking para operaciones largas
+
+> **Motivación**: Workers como `isp_billing/detect-overdue`, `mfg_mrp` (explosión de BOM),
+> y batch billing ejecutan sin feedback visible. El admin no sabe si la operación está
+> corriendo o si falló. OM tiene el módulo `progress` habilitado que muestra una barra
+> en el topbar del backend.
+
+**Patrón OM** (`packages/core/src/modules/progress/AGENTS.md`):
+```typescript
+// En el API handler que lanza la operación:
+import { createProgressJob } from '@open-mercato/core/modules/progress/lib/progressService'
+
+const progressJobId = await createProgressJob(container, {
+  label: 'Generando facturas ISP...',
+  tenantId, organizationId, userId,
+  estimatedSteps: subscriberCount,
+})
+// Encola el worker con progressJobId en el payload
+await queue.enqueue({ tenantId, organizationId, progressJobId })
+// Retorna el progressJobId al frontend → ProgressTopBar polling
+
+// En el worker: reportar avance
+await progressService.advanceJob(progressJobId, { current: i, total: n }, scope)
+```
+
+**Operaciones prioritarias para progress tracking:**
+
+| Módulo | Operación | Estimación |
+|--------|-----------|-----------|
+| `isp_billing` | Generación masiva de facturas mensuales | N abonados (potencialmente 100-1000) |
+| `mfg_mrp` | Explosión de BOM + cálculo de necesidades netas | N artículos × niveles del BOM |
+| `agri_hr` | Cálculo de nómina jornaleros | N trabajadores × días |
+| `condo_fees` | Generación de recibos de condominio | N propietarios |
+| `enrollment` | Importación masiva de alumnos (school_migration) | N alumnos del CSV |
+
+---
+
+### Phase 41 — Outbound Webhooks (ISP + Agro + Fiscal)
+
+> **Motivación**: El módulo `webhooks` está habilitado en `modules.ts`. Los módulos pueden
+> registrar webhooks outbound que se disparan en eventos del sistema. Habilitar webhooks
+> permitiría integrar la plataforma con sistemas externos sin desarrollo adicional.
+
+**Casos de uso de alto valor:**
+
+**ISP (cuando `isp_monitoring` se active — Phase 22-C):**
+- [ ] `isp_billing.cut_triggered` → webhook a Radius/OLT para suspender servicio físicamente
+- [ ] `isp_subscribers.subscriber.reconnected` → webhook a Radius/OLT para reactivar
+- [ ] Implementar en `isp_subscribers/webhooks.ts`: handler de outbound webhook con firma Standard Webhooks
+
+**Agro:**
+- [ ] `agri_quality.nc.created` (NC crítica) → webhook a sistema SASA / SENASAG para notificación regulatoria
+- [ ] `agri_cold_chain.temperature.excursion` → webhook a WhatsApp Business API (alertas al responsable)
+
+**Fiscal Venezuela:**
+- [ ] `agri_sales.invoice.created` / `mfg_dispatch.invoice.created` → webhook a sistema contable externo (SIC, Monica, etc.)
+
+---
+
+### Phase 42 — Translations.ts (campos multiidioma)
+
+> **Motivación**: 0/111 módulos usan el sistema de Translation Manager de OM.
+> Al declarar `translations.ts`, OM inyecta automáticamente un widget de traducción
+> en los formularios CrudForm de esas entidades. Útil para plataformas con usuarios
+> que hablan diferentes idiomas o que exportan contenido en múltiples idiomas.
+
+**Módulos donde aplica primero:**
+
+| Módulo | Campos a declarar | Casos de uso |
+|--------|------------------|--------------|
+| `academy_courses` | `title`, `description`, `objectives` | Academias con alumnos de habla inglesa o bilingües |
+| `mfg_dispatch` | `product_description` en CoA | Certificados para clientes internacionales |
+| `properties` | `title`, `description` | Agencias que publican propiedades para clientes extranjeros |
+
+**Patrón:**
+```typescript
+// src/modules/academy_courses/translations.ts
+export const translatableFields: Record<string, string[]> = {
+  'academy_courses:course': ['title', 'description', 'objectives'],
+}
+// Ejecutar: yarn generate
+// Resultado: widget "Translations" aparece automáticamente en el CrudForm del curso
+```
+
+---
+
+### Phase 43 — Integration Adapters Venezuela
+
+> **Motivación**: OM tiene un sistema de integraciones completo (`integrations` + `data_sync`
+> módulos habilitados, Integration Marketplace framework). Ningún adapter venezolano
+> está implementado. Habilitar estos adapters conecta la plataforma con el ecosistema
+> de sistemas venezolanos sin desarrollo adicional posterior.
+
+**Adapters prioritarios:**
+
+**DolarApi → Adapter formal (`venezuela_rates`):**
+- [ ] Migrar `venezuela_rates` de servicio manual a adapter formal `data_sync`
+- [ ] Sincronización automática cada hora via worker
+- [ ] Health check de disponibilidad del endpoint
+- [ ] Historial de tasas almacenado en DB para auditoría
+
+**SENIAT (Servicio Nacional de Administración Aduanera y Tributaria):**
+- [ ] Consulta de contribuyente por RIF (validación en tiempo real vs DB SENIAT)
+- [ ] Detección automática de Contribuyentes Especiales (impactan retenciones)
+- [ ] Usado por: `ve_withholdings`, `agri_sales`, `mfg_dispatch`
+
+**IVSS (Instituto Venezolano de los Seguros Sociales):**
+- [ ] Verificación de estado activo del trabajador
+- [ ] Usado por: `agri_hr` (liquidaciones), `mfg_hr` (nómina)
+
+**WhatsApp Business API:**
+- [ ] Adapter para notificaciones de cobro (`isp_billing`, `tuition`, `condo_fees`)
+- [ ] Envío de facturas en PDF como adjunto
+- [ ] Confirmación de pago con foto de comprobante
+
+---
+
+## Resumen de Fases Pendientes (Roadmap 2026)
+
+| Phase | Título | Prioridad | Prerequisito |
+|-------|--------|-----------|--------------|
+| 28 | Integration Tests en CI | 🔴 Alta | Phase 25 ✅ |
+| 30 (cont.) | Wizard tenant + seedDefaults condicionales | 🔴 Alta | Phase 30 parcial ✅ |
+| 33 | Detail Pages módulos críticos | 🟡 Alta | ninguno |
+| 34 | AI Agents — ISP + gaps | 🔴 Alta | API key configurada en Coolify |
+| 35 | Dashboard Widgets por vertical | 🟡 Alta | ninguno |
+| 36 | PII Encryption (students, isp_subscribers) | 🔴 Alta | — |
+| 37 | Widget Injection cross-module | 🟡 Media | Phase 33 |
+| 38 | Custom Fields (`ce.ts`) | 🟡 Media | ninguno |
+| 39 | Real-time UI (`useAppEvent`) | 🟢 Media | events clientBroadcast ya activos |
+| 40 | Progress Tracking workers | 🟢 Media | Phase 34 |
+| 41 | Outbound Webhooks | 🟢 Media | Phase 22-C (ISP monitoring) |
+| 42 | Translations.ts | 🟢 Baja | ninguno |
+| 43 | Integration Adapters Venezuela | 🟡 Media | Phase 40 |
+
+**Nota sobre PII Encryption (Phase 36)**: La encriptación es transparente para la IA.
+Los AI agents usan `findWithDecryption()` y reciben datos en texto plano. El ORM subscriber
+encripta automáticamente al escribir. Cero impacto funcional en el AI framework.
 
 ---
 
