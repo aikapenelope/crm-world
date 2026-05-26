@@ -6,4 +6,7 @@ export const metadata: PageMetadata = {
   order: 40,
   requireAuth: true,
   requireFeatures: ['payment_methods.view'],
+  pageGroup: 'Configuración',
+  pageGroupKey: 'settings.sections.moduleConfigs',
+  pageOrder: 200,
 }

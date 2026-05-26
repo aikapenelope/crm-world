@@ -3,4 +3,7 @@ export const metadata = {
   requireFeatures: ['tuition.record_payment'],
   pageTitle: 'Registrar Pago',
   pageTitleKey: 'tuition.nav.payments',
+  pageGroup: 'Education',
+  pageGroupKey: 'education',
+  pageOrder: 270,
 }

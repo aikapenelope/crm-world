@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Cobro WhatsApp',
   pageTitleKey: 'dist_credit.cobro.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
+  pageOrder: 200,
 }

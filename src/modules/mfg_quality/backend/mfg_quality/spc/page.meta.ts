@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['mfg_quality.view'],
   pageTitle: 'Cartas de Control SPC',
   navHidden: true,
+  pageGroup: 'Manufactura',
+  pageGroupKey: 'nav.group.mfg',
+  pageOrder: 200,
 }

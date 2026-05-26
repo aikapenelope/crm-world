@@ -3,4 +3,7 @@ export const metadata = {
   requireFeatures: ['condo_maintenance.view'],
   pageTitle: 'Solicitudes',
   pageTitleKey: 'condo_maintenance.requests.title',
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
+  pageOrder: 220,
 }

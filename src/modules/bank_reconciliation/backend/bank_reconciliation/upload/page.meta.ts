@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Cargar Extracto Bancario',
   pageTitleKey: 'bank_reconciliation.upload.title',
   navHidden: true,
+  pageGroup: 'Fiscal',
+  pageGroupKey: 'fiscal',
+  pageOrder: 200,
 }

@@ -3,4 +3,7 @@ export const metadata = {
   requireFeatures: ['const_subcon.view'],
   pageTitle: 'Contratos de Subcontrato',
   pageTitleKey: 'const_subcon.contracts.title',
+  pageGroup: 'Construcción',
+  pageGroupKey: 'construccion',
+  pageOrder: 200,
 }
