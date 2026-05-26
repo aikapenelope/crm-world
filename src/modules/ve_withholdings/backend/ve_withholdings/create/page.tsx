@@ -7,8 +7,10 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Receipt } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function CreateWithholdingPage() {
+  const t = useT()
   const router = useRouter()
 
   const currentPeriod = React.useMemo(() => {
@@ -25,33 +27,24 @@ export default function CreateWithholdingPage() {
         column: 1,
         title: 'Datos de la retención',
         fields: [
-          {
-            id: 'type', type: 'select', label: 'Tipo de retención', required: true,
-            options: [
-              { label: 'Retención IVA (75%)', value: 'iva' },
-              { label: 'Retención ISLR', value: 'islr' },
-            ],
-          },
+          { id: 'type', type: 'select', label: 'Tipo de retención', required: true, options: [
+            { label: 'Retención IVA (75%)', value: 'iva' },
+            { label: 'Retención ISLR', value: 'islr' },
+          ]},
           { id: 'period_month', type: 'text', label: 'Período (YYYY-MM)', required: true, defaultValue: currentPeriod, placeholder: '2026-05' },
-          {
-            id: 'fortnight', type: 'select', label: 'Quincena (solo IVA)', defaultValue: '1',
-            options: [
-              { label: 'Primera quincena (1-15)', value: '1' },
-              { label: 'Segunda quincena (16-fin)', value: '2' },
-            ],
-          },
-          {
-            id: 'withholding_rate', type: 'select', label: 'Porcentaje de retención', required: true,
-            options: [
-              { label: '75% — IVA (agente de retención)', value: '75.00' },
-              { label: '100% — IVA (contribuyente no domiciliado)', value: '100.00' },
-              { label: '5% — ISLR (servicios profesionales)', value: '5.00' },
-              { label: '3% — ISLR (transporte)', value: '3.00' },
-              { label: '2% — ISLR (compras de bienes)', value: '2.00' },
-              { label: '1% — ISLR (seguros)', value: '1.00' },
-              { label: '34% — ISLR (no domiciliados)', value: '34.00' },
-            ],
-          },
+          { id: 'fortnight', type: 'select', label: 'Quincena (solo IVA)', defaultValue: '1', options: [
+            { label: 'Primera quincena (1-15)', value: '1' },
+            { label: 'Segunda quincena (16-fin)', value: '2' },
+          ]},
+          { id: 'withholding_rate', type: 'select', label: 'Porcentaje de retención', required: true, options: [
+            { label: '75% — IVA (agente de retención)', value: '75.00' },
+            { label: '100% — IVA (contribuyente no domiciliado)', value: '100.00' },
+            { label: '5% — ISLR (servicios profesionales)', value: '5.00' },
+            { label: '3% — ISLR (transporte)', value: '3.00' },
+            { label: '2% — ISLR (compras de bienes)', value: '2.00' },
+            { label: '1% — ISLR (seguros)', value: '1.00' },
+            { label: '34% — ISLR (no domiciliados)', value: '34.00' },
+          ]},
         ],
       },
       {
@@ -96,8 +89,8 @@ export default function CreateWithholdingPage() {
             <Receipt className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Registrar Retención</h1>
-            <p className="text-sm text-muted-foreground">Calcular y registrar retención de IVA o ISLR a un proveedor</p>
+            <h1 className="text-2xl font-bold">{t('ve_withholdings.create.title', 'Registrar Retención')}</h1>
+            <p className="text-sm text-muted-foreground">{t('ve_withholdings.create.subtitle', 'Calcular y registrar retención de IVA o ISLR a un proveedor')}</p>
           </div>
         </div>
 
@@ -105,7 +98,7 @@ export default function CreateWithholdingPage() {
           backHref="/backend/ve_withholdings"
           fields={[]}
           groups={groups}
-          submitLabel="Registrar Retención"
+          submitLabel={t('ve_withholdings.create.submit', 'Registrar Retención')}
           cancelHref="/backend/ve_withholdings"
           onSubmit={async (values) => {
             const payload = {
@@ -126,7 +119,7 @@ export default function CreateWithholdingPage() {
             }
 
             await createCrud('ve-withholdings/records', payload)
-            flash('Retención registrada exitosamente', 'success')
+            flash(t('ve_withholdings.create.success', 'Retención registrada exitosamente'), 'success')
             router.push('/backend/ve_withholdings')
           }}
         />
