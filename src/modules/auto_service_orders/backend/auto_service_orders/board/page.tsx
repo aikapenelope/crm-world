@@ -5,6 +5,7 @@ import { Page, PageBody } from '@open-mercato/ui/backend/Page'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { LayoutGrid } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type OrderRow = {
   id: string
@@ -31,6 +32,7 @@ const PRIORITY_DOTS: Record<string, string> = {
 }
 
 export default function ServiceOrderBoardPage() {
+  const t = useT()
   const [orders, setOrders] = React.useState<OrderRow[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
 
@@ -57,7 +59,15 @@ export default function ServiceOrderBoardPage() {
   }, [orders])
 
   if (isLoading) {
-    return <Page><PageBody><div className="text-center py-8 text-muted-foreground">Cargando board...</div></PageBody></Page>
+    return (
+      <Page>
+        <PageBody>
+          <div className="text-center py-8 text-muted-foreground">
+            {t('auto_service_orders.board.loading', 'Cargando board...')}
+          </div>
+        </PageBody>
+      </Page>
+    )
   }
 
   return (
@@ -65,7 +75,7 @@ export default function ServiceOrderBoardPage() {
       <PageBody>
         <div className="mb-6 flex items-center gap-3">
           <LayoutGrid className="size-5 text-muted-foreground" />
-          <h1 className="text-2xl font-bold">Board — Vehículos en Taller</h1>
+          <h1 className="text-2xl font-bold">{t('auto_service_orders.board.title', 'Board — Vehículos en Taller')}</h1>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
@@ -93,7 +103,9 @@ export default function ServiceOrderBoardPage() {
                     </div>
                   ))}
                   {colOrders.length === 0 && (
-                    <p className="text-xs text-muted-foreground text-center py-4">Sin órdenes</p>
+                    <p className="text-xs text-muted-foreground text-center py-4">
+                      {t('auto_service_orders.board.empty_col', 'Sin órdenes')}
+                    </p>
                   )}
                 </div>
               </div>

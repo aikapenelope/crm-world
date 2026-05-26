@@ -7,13 +7,16 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Package } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function CreatePartPage() {
+  const t = useT()
   const router = useRouter()
 
+  // PATTERNS.md §10: CrudFormGroup uses `title` (not `label`)
   const groups = React.useMemo<CrudFormGroup[]>(() => [
     {
-      id: 'part', column: 1, label: 'Datos del repuesto',
+      id: 'part', column: 1, title: 'Datos del repuesto',
       fields: [
         { id: 'code', type: 'text', label: 'Código', required: true, placeholder: 'FRE-001' },
         { id: 'name', type: 'text', label: 'Nombre', required: true, placeholder: 'Pastillas de freno delanteras' },
@@ -29,7 +32,7 @@ export default function CreatePartPage() {
       ],
     },
     {
-      id: 'pricing', column: 2, label: 'Precios y stock',
+      id: 'pricing', column: 2, title: 'Precios y stock',
       fields: [
         { id: 'cost_price', type: 'text', label: 'Precio de costo', required: true, placeholder: '15.00' },
         { id: 'sell_price', type: 'text', label: 'Precio de venta', required: true, placeholder: '25.00' },
@@ -48,13 +51,13 @@ export default function CreatePartPage() {
             <Package className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Agregar Repuesto</h1>
-            <p className="text-sm text-muted-foreground">Registrar un repuesto en el inventario del taller</p>
+            <h1 className="text-2xl font-bold">{t('auto_parts.create.title', 'Agregar Repuesto')}</h1>
+            <p className="text-sm text-muted-foreground">{t('auto_parts.create.subtitle', 'Registrar un repuesto en el inventario del taller')}</p>
           </div>
         </div>
         <CrudForm
           backHref="/backend/auto_parts" fields={[]} groups={groups}
-          submitLabel="Agregar Repuesto" cancelHref="/backend/auto_parts"
+          submitLabel={t('auto_parts.create.submit', 'Agregar Repuesto')} cancelHref="/backend/auto_parts"
           onSubmit={async (values) => {
             await createCrud('auto-parts/parts', {
               code: String(values.code).trim(), name: String(values.name).trim(),
@@ -66,7 +69,7 @@ export default function CreatePartPage() {
               reorder_point: Number(values.reorder_point) || 0,
               location: values.location ? String(values.location).trim() : null,
             })
-            flash('Repuesto agregado', 'success')
+            flash(t('auto_parts.create.success', 'Repuesto agregado'), 'success')
             router.push('/backend/auto_parts')
           }}
         />

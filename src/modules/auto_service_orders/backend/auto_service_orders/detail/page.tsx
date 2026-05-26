@@ -5,8 +5,8 @@ import { Page, PageBody } from '@open-mercato/ui/backend/Page'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
-import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { CheckCircle2, Circle, Clock, Wrench, Camera, MessageCircle } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 /**
  * Service Order Detail Page with Visual Timeline.
@@ -38,6 +38,7 @@ const TIMELINE_STEPS = [
 ]
 
 export default function ServiceOrderDetailPage() {
+  const t = useT()
   const [order, setOrder] = React.useState<Order | null>(null)
   const [isLoading, setIsLoading] = React.useState(true)
 
@@ -55,10 +56,17 @@ export default function ServiceOrderDetailPage() {
   }, [orderId])
 
   if (isLoading || !order) {
-    return <Page><PageBody><div className="text-center py-8 text-muted-foreground">Cargando orden...</div></PageBody></Page>
+    return (
+      <Page>
+        <PageBody>
+          <div className="text-center py-8 text-muted-foreground">
+            {t('auto_service_orders.detail.loading', 'Cargando orden...')}
+          </div>
+        </PageBody>
+      </Page>
+    )
   }
 
-  // Determine current step index
   const currentStepIndex = TIMELINE_STEPS.findIndex((s) => s.key === order.status)
 
   return (
@@ -75,34 +83,35 @@ export default function ServiceOrderDetailPage() {
           <div className="flex gap-2">
             <Button type="button" variant="outline" size="sm">
               <Camera className="mr-2 size-4" />
-              Inspección
+              {t('auto_service_orders.detail.inspection_button', 'Inspección')}
             </Button>
-            <Button type="button" size="sm" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white">
+            {/* WhatsApp brand color: ds-rules allows brand colors via inline style, not className */}
+            <Button
+              type="button"
+              size="sm"
+              style={{ backgroundColor: '#25D366', color: 'white' }}
+              className="hover:opacity-90"
+            >
               <MessageCircle className="mr-2 size-4" />
-              WhatsApp
+              {t('auto_service_orders.detail.whatsapp_button', 'WhatsApp')}
             </Button>
           </div>
         </div>
 
         {/* Visual Timeline */}
         <div className="mb-8 rounded-lg border p-6">
-          <h2 className="text-sm font-semibold mb-4">Progreso</h2>
+          <h2 className="text-sm font-semibold mb-4">{t('auto_service_orders.detail.progress_title', 'Progreso')}</h2>
           <div className="relative">
-            {/* Progress bar background */}
             <div className="absolute top-4 left-4 right-4 h-0.5 bg-border" />
-            {/* Progress bar filled */}
             <div
               className="absolute top-4 left-4 h-0.5 bg-primary transition-all duration-500"
               style={{ width: `${Math.max(0, (currentStepIndex / (TIMELINE_STEPS.length - 1)) * 100)}%` }}
             />
-
-            {/* Steps */}
             <div className="relative flex justify-between">
               {TIMELINE_STEPS.map((step, idx) => {
                 const isCompleted = idx < currentStepIndex
                 const isCurrent = idx === currentStepIndex
                 const Icon = step.icon
-
                 return (
                   <div key={step.key} className="flex flex-col items-center">
                     <div className={`
@@ -126,33 +135,33 @@ export default function ServiceOrderDetailPage() {
         {/* Order Details */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="rounded-lg border p-4 space-y-3">
-            <h3 className="text-sm font-semibold">Motivo de Ingreso</h3>
+            <h3 className="text-sm font-semibold">{t('auto_service_orders.detail.reason_entry', 'Motivo de Ingreso')}</h3>
             <p className="text-sm">{order.customer_complaint ?? 'No especificado'}</p>
             {order.diagnosis_notes && (
               <>
-                <h3 className="text-sm font-semibold mt-4">Diagnóstico</h3>
+                <h3 className="text-sm font-semibold mt-4">{t('auto_service_orders.detail.diagnosis_title', 'Diagnóstico del técnico')}</h3>
                 <p className="text-sm">{order.diagnosis_notes}</p>
               </>
             )}
           </div>
           <div className="rounded-lg border p-4 space-y-3">
-            <h3 className="text-sm font-semibold">Información</h3>
+            <h3 className="text-sm font-semibold">{t('auto_service_orders.detail.info_title', 'Información')}</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Prioridad</span>
+                <span className="text-muted-foreground">{t('auto_service_orders.detail.priority_label', 'Prioridad')}</span>
                 <Badge variant={order.priority === 'urgent' ? 'destructive' : 'outline'}>
                   {order.priority === 'urgent' ? 'Urgente' : order.priority === 'high' ? 'Alta' : order.priority === 'low' ? 'Baja' : 'Normal'}
                 </Badge>
               </div>
               {order.estimated_completion && (
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Entrega estimada</span>
+                  <span className="text-muted-foreground">{t('auto_service_orders.detail.delivery_label', 'Entrega estimada')}</span>
                   <span className="font-medium">{new Date(order.estimated_completion).toLocaleDateString('es-VE')}</span>
                 </div>
               )}
               {Number(order.total_amount) > 0 && (
                 <div className="flex justify-between border-t pt-2">
-                  <span className="text-muted-foreground">Total</span>
+                  <span className="text-muted-foreground">{t('auto_service_orders.detail.total', 'Total')}</span>
                   <span className="font-bold text-lg">{order.currency} {Number(order.total_amount).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</span>
                 </div>
               )}

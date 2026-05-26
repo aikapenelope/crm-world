@@ -7,6 +7,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Camera, Car, History, Upload } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Vehicle = {
   id: string
@@ -35,13 +36,13 @@ const PHOTO_TYPE_LABELS: Record<string, string> = {
 }
 
 export default function VehicleDetailPage() {
+  const t = useT()
   const [vehicle, setVehicle] = React.useState<Vehicle | null>(null)
   const [photos, setPhotos] = React.useState<Photo[]>([])
   const [activeTab, setActiveTab] = React.useState<'info' | 'photos' | 'history'>('info')
   const [isUploading, setIsUploading] = React.useState(false)
   const [selectedPhoto, setSelectedPhoto] = React.useState<Photo | null>(null)
 
-  // In production, vehicle ID comes from URL params
   const vehicleId = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('id') : null
 
   React.useEffect(() => {
@@ -56,32 +57,19 @@ export default function VehicleDetailPage() {
     load()
   }, [vehicleId])
 
-  // Camera upload handler
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file || !vehicleId) return
-
     setIsUploading(true)
-    // In production, this would upload to storage and get a URL back
-    // For now, create a local object URL as placeholder
     const photoUrl = URL.createObjectURL(file)
-
-    const payload = {
-      vehicle_id: vehicleId,
-      photo_url: photoUrl,
-      photo_type: 'other',
-      caption: file.name,
-    }
-
+    const payload = { vehicle_id: vehicleId, photo_url: photoUrl, photo_type: 'other', caption: file.name }
     const call = await apiCall('/api/auto-vehicles/photos', {
       method: 'POST',
       body: JSON.stringify(payload),
       headers: { 'Content-Type': 'application/json' },
     }, { fallback: null })
-
     if (call.ok) {
-      flash('Foto subida exitosamente', 'success')
-      // Reload photos
+      flash(t('auto_vehicles.create.success', 'Foto subida exitosamente'), 'success')
       const pCall = await apiCall<{ items: Photo[] }>(`/api/auto-vehicles/photos?vehicle_id=${vehicleId}&pageSize=50`, undefined, { fallback: { items: [] } })
       if (pCall.ok) setPhotos(pCall.result?.items ?? [])
     }
@@ -89,8 +77,22 @@ export default function VehicleDetailPage() {
   }
 
   if (!vehicle) {
-    return <Page><PageBody><div className="text-center py-8 text-muted-foreground">Cargando vehículo...</div></PageBody></Page>
+    return (
+      <Page>
+        <PageBody>
+          <div className="text-center py-8 text-muted-foreground">
+            {t('auto_vehicles.detail.loading', 'Cargando vehículo...')}
+          </div>
+        </PageBody>
+      </Page>
+    )
   }
+
+  const tabs = [
+    { id: 'info' as const, label: t('auto_vehicles.detail.tab.info', 'Información'), icon: Car },
+    { id: 'photos' as const, label: `${t('auto_vehicles.detail.tab.photos', 'Fotos')} (${photos.length})`, icon: Camera },
+    { id: 'history' as const, label: t('auto_vehicles.detail.tab.history', 'Historial'), icon: History },
+  ]
 
   return (
     <Page>
@@ -124,7 +126,7 @@ export default function VehicleDetailPage() {
             <Button type="button" asChild disabled={isUploading}>
               <span>
                 <Camera className="mr-2 size-4" />
-                {isUploading ? 'Subiendo...' : 'Tomar Foto'}
+                {isUploading ? t('auto_vehicles.detail.uploading', 'Subiendo...') : t('auto_vehicles.detail.take_photo', 'Tomar Foto')}
               </span>
             </Button>
           </label>
@@ -132,16 +134,16 @@ export default function VehicleDetailPage() {
 
         {/* Tabs */}
         <div className="mb-6 flex gap-1 border-b">
-          {(['info', 'photos', 'history'] as const).map((tab) => (
+          {tabs.map((tab) => (
             <button
-              key={tab}
+              key={tab.id}
               type="button"
               className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === tab ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'
+                activeTab === tab.id ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'
               }`}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => setActiveTab(tab.id)}
             >
-              {tab === 'info' ? 'Información' : tab === 'photos' ? `Fotos (${photos.length})` : 'Historial'}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -150,22 +152,22 @@ export default function VehicleDetailPage() {
         {activeTab === 'info' && (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="rounded-lg border p-4 space-y-3">
-              <h3 className="text-sm font-semibold">Datos del Vehículo</h3>
+              <h3 className="text-sm font-semibold">{t('auto_vehicles.detail.section.vehicle', 'Datos del Vehículo')}</h3>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">Placa</span><span className="font-mono font-bold">{vehicle.plate}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Marca</span><span>{vehicle.brand}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Modelo</span><span>{vehicle.model}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Año</span><span>{vehicle.year}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Color</span><span>{vehicle.color ?? '—'}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">VIN</span><span className="font-mono text-xs">{vehicle.vin ?? '—'}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.plate', 'Placa')}</span><span className="font-mono font-bold">{vehicle.plate}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.brand', 'Marca')}</span><span>{vehicle.brand}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.model', 'Modelo')}</span><span>{vehicle.model}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.year', 'Año')}</span><span>{vehicle.year}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.color', 'Color')}</span><span>{vehicle.color ?? '—'}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.vin', 'VIN')}</span><span className="font-mono text-xs">{vehicle.vin ?? '—'}</span></div>
               </div>
             </div>
             <div className="rounded-lg border p-4 space-y-3">
-              <h3 className="text-sm font-semibold">Especificaciones</h3>
+              <h3 className="text-sm font-semibold">{t('auto_vehicles.detail.section.specs', 'Especificaciones')}</h3>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between"><span className="text-muted-foreground">Motor</span><span>{vehicle.engine_type === 'gasoline' ? 'Gasolina' : vehicle.engine_type}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Transmisión</span><span>{vehicle.transmission === 'automatic' ? 'Automático' : 'Manual'}</span></div>
-                <div className="flex justify-between"><span className="text-muted-foreground">Kilometraje</span><span className="font-bold">{vehicle.current_km.toLocaleString('es-VE')} km</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.engine', 'Motor')}</span><span>{vehicle.engine_type === 'gasoline' ? 'Gasolina' : vehicle.engine_type}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.transmission', 'Transmisión')}</span><span>{vehicle.transmission === 'automatic' ? 'Automático' : 'Manual'}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">{t('auto_vehicles.detail.field.km', 'Kilometraje')}</span><span className="font-bold">{vehicle.current_km.toLocaleString('es-VE')} km</span></div>
               </div>
             </div>
           </div>
@@ -176,17 +178,16 @@ export default function VehicleDetailPage() {
             {photos.length === 0 ? (
               <div className="rounded-lg border border-dashed p-12 text-center">
                 <Camera className="mx-auto size-12 text-muted-foreground/50 mb-4" />
-                <p className="text-muted-foreground mb-2">No hay fotos del vehículo</p>
+                <p className="text-muted-foreground mb-2">{t('auto_vehicles.detail.no_photos', 'No hay fotos del vehículo')}</p>
                 <label className="cursor-pointer">
                   <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoUpload} />
                   <Button type="button" variant="outline" asChild>
-                    <span><Upload className="mr-2 size-4" />Subir primera foto</span>
+                    <span><Upload className="mr-2 size-4" />{t('auto_vehicles.detail.upload_first', 'Subir primera foto')}</span>
                   </Button>
                 </label>
               </div>
             ) : (
               <>
-                {/* Photo Grid */}
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                   {photos.map((photo) => (
                     <div
@@ -202,7 +203,6 @@ export default function VehicleDetailPage() {
                   ))}
                 </div>
 
-                {/* Lightbox */}
                 {selectedPhoto && (
                   <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
@@ -212,7 +212,7 @@ export default function VehicleDetailPage() {
                       <img src={selectedPhoto.photo_url} alt={selectedPhoto.caption ?? ''} className="max-w-full max-h-[85vh] object-contain rounded-lg" />
                       <div className="absolute top-4 right-4">
                         <Button type="button" variant="secondary" size="sm" onClick={() => setSelectedPhoto(null)}>
-                          Cerrar
+                          {t('auto_vehicles.detail.close', 'Cerrar')}
                         </Button>
                       </div>
                       {selectedPhoto.caption && (
@@ -229,7 +229,7 @@ export default function VehicleDetailPage() {
         {activeTab === 'history' && (
           <div className="rounded-lg border p-6 text-center">
             <History className="mx-auto size-8 text-muted-foreground/50 mb-3" />
-            <p className="text-muted-foreground">El historial de servicios se muestra aquí cuando el vehículo tiene órdenes completadas.</p>
+            <p className="text-muted-foreground">{t('auto_vehicles.detail.history_empty', 'El historial de servicios se muestra aquí cuando el vehículo tiene órdenes completadas.')}</p>
           </div>
         )}
       </PageBody>

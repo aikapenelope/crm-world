@@ -9,6 +9,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, Camera } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type InspectionRow = {
   id: string
@@ -49,6 +50,7 @@ const CONDITION_VARIANTS: Record<string, 'default' | 'secondary' | 'outline' | '
 }
 
 export default function AutoInspectionsPage() {
+  const t = useT()
   const router = useRouter()
   const [inspections, setInspections] = React.useState<InspectionRow[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
@@ -70,17 +72,17 @@ export default function AutoInspectionsPage() {
   const columns: ColumnDef<InspectionRow>[] = [
     {
       accessorKey: 'created_at',
-      header: 'Fecha',
+      header: t('auto_inspections.list.col.date', 'Fecha'),
       cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString('es-VE'),
     },
     {
       accessorKey: 'type',
-      header: 'Tipo',
+      header: t('auto_inspections.list.col.type', 'Tipo'),
       cell: ({ row }) => TYPE_LABELS[row.original.type] ?? row.original.type,
     },
     {
       accessorKey: 'overall_condition',
-      header: 'Condición',
+      header: t('auto_inspections.list.col.condition', 'Condición'),
       cell: ({ row }) => row.original.overall_condition ? (
         <Badge variant={CONDITION_VARIANTS[row.original.overall_condition] ?? 'outline'}>
           {CONDITION_LABELS[row.original.overall_condition] ?? row.original.overall_condition}
@@ -89,7 +91,7 @@ export default function AutoInspectionsPage() {
     },
     {
       accessorKey: 'status',
-      header: 'Estado',
+      header: t('auto_inspections.list.col.status', 'Estado'),
       cell: ({ row }) => (
         <Badge variant={row.original.status === 'sent_to_customer' ? 'default' : 'secondary'}>
           {STATUS_LABELS[row.original.status] ?? row.original.status}
@@ -98,7 +100,7 @@ export default function AutoInspectionsPage() {
     },
     {
       accessorKey: 'sent_to_customer_at',
-      header: 'Enviada',
+      header: t('auto_inspections.list.col.sent', 'Enviada'),
       cell: ({ row }) => row.original.sent_to_customer_at
         ? new Date(row.original.sent_to_customer_at).toLocaleDateString('es-VE')
         : '—',
@@ -111,11 +113,11 @@ export default function AutoInspectionsPage() {
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Camera className="size-6 text-muted-foreground" />
-            <h1 className="text-2xl font-bold">Inspecciones Digitales</h1>
+            <h1 className="text-2xl font-bold">{t('auto_inspections.list.title', 'Inspecciones Digitales')}</h1>
           </div>
           <Button type="button" onClick={() => router.push('/backend/auto_inspections/create')}>
             <Plus className="mr-2 size-4" />
-            Nueva Inspección
+            {t('auto_inspections.list.new_button', 'Nueva Inspección')}
           </Button>
         </div>
 
@@ -123,7 +125,7 @@ export default function AutoInspectionsPage() {
           columns={columns}
           data={inspections}
           isLoading={isLoading}
-          searchPlaceholder="Buscar inspección..."
+          searchPlaceholder={t('auto_inspections.list.search_placeholder', 'Buscar inspección...')}
         />
       </PageBody>
     </Page>

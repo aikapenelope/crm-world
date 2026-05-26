@@ -4,6 +4,7 @@ import * as React from 'react'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { CheckCircle2, AlertTriangle, XCircle, Camera } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 /**
  * Public Inspection Page — /inspection/[id]
@@ -62,6 +63,7 @@ const URGENCY_LABELS: Record<string, string> = {
 }
 
 export default function PublicInspectionPage() {
+  const t = useT()
   const [inspection, setInspection] = React.useState<InspectionData | null>(null)
   const [items, setItems] = React.useState<InspectionItem[]>([])
   const [photos, setPhotos] = React.useState<InspectionPhoto[]>([])
@@ -88,11 +90,19 @@ export default function PublicInspectionPage() {
   }, [inspectionId])
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">Cargando inspección...</p></div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">{t('auto_inspections.public.loading', 'Cargando inspección...')}</p>
+      </div>
+    )
   }
 
   if (!inspection) {
-    return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">Inspección no encontrada.</p></div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">{t('auto_inspections.public.not_found', 'Inspección no encontrada.')}</p>
+      </div>
+    )
   }
 
   // Group items by system
@@ -103,17 +113,15 @@ export default function PublicInspectionPage() {
     return acc
   }, {} as Record<string, InspectionItem[]>)
 
-  // Get photos for a specific item
   const getPhotosForItem = (itemId: string) => photos.filter((p) => p.inspection_item_id === itemId)
   const generalPhotos = photos.filter((p) => !p.inspection_item_id)
-
   const overallConfig = inspection.overall_condition ? CONDITION_CONFIG[inspection.overall_condition] : null
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b bg-card px-4 py-6 text-center">
-        <h1 className="text-xl font-bold">Inspección del Vehículo</h1>
+        <h1 className="text-xl font-bold">{t('auto_inspections.public.title', 'Inspección del Vehículo')}</h1>
         <p className="text-sm text-muted-foreground mt-1">
           {new Date(inspection.created_at).toLocaleDateString('es-VE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
@@ -166,7 +174,8 @@ export default function PublicInspectionPage() {
                     {item.notes && <p className="text-xs text-muted-foreground mt-1">{item.notes}</p>}
                     {item.recommended_action && (
                       <p className="text-xs mt-1">
-                        <span className="font-medium">Recomendación:</span> {item.recommended_action}
+                        <span className="font-medium">{t('auto_inspections.public.recommendation', 'Recomendación:')}</span>{' '}
+                        {item.recommended_action}
                         {item.urgency !== 'none' && (
                           <Badge variant={item.urgency === 'immediate' ? 'destructive' : 'secondary'} className="ml-2 text-xs">
                             {URGENCY_LABELS[item.urgency]}
@@ -174,7 +183,6 @@ export default function PublicInspectionPage() {
                         )}
                       </p>
                     )}
-                    {/* Item photos */}
                     {itemPhotos.length > 0 && (
                       <div className="flex gap-2 mt-2 overflow-x-auto">
                         {itemPhotos.map((photo) => (
@@ -200,7 +208,7 @@ export default function PublicInspectionPage() {
       {inspection.notes && (
         <div className="px-4 py-4">
           <div className="rounded-lg border p-4 bg-muted/30">
-            <h3 className="text-sm font-semibold mb-1">Notas del Técnico</h3>
+            <h3 className="text-sm font-semibold mb-1">{t('auto_inspections.public.notes_title', 'Notas del Técnico')}</h3>
             <p className="text-sm text-muted-foreground">{inspection.notes}</p>
           </div>
         </div>
@@ -209,7 +217,7 @@ export default function PublicInspectionPage() {
       {/* Footer */}
       <div className="px-4 py-6 text-center border-t">
         <p className="text-xs text-muted-foreground">
-          Inspección realizada por el taller. Para aprobar el presupuesto, contacte al taller.
+          {t('auto_inspections.public.footer', 'Inspección realizada por el taller. Para aprobar el presupuesto, contacte al taller.')}
         </p>
       </div>
 
