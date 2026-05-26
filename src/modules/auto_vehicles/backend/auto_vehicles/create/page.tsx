@@ -7,8 +7,10 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Car } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function CreateVehiclePage() {
+  const t = useT()
   const router = useRouter()
 
   const groups = React.useMemo<CrudFormGroup[]>(
@@ -65,8 +67,8 @@ export default function CreateVehiclePage() {
             <Car className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Registrar Vehículo</h1>
-            <p className="text-sm text-muted-foreground">Agregar un vehículo al sistema del taller</p>
+            <h1 className="text-2xl font-bold">{t('auto_vehicles.create.title', 'Registrar Vehículo')}</h1>
+            <p className="text-sm text-muted-foreground">{t('auto_vehicles.create.subtitle', 'Agregar un vehículo al sistema del taller')}</p>
           </div>
         </div>
 
@@ -74,7 +76,7 @@ export default function CreateVehiclePage() {
           backHref="/backend/auto_vehicles"
           fields={[]}
           groups={groups}
-          submitLabel="Registrar Vehículo"
+          submitLabel={t('auto_vehicles.create.submit', 'Registrar Vehículo')}
           cancelHref="/backend/auto_vehicles"
           onSubmit={async (values) => {
             const payload = {
@@ -92,7 +94,7 @@ export default function CreateVehiclePage() {
             }
 
             await createCrud('auto-vehicles/vehicles', payload)
-            flash('Vehículo registrado exitosamente', 'success')
+            flash(t('auto_vehicles.create.success', 'Vehículo registrado exitosamente'), 'success')
             router.push('/backend/auto_vehicles')
           }}
         />

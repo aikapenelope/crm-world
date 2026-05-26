@@ -7,8 +7,10 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Camera } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function CreateInspectionPage() {
+  const t = useT()
   const router = useRouter()
 
   const groups = React.useMemo<CrudFormGroup[]>(
@@ -55,8 +57,8 @@ export default function CreateInspectionPage() {
             <Camera className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Nueva Inspección Digital</h1>
-            <p className="text-sm text-muted-foreground">Documentar el estado del vehículo con fotos y hallazgos</p>
+            <h1 className="text-2xl font-bold">{t('auto_inspections.create.title', 'Nueva Inspección Digital')}</h1>
+            <p className="text-sm text-muted-foreground">{t('auto_inspections.create.subtitle', 'Documentar el estado del vehículo con fotos y hallazgos')}</p>
           </div>
         </div>
 
@@ -64,7 +66,7 @@ export default function CreateInspectionPage() {
           backHref="/backend/auto_inspections"
           fields={[]}
           groups={groups}
-          submitLabel="Crear Inspección"
+          submitLabel={t('auto_inspections.create.submit', 'Crear Inspección')}
           cancelHref="/backend/auto_inspections"
           onSubmit={async (values) => {
             const payload = {
@@ -77,16 +79,16 @@ export default function CreateInspectionPage() {
             }
 
             await createCrud('auto-inspections/inspections', payload)
-            flash('Inspección creada — ahora puede agregar fotos y hallazgos', 'success')
+            flash(t('auto_inspections.create.success', 'Inspección creada — ahora puede agregar fotos y hallazgos'), 'success')
             router.push('/backend/auto_inspections')
           }}
         />
 
         {/* Info about photo upload */}
         <div className="mt-6 rounded-lg border bg-muted/30 p-4">
-          <h3 className="text-sm font-semibold mb-2">Sobre las fotos</h3>
+          <h3 className="text-sm font-semibold mb-2">{t('auto_inspections.create.photos_info_title', 'Sobre las fotos')}</h3>
           <p className="text-xs text-muted-foreground">
-            Después de crear la inspección, podrá agregar fotos desde la cámara del teléfono.
+            {t('auto_inspections.create.photos_info_text', 'Después de crear la inspección, podrá agregar fotos desde la cámara del teléfono.')}
             Use <code className="font-mono">input type=file accept=image/* capture=environment</code> para
             abrir la cámara directamente. Las fotos se asocian a cada hallazgo del checklist.
           </p>

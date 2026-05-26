@@ -7,11 +7,12 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Wrench } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function CreateServiceOrderPage() {
+  const t = useT()
   const router = useRouter()
 
-  // Generate order number
   const orderNumber = React.useMemo(() => {
     const now = new Date()
     const y = now.getFullYear()
@@ -72,8 +73,8 @@ export default function CreateServiceOrderPage() {
             <Wrench className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Nueva Orden de Servicio</h1>
-            <p className="text-sm text-muted-foreground">Registrar ingreso de vehículo al taller</p>
+            <h1 className="text-2xl font-bold">{t('auto_service_orders.create.title', 'Nueva Orden de Servicio')}</h1>
+            <p className="text-sm text-muted-foreground">{t('auto_service_orders.create.subtitle', 'Registrar ingreso de vehículo al taller')}</p>
           </div>
         </div>
 
@@ -81,7 +82,7 @@ export default function CreateServiceOrderPage() {
           backHref="/backend/auto_service_orders"
           fields={[]}
           groups={groups}
-          submitLabel="Crear Orden"
+          submitLabel={t('auto_service_orders.create.submit', 'Crear Orden')}
           cancelHref="/backend/auto_service_orders"
           onSubmit={async (values) => {
             const payload = {
@@ -98,7 +99,7 @@ export default function CreateServiceOrderPage() {
             }
 
             await createCrud('auto-service-orders/orders', payload)
-            flash('Orden de servicio creada', 'success')
+            flash(t('auto_service_orders.create.success', 'Orden de servicio creada'), 'success')
             router.push('/backend/auto_service_orders')
           }}
         />

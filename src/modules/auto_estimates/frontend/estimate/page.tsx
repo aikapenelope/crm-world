@@ -5,6 +5,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { CheckCircle2, XCircle } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 /**
  * Public Estimate Page — /estimate?id=<estimate_id>
@@ -14,8 +15,6 @@ import { CheckCircle2, XCircle } from 'lucide-react'
  * - Approve or decline individual items
  * - See totals update in real-time
  * - Submit their approval
- *
- * Follows the same pattern as Open Mercato's sales/frontend/quote/[token]/page.tsx
  */
 
 type EstimateData = {
@@ -41,6 +40,7 @@ type EstimateItem = {
 }
 
 export default function PublicEstimatePage() {
+  const t = useT()
   const [estimate, setEstimate] = React.useState<EstimateData | null>(null)
   const [items, setItems] = React.useState<EstimateItem[]>([])
   const [approvals, setApprovals] = React.useState<Record<string, boolean>>({})
@@ -62,7 +62,6 @@ export default function PublicEstimatePage() {
       if (iCall.ok) {
         const loadedItems = iCall.result?.items ?? []
         setItems(loadedItems)
-        // Initialize approvals (all approved by default)
         const initial: Record<string, boolean> = {}
         for (const item of loadedItems) { initial[item.id] = true }
         setApprovals(initial)
@@ -76,14 +75,12 @@ export default function PublicEstimatePage() {
     setApprovals((prev) => ({ ...prev, [itemId]: !prev[itemId] }))
   }
 
-  // Calculate approved total
   const approvedTotal = items
     .filter((item) => approvals[item.id])
     .reduce((sum, item) => sum + Number(item.total_price), 0)
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
-    // In production, this would call an API to save the approvals
     await new Promise((r) => setTimeout(r, 1000))
     setSubmitted(true)
     setIsSubmitting(false)
@@ -92,11 +89,19 @@ export default function PublicEstimatePage() {
   const fmt = (val: string | number) => Number(val).toLocaleString('es-VE', { minimumFractionDigits: 2 })
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">Cargando presupuesto...</p></div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">{t('auto_estimates.public.loading', 'Cargando presupuesto...')}</p>
+      </div>
+    )
   }
 
   if (!estimate) {
-    return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">Presupuesto no encontrado.</p></div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">{t('auto_estimates.public.not_found', 'Presupuesto no encontrado.')}</p>
+      </div>
+    )
   }
 
   if (submitted) {
@@ -104,10 +109,10 @@ export default function PublicEstimatePage() {
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="text-center space-y-4">
           <CheckCircle2 className="mx-auto size-16 text-primary" />
-          <h1 className="text-2xl font-bold">Respuesta Enviada</h1>
+          <h1 className="text-2xl font-bold">{t('auto_estimates.public.success.title', 'Respuesta Enviada')}</h1>
           <p className="text-muted-foreground">
             {Object.values(approvals).every(Boolean)
-              ? 'Ha aprobado todos los trabajos. El taller procederá con la reparación.'
+              ? t('auto_estimates.public.success.all', 'Ha aprobado todos los trabajos. El taller procederá con la reparación.')
               : `Ha aprobado ${Object.values(approvals).filter(Boolean).length} de ${items.length} items. El taller lo contactará para confirmar.`
             }
           </p>
@@ -120,13 +125,15 @@ export default function PublicEstimatePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b bg-card px-4 py-6 text-center">
-        <h1 className="text-xl font-bold">Presupuesto {estimate.estimate_number}</h1>
+        <h1 className="text-xl font-bold">
+          {t('auto_estimates.public.title', 'Presupuesto {number}').replace('{number}', estimate.estimate_number)}
+        </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Seleccione los trabajos que desea aprobar
+          {t('auto_estimates.public.subtitle', 'Seleccione los trabajos que desea aprobar')}
         </p>
         {estimate.valid_until && (
           <p className="text-xs text-muted-foreground mt-1">
-            Válido hasta: {new Date(estimate.valid_until).toLocaleDateString('es-VE')}
+            {t('auto_estimates.public.valid_until', 'Válido hasta: {date}').replace('{date}', new Date(estimate.valid_until).toLocaleDateString('es-VE'))}
           </p>
         )}
       </div>
@@ -152,7 +159,9 @@ export default function PublicEstimatePage() {
                     <p className="text-sm font-medium">{item.description}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <Badge variant="outline" className="text-xs">
-                        {item.type === 'labor' ? 'Mano de obra' : 'Repuesto'}
+                        {item.type === 'labor'
+                          ? t('auto_estimates.public.labor_badge', 'Mano de obra')
+                          : t('auto_estimates.public.part_badge', 'Repuesto')}
                       </Badge>
                       {item.quantity > 1 && <span className="text-xs text-muted-foreground">x{item.quantity}</span>}
                     </div>
@@ -171,11 +180,14 @@ export default function PublicEstimatePage() {
       <div className="px-4 py-4 border-t">
         <div className="rounded-lg border p-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Items aprobados</span>
-            <span>{Object.values(approvals).filter(Boolean).length} de {items.length}</span>
+            <span className="text-muted-foreground">
+              {t('auto_estimates.public.approved_items', '{approved} de {total} items')
+                .replace('{approved}', String(Object.values(approvals).filter(Boolean).length))
+                .replace('{total}', String(items.length))}
+            </span>
           </div>
           <div className="flex justify-between font-bold text-lg border-t pt-2">
-            <span>Total aprobado</span>
+            <span>{t('auto_estimates.public.approved_total', 'Total aprobado')}</span>
             <span className="text-primary">{estimate.currency} {fmt(approvedTotal)}</span>
           </div>
         </div>
@@ -190,10 +202,12 @@ export default function PublicEstimatePage() {
           onClick={handleSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Enviando...' : `Confirmar Aprobación (${estimate.currency} ${fmt(approvedTotal)})`}
+          {isSubmitting
+            ? t('auto_estimates.public.confirming', 'Enviando...')
+            : `${t('auto_estimates.public.confirm_button', 'Confirmar Aprobación')} (${estimate.currency} ${fmt(approvedTotal)})`}
         </Button>
         <p className="text-xs text-muted-foreground text-center mt-2">
-          Toque un item para aprobarlo o rechazarlo
+          {t('auto_estimates.public.tap_hint', 'Toque un item para aprobarlo o rechazarlo')}
         </p>
       </div>
     </div>

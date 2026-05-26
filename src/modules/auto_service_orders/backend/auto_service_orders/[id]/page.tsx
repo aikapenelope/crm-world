@@ -9,9 +9,8 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { updateCrud } from '@open-mercato/ui/backend/utils/crud'
-import {
-  ArrowLeft, CheckCircle2, Circle, Clock, Wrench, Camera, MessageCircle,
-} from 'lucide-react'
+import { ArrowLeft, CheckCircle2, Circle, Clock, Wrench, Camera } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Order = {
   id: string
@@ -42,17 +41,6 @@ type OrderItem = {
   technician_notes: string | null
 }
 
-type Vehicle = {
-  id: string
-  plate: string
-  brand: string
-  model: string
-  year: number
-  color: string | null
-  owner_name: string | null
-  owner_phone: string | null
-}
-
 const TIMELINE_STEPS = [
   { key: 'received', label: 'Recibido', icon: Circle },
   { key: 'diagnosis', label: 'Diagnóstico', icon: Clock },
@@ -70,27 +58,21 @@ const PRIORITY_LABELS: Record<string, string> = {
 
 const STATUS_NEXT: Record<string, string> = {
   received: 'diagnosis', diagnosis: 'estimate_sent', estimate_sent: 'approved',
-  approved: 'in_repair', in_repair: 'quality_check', quality_check: 'ready',
-  ready: 'delivered',
+  approved: 'in_repair', in_repair: 'quality_check', quality_check: 'ready', ready: 'delivered',
 }
 
 const STATUS_NEXT_LABELS: Record<string, string> = {
-  received: 'Iniciar Diagnóstico',
-  diagnosis: 'Enviar Presupuesto',
-  estimate_sent: 'Marcar Aprobado',
-  approved: 'Iniciar Reparación',
-  in_repair: 'Control de Calidad',
-  quality_check: 'Marcar Listo',
-  ready: 'Marcar Entregado',
+  received: 'Iniciar Diagnóstico', diagnosis: 'Enviar Presupuesto', estimate_sent: 'Marcar Aprobado',
+  approved: 'Iniciar Reparación', in_repair: 'Control de Calidad', quality_check: 'Marcar Listo', ready: 'Marcar Entregado',
 }
 
 export default function ServiceOrderDetailPage() {
+  const t = useT()
   const params = useParams()
   const router = useRouter()
   const orderId = params?.id as string
 
   const [order, setOrder] = React.useState<Order | null>(null)
-  const [vehicle, setVehicle] = React.useState<Vehicle | null>(null)
   const [items, setItems] = React.useState<OrderItem[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [advancing, setAdvancing] = React.useState(false)
@@ -98,33 +80,11 @@ export default function ServiceOrderDetailPage() {
   async function load() {
     setIsLoading(true)
     const [orderRes, itemsRes] = await Promise.all([
-      apiCall<{ items: Order[] }>(
-        `/api/auto-service-orders/orders?id=${orderId}`,
-        undefined,
-        { fallback: { items: [] } },
-      ),
-      apiCall<{ items: OrderItem[] }>(
-        `/api/auto-service-orders/items?service_order_id=${orderId}&pageSize=50`,
-        undefined,
-        { fallback: { items: [] } },
-      ),
+      apiCall<{ items: Order[] }>(`/api/auto-service-orders/orders?id=${orderId}`, undefined, { fallback: { items: [] } }),
+      apiCall<{ items: OrderItem[] }>(`/api/auto-service-orders/items?service_order_id=${orderId}&pageSize=50`, undefined, { fallback: { items: [] } }),
     ])
-    const o = orderRes.result?.items?.[0] ?? null
-    setOrder(o)
+    setOrder(orderRes.result?.items?.[0] ?? null)
     setItems(itemsRes.result?.items ?? [])
-
-    // Load vehicle via auto_vehicles
-    if (o) {
-      const vRes = await apiCall<{ items: any[] }>(
-        `/api/auto-vehicles/vehicles?pageSize=1`,
-        undefined,
-        { fallback: { items: [] } },
-      )
-      // vehicles are loaded by listing — find the one linked to this order
-      // For now vehicle data comes from the order's vehicle_id via a join
-      // We'll load all vehicles and find by id from order context in the future
-    }
-
     setIsLoading(false)
   }
 
@@ -137,22 +97,22 @@ export default function ServiceOrderDetailPage() {
     setAdvancing(true)
     const res = await updateCrud('auto-service-orders/orders', { id: order.id, status: nextStatus })
     if (res.ok) {
-      flash('Estado actualizado', 'success')
+      flash(t('auto_service_orders.detail.advanced', 'Estado actualizado'), 'success')
       await load()
     } else {
-      flash('Error al actualizar estado', 'error')
+      flash(t('auto_service_orders.detail.advance_error', 'Error al actualizar estado'), 'error')
     }
     setAdvancing(false)
   }
 
-  if (isLoading) return <LoadingMessage label="Cargando orden..." />
+  if (isLoading) return <LoadingMessage label={t('auto_service_orders.detail.loading', 'Cargando orden...')} />
   if (!order) return (
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.back()}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Volver
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('auto_service_orders.detail.back_short', 'Volver')}
         </Button>
-        <p className="mt-4 text-muted-foreground">Orden no encontrada.</p>
+        <p className="mt-4 text-muted-foreground">{t('auto_service_orders.detail.not_found', 'Orden no encontrada.')}</p>
       </PageBody>
     </Page>
   )
@@ -160,7 +120,6 @@ export default function ServiceOrderDetailPage() {
   const currentStepIndex = TIMELINE_STEPS.findIndex(s => s.key === order.status)
   const isDelivered = order.status === 'delivered'
   const nextStatusLabel = STATUS_NEXT_LABELS[order.status]
-
   const laborItems = items.filter(i => i.type === 'labor')
   const partItems = items.filter(i => i.type === 'part')
 
@@ -171,7 +130,7 @@ export default function ServiceOrderDetailPage() {
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={() => router.push('/backend/auto_service_orders')}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Órdenes de servicio
+            {t('auto_service_orders.detail.back', 'Órdenes de servicio')}
           </Button>
           <div className="mt-3 flex items-start justify-between flex-wrap gap-3">
             <div>
@@ -183,23 +142,13 @@ export default function ServiceOrderDetailPage() {
             </div>
             <div className="flex gap-2 flex-wrap">
               {!isDelivered && nextStatusLabel && (
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={handleAdvanceStatus}
-                  disabled={advancing}
-                >
-                  {advancing ? 'Actualizando...' : nextStatusLabel}
+                <Button type="button" size="sm" onClick={handleAdvanceStatus} disabled={advancing}>
+                  {advancing ? t('auto_service_orders.detail.advancing', 'Actualizando...') : nextStatusLabel}
                 </Button>
               )}
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => router.push('/backend/auto_service_orders/board')}
-              >
+              <Button type="button" variant="outline" size="sm" onClick={() => router.push('/backend/auto_service_orders/board')}>
                 <Camera className="mr-2 size-4" />
-                Tablero
+                {t('auto_service_orders.detail.board_button', 'Tablero')}
               </Button>
             </div>
           </div>
@@ -209,7 +158,7 @@ export default function ServiceOrderDetailPage() {
             </Badge>
             {order.estimated_completion && (
               <Badge variant="secondary">
-                Entrega: {new Date(order.estimated_completion).toLocaleDateString('es-VE')}
+                {t('auto_service_orders.detail.delivery_label', 'Entrega estimada')}: {new Date(order.estimated_completion).toLocaleDateString('es-VE')}
               </Badge>
             )}
           </div>
@@ -217,7 +166,9 @@ export default function ServiceOrderDetailPage() {
 
         {/* Visual Timeline */}
         <div className="mb-6 rounded-lg border p-5">
-          <h2 className="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-wide">Progreso</h2>
+          <h2 className="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-wide">
+            {t('auto_service_orders.detail.progress_title', 'Progreso')}
+          </h2>
           <div className="relative">
             <div className="absolute top-4 left-4 right-4 h-0.5 bg-border" />
             <div
@@ -251,38 +202,38 @@ export default function ServiceOrderDetailPage() {
         {/* Info grid */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-6">
           <div className="rounded-lg border p-4 space-y-3">
-            <h3 className="text-sm font-semibold">Motivo y Diagnóstico</h3>
+            <h3 className="text-sm font-semibold">{t('auto_service_orders.detail.reason_title', 'Motivo y Diagnóstico')}</h3>
             {order.customer_complaint ? (
               <p className="text-sm">{order.customer_complaint}</p>
             ) : (
-              <p className="text-sm text-muted-foreground">Sin descripción</p>
+              <p className="text-sm text-muted-foreground">{t('auto_service_orders.detail.no_description', 'Sin descripción')}</p>
             )}
             {order.diagnosis_notes && (
               <>
-                <h3 className="text-sm font-semibold mt-3">Diagnóstico del técnico</h3>
+                <h3 className="text-sm font-semibold mt-3">{t('auto_service_orders.detail.diagnosis_title', 'Diagnóstico del técnico')}</h3>
                 <p className="text-sm">{order.diagnosis_notes}</p>
               </>
             )}
             {order.notes && (
               <>
-                <h3 className="text-sm font-semibold mt-3">Notas internas</h3>
+                <h3 className="text-sm font-semibold mt-3">{t('auto_service_orders.detail.notes_title', 'Notas internas')}</h3>
                 <p className="text-sm text-muted-foreground">{order.notes}</p>
               </>
             )}
           </div>
           <div className="rounded-lg border p-4 space-y-3">
-            <h3 className="text-sm font-semibold">Resumen financiero</h3>
+            <h3 className="text-sm font-semibold">{t('auto_service_orders.detail.financial_title', 'Resumen financiero')}</h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Mano de obra</span>
+                <span className="text-muted-foreground">{t('auto_service_orders.detail.labor', 'Mano de obra')}</span>
                 <span>{order.currency} {Number(order.total_labor).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Repuestos</span>
+                <span className="text-muted-foreground">{t('auto_service_orders.detail.parts', 'Repuestos')}</span>
                 <span>{order.currency} {Number(order.total_parts).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between border-t pt-2 font-bold">
-                <span>Total</span>
+                <span>{t('auto_service_orders.detail.total', 'Total')}</span>
                 <span className="text-lg">{order.currency} {Number(order.total_amount).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</span>
               </div>
             </div>
@@ -293,7 +244,7 @@ export default function ServiceOrderDetailPage() {
         {items.length > 0 && (
           <div className="rounded-lg border overflow-hidden mb-6">
             <div className="px-4 py-3 border-b bg-muted/30">
-              <h3 className="text-sm font-semibold">Trabajos y repuestos</h3>
+              <h3 className="text-sm font-semibold">{t('auto_service_orders.detail.items_title', 'Trabajos y repuestos')}</h3>
             </div>
             <div className="divide-y">
               {[...laborItems, ...partItems].map((item) => (
@@ -301,11 +252,11 @@ export default function ServiceOrderDetailPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <Badge variant={item.type === 'labor' ? 'secondary' : 'outline'} className="text-xs">
-                        {item.type === 'labor' ? 'MO' : 'Repuesto'}
+                        {item.type === 'labor' ? t('auto_service_orders.detail.labor_badge', 'MO') : t('auto_service_orders.detail.part_badge', 'Repuesto')}
                       </Badge>
                       <span className="text-sm font-medium">{item.description}</span>
                       {!item.is_approved && (
-                        <Badge variant="destructive" className="text-xs">Rechazado</Badge>
+                        <Badge variant="destructive" className="text-xs">{t('auto_service_orders.detail.rejected_badge', 'Rechazado')}</Badge>
                       )}
                     </div>
                     {item.technician_notes && (
