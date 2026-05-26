@@ -5,5 +5,4 @@ export const metadata = {
   navHidden: true,
   pageGroup: 'Distribución',
   pageGroupKey: 'distribution',
-  navHidden: true,
 }

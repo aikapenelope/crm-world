@@ -9,5 +9,4 @@ export const metadata = {
   ],
   pageGroup: 'Retail',
   pageGroupKey: 'retail.nav.group',
-  navHidden: true,
 }

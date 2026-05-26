@@ -6,5 +6,4 @@ export const metadata: PageMetadata = {
   navHidden: true,
   pageGroup: 'Manufactura',
   pageGroupKey: 'nav.group.mfg',
-  navHidden: true,
 }

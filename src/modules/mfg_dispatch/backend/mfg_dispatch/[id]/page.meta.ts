@@ -4,5 +4,4 @@ export const metadata: PageMetadata = {
   pageTitle: 'Detalle Pedido / Guía', navHidden: true,
   pageGroup: 'Manufactura',
   pageGroupKey: 'nav.group.mfg',
-  navHidden: true,
 }

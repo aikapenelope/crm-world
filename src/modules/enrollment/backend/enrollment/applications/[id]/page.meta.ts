@@ -5,5 +5,4 @@ export const metadata = {
   navHidden: true,
   pageGroup: 'Education',
   pageGroupKey: 'education',
-  navHidden: true,
 }

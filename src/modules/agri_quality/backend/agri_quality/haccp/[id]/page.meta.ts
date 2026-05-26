@@ -6,5 +6,4 @@ export const metadata: PageMetadata = {
   navHidden: true,
   pageGroup: 'Agroindustria',
   pageGroupKey: 'nav.group.agri',
-  navHidden: true,
 }

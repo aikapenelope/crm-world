@@ -7,5 +7,4 @@ export const metadata: PageMetadata = {
   navHidden: true,
   pageGroup: 'ISP',
   pageGroupKey: 'nav.group.isp',
-  navHidden: true,
 }

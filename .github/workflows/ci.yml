@@ -378,11 +378,18 @@ jobs:
       - name: Run API Smoke Tests (ephemeral)
         # Starts isolated Docker containers, boots the app, runs all TC-SMOKE-001
         # specs. Produces results.json + HTML report following OM qa/AGENTS.md.
+        #
+        # CLI flags verified in open-mercato packages/cli/src/mercato.ts:1778-1839:
+        #   --filter <value>  Filter spec files by name pattern (supported)
+        #   --verbose         Verbose output (supported)
+        #   --force-rebuild   Force image rebuild (supported)
+        #   --reuse           Reuse existing environment (supported)
+        #
+        # NOT supported in standard ephemeral (interactive-only):
+        #   --workers N   → Playwright retries/workers are configured in playwright.config.ts
+        #   --retries N   → retries: 1 is already set in the template playwright.config.ts
         run: |
-          yarn test:integration:ephemeral \
-            --filter TC-SMOKE-001 \
-            --workers 1 \
-            --retries 1
+          yarn test:integration:ephemeral --filter TC-SMOKE-001
 
       - name: Upload test results
         if: always()
