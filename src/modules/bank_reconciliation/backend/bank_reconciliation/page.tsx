@@ -25,9 +25,6 @@ type TransactionRow = {
   matched_payment_id: string | null
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  pending: 'Pendiente', matched: 'Conciliado', unmatched: 'Sin cruce', ignored: 'Ignorado',
-}
 const STATUS_VARIANTS: Record<string, 'default' | 'secondary' | 'outline' | 'destructive'> = {
   pending: 'outline', matched: 'default', unmatched: 'destructive', ignored: 'secondary',
 }
@@ -63,14 +60,36 @@ export default function BankReconciliationPage() {
     }
   }, [transactions])
 
-  const columns: ColumnDef<TransactionRow>[] = [
+  // Translated status labels — built inside the component so locale changes are reflected
+  const statusLabels = React.useMemo<Record<string, string>>(() => ({
+    pending: t('bank_reconciliation.list.status.pending', 'Pendiente'),
+    matched: t('bank_reconciliation.list.status.matched', 'Conciliado'),
+    unmatched: t('bank_reconciliation.list.status.unmatched', 'Sin cruce'),
+    ignored: t('bank_reconciliation.list.status.ignored', 'Ignorado'),
+  }), [t])
+
+  const columns = React.useMemo<ColumnDef<TransactionRow>[]>(() => [
     { accessorKey: 'transaction_date', header: t('bank_reconciliation.list.col.date', 'Fecha'), cell: ({ row }) => new Date(row.original.transaction_date).toLocaleDateString('es-VE') },
-    { accessorKey: 'direction', header: t('bank_reconciliation.list.col.type', 'Tipo'), cell: ({ row }) => <Badge variant={row.original.direction === 'credit' ? 'default' : 'secondary'}>{row.original.direction === 'credit' ? 'Crédito' : 'Débito'}</Badge> },
-    { accessorKey: 'amount', header: t('bank_reconciliation.list.col.amount', 'Monto'), cell: ({ row }) => <span className={`font-medium ${row.original.direction === 'credit' ? 'text-primary' : 'text-foreground'}`}>{row.original.currency} {Number(row.original.amount).toLocaleString('es-VE', { minimumFractionDigits: 2 })}</span> },
+    { accessorKey: 'direction', header: t('bank_reconciliation.list.col.type', 'Tipo'), cell: ({ row }) => (
+      <Badge variant={row.original.direction === 'credit' ? 'default' : 'secondary'}>
+        {row.original.direction === 'credit'
+          ? t('bank_reconciliation.list.direction.credit', 'Crédito')
+          : t('bank_reconciliation.list.direction.debit', 'Débito')}
+      </Badge>
+    )},
+    { accessorKey: 'amount', header: t('bank_reconciliation.list.col.amount', 'Monto'), cell: ({ row }) => (
+      <span className={`font-medium ${row.original.direction === 'credit' ? 'text-primary' : 'text-foreground'}`}>
+        {row.original.currency} {Number(row.original.amount).toLocaleString('es-VE', { minimumFractionDigits: 2 })}
+      </span>
+    )},
     { accessorKey: 'reference', header: t('bank_reconciliation.list.col.reference', 'Referencia'), cell: ({ row }) => row.original.reference ?? '—' },
     { accessorKey: 'description', header: t('bank_reconciliation.list.col.description', 'Descripción'), cell: ({ row }) => <span className="max-w-[200px] truncate block text-xs">{row.original.description ?? '—'}</span> },
-    { accessorKey: 'reconciliation_status', header: t('bank_reconciliation.list.col.status', 'Estado'), cell: ({ row }) => <Badge variant={STATUS_VARIANTS[row.original.reconciliation_status] ?? 'outline'}>{STATUS_LABELS[row.original.reconciliation_status] ?? row.original.reconciliation_status}</Badge> },
-  ]
+    { accessorKey: 'reconciliation_status', header: t('bank_reconciliation.list.col.status', 'Estado'), cell: ({ row }) => (
+      <Badge variant={STATUS_VARIANTS[row.original.reconciliation_status] ?? 'outline'}>
+        {statusLabels[row.original.reconciliation_status] ?? row.original.reconciliation_status}
+      </Badge>
+    )},
+  ], [t, statusLabels])
 
   return (
     <Page>
