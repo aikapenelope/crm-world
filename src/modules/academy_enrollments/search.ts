@@ -19,7 +19,7 @@ const STATUS_LABELS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'academy_enrollments.academy_enrollment',
+      entityId: 'academy_enrollments:academy_enrollment',
       enabled: true,
       priority: 30,
 

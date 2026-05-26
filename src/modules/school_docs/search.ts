@@ -17,7 +17,7 @@ function norm(v: unknown): string | null {
 // =========================================================================
 export const searchConfig: SearchModuleConfig = {
   entities: [{
-    entityId: 'school_docs.document_template',
+    entityId: 'school_docs:document_template',
     enabled: true,
     priority: 10,
     fieldPolicy: {

@@ -25,7 +25,7 @@ export const searchConfig: SearchModuleConfig = {
     // Los administradores buscan acuerdos por número o estado.
     // =========================================================================
     {
-      entityId: 'condo_collections.condo_payment_agreement',
+      entityId: 'condo_collections:condo_payment_agreement',
       enabled: true,
       priority: 15,
 

@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'condo_comms.condo_circular',
+      entityId: 'condo_comms:condo_circular',
       enabled: true,
       priority: 15,
 

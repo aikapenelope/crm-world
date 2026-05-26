@@ -3,7 +3,7 @@ function norm(v: unknown): string | null { const s = String(v ?? '').trim(); ret
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_mrp.mfg_purchase_requisition',
+      entityId: 'mfg_mrp:mfg_purchase_requisition',
       enabled: true,
       priority: 40,
       fieldPolicy: { searchable: ['requisition_number', 'material_code', 'material_name', 'status'], excluded: ['tenant_id', 'organization_id', 'material_id', 'supplier_id', 'mrp_requirement_id'] },

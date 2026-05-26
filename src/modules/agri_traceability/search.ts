@@ -16,7 +16,7 @@ const RECALL_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_traceability.agri_recall',
+      entityId: 'agri_traceability:agri_recall',
       enabled: true,
       priority: 60,
       fieldPolicy: { searchable: ['recall_number', 'lot_number', 'status', 'recall_class'], excluded: ['tenant_id', 'organization_id', 'approved_by', 'affected_clients'] },

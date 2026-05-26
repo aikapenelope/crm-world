@@ -4,7 +4,7 @@ const SO_STATUS: Record<string, string> = { draft: 'Borrador', confirmed: 'Confi
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_dispatch.mfg_sale_order_mfg',
+      entityId: 'mfg_dispatch:mfg_sale_order_mfg',
       enabled: true, priority: 50,
       fieldPolicy: { searchable: ['order_number', 'customer_name', 'customer_rif', 'status'], excluded: ['tenant_id', 'organization_id', 'customer_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

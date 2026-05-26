@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'matching.contact_preference',
+      entityId: 'matching:contact_preference',
       enabled: true,
       priority: 10,
 

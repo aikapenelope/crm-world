@@ -15,7 +15,7 @@ const CROP_TYPE: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_field.agri_field_plot',
+      entityId: 'agri_field:agri_field_plot',
       enabled: true, priority: 20,
       fieldPolicy: { searchable: ['name', 'soil_type', 'irrigation_system', 'status'], excluded: ['tenant_id', 'organization_id', 'farm_unit_id', 'location_gps'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
@@ -35,7 +35,7 @@ export const searchConfig: SearchModuleConfig = {
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-field`,
     },
     {
-      entityId: 'agri_field.agri_crop_cycle',
+      entityId: 'agri_field:agri_crop_cycle',
       enabled: true, priority: 20,
       fieldPolicy: { searchable: ['crop_type', 'crop_variety', 'status', 'destination'], excluded: ['tenant_id', 'organization_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

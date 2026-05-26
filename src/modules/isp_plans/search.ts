@@ -18,7 +18,7 @@ export const searchConfig: SearchModuleConfig = {
     // Técnicos y agentes buscan por nombre, tecnología o segmento.
     // =========================================================================
     {
-      entityId: 'isp_plans.isp_service_plan',
+      entityId: 'isp_plans:isp_service_plan',
       enabled: true,
       priority: 5,
 

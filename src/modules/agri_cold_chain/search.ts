@@ -16,7 +16,7 @@ const UNIT_TYPE: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_cold_chain.agri_cold_storage_unit',
+      entityId: 'agri_cold_chain:agri_cold_storage_unit',
       enabled: true,
       priority: 25,
       fieldPolicy: { searchable: ['name', 'unit_type', 'status', 'sensor_id'], excluded: ['tenant_id', 'organization_id', 'alert_contact_id'] },

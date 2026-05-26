@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'academy_groups.academy_group',
+      entityId: 'academy_groups:academy_group',
       enabled: true,
       priority: 25,
 

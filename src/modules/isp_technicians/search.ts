@@ -18,7 +18,7 @@ export const searchConfig: SearchModuleConfig = {
     // Técnicos buscan sus órdenes por número o dirección.
     // =========================================================================
     {
-      entityId: 'isp_technicians.isp_work_order',
+      entityId: 'isp_technicians:isp_work_order',
       enabled: true,
       priority: 25,
 
@@ -69,7 +69,7 @@ export const searchConfig: SearchModuleConfig = {
     // isp_technicians.technician — Técnicos de campo
     // =========================================================================
     {
-      entityId: 'isp_technicians.isp_field_technician',
+      entityId: 'isp_technicians:isp_field_technician',
       enabled: true,
       priority: 10,
 

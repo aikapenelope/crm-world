@@ -23,7 +23,7 @@ export const searchConfig: SearchModuleConfig = {
     // Administradores buscan por número de factura o período.
     // =========================================================================
     {
-      entityId: 'isp_billing.isp_invoice',
+      entityId: 'isp_billing:isp_invoice',
       enabled: true,
       priority: 30,
 

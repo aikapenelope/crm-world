@@ -31,7 +31,7 @@ export const searchConfig: SearchModuleConfig = {
     // Los vendedores y cobradores buscan cuentas por nombre de cliente o estado.
     // =========================================================================
     {
-      entityId: 'dist_credit.dist_credit_limit',
+      entityId: 'dist_credit:dist_credit_limit',
       enabled: true,
       priority: 20,
 
@@ -117,7 +117,7 @@ export const searchConfig: SearchModuleConfig = {
     // Los cobradores buscan transacciones por descripción o tipo.
     // =========================================================================
     {
-      entityId: 'dist_credit.dist_credit_transaction',
+      entityId: 'dist_credit:dist_credit_transaction',
       enabled: true,
       priority: 10,
 

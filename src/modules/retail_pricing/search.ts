@@ -4,7 +4,7 @@ function norm(v: unknown): string | null { if (v == null) return null; const s =
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'retail_pricing.retail_pricing_rule',
+      entityId: 'retail_pricing:retail_pricing_rule',
       enabled: true,
       priority: 10,
       fieldPolicy: { searchable: ['name', 'rule_type'], excluded: ['min_margin_percent'] },

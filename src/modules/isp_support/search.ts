@@ -27,7 +27,7 @@ export const searchConfig: SearchModuleConfig = {
     // Técnicos y supervisores buscan por número de ticket o asunto.
     // =========================================================================
     {
-      entityId: 'isp_support.isp_support_ticket',
+      entityId: 'isp_support:isp_support_ticket',
       enabled: true,
       priority: 40,
 

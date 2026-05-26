@@ -16,7 +16,7 @@ const ORDER_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_orders.mfg_production_order',
+      entityId: 'mfg_orders:mfg_production_order',
       enabled: true,
       priority: 50,
       fieldPolicy: {

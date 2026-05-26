@@ -19,7 +19,7 @@ const INVOICE_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_sales.agri_sale_order',
+      entityId: 'agri_sales:agri_sale_order',
       enabled: true, priority: 35,
       fieldPolicy: { searchable: ['order_number', 'status', 'payment_terms'], excluded: ['tenant_id', 'organization_id', 'customer_id', 'items', 'bcv_rate'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
@@ -39,7 +39,7 @@ export const searchConfig: SearchModuleConfig = {
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-sales/${ctx.record.id}`,
     },
     {
-      entityId: 'agri_sales.agri_sale_invoice',
+      entityId: 'agri_sales:agri_sale_invoice',
       enabled: true, priority: 35,
       fieldPolicy: { searchable: ['invoice_number', 'control_number', 'status'], excluded: ['tenant_id', 'organization_id', 'customer_id', 'bcv_rate'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

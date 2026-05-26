@@ -19,7 +19,7 @@ const TYPE_LABEL: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_inputs.agri_input_item',
+      entityId: 'agri_inputs:agri_input_item',
       enabled: true,
       priority: 30,
 

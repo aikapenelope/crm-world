@@ -4,7 +4,7 @@ function norm(v: unknown): string | null { if (v == null) return null; const s =
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'retail_inventory.retail_stock_count',
+      entityId: 'retail_inventory:retail_stock_count',
       enabled: true,
       priority: 15,
       fieldPolicy: { searchable: ['count_number', 'status', 'count_type'], excluded: [] },

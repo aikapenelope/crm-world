@@ -27,7 +27,7 @@ export const searchConfig: SearchModuleConfig = {
     // El pppoe_username se indexa solo como hash para login lookup seguro.
     // =========================================================================
     {
-      entityId: 'isp_subscribers.isp_subscriber',
+      entityId: 'isp_subscribers:isp_subscriber',
       enabled: true,
       priority: 50,
 

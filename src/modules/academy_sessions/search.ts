@@ -28,7 +28,7 @@ export const searchConfig: SearchModuleConfig = {
     // Instructores y admin buscan por número de sesión o estado.
     // =========================================================================
     {
-      entityId: 'academy_sessions.academy_session',
+      entityId: 'academy_sessions:academy_session',
       enabled: true,
       priority: 15,
 

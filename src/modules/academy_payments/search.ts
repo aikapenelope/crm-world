@@ -28,7 +28,7 @@ export const searchConfig: SearchModuleConfig = {
     // Administradores buscan por número de pago o método.
     // =========================================================================
     {
-      entityId: 'academy_payments.academy_payment',
+      entityId: 'academy_payments:academy_payment',
       enabled: true,
       priority: 25,
 

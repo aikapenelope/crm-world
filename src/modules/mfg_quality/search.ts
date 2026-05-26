@@ -16,7 +16,7 @@ const NC_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_quality.mfg_nonconformance',
+      entityId: 'mfg_quality:mfg_nonconformance',
       enabled: true,
       priority: 45,
       fieldPolicy: {

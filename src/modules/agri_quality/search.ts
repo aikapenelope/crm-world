@@ -16,7 +16,7 @@ const NC_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_quality.agri_non_conformity',
+      entityId: 'agri_quality:agri_non_conformity',
       enabled: true,
       priority: 40,
       fieldPolicy: { searchable: ['nc_number', 'source', 'severity', 'status', 'description'], excluded: ['tenant_id', 'organization_id', 'detected_by', 'decision_by'] },
