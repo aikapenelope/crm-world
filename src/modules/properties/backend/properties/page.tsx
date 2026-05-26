@@ -99,7 +99,7 @@ export default function PropertiesPage() {
         )
 
         if (!call.ok) {
-          flash('Error al cargar propiedades', 'error')
+          flash(t('properties.list.error_load', 'Error al cargar propiedades'), 'error')
           return
         }
 
@@ -110,7 +110,7 @@ export default function PropertiesPage() {
           setTotalPages(payload.totalPages || 1)
         }
       } catch {
-        if (!cancelled) flash('Error al cargar propiedades', 'error')
+        if (!cancelled) flash(t('properties.list.error_load', 'Error al cargar propiedades'), 'error')
       } finally {
         if (!cancelled) setIsLoading(false)
       }
@@ -122,7 +122,7 @@ export default function PropertiesPage() {
   const handleDelete = React.useCallback(
     async (row: PropertyRow) => {
       const confirmed = await confirmDialog({
-        title: `¿Eliminar "${row.title}"?`,
+        title: t('properties.list.confirm_delete_named', '¿Eliminar esta propiedad?').replace('{title}', row.title),
         variant: 'destructive',
       })
       if (!confirmed) return
@@ -134,11 +134,11 @@ export default function PropertiesPage() {
       })
 
       if (!call.ok) {
-        flash('Error al eliminar', 'error')
+        flash(t('properties.list.error_delete', 'Error al eliminar'), 'error')
         return
       }
 
-      flash('Propiedad eliminada', 'success')
+      flash(t('properties.list.deleted', 'Propiedad eliminada'), 'success')
       setReloadToken((t) => t + 1)
     },
     [confirmDialog],
@@ -148,7 +148,7 @@ export default function PropertiesPage() {
     () => [
       {
         accessorKey: 'title',
-        header: 'Título',
+        header: t('properties.list.col.title', 'Título'),
         cell: ({ row }) => (
           <Link href={`/backend/properties/${row.original.id}`} className="font-medium hover:underline">
             {row.original.title}
@@ -157,17 +157,17 @@ export default function PropertiesPage() {
       },
       {
         accessorKey: 'property_type',
-        header: 'Tipo',
+        header: t('properties.list.col.type', 'Tipo'),
         cell: ({ row }) => TYPE_LABELS[row.original.property_type] ?? row.original.property_type,
       },
       {
         accessorKey: 'operation',
-        header: 'Operación',
+        header: t('properties.list.col.operation', 'Operación'),
         cell: ({ row }) => OP_LABELS[row.original.operation] ?? row.original.operation,
       },
       {
         accessorKey: 'status',
-        header: 'Estado',
+        header: t('properties.list.col.status', 'Estado'),
         cell: ({ row }) => (
           <Badge variant={STATUS_COLORS[row.original.status] as any ?? 'secondary'}>
             {row.original.status}
@@ -176,32 +176,32 @@ export default function PropertiesPage() {
       },
       {
         accessorKey: 'price',
-        header: 'Precio',
+        header: t('properties.list.col.price', 'Precio'),
         cell: ({ row }) => `${row.original.currency} ${Number(row.original.price).toLocaleString('es-VE')}`,
       },
       {
         accessorKey: 'city',
-        header: 'Ciudad',
+        header: t('properties.list.col.city', 'Ciudad'),
       },
       {
         accessorKey: 'bedrooms',
-        header: 'Hab.',
+        header: t('properties.list.col.rooms', 'Hab.'),
         cell: ({ row }) => row.original.bedrooms ?? '—',
       },
       {
         accessorKey: 'area_m2',
-        header: 'Área',
+        header: t('properties.list.col.area', 'Área'),
         cell: ({ row }) => row.original.area_m2 ? `${row.original.area_m2} m²` : '—',
       },
     ],
-    [],
+    [t],
   )
 
   const filterDefs = React.useMemo<FilterDef[]>(
     () => [
       {
         id: 'property_type',
-        label: 'Tipo',
+        label: t('properties.list.filter.type', 'Tipo'),
         type: 'select',
         options: [
           { label: 'Todos', value: '' },
@@ -215,7 +215,7 @@ export default function PropertiesPage() {
       },
       {
         id: 'operation',
-        label: 'Operación',
+        label: t('properties.list.filter.operation', 'Operación'),
         type: 'select',
         options: [
           { label: 'Todas', value: '' },
@@ -226,7 +226,7 @@ export default function PropertiesPage() {
       },
       {
         id: 'status',
-        label: 'Estado',
+        label: t('properties.list.filter.status', 'Estado'),
         type: 'select',
         options: [
           { label: 'Todos', value: '' },
@@ -239,19 +239,19 @@ export default function PropertiesPage() {
         ],
       },
     ],
-    [],
+    [t],
   )
 
   return (
     <Page>
       <PageBody>
         <DataTable
-          title="Propiedades"
+          title={t('properties.list.title', 'Propiedades')}
           columns={columns}
           data={rows}
           searchValue={search}
           onSearchChange={(value) => { setSearch(value); setPage(1) }}
-          searchPlaceholder="Buscar por título, ciudad..."
+          searchPlaceholder={t('properties.list.search_placeholder', 'Buscar por título, ciudad...')}
           filters={filterDefs}
           filterValues={filters}
           onFiltersApply={(values) => { setFilters(values); setPage(1) }}
@@ -260,15 +260,15 @@ export default function PropertiesPage() {
             <Button asChild>
               <Link href="/backend/properties/create">
                 <Plus className="mr-2 h-4 w-4" />
-                Nueva Propiedad
+                {t('properties.list.new_button', 'Nueva Propiedad')}
               </Link>
             </Button>
           }
           rowActions={(row) => (
             <RowActions
               items={[
-                { id: 'edit', label: 'Editar', href: `/backend/properties/${row.id}` },
-                { id: 'delete', label: 'Eliminar', destructive: true, onSelect: () => handleDelete(row) },
+                { id: 'edit', label: t('properties.list.action.edit', 'Editar'), href: `/backend/properties/${row.id}` },
+                { id: 'delete', label: t('properties.list.action.delete', 'Eliminar'), destructive: true, onSelect: () => handleDelete(row) },
               ]}
             />
           )}
