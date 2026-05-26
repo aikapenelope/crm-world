@@ -7,8 +7,10 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useOrganizationScopeDetail } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function CreatePropertyPage() {
+  const t = useT()
   const router = useRouter()
   const { organizationId, tenantId } = useOrganizationScopeDetail()
 
@@ -97,11 +99,11 @@ export default function CreatePropertyPage() {
     <Page>
       <PageBody>
         <CrudForm
-          title="Nueva Propiedad"
+          title={t('properties.create.title', 'Nueva Propiedad')}
           backHref="/backend/properties"
           fields={[]}
           groups={groups}
-          submitLabel="Crear Propiedad"
+          submitLabel={t('properties.create.submit', 'Crear Propiedad')}
           cancelHref="/backend/properties"
           onSubmit={async (values) => {
             const payload = {
@@ -126,7 +128,7 @@ export default function CreatePropertyPage() {
             }
 
             await createCrud('properties/properties', payload)
-            flash('Propiedad creada exitosamente', 'success')
+            flash(t('properties.create.success', 'Propiedad creada exitosamente'), 'success')
             router.push('/backend/properties')
           }}
         />

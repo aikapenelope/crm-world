@@ -1,12 +1,18 @@
-const MarketDataPage = () => {
+'use client'
+
+import { useT } from '@open-mercato/shared/lib/i18n/context'
+
+export default function MarketDataPage() {
+  const t = useT()
+
   return (
     <div className="container">
-      <h1 className="text-2xl font-semibold mb-4">Datos de Mercado</h1>
+      <h1 className="text-2xl font-semibold mb-4">
+        {t('mercadolibre_sync.page.title', 'Datos de Mercado')}
+      </h1>
       <p className="text-muted-foreground">
-        Listings sincronizados de MercadoLibre Venezuela para análisis de mercado.
+        {t('mercadolibre_sync.page.description', 'Listings sincronizados de MercadoLibre Venezuela para análisis de mercado.')}
       </p>
     </div>
   )
 }
-
-export default MarketDataPage

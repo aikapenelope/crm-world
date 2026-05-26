@@ -6,8 +6,8 @@ import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
-import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useOrganizationScopeVersion } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type MatchRow = {
   id: string
@@ -27,6 +27,7 @@ type ResponsePayload = {
 }
 
 export default function MatchingPage() {
+  const t = useT()
   const [rows, setRows] = React.useState<MatchRow[]>([])
   const [page, setPage] = React.useState(1)
   const [total, setTotal] = React.useState(0)
@@ -75,17 +76,17 @@ export default function MatchingPage() {
       },
       {
         accessorKey: 'contact_id',
-        header: 'Contacto',
+        header: t('matching.list.col.contact', 'Contacto'),
         cell: ({ row }) => row.original.contact_id.slice(0, 8) + '...',
       },
       {
         accessorKey: 'property_id',
-        header: 'Propiedad',
+        header: t('matching.list.col.property', 'Propiedad'),
         cell: ({ row }) => row.original.property_id.slice(0, 8) + '...',
       },
       {
         accessorKey: 'criteria_matched',
-        header: 'Criterios',
+        header: t('matching.list.col.criteria', 'Criterios'),
         cell: ({ row }) => {
           const criteria = row.original.criteria_matched
           if (!criteria) return '—'
@@ -96,21 +97,21 @@ export default function MatchingPage() {
       },
       {
         accessorKey: 'created_at',
-        header: 'Fecha',
+        header: t('matching.list.col.date', 'Fecha'),
         cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString('es-VE'),
       },
     ],
-    [],
+    [t],
   )
 
   return (
     <Page>
       <PageBody>
         <DataTable
-          title="Matching — Contactos × Propiedades"
+          title={t('matching.list.title', 'Matching — Contactos × Propiedades')}
           columns={columns}
           data={rows}
-          searchPlaceholder="Buscar..."
+          searchPlaceholder={t('matching.list.search_placeholder', 'Buscar...')}
           pagination={{ page, pageSize: 50, total, totalPages, onPageChange: setPage }}
           isLoading={isLoading}
         />

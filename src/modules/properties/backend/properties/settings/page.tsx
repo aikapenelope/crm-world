@@ -6,6 +6,7 @@ import { CrudForm, type CrudFormGroup } from '@open-mercato/ui/backend/CrudForm'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { useOrganizationScopeDetail } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 /**
  * Settings page for Real Estate module.
@@ -13,6 +14,7 @@ import { useOrganizationScopeDetail } from '@open-mercato/shared/lib/frontend/us
  * Data is saved as tenant-level config via the configs API.
  */
 export default function SettingsPage() {
+  const t = useT()
   const { organizationId, tenantId } = useOrganizationScopeDetail()
   const [settings, setSettings] = React.useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = React.useState(true)
@@ -64,18 +66,24 @@ export default function SettingsPage() {
   ]
 
   if (isLoading) {
-    return <Page><PageBody><p>Cargando configuración...</p></PageBody></Page>
+    return (
+      <Page>
+        <PageBody>
+          <p>{t('properties.settings.loading', 'Cargando configuración...')}</p>
+        </PageBody>
+      </Page>
+    )
   }
 
   return (
     <Page>
       <PageBody>
         <CrudForm
-          title="Configuración de Real Estate"
+          title={t('properties.settings.title', 'Configuración de Real Estate')}
           backHref="/backend/properties"
           fields={[]}
           groups={groups}
-          submitLabel="Guardar configuración"
+          submitLabel={t('properties.settings.submit', 'Guardar configuración')}
           cancelHref="/backend/properties"
           onSubmit={async (values) => {
             const payload: Record<string, string> = {}
@@ -96,7 +104,7 @@ export default function SettingsPage() {
               }),
             })
 
-            flash('Configuración guardada', 'success')
+            flash(t('properties.settings.success', 'Configuración guardada'), 'success')
           }}
         />
       </PageBody>

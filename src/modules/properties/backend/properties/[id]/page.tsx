@@ -14,6 +14,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { useOrganizationScopeDetail } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
 import type { ColumnDef } from '@tanstack/react-table'
 import { ArrowLeft, Image, Link2, FileText, Users } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 // =============================================================================
 // Types
@@ -47,20 +48,21 @@ type MatchResult = {
 // Tab Navigation
 // =============================================================================
 
-const TABS = [
-  { id: 'general', label: 'General', icon: FileText },
-  { id: 'images', label: 'Imágenes', icon: Image },
-  { id: 'links', label: 'Links', icon: Link2 },
-  { id: 'matching', label: 'Matching', icon: Users },
+const TABS_CONFIG = [
+  { id: 'general', labelKey: 'properties.detail.tab.general', labelFallback: 'General', icon: FileText },
+  { id: 'images', labelKey: 'properties.detail.tab.images', labelFallback: 'Imágenes', icon: Image },
+  { id: 'links', labelKey: 'properties.detail.tab.links', labelFallback: 'Links', icon: Link2 },
+  { id: 'matching', labelKey: 'properties.detail.tab.matching', labelFallback: 'Matching', icon: Users },
 ] as const
 
-type TabId = typeof TABS[number]['id']
+type TabId = typeof TABS_CONFIG[number]['id']
 
 // =============================================================================
 // Main Component
 // =============================================================================
 
 export default function PropertyDetailPage() {
+  const t = useT()
   const router = useRouter()
   const params = useParams()
   const propertyId = params?.id as string
@@ -86,8 +88,8 @@ export default function PropertyDetailPage() {
     if (propertyId) load()
   }, [propertyId])
 
-  if (isLoading) return <LoadingMessage label="Cargando propiedad..." />
-  if (!property) return <Page><PageBody><p>Propiedad no encontrada</p></PageBody></Page>
+  if (isLoading) return <LoadingMessage label={t('properties.detail.loading', 'Cargando propiedad...')} />
+  if (!property) return <Page><PageBody><p>{t('properties.detail.not_found', 'Propiedad no encontrada')}</p></PageBody></Page>
 
   return (
     <Page>
@@ -96,7 +98,7 @@ export default function PropertyDetailPage() {
         <div className="mb-6">
           <Button variant="ghost" size="sm" onClick={() => router.push('/backend/properties')}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Volver a propiedades
+            {t('properties.detail.back', 'Volver a propiedades')}
           </Button>
           <h1 className="mt-2 text-2xl font-bold">{property.title}</h1>
           <div className="mt-1 flex items-center gap-2">
@@ -109,11 +111,12 @@ export default function PropertyDetailPage() {
         {/* Tab Navigation */}
         <div className="mb-6 border-b">
           <nav className="flex gap-4">
-            {TABS.map((tab) => {
+            {TABS_CONFIG.map((tab) => {
               const Icon = tab.icon
               return (
                 <button
                   key={tab.id}
+                  type="button"
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 border-b-2 px-1 pb-3 text-sm font-medium transition-colors ${
                     activeTab === tab.id
@@ -122,7 +125,7 @@ export default function PropertyDetailPage() {
                   }`}
                 >
                   <Icon className="h-4 w-4" />
-                  {tab.label}
+                  {t(tab.labelKey, tab.labelFallback)}
                 </button>
               )
             })}
@@ -158,6 +161,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
   tenantId: string
   router: any
 }) {
+  const t = useT()
   const groups: CrudFormGroup[] = [
     {
       id: 'basic',
@@ -254,7 +258,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
       backHref=""
       fields={[]}
       groups={groups}
-      submitLabel="Guardar cambios"
+      submitLabel={t('properties.detail.save', 'Guardar cambios')}
       cancelHref="/backend/properties"
       onSubmit={async (values) => {
         const payload = {
@@ -281,7 +285,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
         }
 
         await updateCrud('properties/properties', payload)
-        flash('Propiedad actualizada', 'success')
+        flash(t('properties.detail.updated', 'Propiedad actualizada'), 'success')
         router.push('/backend/properties')
       }}
     />
@@ -293,6 +297,7 @@ function GeneralTab({ property, propertyId, organizationId, tenantId, router }: 
 // =============================================================================
 
 function ImagesTab({ propertyId }: { propertyId: string }) {
+  const t = useT()
   const [images, setImages] = React.useState<PropertyImage[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
 
@@ -336,11 +341,11 @@ function ImagesTab({ propertyId }: { propertyId: string }) {
 
   return (
     <DataTable
-      title="Imágenes"
+      title={t('properties.detail.images.title', 'Imágenes')}
       columns={columns}
       data={images}
       isLoading={isLoading}
-      searchPlaceholder="Buscar imágenes..."
+      searchPlaceholder={t('properties.detail.search_images', 'Buscar imágenes...')}
     />
   )
 }
@@ -350,6 +355,7 @@ function ImagesTab({ propertyId }: { propertyId: string }) {
 // =============================================================================
 
 function LinksTab({ propertyId }: { propertyId: string }) {
+  const t = useT()
   const [links, setLinks] = React.useState<PropertyLink[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
 
@@ -406,11 +412,11 @@ function LinksTab({ propertyId }: { propertyId: string }) {
 
   return (
     <DataTable
-      title="Links externos"
+      title={t('properties.detail.links.title', 'Links externos')}
       columns={columns}
       data={links}
       isLoading={isLoading}
-      searchPlaceholder="Buscar links..."
+      searchPlaceholder={t('properties.detail.search_links', 'Buscar links...')}
     />
   )
 }
@@ -420,6 +426,7 @@ function LinksTab({ propertyId }: { propertyId: string }) {
 // =============================================================================
 
 function MatchingTab({ propertyId }: { propertyId: string }) {
+  const t = useT()
   const [matches, setMatches] = React.useState<MatchResult[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
 
@@ -468,11 +475,11 @@ function MatchingTab({ propertyId }: { propertyId: string }) {
 
   return (
     <DataTable
-      title="Contactos compatibles"
+      title={t('properties.detail.matching.title', 'Contactos compatibles')}
       columns={columns}
       data={matches}
       isLoading={isLoading}
-      searchPlaceholder="Buscar matches..."
+      searchPlaceholder={t('properties.detail.search_matches', 'Buscar matches...')}
     />
   )
 }
