@@ -18,7 +18,7 @@ const MODALITY_LABELS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'academy_courses.course',
+      entityId: 'academy_courses:academy_course',
       enabled: true,
       priority: 25,
 

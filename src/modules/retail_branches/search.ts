@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'retail_branches.branch',
+      entityId: 'retail_branches:retail_branch',
       enabled: true,
       priority: 25,
 

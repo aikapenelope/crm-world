@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { makeCrudRoute } from '@open-mercato/shared/lib/crud/factory'
-import { ConstRFIEntity } from '../../data/entities'
+import { ConstRfiEntity } from '../../data/entities'
 import { createRFISchema, updateRFISchema } from '../../data/validators'
 
 const listSchema = z.object({
@@ -22,7 +22,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: ConstRFIEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: ConstRfiEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
   indexer: { entityType: 'const_rfis.rfi' },
   list: { schema: listSchema },
   create: { schema: createRFISchema, mapToEntity: (input: any) => ({ ...input, rfi_number: `RFI-${Date.now().toString(36).toUpperCase().slice(-5)}` }) },

@@ -45,7 +45,7 @@ export class DistCommissionRuleEntity {
   rate!: string
 
   // Monto mínimo para aplicar (0 = sin mínimo)
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   min_amount: string = '0.00'
 
   // Meta para bonus (null = no aplica)

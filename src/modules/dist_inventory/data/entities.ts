@@ -44,7 +44,7 @@ export class DistInventoryItemEntity {
   variant_id?: string | null
 
   // Bodega (default: main)
-  @Property({ type: 'text', length: 50, default: "'main'" })
+  @Property({ type: 'text', length: 50, default: 'main' })
   warehouse_code: string = 'main'
 
   // Cantidades
@@ -65,10 +65,10 @@ export class DistInventoryItemEntity {
   reorder_quantity: number = 0
 
   // Costo
-  @Property({ type: 'decimal', precision: 18, scale: 4, default: "'0.0000'" })
+  @Property({ type: 'decimal', precision: 18, scale: 4, default: '0.0000' })
   unit_cost: string = '0.0000'
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Último conteo físico
@@ -104,7 +104,7 @@ export class DistInventoryMovementEntity {
   @Property({ type: 'uuid', nullable: true })
   variant_id?: string | null
 
-  @Property({ type: 'text', length: 50, default: "'main'" })
+  @Property({ type: 'text', length: 50, default: 'main' })
   warehouse_code: string = 'main'
 
   // Tipo de movimiento

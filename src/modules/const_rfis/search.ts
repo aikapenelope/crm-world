@@ -22,7 +22,7 @@ const RFI_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'const_rfis:rfi',
+      entityId: 'const_rfis:const_rfi',
       enabled: true,
       priority: 15,
 

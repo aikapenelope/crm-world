@@ -49,10 +49,10 @@ export class AgriSaleOrderEntity {
   subtotal_usd!: string
 
   /** Descuento comercial en USD */
-  @Property({ type: 'decimal', precision: 12, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 12, scale: 2, default: '0.00' })
   discount_usd: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'16.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '16.00' })
   iva_rate: string = '16.00'
 
   /** IVA calculado en bolívares (base en VES × 16%) */
@@ -225,7 +225,7 @@ export class AgriSaleInvoiceEntity {
   @Property({ type: 'decimal', precision: 12, scale: 2 })
   subtotal_usd!: string
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'16.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '16.00' })
   iva_rate: string = '16.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
@@ -238,10 +238,10 @@ export class AgriSaleInvoiceEntity {
   total_usd!: string
 
   /** IGTF (3%) — aplica cuando el pago es en divisa */
-  @Property({ type: 'decimal', precision: 10, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 10, scale: 2, default: '0.00' })
   igtf_amount_usd: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 12, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 12, scale: 2, default: '0.00' })
   paid_amount_usd: string = '0.00'
 
   /** pending | partial | paid | overdue | cancelled */

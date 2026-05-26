@@ -14,7 +14,7 @@ const SETTLE_STATUS: Record<string, string> = { calculated: 'Calculada', approve
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_hr.employee',
+      entityId: 'agri_hr:agri_employee',
       enabled: true, priority: 20,
       fieldPolicy: { searchable: ['first_name', 'last_name', 'cedula', 'department', 'position', 'employee_type'], excluded: ['tenant_id', 'organization_id', 'bank_account'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
@@ -37,7 +37,7 @@ export const searchConfig: SearchModuleConfig = {
       resolveUrl: async (_ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-hr`,
     },
     {
-      entityId: 'agri_hr.settlement',
+      entityId: 'agri_hr:agri_producer_settlement',
       enabled: true, priority: 20,
       fieldPolicy: { searchable: ['status', 'actual_fca', 'actual_mortality_pct'], excluded: ['tenant_id', 'organization_id', 'producer_id', 'approved_by'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

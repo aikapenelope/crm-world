@@ -20,7 +20,7 @@ const STATUS_LABELS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'const_projects:project',
+      entityId: 'const_projects:const_project',
       enabled: true,
       priority: 20,
 

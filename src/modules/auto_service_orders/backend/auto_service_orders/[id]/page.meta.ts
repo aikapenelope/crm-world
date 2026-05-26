@@ -5,4 +5,7 @@ export const metadata: PageMetadata = {
   title: 'Orden de Servicio',
   requireAuth: true,
   requireFeatures: ['auto_service_orders.view'],
+  pageGroup: 'Taller',
+  pageGroupKey: 'automotive',
+  navHidden: true,
 }

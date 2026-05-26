@@ -4,7 +4,7 @@ const SC_STATUS: Record<string, string> = { draft: 'Borrador', materials_sent: '
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_subcontract.order',
+      entityId: 'mfg_subcontract:mfg_subcontract_order',
       enabled: true, priority: 40,
       fieldPolicy: { searchable: ['order_number', 'subcontractor_name', 'product_code', 'status'], excluded: ['tenant_id', 'organization_id', 'product_id', 'subcontractor_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

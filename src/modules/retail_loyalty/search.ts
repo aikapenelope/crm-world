@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'retail_loyalty.program',
+      entityId: 'retail_loyalty:retail_loyalty_program',
       enabled: true,
       priority: 15,
 

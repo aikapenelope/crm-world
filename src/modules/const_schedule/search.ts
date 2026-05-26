@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'const_schedule.task',
+      entityId: 'const_schedule:const_task',
       enabled: true,
       priority: 15,
 

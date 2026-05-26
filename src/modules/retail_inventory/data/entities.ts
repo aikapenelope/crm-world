@@ -151,7 +151,7 @@ export class RetailStockRotationEntity {
   total_received: number = 0
 
   // Índice de rotación: sold / avg_stock
-  @Property({ type: 'decimal', precision: 10, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 10, scale: 2, default: '0.00' })
   rotation_index: string = '0.00'
 
   // Días de stock: stock / daily_avg_sales

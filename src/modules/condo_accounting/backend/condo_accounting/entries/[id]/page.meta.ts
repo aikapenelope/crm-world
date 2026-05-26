@@ -3,4 +3,6 @@ export const metadata = {
   requireFeatures: ['condo_accounting.view'],
   pageTitle: 'Detalle de Movimiento',
   navHidden: true,
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
 }

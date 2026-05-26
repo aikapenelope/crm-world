@@ -80,7 +80,7 @@ export class RetailReturnPolicyEntity {
   @Enum({ items: () => RefundMethod, type: 'string', length: 15, default: RefundMethod.CREDIT_NOTE })
   refund_method: RefundMethod = RefundMethod.CREDIT_NOTE
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   restocking_fee_percent: string = '0.00'
 
   // Condiciones adicionales
@@ -139,13 +139,13 @@ export class RetailReturnEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   subtotal!: string
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   restocking_fee: string = '0.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   refund_amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'uuid', nullable: true })
@@ -228,7 +228,7 @@ export class RetailCreditNoteEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   balance!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Enum({ items: () => CreditNoteStatus, type: 'string', length: 15, default: CreditNoteStatus.ACTIVE })

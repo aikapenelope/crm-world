@@ -39,7 +39,7 @@ export const searchConfig: SearchModuleConfig = {
     // agri_units.farm_unit — Granjas y galpones
     // =========================================================================
     {
-      entityId: 'agri_units.farm_unit',
+      entityId: 'agri_units:agri_farm_unit',
       enabled: true,
       priority: 40,
 
@@ -90,7 +90,7 @@ export const searchConfig: SearchModuleConfig = {
     // Los operativos buscan por número de lote para ver el estado actual.
     // =========================================================================
     {
-      entityId: 'agri_units.flock',
+      entityId: 'agri_units:agri_flock',
       enabled: true,
       priority: 50,
 

@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Registrar Vehículo',
   pageTitleKey: 'auto_vehicles.create.title',
   navHidden: true,
+  pageGroup: 'Taller',
+  pageGroupKey: 'automotive',
 }

@@ -59,7 +59,7 @@ export class CondoAccountingEntryEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 18, scale: 4, nullable: true })
@@ -123,16 +123,16 @@ export class CondoReserveFundEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   opening_balance!: string
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   contributions: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   withdrawals: string = '0.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   closing_balance!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
@@ -178,10 +178,10 @@ export class CondoBudgetEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   total_expenses!: string
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'10.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '10.00' })
   reserve_fund_percent: string = '10.00'
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'boolean', default: false })

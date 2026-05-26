@@ -4,4 +4,6 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_quality.view'],
   pageTitle: 'Detalle No-Conformidad',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
 }

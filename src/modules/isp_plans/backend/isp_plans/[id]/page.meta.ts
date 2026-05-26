@@ -5,4 +5,6 @@ export const metadata: PageMetadata = {
   requireFeatures: ['isp_plans.manage'],
   pageTitle: 'Editar Plan',
   navHidden: true,
+  pageGroup: 'ISP',
+  pageGroupKey: 'nav.group.isp',
 }

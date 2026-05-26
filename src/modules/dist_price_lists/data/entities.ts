@@ -35,7 +35,7 @@ export class DistPriceListEntity {
   @Enum({ items: () => PriceListType, type: 'string', length: 15, default: PriceListType.STANDARD })
   type: PriceListType = PriceListType.STANDARD
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'boolean', default: false })
@@ -97,7 +97,7 @@ export class DistPriceListItemEntity {
   @Property({ type: 'int', default: 1 })
   min_quantity: number = 1
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'timestamptz' })

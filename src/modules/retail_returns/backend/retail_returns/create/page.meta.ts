@@ -8,4 +8,6 @@ export const metadata = {
     { label: 'Devoluciones', labelKey: 'retail_returns.nav.title', href: '/backend/retail_returns' },
     { label: 'Nueva', labelKey: 'retail_returns.return.create' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
 }

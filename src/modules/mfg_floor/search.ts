@@ -3,7 +3,7 @@ function norm(v: unknown): string | null { const s = String(v ?? '').trim(); ret
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_floor.shift_report',
+      entityId: 'mfg_floor:mfg_shift_report',
       enabled: true,
       priority: 35,
       fieldPolicy: { searchable: ['report_number', 'shift_type', 'shift_date', 'work_center_name'], excluded: ['tenant_id', 'organization_id', 'work_center_id', 'supervisor_id'] },

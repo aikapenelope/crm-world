@@ -20,7 +20,7 @@ const LOT_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'agri_processing.slaughter_batch',
+      entityId: 'agri_processing:agri_slaughter_batch',
       enabled: true, priority: 45,
       fieldPolicy: { searchable: ['batch_number', 'status'], excluded: ['tenant_id', 'organization_id', 'dispatch_approved_by'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
@@ -40,7 +40,7 @@ export const searchConfig: SearchModuleConfig = {
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/agri-processing/${ctx.record.id}`,
     },
     {
-      entityId: 'agri_processing.lot',
+      entityId: 'agri_processing:agri_processing_lot',
       enabled: true, priority: 50,
       fieldPolicy: { searchable: ['lot_number', 'barcode', 'status'], excluded: ['tenant_id', 'organization_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

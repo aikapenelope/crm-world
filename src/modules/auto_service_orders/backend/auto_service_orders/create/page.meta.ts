@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Nueva Orden de Servicio',
   pageTitleKey: 'auto_service_orders.create.title',
   navHidden: true,
+  pageGroup: 'Taller',
+  pageGroupKey: 'automotive',
 }

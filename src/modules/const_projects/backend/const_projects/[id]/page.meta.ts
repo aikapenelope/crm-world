@@ -5,4 +5,7 @@ export const metadata: PageMetadata = {
   title: 'Detalle del Proyecto',
   requireAuth: true,
   requireFeatures: ['const_projects.view'],
+  pageGroup: 'Construcción',
+  pageGroupKey: 'construccion',
+  navHidden: true,
 }

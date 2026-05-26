@@ -8,4 +8,6 @@ export const metadata = {
     { label: 'Sucursales', labelKey: 'retail_branches.nav.title', href: '/backend/retail_branches' },
     { label: 'Detalle', labelKey: 'retail_branches.branch.edit' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
 }

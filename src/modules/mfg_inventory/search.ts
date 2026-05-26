@@ -16,7 +16,7 @@ const LOT_STATUS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_inventory.lot',
+      entityId: 'mfg_inventory:mfg_stock_lot',
       enabled: true,
       priority: 40,
       fieldPolicy: {

@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Registrar Entrada Fiscal',
   pageTitleKey: 've_tax_books.create.title',
   navHidden: true,
+  pageGroup: 'Fiscal',
+  pageGroupKey: 'fiscal',
 }

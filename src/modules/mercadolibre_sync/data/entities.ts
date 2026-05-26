@@ -91,7 +91,7 @@ export class MarketListingEntity {
   seller_id?: string | null
 
   // Sync metadata
-  @Property({ type: 'text', length: 20, default: "'active'" })
+  @Property({ type: 'text', length: 20, default: 'active' })
   sync_status: string = 'active' // active, delisted, error
 
   @Property({ type: 'timestamptz', nullable: true })

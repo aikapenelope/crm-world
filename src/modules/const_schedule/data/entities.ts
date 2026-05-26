@@ -73,7 +73,7 @@ export class ConstTaskEntity {
   @Property({ type: 'int', default: 1 })
   duration_days: number = 1
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   progress_percent: string = '0.00'
 
   @Property({ type: 'text', length: 255, nullable: true })

@@ -51,16 +51,16 @@ export class ConstBudgetItemEntity {
   @Property({ type: 'text', length: 20, nullable: true })
   unit?: string | null
 
-  @Property({ type: 'decimal', precision: 14, scale: 4, default: "'0.0000'" })
+  @Property({ type: 'decimal', precision: 14, scale: 4, default: '0.0000' })
   quantity: string = '0.0000'
 
-  @Property({ type: 'decimal', precision: 18, scale: 4, default: "'0.0000'" })
+  @Property({ type: 'decimal', precision: 18, scale: 4, default: '0.0000' })
   unit_cost: string = '0.0000'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   total_cost: string = '0.00'
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Enum({ items: () => BudgetCategory, type: 'string', length: 15 })
@@ -112,7 +112,7 @@ export class ConstBudgetResourceEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   total!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'int', default: 0 })

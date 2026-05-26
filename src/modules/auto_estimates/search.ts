@@ -4,7 +4,7 @@ function norm(v: unknown): string | null { if (v == null) return null; const s =
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'auto_estimates.estimate',
+      entityId: 'auto_estimates:auto_estimate',
       enabled: true,
       priority: 20,
       fieldPolicy: { searchable: ['estimate_number', 'status'], excluded: ['total_amount', 'subtotal', 'tax_amount'] },

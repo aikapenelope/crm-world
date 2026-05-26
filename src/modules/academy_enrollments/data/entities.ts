@@ -54,7 +54,7 @@ export class AcademyEnrollmentEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   price_agreed!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'text', nullable: true })

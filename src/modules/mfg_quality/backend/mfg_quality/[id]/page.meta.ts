@@ -4,4 +4,6 @@ export const metadata: PageMetadata = {
   requireFeatures: ['mfg_quality.view'],
   pageTitle: 'Detalle No-Conformidad',
   navHidden: true,
+  pageGroup: 'Manufactura',
+  pageGroupKey: 'nav.group.mfg',
 }

@@ -92,7 +92,7 @@ export class ConstProjectEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   contract_amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Dates
@@ -106,14 +106,14 @@ export class ConstProjectEntity {
   actual_end_date?: Date | null
 
   // Financial terms
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   advance_percent: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'10.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '10.00' })
   retention_percent: string = '10.00'
 
   // Progress
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   overall_progress: string = '0.00'
 
   // Team

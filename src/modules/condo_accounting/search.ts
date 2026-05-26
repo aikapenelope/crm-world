@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'condo_accounting.entry',
+      entityId: 'condo_accounting:condo_accounting_entry',
       enabled: true,
       priority: 15,
 

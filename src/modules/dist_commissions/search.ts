@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'dist_commissions.rule',
+      entityId: 'dist_commissions:dist_commission_rule',
       enabled: true,
       priority: 10,
 

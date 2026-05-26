@@ -3,4 +3,6 @@ export const metadata = {
   requireFeatures: ['condo_comms.manage'],
   pageTitle: 'Nueva Circular',
   pageTitleKey: 'condo_comms.circulars.create.title',
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
 }

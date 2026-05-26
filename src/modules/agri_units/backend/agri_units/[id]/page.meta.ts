@@ -4,4 +4,6 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_units.view'],
   pageTitle: 'Detalle de Lote',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
 }

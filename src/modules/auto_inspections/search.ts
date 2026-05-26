@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'auto_inspections.inspection',
+      entityId: 'auto_inspections:auto_inspection',
       enabled: true,
       priority: 20,
 

@@ -17,7 +17,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'condo_properties:building',
+      entityId: 'condo_properties:condo_building',
       enabled: true,
       priority: 15,
 
@@ -83,7 +83,7 @@ export const searchConfig: SearchModuleConfig = {
     },
 
     {
-      entityId: 'condo_properties:unit',
+      entityId: 'condo_properties:condo_unit',
       enabled: true,
       priority: 12,
 

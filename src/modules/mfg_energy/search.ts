@@ -4,7 +4,7 @@ const OUTAGE_TYPE: Record<string, string> = { scheduled_restriction: 'Restricci√
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_energy.power_outage',
+      entityId: 'mfg_energy:mfg_power_outage',
       enabled: true, priority: 35,
       fieldPolicy: { searchable: ['outage_type', 'zone', 'products_affected'], excluded: ['tenant_id', 'organization_id', 'reported_by'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

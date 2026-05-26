@@ -4,4 +4,6 @@ export const metadata: PageMetadata = {
   requireFeatures: ['mfg_orders.view'],
   pageTitle: 'Detalle Orden de Producción',
   navHidden: true,
+  pageGroup: 'Manufactura',
+  pageGroupKey: 'nav.group.mfg',
 }

@@ -4,4 +4,6 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_quality.edit'],
   pageTitle: 'Detalle Plan HACCP',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
 }

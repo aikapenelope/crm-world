@@ -23,7 +23,7 @@ export const searchConfig: SearchModuleConfig = {
     // Residente de obra y directores buscan por fecha o estado.
     // =========================================================================
     {
-      entityId: 'const_daily.report',
+      entityId: 'const_daily:const_daily_report',
       enabled: true,
       priority: 15,
 

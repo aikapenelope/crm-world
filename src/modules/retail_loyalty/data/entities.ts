@@ -66,10 +66,10 @@ export class RetailLoyaltyProgramEntity {
   is_active: boolean = true
 
   // Puntos por cada USD gastado
-  @Property({ type: 'decimal', precision: 10, scale: 2, default: "'10.00'" })
+  @Property({ type: 'decimal', precision: 10, scale: 2, default: '10.00' })
   points_per_usd: string = '10.00'
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   points_currency: string = 'USD'
 
   // Mínimo para canjear
@@ -77,7 +77,7 @@ export class RetailLoyaltyProgramEntity {
   min_redemption_points: number = 100
 
   // Valor de cada punto en USD
-  @Property({ type: 'decimal', precision: 10, scale: 4, default: "'0.0100'" })
+  @Property({ type: 'decimal', precision: 10, scale: 4, default: '0.0100' })
   point_value_usd: string = '0.0100'
 
   // Días para expirar (null = no expiran)
@@ -111,11 +111,11 @@ export class RetailLoyaltyTierEntity {
   min_points_lifetime!: number
 
   // Descuento automático (%)
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   discount_percent: string = '0.00'
 
   // Multiplicador de puntos (1.0 = normal, 1.5 = 50% más)
-  @Property({ type: 'decimal', precision: 4, scale: 2, default: "'1.00'" })
+  @Property({ type: 'decimal', precision: 4, scale: 2, default: '1.00' })
   multiplier: string = '1.00'
 
   // Beneficios adicionales

@@ -33,7 +33,7 @@ const PRIORITY_LABELS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'auto_service_orders.order',
+      entityId: 'auto_service_orders:auto_service_order',
       enabled: true,
       priority: 25,
 

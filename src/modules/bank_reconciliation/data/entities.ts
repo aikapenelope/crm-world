@@ -108,7 +108,7 @@ export class BankTransactionEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'VES'" })
+  @Property({ type: 'text', length: 10, default: 'VES' })
   currency: string = 'VES'
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })

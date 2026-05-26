@@ -22,7 +22,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'const_budget:item',
+      entityId: 'const_budget:const_budget_item',
       enabled: true,
       priority: 14,
 

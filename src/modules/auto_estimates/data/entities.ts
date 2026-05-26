@@ -14,11 +14,11 @@ export class AutoEstimateEntity {
   @Property({ type: 'uuid' }) customer_id!: string
   @Property({ type: 'text', length: 30 }) estimate_number!: string
   @Enum({ items: () => EstimateStatus, type: 'string', length: 20, default: EstimateStatus.DRAFT }) status: EstimateStatus = EstimateStatus.DRAFT
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" }) subtotal_labor: string = '0.00'
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" }) subtotal_parts: string = '0.00'
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" }) tax_amount: string = '0.00'
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" }) total_amount: string = '0.00'
-  @Property({ type: 'text', length: 10, default: "'USD'" }) currency: string = 'USD'
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' }) subtotal_labor: string = '0.00'
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' }) subtotal_parts: string = '0.00'
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' }) tax_amount: string = '0.00'
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' }) total_amount: string = '0.00'
+  @Property({ type: 'text', length: 10, default: 'USD' }) currency: string = 'USD'
   @Property({ type: 'date', nullable: true }) valid_until?: Date | null
   @Property({ type: 'timestamptz', nullable: true }) sent_at?: Date | null
   @Property({ type: 'timestamptz', nullable: true }) approved_at?: Date | null

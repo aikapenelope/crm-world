@@ -27,7 +27,7 @@ export const searchConfig: SearchModuleConfig = {
     // Agentes buscan análisis por ciudad u operación para referencia de precio.
     // =========================================================================
     {
-      entityId: 'market_intelligence.analysis',
+      entityId: 'market_intelligence:market_valuation',
       enabled: true,
       priority: 10,
 

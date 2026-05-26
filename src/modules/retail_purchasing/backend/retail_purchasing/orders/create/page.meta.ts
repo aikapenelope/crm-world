@@ -8,4 +8,6 @@ export const metadata = {
     { label: 'Compras', labelKey: 'retail_purchasing.nav.title', href: '/backend/retail_purchasing' },
     { label: 'Nueva Orden', labelKey: 'retail_purchasing.order.create' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
 }

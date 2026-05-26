@@ -3,7 +3,7 @@ function norm(v: unknown): string | null { const s = String(v ?? '').trim(); ret
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_planning.schedule',
+      entityId: 'mfg_planning:mfg_master_schedule',
       enabled: true, priority: 40,
       fieldPolicy: { searchable: ['schedule_number', 'product_code', 'product_name', 'status'], excluded: ['tenant_id', 'organization_id', 'product_id', 'work_center_id', 'production_order_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

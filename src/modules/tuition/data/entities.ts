@@ -59,7 +59,7 @@ export class TuitionPlanEntity {
   @Property({ type: 'decimal', precision: 10, scale: 2 })
   monthly_amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'smallint', default: 10 })
@@ -68,7 +68,7 @@ export class TuitionPlanEntity {
   @Property({ type: 'smallint', default: 5 })
   due_day: number = 5
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'5.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '5.00' })
   late_fee_percentage: string = '5.00'
 
   @Property({ type: 'smallint', default: 10 })
@@ -120,7 +120,7 @@ export class TuitionChargeEntity {
   @Property({ type: 'decimal', precision: 10, scale: 2 })
   amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Enum({ items: () => ChargeStatus, type: 'string', length: 15, default: ChargeStatus.PENDING })
@@ -132,10 +132,10 @@ export class TuitionChargeEntity {
   @Property({ type: 'date', nullable: true })
   paid_date?: Date | null
 
-  @Property({ type: 'decimal', precision: 10, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 10, scale: 2, default: '0.00' })
   late_fee_applied: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 10, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 10, scale: 2, default: '0.00' })
   amount_paid: string = '0.00'
 
   @Property({ type: 'text', nullable: true })

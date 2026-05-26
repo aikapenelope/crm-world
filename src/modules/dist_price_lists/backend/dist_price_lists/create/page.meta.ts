@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Nueva Lista de Precios',
   pageTitleKey: 'dist_price_lists.create.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
 }

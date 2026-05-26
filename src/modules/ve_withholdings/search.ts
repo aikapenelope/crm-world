@@ -4,7 +4,7 @@ function norm(v: unknown): string | null { if (v == null) return null; const s =
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 've_withholdings.record',
+      entityId: 've_withholdings:ve_withholding_record',
       enabled: true,
       priority: 15,
       fieldPolicy: {

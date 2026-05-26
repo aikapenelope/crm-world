@@ -9,4 +9,6 @@ export const metadata = {
     { label: 'Transferencias', labelKey: 'retail_branches.nav.transfers', href: '/backend/retail_branches/transfers' },
     { label: 'Nueva', labelKey: 'retail_branches.transfer.create' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
 }

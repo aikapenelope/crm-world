@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   title: 'Detalle del Edificio',
   requireAuth: true,
   requireFeatures: ['condo_properties.view'],
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
+  navHidden: true,
 }

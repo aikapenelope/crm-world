@@ -3,4 +3,6 @@ export const metadata = {
   requireFeatures: ['condo_accounting.manage'],
   pageTitle: 'Registrar Movimiento',
   pageTitleKey: 'condo_accounting.entries.create.title',
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
 }

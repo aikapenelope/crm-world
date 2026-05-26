@@ -17,7 +17,7 @@ function norm(v: unknown): string | null {
 // =========================================================================
 export const searchConfig: SearchModuleConfig = {
   entities: [{
-    entityId: 'payment_methods.method',
+    entityId: 'payment_methods:payment_method',
     enabled: true,
     priority: 5,
     fieldPolicy: {
