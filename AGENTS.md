@@ -147,6 +147,17 @@ This is a Next.js 16 application built on the **Open Mercato** modular ERP frame
 - `src/bootstrap.ts` - Application initialization (imports generated files, registers i18n)
 - `.mercato/generated/` - Auto-generated files from `yarn generate` (do not edit manually)
 
+### Module Overrides
+
+Use the unified `entry.overrides` field in `src/modules.ts` when this app needs to replace or disable a contract from a package-backed module without forking it. The template ships a non-applied `moduleOverrideExamples` object covering AI, routes, events, workers, widgets, notifications, interceptors, setup, ACL, DI, and encryption. Copy only the specific domains you need into the target module entry's `overrides` field.
+
+Rules:
+
+- `null` disables a matching contract; an object/function definition replaces it.
+- API route keys are `'METHOD /api/path'`; page route keys are `'/backend/path'` or `'/frontend/path'`.
+- `setup` overrides apply to the module entry carrying them, not to a separate setup id map.
+- The standard `src/bootstrap.ts` already calls `applyModuleOverridesFromEnabledModules(enabledModules)` before registries load.
+
 ### Routing Structure
 
 - `/backend/*` - Admin panel routes (AppShell with sidebar navigation)
@@ -248,7 +259,7 @@ export const aiAgentOverrides: AiAgentOverridesMap = {
 }
 ```
 
-Example `modules.ts` inline override (preferred for app-level decisions that don't deserve a fake module). AI lives at `overrides.ai.*`; other domains (routes, events, workers, widgets, …) reuse the same `entry.overrides` umbrella per the [unified spec](https://github.com/open-mercato/open-mercato/blob/main/.ai/specs/2026-05-04-modules-ts-unified-overrides.md) — AI is Phase 1, other domains roll out as separate PRs:
+Example `modules.ts` inline override (preferred for app-level decisions that do not deserve a fake module). All module contract domains live under the same `entry.overrides` umbrella per the [unified spec](https://github.com/open-mercato/open-mercato/blob/main/.ai/specs/2026-05-04-modules-ts-unified-overrides.md):
 
 ```ts
 // src/modules.ts
@@ -259,6 +270,17 @@ Example `modules.ts` inline override (preferred for app-level decisions that don
     ai: {
       agents: { 'catalog.catalog_assistant': null },
       tools:  { 'inbox_ops_accept_action': null },
+    },
+    routes: {
+      api: {
+        'GET /api/example/override-probe': {
+          handler: async () => Response.json({ ok: true, source: 'override' }),
+          metadata: { requireAuth: false },
+        },
+      },
+      pages: {
+        '/backend/example/reports': null,
+      },
     },
   },
 },
@@ -289,6 +311,108 @@ yarn mercato configs cache structural --all-tenants
 ```
 
 Refer to the `create-ai-agent` skill (`.ai/skills/create-ai-agent/SKILL.md`) and the public docs at `framework/ai-assistant/overrides` for the full contract, MUST rules, and the resolution order.
+
+### Unified module contract overrides
+
+The same `entry.overrides` surface that disables/replaces AI agents also wires routes, subscribers, workers, widgets, notifications, interceptors, enrichers, guards, CLI commands, setup hooks, ACL features, DI bindings, and encryption maps. Use it when you want to replace a contract shipped by an upstream module without forking the source.
+
+```ts
+// src/modules.ts — representative examples across override phases
+{
+  id: 'example',
+  from: '@app',
+  overrides: {
+    routes: {
+      api: {
+        // disable
+        'DELETE /api/example/items': null,
+        // replace
+        'POST /api/example/items': {
+          handler: async (req) => new Response(JSON.stringify({ ok: true }), { status: 200 }),
+          metadata: { requireAuth: true, requireFeatures: ['example.manage'] },
+        },
+      },
+      pages: {
+        '/backend/example/items': null,
+      },
+    },
+    events: {
+      subscribers: {
+        'example.todo.created.notify': null,
+      },
+    },
+    workers: {
+      'example:sync': null,
+    },
+    widgets: {
+      injection: { 'example.toolbar': null },
+      dashboard: { 'example.kpi': null },
+      components: {
+        'page:/backend/example': {
+          target: { componentId: 'page:/backend/example' },
+          priority: 10,
+          propsTransform: (props) => props,
+        },
+      },
+    },
+    notifications: {
+      types: { 'example.notice': null },
+      handlers: { 'example.notice.toast': null },
+    },
+    interceptors: { 'example.items.audit': null },
+    commandInterceptors: { 'example.command.audit': null },
+    enrichers: { 'example.items.enricher': null },
+    guards: { 'example.backend.guard': null },
+    cli: { 'example seed': null },
+    setup: {
+      defaultRoleFeatures: { admin: ['example.view'] },
+      seedExamples: false,
+    },
+    acl: {
+      features: { 'example.manage': null },
+    },
+    di: {
+      exampleService: {
+        register: (container, key) => container.register({ [key]: { mode: 'replacement' } }),
+      },
+    },
+    encryption: {
+      maps: { 'example:item': null },
+    },
+  },
+},
+```
+
+Programmatic equivalent (boot-time, env-driven, or test scaffold):
+
+```ts
+// src/bootstrap.ts (extra)
+import {
+  applyApiRouteOverrides,
+  applyPageRouteOverrides,
+  applyWorkerOverrides,
+} from '@open-mercato/shared/modules/overrides'
+
+applyApiRouteOverrides({
+  'GET /api/example/items': null,
+})
+applyPageRouteOverrides({
+  '/backend/example/items': null,
+})
+applyWorkerOverrides({
+  'example:sync': null,
+})
+```
+
+Key rules:
+
+- Keys are `'METHOD /api/path'`; method is normalized, path leading slash optional, trailing slashes stripped.
+- Page route keys are `'/backend/path'` or `'/frontend/path'`.
+- `null` disables the matching contract; a definition replaces it.
+- Programmatic > `modules.ts` > file-based where supported > base. The dispatcher MUST run before registries first-load — the template's `bootstrap.ts` already does this.
+- Stale override keys log a warning so operators notice renamed or removed upstream contracts.
+
+Full reference: `framework/modules/overrides` and `framework/modules/routes-and-pages`.
 
 ## Disabling the Dashboards Module: Update /backend
 
@@ -348,8 +472,8 @@ When building a new application or a new module under `src/modules/<id>/`, do no
 | Frontend public pages and customer portal | Auto-discovered files under `frontend/**`. Portal pages live at `frontend/[orgSlug]/portal/<path>/page.tsx` with `requireCustomerAuth` / `requireCustomerFeatures` | <https://docs.open-mercato.dev/framework/modules/routes-and-pages> |
 | API routes (auth + OpenAPI) | `src/modules/<id>/api/**/route.ts` exporting handlers + `metadata` (per-method `requireAuth` / `requireFeatures`) + `openApi` | <https://docs.open-mercato.dev/framework/api/api-development-guide> |
 | CRUD APIs (factory) | `makeCrudRoute({ entity, entityId, operations, schema, indexer: { entityType } })` from `@open-mercato/shared/lib/crud/factory` | <https://docs.open-mercato.dev/framework/api/crud-factory> |
-| CRUD forms in admin | `<CrudForm fields={[...]} groups={[...]} initialValues={...} onSubmit={...} cancelHref="/path" />` from `@open-mercato/ui/backend/CrudForm`. **v0.6.1**: `entityId`/`apiPath`/`mode` ya NO son props — ver `docs/PATTERNS.md §CrudForm`. Helpers: `createCrud`/`updateCrud`/`deleteCrud` from `@open-mercato/ui/backend/utils/crud`. Never raw `<form>` or raw `fetch` | `node_modules/@open-mercato/ui/src/backend/CrudForm.tsx` |
-| DataTables in admin | `<DataTable entityId={...} columns={...} data={...} />` from `@open-mercato/ui/backend/DataTable`. **v0.6.1**: `apiPath` y `extensionTableId` NO son props válidas — ver `DataTableProps` en `node_modules/@open-mercato/ui/src/backend/DataTable.tsx`. `emptyState` acepta `ReactNode` (string o elemento) | `node_modules/@open-mercato/ui/src/backend/DataTable.tsx` |
+| CRUD forms in admin | `<CrudForm fields={[...]} groups={[...]} initialValues={...} onSubmit={async (values) => {}} cancelHref="/path" />` from `@open-mercato/ui/backend/CrudForm`. Props verified against `CrudFormProps` in v0.6.2: `fields: CrudField[]` (required), `groups?: CrudFormGroup[]`, `entityId?: string` (optional, only for custom field definitions), `cancelHref?: string`, `onSubmit?`, `title?`, `submitLabel?`. **No `apiPath` prop, no `mode` prop in this version.** Helpers: `createCrud` / `updateCrud` / `deleteCrud` from `@open-mercato/ui/backend/utils/crud`; `createCrudFormError` from `@open-mercato/ui/backend/utils/serverErrors`. Never raw `<form>` or raw `fetch` | `node_modules/@open-mercato/ui/src/backend/CrudForm.tsx` (CrudFormProps:289) |
+| DataTables in admin | `<DataTable columns={[...]} data={[...]} isLoading={bool} emptyState={<ReactNode>} />` from `@open-mercato/ui/backend/DataTable`. Props verified against `DataTableProps` in v0.6.2: `isLoading?: boolean` (not `loading`), `emptyState?: React.ReactNode` (not `emptyTitle`/`emptyDescription`). Keep column definitions stable so widget injection (columns, row actions, filters, toolbar) keeps working | `node_modules/@open-mercato/ui/src/backend/DataTable.tsx` (DataTableProps) |
 | Authorization (RBAC) | Declare features in `<module>/acl.ts`, grant in `<module>/setup.ts` `defaultRoleFeatures`, gate routes/pages with `requireFeatures` in `metadata`. NEVER use `requireRoles`. Run `yarn mercato auth sync-role-acls` after adding features | <https://docs.open-mercato.dev/framework/rbac/overview> |
 | Multi-tenant scoping (default) | Every tenant-scoped entity MUST include indexed `organization_id` and `tenant_id`; every read/write filters by them. The CRUD factory injects the scope automatically — do not bypass it | <https://docs.open-mercato.dev/architecture/system-overview> |
 | **Encryption maps for sensitive data** | Declare `<module>/encryption.ts` exporting `defaultEncryptionMaps: ModuleEncryptionMap[]`; read via `findWithDecryption` / `findOneWithDecryption`. NEVER hand-roll AES/KMS — see the next section | <https://docs.open-mercato.dev/user-guide/encryption> |
