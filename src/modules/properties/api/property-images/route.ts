@@ -23,6 +23,9 @@ const crud = makeCrudRoute({
     entity: PropertyImageEntity,
     idField: 'id',
     tenantField: 'tenant_id',
+    // Entity is append-only (no deleted_at column). Disable the implicit
+    // WHERE deletedAt IS NULL filter — see makeCrudRoute factory.ts:845.
+    softDeleteField: null,
   },
   indexer: { entityType: 'properties.property_image' },
   list: { schema: listSchema },

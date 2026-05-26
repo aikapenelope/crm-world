@@ -20,7 +20,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgStockMovementEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgStockMovementEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_inventory:movement' },
   list: { schema: z.object({ page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(200).default(50), lot_id: z.string().uuid().optional(), movement_type: z.string().optional() }).passthrough() },
   create: { schema: stockMovementCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

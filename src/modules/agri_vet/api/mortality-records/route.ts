@@ -19,7 +19,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: AgriVetMortalityRecordEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: AgriVetMortalityRecordEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'agri_vet:mortality' },
   list: { schema: listSchema },
   create: { schema: mortalityRecordCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

@@ -13,7 +13,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgBomAlternativeEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgBomAlternativeEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_bom:alternative' },
   list: { schema: z.object({ bom_line_id: z.string().uuid().optional(), pageSize: z.coerce.number().min(1).max(100).default(50) }).passthrough() },
   create: { schema: bomAlternativeCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

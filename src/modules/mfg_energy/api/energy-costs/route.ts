@@ -13,7 +13,7 @@ const createSchema = z.object({
 })
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgEnergyCostEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgEnergyCostEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_energy:cost' },
   list: { schema: z.object({ production_order_id: z.string().uuid().optional(), pageSize: z.coerce.number().min(1).max(200).default(100) }).passthrough() },
   create: { schema: createSchema, mapToEntity: (input: any) => ({ ...input }) },

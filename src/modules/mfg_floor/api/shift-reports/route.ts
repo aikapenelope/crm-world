@@ -6,7 +6,7 @@ const routeMetadata = { GET: { requireAuth: true, requireFeatures: ['mfg_floor.v
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgShiftReportEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgShiftReportEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'mfg_floor:shift_report' },
   list: { schema: z.object({ page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(100).default(30), work_center_id: z.string().uuid().optional(), shift_type: z.string().optional() }).passthrough() },
   create: { schema: shiftReportCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

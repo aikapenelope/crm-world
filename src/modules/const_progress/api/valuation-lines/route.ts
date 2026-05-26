@@ -20,7 +20,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: ConstValuationLineEntity, idField: 'id', orgField: null as any, tenantField: null as any },
+  orm: { entity: ConstValuationLineEntity, idField: 'id', orgField: null as any, tenantField: null as any, softDeleteField: null },
   indexer: { entityType: 'const_progress.valuation_line' },
   list: { schema: listSchema },
   create: { schema: createValuationLineSchema, mapToEntity: (input: any) => ({ ...input }) },

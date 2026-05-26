@@ -21,7 +21,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: ConstSubmittalEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: ConstSubmittalEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id', softDeleteField: null },
   indexer: { entityType: 'const_rfis.submittal' },
   list: { schema: listSchema },
   create: { schema: createSubmittalSchema, mapToEntity: (input: any) => ({ ...input, submittal_number: `SUB-${Date.now().toString(36).toUpperCase().slice(-5)}` }) },

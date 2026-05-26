@@ -25,7 +25,7 @@ const crud = makeCrudRoute({
     entity: ConstBudgetResourceEntity,
     idField: 'id',
     orgField: null as any,
-    tenantField: null as any,
+    tenantField: null as any, softDeleteField: null
   },
   indexer: { entityType: 'const_budget.resource' },
   list: { schema: listSchema },
