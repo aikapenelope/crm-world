@@ -5,6 +5,8 @@ import type { DashboardWidgetComponentProps } from '@open-mercato/shared/modules
 import { readApiResultOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
 import { Spinner } from '@open-mercato/ui/primitives/spinner'
 import { Badge } from '@open-mercato/ui/primitives/badge'
+import { Checkbox } from '@open-mercato/ui/primitives/checkbox'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 import { hydrateSettings, type PropertiesByStatusSettings } from './config'
 
 type PropertyRow = {
@@ -35,6 +37,7 @@ const PropertiesByStatusWidget: React.FC<DashboardWidgetComponentProps<Propertie
   refreshToken,
   onRefreshStateChange,
 }) => {
+  const t = useT()
   const value = React.useMemo(() => hydrateSettings(settings), [settings])
   const [counts, setCounts] = React.useState<StatusCount[]>([])
   const [total, setTotal] = React.useState(0)
@@ -79,13 +82,12 @@ const PropertiesByStatusWidget: React.FC<DashboardWidgetComponentProps<Propertie
   if (mode === 'settings') {
     return (
       <div className="space-y-4">
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
+        <label className="flex items-center gap-2 text-sm cursor-pointer">
+          <Checkbox
             checked={value.showInactive}
-            onChange={(e) => onSettingsChange({ ...value, showInactive: e.target.checked })}
+            onCheckedChange={(checked) => onSettingsChange({ ...value, showInactive: !!checked })}
           />
-          Mostrar propiedades inactivas
+          {t('properties.widget.by_status.settings.show_inactive', 'Mostrar propiedades inactivas')}
         </label>
       </div>
     )
@@ -102,7 +104,9 @@ const PropertiesByStatusWidget: React.FC<DashboardWidgetComponentProps<Propertie
   return (
     <div className="space-y-3">
       <div className="text-2xl font-bold">{total}</div>
-      <div className="text-xs text-muted-foreground">propiedades en total</div>
+      <div className="text-xs text-muted-foreground">
+        {t('properties.widget.by_status.total', 'propiedades en total')}
+      </div>
       <div className="space-y-2">
         {counts.map((item) => (
           <div key={item.status} className="flex items-center justify-between">
@@ -111,7 +115,9 @@ const PropertiesByStatusWidget: React.FC<DashboardWidgetComponentProps<Propertie
           </div>
         ))}
         {counts.length === 0 && (
-          <p className="text-sm text-muted-foreground">Sin propiedades registradas</p>
+          <p className="text-sm text-muted-foreground">
+            {t('properties.widget.by_status.empty', 'Sin propiedades registradas')}
+          </p>
         )}
       </div>
     </div>

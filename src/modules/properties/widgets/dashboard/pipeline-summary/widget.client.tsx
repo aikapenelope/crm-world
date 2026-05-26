@@ -4,6 +4,8 @@ import * as React from 'react'
 import type { DashboardWidgetComponentProps } from '@open-mercato/shared/modules/dashboard/widgets'
 import { readApiResultOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
 import { Spinner } from '@open-mercato/ui/primitives/spinner'
+import { Checkbox } from '@open-mercato/ui/primitives/checkbox'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 import { hydrateSettings, type PipelineSummarySettings } from './config'
 
 type PropertyRow = {
@@ -29,6 +31,7 @@ const PipelineSummaryWidget: React.FC<DashboardWidgetComponentProps<PipelineSumm
   refreshToken,
   onRefreshStateChange,
 }) => {
+  const t = useT()
   const value = React.useMemo(() => hydrateSettings(settings), [settings])
   const [metrics, setMetrics] = React.useState<PipelineMetrics | null>(null)
   const [loading, setLoading] = React.useState(true)
@@ -67,13 +70,12 @@ const PipelineSummaryWidget: React.FC<DashboardWidgetComponentProps<PipelineSumm
   if (mode === 'settings') {
     return (
       <div className="space-y-4">
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
+        <label className="flex items-center gap-2 text-sm cursor-pointer">
+          <Checkbox
             checked={value.showValue}
-            onChange={(e) => onSettingsChange({ ...value, showValue: e.target.checked })}
+            onCheckedChange={(checked) => onSettingsChange({ ...value, showValue: !!checked })}
           />
-          Mostrar valor total del pipeline
+          {t('properties.widget.pipeline.settings.show_value', 'Mostrar valor total del pipeline')}
         </label>
       </div>
     )
@@ -91,26 +93,36 @@ const PipelineSummaryWidget: React.FC<DashboardWidgetComponentProps<PipelineSumm
     <div className="grid grid-cols-2 gap-4">
       <div className="rounded-md border p-3 text-center">
         <div className="text-2xl font-bold">{metrics.totalActive}</div>
-        <div className="text-xs text-muted-foreground">Activas</div>
+        <div className="text-xs text-muted-foreground">
+          {t('properties.widget.pipeline.active', 'Activas')}
+        </div>
       </div>
       <div className="rounded-md border p-3 text-center">
         <div className="text-2xl font-bold">{metrics.totalReserved}</div>
-        <div className="text-xs text-muted-foreground">Reservadas</div>
+        <div className="text-xs text-muted-foreground">
+          {t('properties.widget.pipeline.reserved', 'Reservadas')}
+        </div>
       </div>
       <div className="rounded-md border p-3 text-center">
         <div className="text-2xl font-bold">{metrics.ventaCount}</div>
-        <div className="text-xs text-muted-foreground">En venta</div>
+        <div className="text-xs text-muted-foreground">
+          {t('properties.widget.pipeline.for_sale', 'En venta')}
+        </div>
       </div>
       <div className="rounded-md border p-3 text-center">
         <div className="text-2xl font-bold">{metrics.alquilerCount}</div>
-        <div className="text-xs text-muted-foreground">En alquiler</div>
+        <div className="text-xs text-muted-foreground">
+          {t('properties.widget.pipeline.for_rent', 'En alquiler')}
+        </div>
       </div>
       {value.showValue && (
         <div className="col-span-2 rounded-md border bg-muted/50 p-3 text-center">
           <div className="text-xl font-bold">
             USD {metrics.totalValueUsd.toLocaleString('es-VE', { maximumFractionDigits: 0 })}
           </div>
-          <div className="text-xs text-muted-foreground">Valor total del pipeline</div>
+          <div className="text-xs text-muted-foreground">
+            {t('properties.widget.pipeline.total_value', 'Valor total del pipeline')}
+          </div>
         </div>
       )}
     </div>
