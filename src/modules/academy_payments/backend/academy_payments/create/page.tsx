@@ -23,6 +23,7 @@ import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 const METHODS = [
   { value: 'transfer', label: 'Transferencia bancaria' },
@@ -35,6 +36,7 @@ const METHODS = [
 ]
 
 export default function AcademyPaymentCreatePage() {
+  const t = useT()
   const router = useRouter()
   const searchParams = useSearchParams()
   const presetEnrollmentId = searchParams?.get('enrollment_id') ?? ''
@@ -93,14 +95,14 @@ export default function AcademyPaymentCreatePage() {
       notes: notes || null,
     })
     if (res.ok) {
-      flash('Pago registrado', 'success')
+      flash(t('academy_payments.create.success', 'Pago registrado'), 'success')
       if (presetEnrollmentId) {
         router.push(`/backend/academy_enrollments/${presetEnrollmentId}`)
       } else {
         router.push('/backend/academy_payments')
       }
     } else {
-      flash('Error al registrar el pago', 'error')
+      flash(t('academy_payments.create.error', 'Error al registrar el pago'), 'error')
     }
     setSaving(false)
   }
@@ -111,9 +113,9 @@ export default function AcademyPaymentCreatePage() {
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_payments')}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Pagos
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_payments.create.back', 'Pagos')}
         </Button>
-        <h1 className="mt-4 mb-6 text-2xl font-bold">Registrar pago</h1>
+        <h1 className="mt-4 mb-6 text-2xl font-bold">{t('academy_payments.create.title', 'Registrar pago')}</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 max-w-xl">
           <div className="rounded-lg border p-4 space-y-4">
@@ -172,7 +174,7 @@ export default function AcademyPaymentCreatePage() {
               Cancelar
             </Button>
             <Button type="submit" disabled={saving}>
-              {saving ? 'Guardando...' : 'Confirmar pago'}
+              {saving ? t('academy_payments.create.submitting', 'Guardando...') : t('academy_payments.create.submit', 'Confirmar pago')}
             </Button>
           </div>
         </form>

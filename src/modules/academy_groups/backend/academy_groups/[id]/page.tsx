@@ -13,6 +13,7 @@ import { useAppEvent } from '@open-mercato/ui/backend/injection/useAppEvent'
 import {
   ArrowLeft, Calendar, Users, RefreshCw, Play, CheckCircle2, Clock, MessageCircle,
 } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Group = {
   id: string; group_code: string; course_id: string; instructor_id: string | null
@@ -43,6 +44,7 @@ const DAY_SHORT: Record<string, string> = {
 }
 
 export default function AcademyGroupDetailPage() {
+  const t = useT()
   const params = useParams()
   const router = useRouter()
   const groupId = params?.id as string
@@ -100,10 +102,10 @@ export default function AcademyGroupDetailPage() {
       body: JSON.stringify({ group_id: groupId }),
     })
     if (res.ok) {
-      flash(`Sesiones generadas: ${res.result?.generated ?? 0} nuevas`, 'success')
+      flash(t('academy_groups.detail.sessions_generated', 'Sesiones generadas: {count} nuevas').replace('{count}', String(res.result?.generated ?? 0)), 'success')
       await load()
     } else {
-      flash('Error al generar sesiones', 'error')
+      flash(t('academy_groups.detail.generate_error', 'Error al generar sesiones'), 'error')
     }
     setGenerating(false)
   }
@@ -124,7 +126,7 @@ export default function AcademyGroupDetailPage() {
     setAdvancing(false)
   }
 
-  if (isLoading) return <LoadingMessage label="Cargando grupo..." />
+  if (isLoading) return <LoadingMessage label={t('academy_groups.detail.loading', 'Cargando grupo...')} />
   if (!group) return (
     <Page><PageBody>
       <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_groups')}>
@@ -143,7 +145,7 @@ export default function AcademyGroupDetailPage() {
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_groups')}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Grupos
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_groups.detail.back', 'Grupos')}
         </Button>
 
         <div className="mt-4 mb-6 flex items-start justify-between flex-wrap gap-3">
@@ -383,8 +385,8 @@ function WhatsAppSection({
     <div className="space-y-6">
       {/* Next class reminders */}
       <div className="rounded-xl border overflow-hidden">
-        <div className="bg-[#25D366]/10 border-b px-4 py-3 flex items-center gap-2">
-          <MessageCircle className="size-4 text-[#25D366]" />
+        <div className="border-b px-4 py-3 flex items-center gap-2" style={{ backgroundColor: 'rgba(37,211,102,0.1)' }}>
+          <MessageCircle className="size-4" style={{ color: '#25D366' }} />
           <h3 className="font-semibold text-sm">Recordatorio de clase</h3>
           {nextSession && (
             <span className="ml-auto text-xs text-muted-foreground">
@@ -411,7 +413,7 @@ function WhatsAppSection({
                   {link ? (
                     <a href={link} target="_blank" rel="noopener noreferrer">
                       <Button type="button" size="sm"
-                        className="bg-[#25D366] hover:bg-[#25D366]/90 text-white">
+                        style={{ backgroundColor: '#25D366', color: 'white' }} className="hover:opacity-90">
                         <MessageCircle className="mr-2 size-3" />WhatsApp
                       </Button>
                     </a>
@@ -427,7 +429,7 @@ function WhatsAppSection({
 
       {/* Payment reminders */}
       <div className="rounded-xl border overflow-hidden">
-        <div className="bg-amber-50 dark:bg-status-warning-bg border-b px-4 py-3 flex items-center gap-2">
+        <div className="bg-status-warning-bg border-b px-4 py-3 flex items-center gap-2">
           <MessageCircle className="size-4 text-status-warning-icon" />
           <h3 className="font-semibold text-sm">Recordatorio de cobro</h3>
           <span className="ml-auto text-xs text-muted-foreground">

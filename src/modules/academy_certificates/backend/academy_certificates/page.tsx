@@ -10,6 +10,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Award, CheckCircle2 } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type CertRow = {
   id: string
@@ -27,6 +28,7 @@ type CertRow = {
 }
 
 export default function AcademyCertificatesPage() {
+  const t = useT()
   const router = useRouter()
   const [certs, setCerts] = React.useState<CertRow[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
@@ -49,10 +51,10 @@ export default function AcademyCertificatesPage() {
       body: JSON.stringify({ certificate_id: certId }),
     })
     if (res.ok) {
-      flash(`Certificado emitido: ${res.result?.certificate_number ?? ''}`, 'success')
+      flash(t('academy_certificates.list.issued_success', 'Certificado emitido: {number}').replace('{number}', res.result?.certificate_number ?? ''), 'success')
       await load()
     } else {
-      flash('Error al emitir certificado', 'error')
+      flash(t('academy_certificates.list.issue_error', 'Error al emitir certificado'), 'error')
     }
     setIssuingId(null)
   }
@@ -118,7 +120,7 @@ export default function AcademyCertificatesPage() {
               onClick={(e) => { e.stopPropagation(); handleIssue(row.original.id) }}
             >
               <CheckCircle2 className="mr-1 size-3" />
-              {issuingId === row.original.id ? '...' : 'Emitir'}
+              {issuingId === row.original.id ? t('academy_certificates.list.issuing', '...') : t('academy_certificates.list.issue_button', 'Emitir')}
             </Button>
           )}
         </div>
@@ -132,10 +134,10 @@ export default function AcademyCertificatesPage() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
-              <Award className="size-6" />Certificados
+              <Award className="size-6" />{t('academy_certificates.list.title', 'Certificados')}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {pending} pendientes de emitir · {issued} emitidos
+              {t('academy_certificates.list.subtitle', '{pending} pendientes de emitir · {issued} emitidos').replace('{pending}', String(pending)).replace('{issued}', String(issued))}
             </p>
           </div>
         </div>
@@ -144,7 +146,7 @@ export default function AcademyCertificatesPage() {
           {['all', 'pending', 'issued'].map(f => (
             <Button key={f} type="button" variant={filterStatus === f ? 'default' : 'outline'} size="sm"
               onClick={() => setFilterStatus(f)}>
-              {f === 'all' ? 'Todos' : f === 'pending' ? 'Pendientes' : 'Emitidos'}
+              {f === 'all' ? t('academy_certificates.list.filter.all', 'Todos') : f === 'pending' ? t('academy_certificates.list.filter.pending', 'Pendientes') : t('academy_certificates.list.filter.issued', 'Emitidos')}
             </Button>
           ))}
         </div>
@@ -153,7 +155,7 @@ export default function AcademyCertificatesPage() {
           columns={columns}
           data={filtered}
           isLoading={isLoading}
-          searchPlaceholder="Buscar alumno o certificado..."
+          searchPlaceholder={t('academy_certificates.list.search', 'Buscar alumno o certificado...')}
           onRowClick={(row) => router.push(`/backend/academy_certificates/${row.id}`)}
         />
       </PageBody>

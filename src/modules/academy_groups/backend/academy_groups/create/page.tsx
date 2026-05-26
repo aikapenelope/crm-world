@@ -22,6 +22,7 @@ import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 const DAYS_OF_WEEK = [
   { value: 'monday', label: 'Lunes' }, { value: 'tuesday', label: 'Martes' },
@@ -31,6 +32,7 @@ const DAYS_OF_WEEK = [
 ]
 
 export default function AcademyGroupCreatePage() {
+  const t = useT()
   const router = useRouter()
   const searchParams = useSearchParams()
   const presetCourseId = searchParams?.get('course_id') ?? ''
@@ -84,7 +86,7 @@ export default function AcademyGroupCreatePage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!courseId || !startDate || !endDate || scheduleDays.length === 0 || !scheduleTime) {
-      flash('Completa todos los campos requeridos', 'error')
+      flash(t('academy_groups.create.validation', 'Completa todos los campos requeridos'), 'error')
       return
     }
     setSaving(true)
@@ -110,10 +112,10 @@ export default function AcademyGroupCreatePage() {
         method: 'POST',
         body: JSON.stringify({ group_id: groupId }),
       })
-      flash('Grupo creado con sesiones generadas', 'success')
+      flash(t('academy_groups.create.success', 'Grupo creado con sesiones generadas'), 'success')
       router.push(`/backend/academy_groups/${groupId}`)
     } else {
-      flash('Error al crear el grupo', 'error')
+      flash(t('academy_groups.create.error', 'Error al crear el grupo'), 'error')
     }
     setSaving(false)
   }
@@ -122,9 +124,9 @@ export default function AcademyGroupCreatePage() {
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_groups')}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Grupos
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_groups.create.back', 'Grupos')}
         </Button>
-        <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo grupo</h1>
+        <h1 className="mt-4 mb-6 text-2xl font-bold">{t('academy_groups.create.title', 'Nuevo grupo')}</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
           {/* Course + Instructor */}
@@ -239,7 +241,7 @@ export default function AcademyGroupCreatePage() {
               Cancelar
             </Button>
             <Button type="submit" disabled={saving}>
-              {saving ? 'Creando grupo...' : 'Crear grupo y generar sesiones'}
+              {saving ? t('academy_groups.create.submitting', 'Creando grupo...') : t('academy_groups.create.submit', 'Crear grupo y generar sesiones')}
             </Button>
           </div>
         </form>

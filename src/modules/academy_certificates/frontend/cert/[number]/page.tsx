@@ -3,6 +3,7 @@
 import * as React from 'react'
 import { useParams } from 'next/navigation'
 import { CheckCircle2, XCircle, Award, Shield, Loader2 } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type CertData = {
   valid: boolean
@@ -19,6 +20,7 @@ type CertData = {
 }
 
 export default function CertVerifyPage() {
+  const t = useT()
   const params = useParams()
   const number = (params?.number as string ?? '').toUpperCase()
   const [cert, setCert] = React.useState<CertData | null>(null)
@@ -45,7 +47,7 @@ export default function CertVerifyPage() {
       <div className="min-h-screen flex items-center justify-center bg-muted/30">
         <div className="flex flex-col items-center gap-3 text-muted-foreground">
           <Loader2 className="size-8 animate-spin" />
-          <p className="text-sm">Verificando certificado...</p>
+          <p className="text-sm">{t('academy_certificates.public.loading', 'Verificando certificado...')}</p>
         </div>
       </div>
     )
@@ -60,7 +62,7 @@ export default function CertVerifyPage() {
               <XCircle className="size-12 text-destructive" />
             </div>
           </div>
-          <h1 className="text-2xl font-bold mb-2 text-destructive">Certificado no válido</h1>
+          <h1 className="text-2xl font-bold mb-2 text-destructive">{t('academy_certificates.public.invalid', 'Certificado no válido')}</h1>
           <p className="text-muted-foreground mb-4">
             No se encontró el certificado <span className="font-mono font-bold">{number}</span> en nuestros registros,
             o aún no ha sido emitido oficialmente.
@@ -89,7 +91,7 @@ export default function CertVerifyPage() {
         <div className="flex items-center justify-center gap-2 mb-6">
           <div className="flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5">
             <CheckCircle2 className="size-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">Certificado verificado</span>
+            <span className="text-sm font-semibold text-primary">{t('academy_certificates.public.verified', 'Certificado verificado')}</span>
           </div>
         </div>
 

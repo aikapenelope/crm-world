@@ -8,8 +8,10 @@ import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function AcademyInstructorCreatePage() {
+  const t = useT()
   const router = useRouter()
 
   const groups: CrudFormGroup[] = [
@@ -48,10 +50,10 @@ export default function AcademyInstructorCreatePage() {
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_instructors')}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Instructores
+          {t('academy_instructors.create.back', 'Instructores')}
         </Button>
 
-        <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo instructor</h1>
+        <h1 className="mt-4 mb-6 text-2xl font-bold">{t('academy_instructors.create.title', 'Nuevo instructor')}</h1>
 
         <CrudForm
           fields={[]}
@@ -59,10 +61,10 @@ export default function AcademyInstructorCreatePage() {
           onSubmit={async (values) => {
             const res = await createCrud('academy-instructors/instructors', values)
             if (res.ok) {
-              flash('Instructor creado', 'success')
+              flash(t('academy_instructors.create.success', 'Instructor creado'), 'success')
               router.push('/backend/academy_instructors')
             } else {
-              flash('Error al crear el instructor', 'error')
+              flash(t('academy_instructors.create.error', 'Error al crear el instructor'), 'error')
             }
           }}
           cancelHref='/backend/academy_instructors'

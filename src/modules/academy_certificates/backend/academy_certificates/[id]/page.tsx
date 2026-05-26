@@ -9,6 +9,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, Award, CheckCircle2, Printer } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Certificate = {
   id: string; certificate_number: string; enrollment_id: string
@@ -19,6 +20,7 @@ type Certificate = {
 }
 
 export default function AcademyCertificateDetailPage() {
+  const t = useT()
   const params = useParams()
   const router = useRouter()
   const certId = params?.id as string
@@ -44,21 +46,21 @@ export default function AcademyCertificateDetailPage() {
       body: JSON.stringify({ certificate_id: certId, issued_by: issuedBy || null }),
     })
     if (res.ok) {
-      flash('Certificado emitido exitosamente', 'success')
+      flash(t('academy_certificates.detail.issued_success', 'Certificado emitido exitosamente'), 'success')
       await load()
     } else {
-      flash(res.result?.error ?? 'Error al emitir', 'error')
+      flash(res.result?.error ?? t('academy_certificates.detail.issue_button', 'Error al emitir'), 'error')
     }
     setIssuing(false)
   }
 
-  if (isLoading) return <LoadingMessage label="Cargando certificado..." />
+  if (isLoading) return <LoadingMessage label={t('academy_certificates.detail.loading', 'Cargando certificado...')} />
   if (!cert) return (
     <Page><PageBody>
       <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_certificates')}>
-        <ArrowLeft className="mr-2 h-4 w-4" />Volver
+        <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_certificates.detail.back', 'Certificados')}
       </Button>
-      <p className="mt-4 text-muted-foreground">Certificado no encontrado.</p>
+      <p className="mt-4 text-muted-foreground">{t('academy_certificates.detail.not_found', 'Certificado no encontrado.')}</p>
     </PageBody></Page>
   )
 
@@ -66,7 +68,7 @@ export default function AcademyCertificateDetailPage() {
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_certificates')}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Certificados
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_certificates.detail.back', 'Certificados')}
         </Button>
 
         <div className="mt-4 mb-6 flex items-start justify-between flex-wrap gap-3">
@@ -85,12 +87,12 @@ export default function AcademyCertificateDetailPage() {
           {cert.status !== 'issued' && cert.status !== 'revoked' && (
             <Button type="button" size="sm" onClick={handleIssue} disabled={issuing}>
               <CheckCircle2 className="mr-2 size-4" />
-              {issuing ? 'Emitiendo...' : 'Emitir certificado'}
+              {issuing ? t('academy_certificates.detail.issuing', 'Emitiendo...') : t('academy_certificates.detail.issue_button', 'Emitir certificado')}
             </Button>
           )}
           {cert.status === 'issued' && (
             <Button type="button" variant="outline" size="sm">
-              <Printer className="mr-2 size-4" />Imprimir
+              <Printer className="mr-2 size-4" />{t('academy_certificates.detail.print', 'Imprimir')}
             </Button>
           )}
         </div>
@@ -131,9 +133,9 @@ export default function AcademyCertificateDetailPage() {
         {/* Issue form (only for pending) */}
         {cert.status === 'pending' && (
           <div className="rounded-lg border p-4 space-y-3">
-            <h3 className="font-semibold text-sm">Emisión</h3>
+            <h3 className="font-semibold text-sm">{t('academy_certificates.detail.issue_section', 'Emisión')}</h3>
             <div>
-              <label className="text-sm font-medium block mb-1">Emitido por (opcional)</label>
+              <label className="text-sm font-medium block mb-1">{t('academy_certificates.detail.issue_label', 'Emitido por (opcional)')}</label>
               <input type="text" value={issuedBy} onChange={e => setIssuedBy(e.target.value)}
                 placeholder="Director académico, Coordinador..."
                 className="w-full rounded-md border bg-background px-3 py-2 text-sm" />
@@ -143,7 +145,7 @@ export default function AcademyCertificateDetailPage() {
             </p>
             <Button type="button" size="sm" onClick={handleIssue} disabled={issuing}>
               <CheckCircle2 className="mr-2 size-4" />
-              {issuing ? 'Emitiendo...' : 'Confirmar emisión'}
+              {issuing ? t('academy_certificates.detail.issuing', 'Emitiendo...') : t('academy_certificates.detail.confirm_issue', 'Confirmar emisión')}
             </Button>
           </div>
         )}

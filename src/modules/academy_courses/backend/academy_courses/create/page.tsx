@@ -8,6 +8,7 @@ import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 // Default course categories — configurable by academy type in setup.ts
 const COURSE_CATEGORIES = [
@@ -21,6 +22,7 @@ const COURSE_LEVELS = [
 ]
 
 export default function AcademyCourseCreatePage() {
+  const t = useT()
   const router = useRouter()
 
   const groups: CrudFormGroup[] = [
@@ -73,10 +75,10 @@ export default function AcademyCourseCreatePage() {
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_courses')}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Cursos
+          {t('academy_courses.create.back', 'Cursos')}
         </Button>
 
-        <h1 className="mt-4 mb-6 text-2xl font-bold">Nuevo curso</h1>
+        <h1 className="mt-4 mb-6 text-2xl font-bold">{t('academy_courses.create.title', 'Nuevo curso')}</h1>
 
         <CrudForm
           fields={[]}
@@ -87,10 +89,10 @@ export default function AcademyCourseCreatePage() {
               currency: 'USD',
             })
             if (res.ok) {
-              flash('Curso creado', 'success')
+              flash(t('academy_courses.create.success', 'Curso creado'), 'success')
               router.push('/backend/academy_courses')
             } else {
-              flash('Error al crear el curso', 'error')
+              flash(t('academy_courses.create.error', 'Error al crear el curso'), 'error')
             }
           }}
           cancelHref='/backend/academy_courses'

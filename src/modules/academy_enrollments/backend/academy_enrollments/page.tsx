@@ -9,6 +9,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, UserCheck } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type EnrollmentRow = {
   id: string
@@ -34,6 +35,7 @@ const STATUS_VARIANTS: Record<string, 'default' | 'secondary' | 'destructive' | 
 }
 
 export default function AcademyEnrollmentsPage() {
+  const t = useT()
   const router = useRouter()
   const [enrollments, setEnrollments] = React.useState<EnrollmentRow[]>([])
   const [groupNames, setGroupNames] = React.useState<Record<string, string>>({})
@@ -109,14 +111,14 @@ export default function AcademyEnrollmentsPage() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
-              <UserCheck className="size-6" />Inscripciones
+              <UserCheck className="size-6" />{t('academy_enrollments.list.title', 'Inscripciones')}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
               {active} activas · {pendingPayment} pendientes de pago
             </p>
           </div>
           <Button type="button" onClick={() => router.push('/backend/academy_enrollments/create')}>
-            <Plus className="mr-2 size-4" />Inscribir alumno
+            <Plus className="mr-2 size-4" />{t('academy_enrollments.list.new_button', 'Inscribir alumno')}
           </Button>
         </div>
 
@@ -133,7 +135,7 @@ export default function AcademyEnrollmentsPage() {
           columns={columns}
           data={filtered}
           isLoading={isLoading}
-          searchPlaceholder="Buscar alumno..."
+          searchPlaceholder={t('academy_enrollments.list.search', 'Buscar alumno...')}
           onRowClick={(row) => router.push(`/backend/academy_enrollments/${row.id}`)}
         />
       </PageBody>

@@ -9,6 +9,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from '@open-mercato/ui/backend/DataTable'
 import { DollarSign, MessageCircle, Plus } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type PaymentRow = {
   id: string
@@ -41,6 +42,7 @@ const METHOD_LABELS: Record<string, string> = {
 }
 
 export default function AcademyPaymentsPage() {
+  const t = useT()
   const router = useRouter()
   const [tab, setTab] = React.useState<'payments' | 'cobro'>('payments')
   const [payments, setPayments] = React.useState<PaymentRow[]>([])
@@ -101,14 +103,14 @@ export default function AcademyPaymentsPage() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
-              <DollarSign className="size-6" />Pagos
+              <DollarSign className="size-6" />{t('academy_payments.list.title', 'Pagos')}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
               USD {totalConfirmed.toLocaleString('es-VE', { minimumFractionDigits: 2 })} cobrado · {debtors.length} alumnos con saldo
             </p>
           </div>
           <Button type="button" onClick={() => router.push('/backend/academy_payments/create')}>
-            <Plus className="mr-2 size-4" />Registrar pago
+            <Plus className="mr-2 size-4" />{t('academy_payments.list.new_button', 'Registrar pago')}
           </Button>
         </div>
 
@@ -152,7 +154,7 @@ export default function AcademyPaymentsPage() {
             columns={paymentColumns}
             data={payments}
             isLoading={isLoading}
-            searchPlaceholder="Buscar pago..."
+            searchPlaceholder={t('academy_payments.list.search', 'Buscar pago...')}
           />
         )}
 
@@ -177,7 +179,7 @@ export default function AcademyPaymentsPage() {
                     </div>
                     {d.wa_link && (
                       <a href={d.wa_link} target="_blank" rel="noopener noreferrer">
-                        <Button type="button" size="sm" className="bg-[#25D366] hover:bg-[#25D366]/90 text-white">
+                        <Button type="button" size="sm" style={{ backgroundColor: '#25D366', color: 'white' }} className="hover:opacity-90">
                           <MessageCircle className="mr-2 size-4" />WhatsApp
                         </Button>
                       </a>
