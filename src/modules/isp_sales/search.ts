@@ -29,7 +29,7 @@ export const searchConfig: SearchModuleConfig = {
     // El teléfono se indexa solo como hash para lookup seguro.
     // =========================================================================
     {
-      entityId: 'isp_sales.lead',
+      entityId: 'isp_sales.isp_lead',
       enabled: true,
       priority: 35,
 

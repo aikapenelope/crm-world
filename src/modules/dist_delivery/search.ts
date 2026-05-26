@@ -14,7 +14,7 @@ function norm(v: unknown): string | null {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'dist_delivery.order',
+      entityId: 'dist_delivery.dist_delivery_order',
       enabled: true,
       priority: 25,
 

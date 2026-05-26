@@ -4,7 +4,7 @@ const PO_STATUS: Record<string, string> = { draft: 'Borrador', sent: 'Enviada', 
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_procurement.purchase_order',
+      entityId: 'mfg_procurement.mfg_purchase_order',
       enabled: true, priority: 45,
       fieldPolicy: { searchable: ['po_number', 'supplier_name', 'status', 'dau_number', 'incoterm'], excluded: ['tenant_id', 'organization_id', 'supplier_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

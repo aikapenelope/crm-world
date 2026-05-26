@@ -18,7 +18,7 @@ const TYPE_LABEL: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_bom.header',
+      entityId: 'mfg_bom.mfg_bom_header',
       enabled: true,
       priority: 45,
       fieldPolicy: {

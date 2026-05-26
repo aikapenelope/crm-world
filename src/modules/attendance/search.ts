@@ -24,7 +24,7 @@ export const searchConfig: SearchModuleConfig = {
     // La búsqueda se hace por fecha (YYYY-MM-DD) como identificador natural.
     // =========================================================================
     {
-      entityId: 'attendance.record',
+      entityId: 'attendance.attendance_record',
       enabled: true,
       priority: 10,
 

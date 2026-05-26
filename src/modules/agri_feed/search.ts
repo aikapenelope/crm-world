@@ -27,7 +27,7 @@ export const searchConfig: SearchModuleConfig = {
     // agri_feed.formula — Fórmulas de alimento
     // =========================================================================
     {
-      entityId: 'agri_feed.formula',
+      entityId: 'agri_feed.agri_feed_formula',
       enabled: true,
       priority: 30,
 
@@ -72,7 +72,7 @@ export const searchConfig: SearchModuleConfig = {
     // agri_feed.batch — Lotes de alimento
     // =========================================================================
     {
-      entityId: 'agri_feed.batch',
+      entityId: 'agri_feed.agri_feed_batch',
       enabled: true,
       priority: 25,
 

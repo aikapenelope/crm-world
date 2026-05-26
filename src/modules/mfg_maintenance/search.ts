@@ -3,7 +3,7 @@ function norm(v: unknown): string | null { const s = String(v ?? '').trim(); ret
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'mfg_maintenance.equipment',
+      entityId: 'mfg_maintenance.mfg_equipment',
       enabled: true, priority: 45,
       fieldPolicy: { searchable: ['equipment_code', 'name', 'brand', 'model', 'serial_number', 'status', 'criticality'], excluded: ['tenant_id', 'organization_id', 'work_center_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {
@@ -14,7 +14,7 @@ export const searchConfig: SearchModuleConfig = {
       resolveUrl: async (ctx: SearchBuildContext): Promise<string | null> => `/backend/mfg-maintenance/${ctx.record.id}`,
     },
     {
-      entityId: 'mfg_maintenance.spare_part',
+      entityId: 'mfg_maintenance.mfg_spare_part',
       enabled: true, priority: 40,
       fieldPolicy: { searchable: ['part_code', 'part_name', 'supplier_name'], excluded: ['tenant_id', 'organization_id', 'supplier_id'] },
       buildSource: async (ctx: SearchBuildContext): Promise<SearchIndexSource | null> => {

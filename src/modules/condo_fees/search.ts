@@ -26,7 +26,7 @@ export const searchConfig: SearchModuleConfig = {
     // Administradores buscan por unidad, propietario o número de recibo.
     // =========================================================================
     {
-      entityId: 'condo_fees.receipt',
+      entityId: 'condo_fees.condo_receipt',
       enabled: true,
       priority: 20,
 
@@ -96,7 +96,7 @@ export const searchConfig: SearchModuleConfig = {
     // condo_fees.config — Configuración de cuotas por edificio/período
     // =========================================================================
     {
-      entityId: 'condo_fees.config',
+      entityId: 'condo_fees.condo_fee_config',
       enabled: true,
       priority: 10,
 

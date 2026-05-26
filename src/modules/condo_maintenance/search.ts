@@ -41,7 +41,7 @@ const PRIORITY_LABELS: Record<string, string> = {
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'condo_maintenance.request',
+      entityId: 'condo_maintenance.condo_maintenance_request',
       enabled: true,
       priority: 20,
 

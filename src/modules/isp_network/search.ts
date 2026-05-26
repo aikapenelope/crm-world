@@ -18,7 +18,7 @@ export const searchConfig: SearchModuleConfig = {
     // Técnicos y administradores buscan por nombre de nodo, ciudad o estado.
     // =========================================================================
     {
-      entityId: 'isp_network.node',
+      entityId: 'isp_network.isp_network_node',
       enabled: true,
       priority: 15,
 
@@ -72,7 +72,7 @@ export const searchConfig: SearchModuleConfig = {
     // Técnicos buscan por número de serie, MAC o modelo antes de salir.
     // =========================================================================
     {
-      entityId: 'isp_network.cpe',
+      entityId: 'isp_network.isp_cpe_inventory',
       enabled: true,
       priority: 10,
 

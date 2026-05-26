@@ -4,7 +4,7 @@ function norm(v: unknown): string | null { if (v == null) return null; const s =
 export const searchConfig: SearchModuleConfig = {
   entities: [
     {
-      entityId: 'dist_price_lists.price_list',
+      entityId: 'dist_price_lists.dist_price_list',
       enabled: true,
       priority: 15,
       fieldPolicy: { searchable: ['name', 'code', 'description'], excluded: [] },

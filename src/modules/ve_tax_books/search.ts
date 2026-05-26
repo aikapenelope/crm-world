@@ -18,7 +18,7 @@ function norm(v: unknown): string | null {
 // =========================================================================
 export const searchConfig: SearchModuleConfig = {
   entities: [{
-    entityId: 've_tax_books.entry',
+    entityId: 've_tax_books.ve_tax_book_entry',
     enabled: true,
     priority: 20,
     fieldPolicy: {

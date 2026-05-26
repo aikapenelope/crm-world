@@ -21,7 +21,7 @@ export const searchConfig: SearchModuleConfig = {
     // agri_vet.medication — Medicaciones buscadas por diagnóstico o medicamento
     // =========================================================================
     {
-      entityId: 'agri_vet.medication',
+      entityId: 'agri_vet.agri_vet_medication_record',
       enabled: true,
       priority: 35,
 
@@ -69,7 +69,7 @@ export const searchConfig: SearchModuleConfig = {
     // agri_vet.vaccination — Vacunaciones buscadas por nombre de vacuna
     // =========================================================================
     {
-      entityId: 'agri_vet.vaccination',
+      entityId: 'agri_vet.agri_vet_vaccination_program',
       enabled: true,
       priority: 25,
 

@@ -17,7 +17,7 @@ function norm(v: unknown): string | null {
 // =========================================================================
 export const searchConfig: SearchModuleConfig = {
   entities: [{
-    entityId: 'mercadolibre_sync.listing',
+    entityId: 'mercadolibre_sync.market_listing',
     enabled: true,
     priority: 10,
     fieldPolicy: {

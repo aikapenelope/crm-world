@@ -18,7 +18,7 @@ export const searchConfig: SearchModuleConfig = {
     // Contadores buscan por banco o período para ubicar una conciliación.
     // =========================================================================
     {
-      entityId: 'bank_reconciliation.statement',
+      entityId: 'bank_reconciliation.bank_statement',
       enabled: true,
       priority: 20,
 

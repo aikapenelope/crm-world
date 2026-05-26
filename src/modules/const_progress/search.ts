@@ -27,7 +27,7 @@ export const searchConfig: SearchModuleConfig = {
     // Los directores de obra buscan valuaciones por número, estado o período.
     // =========================================================================
     {
-      entityId: 'const_progress.valuation',
+      entityId: 'const_progress.const_valuation',
       enabled: true,
       priority: 20,
 
