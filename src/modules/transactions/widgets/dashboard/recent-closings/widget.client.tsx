@@ -6,6 +6,8 @@ import { readApiResultOrThrow } from '@open-mercato/ui/backend/utils/apiCall'
 import { Spinner } from '@open-mercato/ui/primitives/spinner'
 import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Input } from '@open-mercato/ui/primitives/input'
+import { Checkbox } from '@open-mercato/ui/primitives/checkbox'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 import { hydrateSettings, type RecentClosingsSettings } from './config'
 
 type TransactionRow = {
@@ -26,6 +28,7 @@ const RecentClosingsWidget: React.FC<DashboardWidgetComponentProps<RecentClosing
   refreshToken,
   onRefreshStateChange,
 }) => {
+  const t = useT()
   const value = React.useMemo(() => hydrateSettings(settings), [settings])
   const [items, setItems] = React.useState<TransactionRow[]>([])
   const [loading, setLoading] = React.useState(true)
@@ -35,12 +38,8 @@ const RecentClosingsWidget: React.FC<DashboardWidgetComponentProps<RecentClosing
       onRefreshStateChange?.(true)
       setLoading(true)
       try {
-        const params = new URLSearchParams({
-          page: '1',
-          pageSize: String(value.pageSize),
-        })
+        const params = new URLSearchParams({ page: '1', pageSize: String(value.pageSize) })
         if (!value.showPending) params.set('status', 'completed')
-
         const result = await readApiResultOrThrow<{ items: TransactionRow[] }>(
           `/api/transactions/transactions?${params.toString()}`,
           undefined,
@@ -60,7 +59,7 @@ const RecentClosingsWidget: React.FC<DashboardWidgetComponentProps<RecentClosing
       <div className="space-y-4">
         <div className="space-y-1.5">
           <label htmlFor="closings-page-size" className="text-xs font-medium uppercase text-muted-foreground">
-            Cantidad a mostrar
+            {t('transactions.widget.recent.settings.count_label', 'Cantidad a mostrar')}
           </label>
           <Input
             id="closings-page-size"
@@ -72,13 +71,12 @@ const RecentClosingsWidget: React.FC<DashboardWidgetComponentProps<RecentClosing
             onChange={(e) => onSettingsChange({ ...value, pageSize: Number(e.target.value) })}
           />
         </div>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
+        <label className="flex items-center gap-2 text-sm cursor-pointer">
+          <Checkbox
             checked={value.showPending}
-            onChange={(e) => onSettingsChange({ ...value, showPending: e.target.checked })}
+            onCheckedChange={(checked) => onSettingsChange({ ...value, showPending: !!checked })}
           />
-          Incluir pendientes
+          {t('transactions.widget.recent.settings.show_pending', 'Incluir pendientes')}
         </label>
       </div>
     )
@@ -95,7 +93,9 @@ const RecentClosingsWidget: React.FC<DashboardWidgetComponentProps<RecentClosing
   return (
     <div className="space-y-2">
       {items.length === 0 ? (
-        <p className="text-sm text-muted-foreground py-6 text-center">Sin transacciones recientes</p>
+        <p className="text-sm text-muted-foreground py-6 text-center">
+          {t('transactions.widget.recent.empty', 'Sin transacciones recientes')}
+        </p>
       ) : null}
       {items.map((tx) => (
         <div key={tx.id} className="flex items-center justify-between rounded-md border bg-muted/50 px-3 py-2">
