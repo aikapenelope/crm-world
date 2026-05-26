@@ -439,8 +439,11 @@ jobs:
         # db:greenfield genera migrations desde los entity schemas Y las aplica.
         # Esto crea las tablas de todos los módulos (core + custom) sin necesitar
         # migration files pre-commiteados.
+        # --yes requerido en CI (no-interactivo) — verificado en:
+        # open-mercato packages/cli/src/mercato.ts:1663
+        #   const yes = args.includes('--yes') || args.includes('-y')
         # Referencia: open-mercato packages/cli/src/lib/db/commands.ts:553-561
-        run: yarn db:greenfield
+        run: yarn db:greenfield --yes
 
       - name: Initialize app data
         # Crea superadmin + primer tenant + seedDefaults de todos los módulos.
