@@ -35,7 +35,8 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: AgriJornaleroPayrollEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: AgriJornaleroPayrollEntity, idField: 'id', orgField: 'organization_id',
+      softDeleteField: null,, tenantField: 'tenant_id' },
   indexer: { entityType: 'agri_hr:payroll' },
   list: { schema: listSchema },
   create: { schema: jornaleroPayrollCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

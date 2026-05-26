@@ -11,7 +11,8 @@ const routeMetadata = {
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgCycleCountEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgCycleCountEntity, idField: 'id', orgField: 'organization_id',
+      softDeleteField: null,, tenantField: 'tenant_id' },
   indexer: { entityType: 'mfg_inventory:cycle_count' },
   list: { schema: z.object({ page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(100).default(50), status: z.string().optional() }).passthrough() },
   create: { schema: cycleCountCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

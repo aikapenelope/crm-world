@@ -20,7 +20,7 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: ConstSubcontractPaymentEntity, idField: 'id', orgField: null as any, tenantField: null as any },
+  orm: { entity: ConstSubcontractPaymentEntity, idField: 'id', orgField: null as any, tenantField: null as any, softDeleteField: null },
   indexer: { entityType: 'const_subcon.payment' },
   list: { schema: listSchema },
   create: { schema: createPaymentSchema, mapToEntity: (input: any) => ({ ...input, payment_number: `PAG-${Date.now().toString(36).toUpperCase().slice(-5)}` }) },

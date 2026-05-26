@@ -24,6 +24,7 @@ const crud = makeCrudRoute({
     entity:      AgriFeedAllocationEntity,
     idField:     'id',
     orgField:    'organization_id',
+      softDeleteField: null,,
     tenantField: 'tenant_id',
     // No soft delete — allocations are part of the traceability audit trail
   },

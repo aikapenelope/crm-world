@@ -31,6 +31,9 @@ const crud = makeCrudRoute({
     idField: 'id',
     orgField: 'organization_id',
     tenantField: 'tenant_id',
+    // Entity is append-only (no deleted_at column). Disable the implicit
+    // WHERE deletedAt IS NULL filter — see makeCrudRoute factory.ts:845.
+    softDeleteField: null,
   },
   indexer: { entityType: 'condo_fees.receipt' },
   list: { schema: listSchema },

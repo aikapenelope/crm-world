@@ -18,7 +18,8 @@ const listSchema = z.object({
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgNonconformanceEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgNonconformanceEntity, idField: 'id', orgField: 'organization_id',
+      softDeleteField: null,, tenantField: 'tenant_id' },
   indexer: { entityType: 'mfg_quality:nc' },
   list: { schema: listSchema },
   create: { schema: nonconformanceCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

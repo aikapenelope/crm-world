@@ -23,6 +23,7 @@ const crud = makeCrudRoute({
     entity:      AgriFlockWeeklyRecordEntity,
     idField:     'id',
     orgField:    'organization_id',
+      softDeleteField: null,,
     tenantField: 'tenant_id',
     // No soft delete — weekly records are immutable audit trail
   },

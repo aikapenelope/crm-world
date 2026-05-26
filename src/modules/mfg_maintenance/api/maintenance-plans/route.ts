@@ -6,7 +6,8 @@ const routeMetadata = { GET: { requireAuth: true, requireFeatures: ['mfg_mainten
 export const metadata = routeMetadata
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgMaintenancePlanEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgMaintenancePlanEntity, idField: 'id', orgField: 'organization_id',
+      softDeleteField: null,, tenantField: 'tenant_id' },
   indexer: { entityType: 'mfg_maintenance:plan' },
   list: { schema: z.object({ equipment_id: z.string().uuid().optional(), status: z.string().optional(), pageSize: z.coerce.number().min(1).max(200).default(100) }).passthrough() },
   create: { schema: maintenancePlanCreateSchema, mapToEntity: (input: any) => ({ ...input }) },

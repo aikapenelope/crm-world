@@ -16,7 +16,8 @@ export const metadata = routeMetadata
 
 const crud = makeCrudRoute({
   metadata: routeMetadata,
-  orm: { entity: MfgPowerOutageEntity, idField: 'id', orgField: 'organization_id', tenantField: 'tenant_id' },
+  orm: { entity: MfgPowerOutageEntity, idField: 'id', orgField: 'organization_id',
+      softDeleteField: null,, tenantField: 'tenant_id' },
   indexer: { entityType: 'mfg_energy:power_outage' },
   list: { schema: z.object({ page: z.coerce.number().min(1).default(1), pageSize: z.coerce.number().min(1).max(200).default(50), outage_type: z.string().optional() }).passthrough() },
   update: { schema: powerOutageUpdateSchema, applyToEntity: (entity: any, input: any) => { Object.assign(entity, input) } },
