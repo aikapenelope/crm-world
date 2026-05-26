@@ -53,7 +53,7 @@ export class PropertyTransactionEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   sale_price!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
@@ -63,7 +63,7 @@ export class PropertyTransactionEntity {
   exchange_rate?: string | null
 
   // Commission
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'5.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '5.00' })
   commission_rate: string = '5.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })

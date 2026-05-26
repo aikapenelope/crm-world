@@ -44,19 +44,19 @@ export class ConstValuationEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   total_contract!: string
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   previous_billed: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   current_period: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   retention_amount: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   advance_deduction: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   net_payable: string = '0.00'
 
   // VES equivalent (multi-currency)
@@ -66,7 +66,7 @@ export class ConstValuationEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   amount_ves?: string | null
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Workflow
@@ -125,16 +125,16 @@ export class ConstValuationLineEntity {
   unit_price!: string
 
   // Progress
-  @Property({ type: 'decimal', precision: 14, scale: 4, default: "'0.0000'" })
+  @Property({ type: 'decimal', precision: 14, scale: 4, default: '0.0000' })
   previous_quantity: string = '0.0000'
 
-  @Property({ type: 'decimal', precision: 14, scale: 4, default: "'0.0000'" })
+  @Property({ type: 'decimal', precision: 14, scale: 4, default: '0.0000' })
   current_quantity: string = '0.0000'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   current_amount: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   accumulated_percent: string = '0.00'
 
   @Property({ type: 'timestamptz' })

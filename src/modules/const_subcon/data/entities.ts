@@ -44,12 +44,12 @@ export class ConstSubcontractEntity {
   @Property({ type: 'text', length: 100 }) contract_number!: string
   @Property({ type: 'text' }) scope_description!: string
   @Property({ type: 'decimal', precision: 18, scale: 2 }) contract_amount!: string
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'10.00'" }) retention_percent: string = '10.00'
-  @Property({ type: 'text', length: 10, default: "'USD'" }) currency: string = 'USD'
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '10.00' }) retention_percent: string = '10.00'
+  @Property({ type: 'text', length: 10, default: 'USD' }) currency: string = 'USD'
   @Property({ type: 'date', nullable: true }) start_date?: Date | null
   @Property({ type: 'date', nullable: true }) end_date?: Date | null
   @Enum({ items: () => SubcontractStatus, type: 'string', length: 15 }) status!: SubcontractStatus
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" }) amount_paid: string = '0.00'
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' }) amount_paid: string = '0.00'
   @Property({ type: 'text', nullable: true }) notes?: string | null
   @Property({ type: 'timestamptz' }) created_at: Date = new Date()
   @Property({ type: 'timestamptz', onUpdate: () => new Date() }) updated_at: Date = new Date()

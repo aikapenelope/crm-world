@@ -26,7 +26,7 @@ export class ConstDailyReportEntity {
   @Enum({ items: () => WeatherCondition, type: 'string', length: 10 }) weather!: WeatherCondition
   @Property({ type: 'int', nullable: true }) temperature_high?: number | null
   @Property({ type: 'int', nullable: true }) temperature_low?: number | null
-  @Property({ type: 'decimal', precision: 4, scale: 1, default: "'8.0'" }) work_hours: string = '8.0'
+  @Property({ type: 'decimal', precision: 4, scale: 1, default: '8.0' }) work_hours: string = '8.0'
   @Enum({ items: () => ReportStatus, type: 'string', length: 15 }) status!: ReportStatus
   @Property({ type: 'text', nullable: true }) overall_notes?: string | null
   @Property({ type: 'int', default: 0 }) safety_incidents: number = 0

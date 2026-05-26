@@ -558,7 +558,48 @@ Si necesitas más estados que `null`/`<uuid>`, añade una columna booleana o enu
 
 ---
 
-## Historial de incidentes (continuación)
+## 18. Entidades MikroORM — `default:` sin comillas SQL embebidas
+
+### Problema encontrado
+Propiedades con `default: "'standard'"` (comillas SQL embebidas en el JS string)
+causan `syntax error at or near "standard"` cuando MikroORM v7 genera migrations.
+
+MikroORM extrae el valor de la string JS → detecta las comillas → las elimina en el
+SQL → genera `DEFAULT standard` (bareword) → PostgreSQL rechaza.
+
+### Regla: SIEMPRE usar el valor JavaScript directamente, sin comillas SQL embebidas
+
+```typescript
+// ✅ CORRECTO — MikroORM añade las comillas SQL automáticamente
+@Property({ type: 'text', length: 10, default: 'USD' })
+currency: string = 'USD'
+
+@Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
+amount: string = '0.00'
+
+@Property({ type: 'boolean', default: false })
+is_active: boolean = true
+
+// ❌ INCORRECTO — comillas SQL embebidas → sintax error en db:greenfield
+@Property({ type: 'text', length: 10, default: "'USD'" })
+currency: string = 'USD'
+```
+
+Para defaults SQL complejos (expresiones, funciones), usar `defaultRaw`:
+```typescript
+@Property({ defaultRaw: 'CURRENT_TIMESTAMP' })
+created_at: Date = new Date()
+```
+
+### Referencia
+Verificado en open-mercato packages/core/src/modules/auth/data/entities.ts:
+  `@Property({ type: 'boolean', default: false })` — sin comillas embedded.
+MikroORM v7 documentation: `default` = JavaScript value, MikroORM maneja
+el SQL quoting; `defaultRaw` = SQL expression raw.
+
+---
+
+
 
 | Fecha | Problema | Causa | Fix |
 |-------|----------|-------|-----|

@@ -48,7 +48,7 @@ export class DistCreditLimitEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   credit_limit!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Plazo de pago en días (15, 30, 60, 90)
@@ -67,7 +67,7 @@ export class DistCreditLimitEntity {
   approved_at?: Date | null
 
   // Saldo actual (calculado, se actualiza con cada transacción)
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   current_balance: string = '0.00'
 
   // Notas
@@ -119,7 +119,7 @@ export class DistCreditTransactionEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 18, scale: 8, nullable: true })

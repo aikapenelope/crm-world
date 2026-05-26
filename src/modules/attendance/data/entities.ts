@@ -86,7 +86,7 @@ export class AttendanceSummaryEntity {
   @Property({ type: 'smallint', default: 0 })
   days_excused: number = 0
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   attendance_percentage: string = '0.00'
 
   @Property({ type: 'timestamptz' })

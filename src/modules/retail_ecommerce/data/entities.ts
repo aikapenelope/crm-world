@@ -139,19 +139,19 @@ export class RetailOnlineOrderEntity {
   @Property({ type: 'json', nullable: true })
   delivery_address?: Record<string, string> | null
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   delivery_fee: string = '0.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   subtotal!: string
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   tax_amount: string = '0.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   total!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'text', nullable: true })

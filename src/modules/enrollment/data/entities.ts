@@ -64,7 +64,7 @@ export class EnrollmentPeriodEntity {
   @Property({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   enrollment_fee?: string | null
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   fee_currency: string = 'USD'
 
   @Property({ type: 'timestamptz' })

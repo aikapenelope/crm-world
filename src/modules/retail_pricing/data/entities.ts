@@ -62,7 +62,7 @@ export class RetailPricingRuleEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   max_regulated_price?: string | null
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'boolean', default: true })
@@ -105,7 +105,7 @@ export class RetailChannelPriceEntity {
   @Property({ type: 'decimal', precision: 18, scale: 4 })
   price!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Costo base para cálculo de margen

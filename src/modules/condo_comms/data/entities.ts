@@ -146,7 +146,7 @@ export class CondoVoteEntity {
   @Property({ type: 'boolean', default: true })
   requires_quorum: boolean = true
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'50.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '50.00' })
   quorum_percent: string = '50.00'
 
   @Enum({ items: () => VoteStatus, type: 'string', length: 15 })
@@ -165,7 +165,7 @@ export class CondoVoteEntity {
   total_votes: number = 0
 
   // Total alícuota que ha votado (para verificar quórum)
-  @Property({ type: 'decimal', precision: 8, scale: 5, default: "'0.00000'" })
+  @Property({ type: 'decimal', precision: 8, scale: 5, default: '0.00000' })
   total_aliquot_voted: string = '0.00000'
 
   @Property({ type: 'timestamptz' })

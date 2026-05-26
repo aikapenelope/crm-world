@@ -95,7 +95,7 @@ export class PaymentRecordEntity {
   @Property({ type: 'uuid', nullable: true })
   reference_id?: string | null
 
-  @Property({ type: 'text', length: 20, default: "'pending'" })
+  @Property({ type: 'text', length: 20, default: 'pending' })
   status: string = 'pending'
 
   @Property({ type: 'uuid', nullable: true })

@@ -86,7 +86,7 @@ export class StudentEntity {
   @Enum({ items: () => GradeLevel, type: 'string', length: 20 })
   grade_level!: GradeLevel
 
-  @Property({ type: 'text', length: 5, default: "'A'" })
+  @Property({ type: 'text', length: 5, default: 'A' })
   section: string = 'A'
 
   @Enum({ items: () => EnrollmentStatus, type: 'string', length: 20, default: EnrollmentStatus.ACTIVE })

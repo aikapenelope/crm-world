@@ -50,7 +50,7 @@ export class ContactPreferenceEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2, nullable: true })
   max_budget?: string | null
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   budget_currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 10, scale: 2, nullable: true })

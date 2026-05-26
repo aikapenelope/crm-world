@@ -39,7 +39,7 @@ export class AutoPartEntity {
   @Property({ type: 'json', nullable: true })
   compatible_brands?: string[] | null
 
-  @Property({ type: 'text', length: 20, default: "'pieza'" })
+  @Property({ type: 'text', length: 20, default: 'pieza' })
   unit: string = 'pieza'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
@@ -48,7 +48,7 @@ export class AutoPartEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   sell_price!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'int', default: 0 })

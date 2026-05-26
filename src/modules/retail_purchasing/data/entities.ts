@@ -69,7 +69,7 @@ export class RetailSupplierEntity {
   default_payment_days: number = 30
 
   // Moneda preferida
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Categorías que provee (IDs de categorías del catálogo)
@@ -120,7 +120,7 @@ export class RetailPurchaseOrderEntity {
   origin: PurchaseOrderOrigin = PurchaseOrderOrigin.MANUAL
 
   // Moneda de la compra
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Tasa de cambio al momento (para compras en USD con contabilidad en VES)
@@ -128,13 +128,13 @@ export class RetailPurchaseOrderEntity {
   exchange_rate?: string | null
 
   // Totales
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   subtotal: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   tax_amount: string = '0.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   total: string = '0.00'
 
   // Fechas
@@ -226,13 +226,13 @@ export class RetailAccountPayableEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   amount!: string
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   amount_paid: string = '0.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   balance!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Enum({ items: () => PayableStatus, type: 'string', length: 15, default: PayableStatus.PENDING })
@@ -282,7 +282,7 @@ export class RetailSupplierNoteEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   // Razón

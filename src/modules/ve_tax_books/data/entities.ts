@@ -76,18 +76,18 @@ export class VeTaxBookEntryEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   taxable_base!: string
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'16.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '16.00' })
   tax_rate: string = '16.00'
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   tax_amount: string = '0.00'
 
   // IGTF (si aplica — pago en divisas)
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   igtf_amount: string = '0.00'
 
   // Retención IVA (si aplica — cuando el cliente es agente de retención)
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   withholding_amount: string = '0.00'
 
   // Total del documento
@@ -95,7 +95,7 @@ export class VeTaxBookEntryEntity {
   total_amount!: string
 
   // Moneda y tasa de cambio
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 18, scale: 8, nullable: true })

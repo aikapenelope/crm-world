@@ -46,7 +46,7 @@ export class AcademyCertificateEntity {
   @Property({ type: 'decimal', precision: 5, scale: 1, nullable: true })
   attendance_percent?: string | null
 
-  @Property({ type: 'text', length: 50, default: "'standard'" })
+  @Property({ type: 'text', length: 50, default: 'standard' })
   template_type: string = 'standard'
 
   @Enum({ items: () => CertificateStatus, type: 'string', length: 15 })

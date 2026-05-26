@@ -137,7 +137,7 @@ export class CondoUnitEntity {
 
   // Alícuota: porcentaje de participación en gastos comunes (Art. 7 LPH)
   // 5 decimales para precisión (ej: 2.34567%)
-  @Property({ type: 'decimal', precision: 8, scale: 5, default: "'0.00000'" })
+  @Property({ type: 'decimal', precision: 8, scale: 5, default: '0.00000' })
   aliquot_percent: string = '0.00000'
 
   @Property({ type: 'int', nullable: true })

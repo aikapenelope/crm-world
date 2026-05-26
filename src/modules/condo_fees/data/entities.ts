@@ -62,7 +62,7 @@ export class CondoFeeConfigEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   base_amount!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Enum({ items: () => DistributionMethod, type: 'string', length: 10 })
@@ -71,7 +71,7 @@ export class CondoFeeConfigEntity {
   @Property({ type: 'date' })
   due_date!: Date
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '0.00' })
   late_fee_percent: string = '0.00'
 
   @Property({ type: 'int', default: 15 })
@@ -144,7 +144,7 @@ export class CondoReceiptEntity {
   @Property({ type: 'decimal', precision: 18, scale: 4, nullable: true })
   exchange_rate?: string | null
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   late_fee_amount: string = '0.00'
 
   @Property({ type: 'decimal', precision: 18, scale: 2 })
@@ -153,7 +153,7 @@ export class CondoReceiptEntity {
   @Enum({ items: () => ReceiptStatus, type: 'string', length: 15 })
   status!: ReceiptStatus
 
-  @Property({ type: 'decimal', precision: 18, scale: 2, default: "'0.00'" })
+  @Property({ type: 'decimal', precision: 18, scale: 2, default: '0.00' })
   paid_amount: string = '0.00'
 
   @Property({ type: 'timestamptz', nullable: true })

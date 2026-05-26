@@ -63,7 +63,7 @@ export class PropertyEntity {
   @Property({ type: 'decimal', precision: 18, scale: 2 })
   price!: string
 
-  @Property({ type: 'text', length: 10, default: "'USD'" })
+  @Property({ type: 'text', length: 10, default: 'USD' })
   currency: string = 'USD'
 
   @Property({ type: 'decimal', precision: 10, scale: 2, nullable: true })
@@ -90,7 +90,7 @@ export class PropertyEntity {
   @Property({ type: 'text', length: 20, nullable: true })
   zip?: string | null
 
-  @Property({ type: 'text', length: 5, default: "'VE'" })
+  @Property({ type: 'text', length: 5, default: 'VE' })
   country: string = 'VE'
 
   @Property({ type: 'decimal', precision: 10, scale: 7, nullable: true })
@@ -99,7 +99,7 @@ export class PropertyEntity {
   @Property({ type: 'decimal', precision: 10, scale: 7, nullable: true })
   longitude?: string | null
 
-  @Property({ type: 'decimal', precision: 5, scale: 2, default: "'5.00'" })
+  @Property({ type: 'decimal', precision: 5, scale: 2, default: '5.00' })
   commission_rate: string = '5.00'
 
   @Property({ type: 'uuid', nullable: true })
