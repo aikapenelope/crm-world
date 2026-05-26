@@ -30,7 +30,7 @@ export default function NuevaVotacionPage() {
     <Page>
       <PageBody>
         <CrudForm
-          title="Nueva Votación"
+          fields={[]}          title="Nueva Votación"
           groups={groups}
           submitLabel="Guardar"
           cancelHref="/backend/condo_comms/votes"

@@ -21,7 +21,7 @@ export default function CircularesPage() {
 
   React.useEffect(() => {
     setLoading(true)
-    apiCall('GET', '/api/condo-comms/circulars?pageSize=50')
+    apiCall('/api/condo-comms/circulars?pageSize=50', { method: 'GET' })
       .then((data: any) => setRows(data?.items ?? []))
       .catch(() => setRows([]))
       .finally(() => setLoading(false))
@@ -44,8 +44,8 @@ export default function CircularesPage() {
           columns={columns}
           data={rows}
           loading={loading}
-          emptyTitle="Sin registros"
-          emptyDescription="No hay registros disponibles aún."
+          
+          
         />
       </PageBody>
     </Page>

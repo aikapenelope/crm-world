@@ -21,7 +21,7 @@ export default function SolicitudesdeMantenimientoPage() {
 
   React.useEffect(() => {
     setLoading(true)
-    apiCall('GET', '/api/condo-maintenance/requests?pageSize=50')
+    apiCall('/api/condo-maintenance/requests?pageSize=50', { method: 'GET' })
       .then((data: any) => setRows(data?.items ?? []))
       .catch(() => setRows([]))
       .finally(() => setLoading(false))
@@ -44,8 +44,8 @@ export default function SolicitudesdeMantenimientoPage() {
           columns={columns}
           data={rows}
           loading={loading}
-          emptyTitle="Sin registros"
-          emptyDescription="No hay registros disponibles aún."
+          
+          
         />
       </PageBody>
     </Page>

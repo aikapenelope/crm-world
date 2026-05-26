@@ -32,7 +32,7 @@ export default function NuevaSolicitudPage() {
     <Page>
       <PageBody>
         <CrudForm
-          title="Nueva Solicitud"
+          fields={[]}          title="Nueva Solicitud"
           groups={groups}
           submitLabel="Guardar"
           cancelHref="/backend/condo_maintenance/requests"

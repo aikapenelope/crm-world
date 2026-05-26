@@ -31,7 +31,7 @@ export default function NuevoAsientoPage() {
     <Page>
       <PageBody>
         <CrudForm
-          title="Nuevo Asiento"
+          fields={[]}          title="Nuevo Asiento"
           groups={groups}
           submitLabel="Guardar"
           cancelHref="/backend/condo_accounting/entries"

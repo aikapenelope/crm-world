@@ -29,7 +29,7 @@ export default function NuevaCircularPage() {
     <Page>
       <PageBody>
         <CrudForm
-          title="Nueva Circular"
+          fields={[]}          title="Nueva Circular"
           groups={groups}
           submitLabel="Guardar"
           cancelHref="/backend/condo_comms/circulars"

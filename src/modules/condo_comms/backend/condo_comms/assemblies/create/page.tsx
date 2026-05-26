@@ -31,7 +31,7 @@ export default function NuevaAsambleaPage() {
     <Page>
       <PageBody>
         <CrudForm
-          title="Nueva Asamblea"
+          fields={[]}          title="Nueva Asamblea"
           groups={groups}
           submitLabel="Guardar"
           cancelHref="/backend/condo_comms"
