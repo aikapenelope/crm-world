@@ -1,0 +1,11 @@
+import { Migration } from '@mikro-orm/migrations';
+
+export class Migration20260526092559_mfg_floor extends Migration {
+
+  override up(): void | Promise<void> {
+    this.addSql(`create table "mfg_oee_history" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "work_center_id" uuid not null, "work_center_code" text not null, "work_center_name" text not null, "record_date" date not null, "shift_type" text not null, "available_hrs" numeric(6,4) not null default '8.0000', "downtime_hrs_total" numeric(6,4) not null default '0.0000', "downtime_hrs_electrical" numeric(6,4) not null default '0.0000', "downtime_hrs_internal" numeric(6,4) not null default '0.0000', "planned_quantity" numeric(12,4) not null default '0.0000', "actual_quantity" numeric(12,4) not null default '0.0000', "rejected_quantity" numeric(12,4) not null default '0.0000', "oee_availability_pct" numeric(5,2) not null default '0.00', "oee_internal_pct" numeric(5,2) not null default '0.00', "oee_performance_pct" numeric(5,2) not null default '0.00', "oee_quality_pct" numeric(5,2) not null default '0.00', "oee_total_pct" numeric(5,2) not null default '0.00', "created_at" timestamptz not null, primary key ("id"));`);
+
+    this.addSql(`create table "mfg_shift_reports" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "report_number" text not null, "shift_type" text not null, "shift_date" date not null, "work_center_id" uuid null, "work_center_name" text null, "shift_start" timestamptz not null, "shift_end" timestamptz null, "supervisor_id" uuid null, "planned_production" numeric(12,4) not null default '0.0000', "actual_production" numeric(12,4) not null default '0.0000', "rejected_units" numeric(12,4) not null default '0.0000', "production_uom" text null, "total_downtime_hrs" numeric(6,4) not null default '0.0000', "electrical_downtime_hrs" numeric(6,4) not null default '0.0000', "internal_downtime_hrs" numeric(6,4) not null default '0.0000', "oee_total_pct" numeric(5,2) null, "oee_internal_pct" numeric(5,2) null, "observations" text null, "whatsapp_sent" boolean not null default false, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+  }
+
+}

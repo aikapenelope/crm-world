@@ -1,0 +1,15 @@
+import { Migration } from '@mikro-orm/migrations';
+
+export class Migration20260526092559_mfg_dispatch extends Migration {
+
+  override up(): void | Promise<void> {
+    this.addSql(`create table "mfg_coa" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "coa_number" text not null, "lot_id" uuid not null, "lot_number" text not null, "product_id" uuid not null, "product_code" text not null, "product_name" text not null, "production_date" date not null, "expiry_date" date null, "quantity" numeric(12,4) not null, "uom" text not null, "dispatch_order_id" uuid null, "customer_name" text null, "qa_results" jsonb null, "approved_by" text null, "approved_at" date null, "is_released" boolean not null default false, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+
+    this.addSql(`create table "mfg_dispatch_orders" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "dispatch_number" text not null, "sale_order_id" uuid not null, "sale_order_number" text not null, "customer_name" text not null, "status" text not null default 'draft', "carrier_name" text null, "vehicle_plate" text null, "driver_name" text null, "requires_temperature_control" boolean not null default false, "temperature_range" text null, "dispatch_date" date null, "delivery_date" date null, "customer_signature" boolean not null default false, "delivery_notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+
+    this.addSql(`create table "mfg_sale_order_lines" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "sale_order_id" uuid not null, "line_number" smallint not null, "product_id" uuid not null, "product_code" text not null, "product_name" text not null, "quantity" numeric(12,4) not null, "uom" text not null, "unit_price_usd" numeric(12,6) not null, "total_price_usd" numeric(14,2) not null, "lot_id" uuid null, "lot_number" text null, "production_order_id" uuid null, "created_at" timestamptz not null, "updated_at" timestamptz not null, primary key ("id"));`);
+
+    this.addSql(`create table "mfg_sale_orders_mfg" ("id" uuid not null, "tenant_id" text not null, "organization_id" text not null, "order_number" text not null, "customer_id" uuid null, "customer_name" text not null, "customer_rif" text null, "status" text not null default 'draft', "currency" text not null default 'USD', "subtotal_usd" numeric(14,2) not null default '0.00', "iva_pct" numeric(5,2) not null default '16.00', "igtf_pct" numeric(5,2) null, "iva_amount_usd" numeric(14,2) not null default '0.00', "igtf_amount_usd" numeric(14,2) not null default '0.00', "total_usd" numeric(14,2) not null default '0.00', "payment_method" text null, "scheduled_dispatch_date" date null, "actual_dispatch_date" date null, "delivery_address" text null, "requires_temperature_control" boolean not null default false, "requires_coa" boolean not null default false, "notes" text null, "created_at" timestamptz not null, "updated_at" timestamptz not null, "deleted_at" timestamptz null, primary key ("id"));`);
+  }
+
+}
