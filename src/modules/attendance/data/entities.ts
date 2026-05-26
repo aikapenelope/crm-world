@@ -51,6 +51,9 @@ export class AttendanceRecordEntity {
 
   @Property({ type: 'timestamptz', onUpdate: () => new Date() })
   updated_at: Date = new Date()
+
+  @Property({ type: 'timestamptz', nullable: true })
+  deleted_at?: Date | null
 }
 
 // =============================================================================

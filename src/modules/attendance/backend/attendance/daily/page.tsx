@@ -9,6 +9,7 @@ import { Spinner } from '@open-mercato/ui/primitives/spinner'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useOrganizationScopeDetail } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
 import { ArrowLeft, Save, CheckCircle2, XCircle, Clock, AlertTriangle } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type StudentRow = { id: string; first_name: string; last_name: string }
 type AttendanceStatus = 'present' | 'absent' | 'late' | 'excused' | 'half_day'
@@ -36,6 +37,7 @@ const GRADE_OPTIONS = [
 ]
 
 export default function DailyAttendancePage() {
+  const t = useT()
   const { organizationId, tenantId } = useOrganizationScopeDetail()
   const today = new Date().toISOString().split('T')[0]
 
@@ -96,7 +98,7 @@ export default function DailyAttendancePage() {
       })
       saved++
     }
-    flash(`Asistencia guardada: ${saved} estudiantes para ${new Date(date).toLocaleDateString('es-VE')}`, 'success')
+    flash(t('attendance.daily.saved', 'Asistencia guardada: {count} estudiantes para {date}').replace('{count}', String(saved)).replace('{date}', new Date(date).toLocaleDateString('es-VE')), 'success')
     setIsSaving(false)
   }
 
@@ -113,15 +115,15 @@ export default function DailyAttendancePage() {
         <div className="mb-6">
           <Button type="button" variant="ghost" size="sm" onClick={() => window.history.back()}>
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Volver
+            {t('attendance.daily.back', 'Volver')}
           </Button>
-          <h1 className="mt-2 text-2xl font-bold">Registro de Asistencia</h1>
+          <h1 className="mt-2 text-2xl font-bold">{t('attendance.daily.title', 'Registro de Asistencia')}</h1>
         </div>
 
         {/* Selectors */}
         <div className="mb-4 grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Fecha</label>
+            <label className="block text-sm font-medium mb-1">{t('attendance.daily.date', 'Fecha')}</label>
             <input
               type="date"
               className="w-full rounded-md border bg-background px-3 py-2 text-sm"
@@ -130,25 +132,25 @@ export default function DailyAttendancePage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Grado</label>
+            <label className="block text-sm font-medium mb-1">{t('attendance.daily.grade', 'Grado')}</label>
             <select className="w-full rounded-md border bg-background px-3 py-2 text-sm" value={gradeLevel} onChange={(e) => setGradeLevel(e.target.value)}>
               <option value="">— Seleccionar —</option>
               {GRADE_OPTIONS.map((g) => <option key={g.value} value={g.value}>{g.label}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Sección</label>
+            <label className="block text-sm font-medium mb-1">{t('attendance.daily.section', 'Sección')}</label>
             <select className="w-full rounded-md border bg-background px-3 py-2 text-sm" value={section} onChange={(e) => setSection(e.target.value)}>
               {['A', 'B', 'C', 'D'].map((s) => <option key={s} value={s}>Sección {s}</option>)}
             </select>
           </div>
           <div className="flex items-end gap-2">
             <Button type="button" variant="outline" onClick={markAllPresent} disabled={students.length === 0}>
-              Todos presentes
+              {t('attendance.daily.all_present', 'Todos presentes')}
             </Button>
             <Button type="button" onClick={handleSave} disabled={isSaving || students.length === 0}>
               {isSaving ? <Spinner className="mr-2 h-4 w-4" /> : <Save className="mr-2 h-4 w-4" />}
-              Guardar
+              {isSaving ? t('attendance.daily.saving', 'Guardando...') : t('attendance.daily.save', 'Guardar')}
             </Button>
           </div>
         </div>
@@ -211,9 +213,9 @@ export default function DailyAttendancePage() {
             </table>
           </div>
         ) : gradeLevel ? (
-          <p className="text-center py-8 text-muted-foreground">No hay estudiantes activos en esta sección</p>
+          <p className="text-center py-8 text-muted-foreground">{t('attendance.daily.no_students', 'No hay estudiantes activos en esta sección')}</p>
         ) : (
-          <p className="text-center py-8 text-muted-foreground">Seleccione grado y sección para pasar lista</p>
+          <p className="text-center py-8 text-muted-foreground">{t('attendance.daily.select_grade', 'Seleccione grado y sección para pasar lista')}</p>
         )}
       </PageBody>
     </Page>

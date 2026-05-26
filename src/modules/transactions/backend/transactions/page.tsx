@@ -13,6 +13,7 @@ import { apiCall } from '@open-mercato/ui/backend/utils/apiCall'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { useOrganizationScopeVersion } from '@open-mercato/shared/lib/frontend/useOrganizationScope'
 import { useConfirmDialog } from '@open-mercato/ui/backend/confirm-dialog'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 import type { FilterDef, FilterValues } from '@open-mercato/ui/backend/FilterBar'
 
 type TransactionRow = {
@@ -36,6 +37,7 @@ type ResponsePayload = {
 }
 
 export default function TransactionsPage() {
+  const t = useT()
   const { confirm: confirmDialog, ConfirmDialogElement } = useConfirmDialog()
   const [rows, setRows] = React.useState<TransactionRow[]>([])
   const [page, setPage] = React.useState(1)
@@ -60,11 +62,7 @@ export default function TransactionsPage() {
         if (filters.status) params.set('status', String(filters.status))
 
         const fallback: ResponsePayload = { items: [], total: 0, page, totalPages: 1 }
-        const call = await apiCall<ResponsePayload>(
-          `/api/transactions/transactions?${params.toString()}`,
-          undefined,
-          { fallback },
-        )
+        const call = await apiCall<ResponsePayload>(`/api/transactions/transactions?${params.toString()}`, undefined, { fallback })
 
         if (call.ok) {
           const payload = call.result ?? fallback
@@ -75,7 +73,7 @@ export default function TransactionsPage() {
           }
         }
       } catch {
-        if (!cancelled) flash('Error al cargar transacciones', 'error')
+        if (!cancelled) flash(t('transactions.list.error_load', 'Error al cargar transacciones'), 'error')
       } finally {
         if (!cancelled) setIsLoading(false)
       }
@@ -86,7 +84,7 @@ export default function TransactionsPage() {
 
   const handleDelete = React.useCallback(
     async (row: TransactionRow) => {
-      const confirmed = await confirmDialog({ title: '¿Eliminar esta transacción?', variant: 'destructive' })
+      const confirmed = await confirmDialog({ title: t('transactions.list.confirm_delete', '¿Eliminar esta transacción?'), variant: 'destructive' })
       if (!confirmed) return
       const call = await apiCall('/api/transactions/transactions', {
         method: 'DELETE',
@@ -94,92 +92,45 @@ export default function TransactionsPage() {
         body: JSON.stringify({ id: row.id }),
       })
       if (call.ok) {
-        flash('Transacción eliminada', 'success')
-        setReloadToken((t) => t + 1)
+        flash(t('transactions.list.deleted', 'Transacción eliminada'), 'success')
+        setReloadToken((n) => n + 1)
       } else {
-        flash('Error al eliminar', 'error')
+        flash(t('transactions.list.error_delete', 'Error al eliminar'), 'error')
       }
     },
-    [confirmDialog],
+    [confirmDialog, t],
   )
 
   const columns = React.useMemo<ColumnDef<TransactionRow>[]>(
     () => [
-      {
-        accessorKey: 'transaction_type',
-        header: 'Tipo',
-        cell: ({ row }) => row.original.transaction_type === 'sale' ? 'Venta' : 'Alquiler',
-      },
-      {
-        accessorKey: 'status',
-        header: 'Estado',
-        cell: ({ row }) => (
-          <Badge variant={row.original.status === 'completed' ? 'default' : row.original.status === 'cancelled' ? 'destructive' : 'secondary'}>
-            {row.original.status === 'completed' ? 'Completada' : row.original.status === 'cancelled' ? 'Cancelada' : 'Pendiente'}
-          </Badge>
-        ),
-      },
-      {
-        accessorKey: 'sale_price',
-        header: 'Precio',
-        cell: ({ row }) => `${row.original.currency} ${Number(row.original.sale_price).toLocaleString('es-VE')}`,
-      },
-      {
-        accessorKey: 'commission_amount',
-        header: 'Comisión',
-        cell: ({ row }) => row.original.commission_amount
-          ? `${row.original.currency} ${Number(row.original.commission_amount).toLocaleString('es-VE')}`
-          : `${row.original.commission_rate}%`,
-      },
-      {
-        accessorKey: 'closing_date',
-        header: 'Fecha cierre',
-        cell: ({ row }) => row.original.closing_date
-          ? new Date(row.original.closing_date).toLocaleDateString('es-VE')
-          : '—',
-      },
-      {
-        accessorKey: 'created_at',
-        header: 'Creada',
-        cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString('es-VE'),
-      },
+      { accessorKey: 'transaction_type', header: t('transactions.list.col.type', 'Tipo'), cell: ({ row }) => row.original.transaction_type === 'sale' ? 'Venta' : 'Alquiler' },
+      { accessorKey: 'status', header: t('transactions.list.col.status', 'Estado'), cell: ({ row }) => <Badge variant={row.original.status === 'completed' ? 'default' : row.original.status === 'cancelled' ? 'destructive' : 'secondary'}>{row.original.status === 'completed' ? 'Completada' : row.original.status === 'cancelled' ? 'Cancelada' : 'Pendiente'}</Badge> },
+      { accessorKey: 'sale_price', header: t('transactions.list.col.price', 'Precio'), cell: ({ row }) => `${row.original.currency} ${Number(row.original.sale_price).toLocaleString('es-VE')}` },
+      { accessorKey: 'commission_amount', header: t('transactions.list.col.commission', 'Comisión'), cell: ({ row }) => row.original.commission_amount ? `${row.original.currency} ${Number(row.original.commission_amount).toLocaleString('es-VE')}` : `${row.original.commission_rate}%` },
+      { accessorKey: 'closing_date', header: t('transactions.list.col.closing', 'Fecha cierre'), cell: ({ row }) => row.original.closing_date ? new Date(row.original.closing_date).toLocaleDateString('es-VE') : '—' },
+      { accessorKey: 'created_at', header: t('transactions.list.col.created', 'Creada'), cell: ({ row }) => new Date(row.original.created_at).toLocaleDateString('es-VE') },
     ],
-    [],
+    [t],
   )
 
   const filterDefs = React.useMemo<FilterDef[]>(
     () => [
-      {
-        id: 'transaction_type', label: 'Tipo', type: 'select',
-        options: [
-          { label: 'Todos', value: '' },
-          { label: 'Venta', value: 'sale' },
-          { label: 'Alquiler', value: 'lease' },
-        ],
-      },
-      {
-        id: 'status', label: 'Estado', type: 'select',
-        options: [
-          { label: 'Todos', value: '' },
-          { label: 'Pendiente', value: 'pending' },
-          { label: 'Completada', value: 'completed' },
-          { label: 'Cancelada', value: 'cancelled' },
-        ],
-      },
+      { id: 'transaction_type', label: t('transactions.list.filter.type', 'Tipo'), type: 'select', options: [{ label: 'Todos', value: '' }, { label: 'Venta', value: 'sale' }, { label: 'Alquiler', value: 'lease' }] },
+      { id: 'status', label: t('transactions.list.filter.status', 'Estado'), type: 'select', options: [{ label: 'Todos', value: '' }, { label: 'Pendiente', value: 'pending' }, { label: 'Completada', value: 'completed' }, { label: 'Cancelada', value: 'cancelled' }] },
     ],
-    [],
+    [t],
   )
 
   return (
     <Page>
       <PageBody>
         <DataTable
-          title="Transacciones"
+          title={t('transactions.list.title', 'Transacciones')}
           columns={columns}
           data={rows}
           searchValue={search}
           onSearchChange={(value) => { setSearch(value); setPage(1) }}
-          searchPlaceholder="Buscar..."
+          searchPlaceholder={t('transactions.list.search_placeholder', 'Buscar...')}
           filters={filterDefs}
           filterValues={filters}
           onFiltersApply={(values) => { setFilters(values); setPage(1) }}
@@ -188,14 +139,14 @@ export default function TransactionsPage() {
             <Button asChild>
               <Link href="/backend/transactions/create">
                 <Plus className="mr-2 h-4 w-4" />
-                Registrar Cierre
+                {t('transactions.list.new_button', 'Registrar Cierre')}
               </Link>
             </Button>
           }
           rowActions={(row) => (
             <RowActions
               items={[
-                { id: 'delete', label: 'Eliminar', destructive: true, onSelect: () => handleDelete(row) },
+                { id: 'delete', label: t('transactions.list.action.delete', 'Eliminar'), destructive: true, onSelect: () => handleDelete(row) },
               ]}
             />
           )}
