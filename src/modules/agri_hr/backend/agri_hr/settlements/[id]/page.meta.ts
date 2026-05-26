@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_hr.view'],
   pageTitle: 'Detalle Liquidación',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
+  navHidden: true,
 }

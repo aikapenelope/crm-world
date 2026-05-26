@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_traceability.view'],
   pageTitle: 'Detalle de Recall',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
+  navHidden: true,
 }

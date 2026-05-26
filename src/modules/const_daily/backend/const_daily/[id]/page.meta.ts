@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   title: 'Reporte Diario de Obra',
   requireAuth: true,
   requireFeatures: ['const_daily.view'],
+  pageGroup: 'Construcción',
+  pageGroupKey: 'construccion',
+  navHidden: true,
 }

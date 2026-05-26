@@ -7,4 +7,7 @@ export const metadata = {
     { label: 'Compras', labelKey: 'retail_purchasing.nav.title', href: '/backend/retail_purchasing' },
     { label: 'Detalle' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
+  navHidden: true,
 }

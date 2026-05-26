@@ -310,3 +310,129 @@ jobs:
         # typescript.ignoreBuildErrors=true in next.config.ts → TS errors don't fail
         # Turbopack/bundler errors (missing modules, bad imports) DO fail the build
         run: yarn build
+
+  # ── API Smoke Tests ──────────────────────────────────────────────────────────
+  # Runs TC-SMOKE-001 against an ephemeral app + database following the
+  # Open Mercato recommended approach: yarn test:integration:ephemeral.
+  #
+  # Uses Docker (available in ubuntu-latest) to spin up isolated PostgreSQL,
+  # Redis, and Meilisearch containers via testcontainers — no real data is
+  # modified, no production secrets are needed.
+  #
+  # This job is non-blocking (continue-on-error: true) while the smoke test
+  # suite stabilizes. Remove continue-on-error once all modules pass.
+  #
+  # Reference: open-mercato .ai/qa/AGENTS.md — "Preferred workflow"
+  #            packages/cli/src/lib/testing/integration.ts (testcontainers)
+  smoke:
+    name: API Smoke Tests
+    runs-on: ubuntu-latest
+    needs: [build]           # Only run if build passes
+    continue-on-error: true  # Non-blocking while suite stabilizes
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Cache Yarn packages
+        uses: actions/cache@v4
+        with:
+          path: .yarn/cache
+          key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          restore-keys: yarn-${{ runner.os }}-
+
+      - name: Cache node_modules
+        id: nm-cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.nm-cache.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Create .env for ephemeral app
+        run: |
+          cat > .env << 'EOF'
+          JWT_SECRET=ci-smoke-secret-not-real
+          APP_URL=http://localhost:5001
+          TENANT_DATA_ENCRYPTION=false
+          OM_SEARCH_ENABLED=false
+          OM_DISABLE_VECTOR_SEARCH_AUTOINDEXING=true
+          AUTO_SPAWN_WORKERS=false
+          NEXT_TELEMETRY_DISABLED=1
+          EOF
+
+      - name: Run API Smoke Tests (ephemeral)
+        # Starts isolated Docker containers, boots the app, runs all TC-SMOKE-001
+        # specs. Produces results.json + HTML report following OM qa/AGENTS.md.
+        run: |
+          yarn test:integration:ephemeral \
+            --filter TC-SMOKE-001 \
+            --workers 1 \
+            --retries 1
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-results-${{ github.run_number }}
+          path: |
+            .ai/qa/test-results/
+          retention-days: 7
+
+      - name: Publish smoke test summary
+        if: always()
+        run: |
+          RESULTS=".ai/qa/test-results/results.json"
+          [ -f "$RESULTS" ] || exit 0
+          node -e "
+          const fs = require('fs')
+          const r = JSON.parse(fs.readFileSync('$RESULTS', 'utf8'))
+          const total = r.stats?.expected ?? 0
+          const passed = r.stats?.expected - (r.stats?.unexpected ?? 0)
+          const failed = r.stats?.unexpected ?? 0
+          const lines = [
+            '## API Smoke Test Results', '',
+            '| Metric | Count |',
+            '|--------|-------|',
+            \`| Total modules tested | \${total} |\`,
+            \`| ✅ Passed | \${passed} |\`,
+            \`| ❌ Failed | \${failed} |\`,
+            '',
+          ]
+          if (r.suites) {
+            const failures = []
+            function collectFailed(suites) {
+              for (const s of suites || []) {
+                for (const spec of s.specs || []) {
+                  for (const test of spec.tests || []) {
+                    if (test.status !== 'expected') {
+                      const err = test.results?.[0]?.errors?.[0]?.message ?? 'unknown error'
+                      failures.push(\`| \${spec.title} | \${err.substring(0, 200)} |\`)
+                    }
+                  }
+                }
+                collectFailed(s.suites)
+              }
+            }
+            collectFailed(r.suites)
+            if (failures.length > 0) {
+              lines.push('### Failed Modules', '', '| Test | Error |', '|------|-------|', ...failures, '')
+            }
+          }
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join('\n'))
+          "
+

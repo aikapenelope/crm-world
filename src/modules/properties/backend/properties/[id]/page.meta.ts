@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   title: 'Editar Propiedad',
   requireAuth: true,
   requireFeatures: ['properties.edit'],
+  pageGroup: 'Inmobiliaria',
+  pageGroupKey: 'nav.group.realestate',
+  navHidden: true,
 }

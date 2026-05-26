@@ -3,4 +3,6 @@ export const metadata = {
   requireFeatures: ['condo_fees.manage'],
   pageTitle: 'Nueva Cuota',
   pageTitleKey: 'condo_fees.configs.create.title',
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
 }

@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['mfg_bom.view'],
   pageTitle: 'Detalle BOM',
   navHidden: true,
+  pageGroup: 'Manufactura',
+  pageGroupKey: 'nav.group.mfg',
+  navHidden: true,
 }

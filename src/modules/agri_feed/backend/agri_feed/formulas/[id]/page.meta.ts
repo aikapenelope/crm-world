@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_feed.edit'],
   pageTitle: 'Ingredientes de Fórmula',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
+  navHidden: true,
 }

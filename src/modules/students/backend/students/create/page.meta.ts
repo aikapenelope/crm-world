@@ -3,4 +3,6 @@ export const metadata = {
   requireFeatures: ['students.create'],
   pageTitle: 'Registrar Estudiante',
   pageTitleKey: 'students.form.title.create',
+  pageGroup: 'Education',
+  pageGroupKey: 'education',
 }

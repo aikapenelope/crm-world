@@ -8,4 +8,7 @@ export const metadata = {
     { label: 'Conteos', labelKey: 'retail_inventory.nav.counts', href: '/backend/retail_inventory/counts' },
     { label: 'Ejecutar' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
+  navHidden: true,
 }

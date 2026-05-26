@@ -4,4 +4,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['agri_vet.edit'],
   pageTitle: 'Detalle Programa Vacunación',
   navHidden: true,
+  pageGroup: 'Agroindustria',
+  pageGroupKey: 'nav.group.agri',
+  navHidden: true,
 }

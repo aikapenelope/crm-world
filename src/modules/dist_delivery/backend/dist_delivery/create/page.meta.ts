@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Nuevo Despacho',
   pageTitleKey: 'dist_delivery.create.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
 }

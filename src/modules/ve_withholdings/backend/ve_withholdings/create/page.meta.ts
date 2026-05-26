@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Registrar Retención',
   pageTitleKey: 've_withholdings.create.title',
   navHidden: true,
+  pageGroup: 'Fiscal',
+  pageGroupKey: 'fiscal',
 }

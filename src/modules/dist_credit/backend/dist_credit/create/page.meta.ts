@@ -4,4 +4,6 @@ export const metadata = {
   pageTitle: 'Asignar Crédito',
   pageTitleKey: 'dist_credit.create.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
 }

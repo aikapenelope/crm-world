@@ -9,4 +9,6 @@ export const metadata = {
     { label: 'Campañas', labelKey: 'retail_loyalty.nav.campaigns', href: '/backend/retail_loyalty/campaigns' },
     { label: 'Nueva', labelKey: 'retail_loyalty.campaign.create' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
 }

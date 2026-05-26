@@ -5,4 +5,7 @@ export const metadata: PageMetadata = {
   requireFeatures: ['isp_network.manage'],
   pageTitle: 'Editar Nodo',
   navHidden: true,
+  pageGroup: 'ISP',
+  pageGroupKey: 'nav.group.isp',
+  navHidden: true,
 }

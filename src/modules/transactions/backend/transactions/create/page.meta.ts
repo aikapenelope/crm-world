@@ -4,4 +4,6 @@ export const metadata: PageMetadata = {
   title: 'Registrar Cierre',
   requireAuth: true,
   requireFeatures: ['transactions.create'],
+  pageGroup: 'Inmobiliaria',
+  pageGroupKey: 'nav.group.realestate',
 }
