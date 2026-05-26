@@ -21,6 +21,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, CheckCircle2, MessageCircle, UserCheck } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Enrollment = {
   id: string; enrollment_number: string; student_name: string; student_email: string | null
@@ -50,6 +51,7 @@ const METHOD_LABELS: Record<string, string> = {
 }
 
 export default function AcademyEnrollmentDetailPage() {
+  const t = useT()
   const params = useParams()
   const router = useRouter()
   const enrollmentId = params?.id as string
@@ -101,7 +103,7 @@ export default function AcademyEnrollmentDetailPage() {
   async function handleActivate() {
     setActivating(true)
     const res = await updateCrud('academy-enrollments/enrollments', { id: enrollmentId, status: 'active' })
-    if (res.ok) { flash('Inscripción activada', 'success'); await load() }
+    if (res.ok) { flash(t('academy_enrollments.detail.activated', 'Inscripción activada'), 'success'); await load() }
     setActivating(false)
   }
 
@@ -113,22 +115,22 @@ export default function AcademyEnrollmentDetailPage() {
       body: JSON.stringify({ enrollment_id: enrollmentId, final_grade: finalGrade }),
     })
     if (res.ok) {
-      flash('Inscripción completada — certificado generado', 'success')
+      flash(t('academy_enrollments.detail.completed', 'Inscripción completada — certificado generado'), 'success')
       setShowCompleteForm(false)
       await load()
     } else {
-      flash('Error al completar', 'error')
+      flash(t('academy_enrollments.detail.complete_error', 'Error al completar'), 'error')
     }
     setCompleting(false)
   }
 
-  if (isLoading) return <LoadingMessage label="Cargando inscripción..." />
+  if (isLoading) return <LoadingMessage label={t('academy_enrollments.detail.loading', 'Cargando inscripción...')} />
   if (!enrollment) return (
     <Page><PageBody>
       <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_enrollments')}>
         <ArrowLeft className="mr-2 h-4 w-4" />Volver
       </Button>
-      <p className="mt-4 text-muted-foreground">Inscripción no encontrada.</p>
+      <p className="mt-4 text-muted-foreground">{t('academy_enrollments.detail.not_found', 'Inscripción no encontrada.')}</p>
     </PageBody></Page>
   )
 
@@ -140,7 +142,7 @@ export default function AcademyEnrollmentDetailPage() {
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_enrollments')}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Inscripciones
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_enrollments.detail.back', 'Inscripciones')}
         </Button>
 
         <div className="mt-4 mb-6 flex items-start justify-between flex-wrap gap-3">
@@ -176,7 +178,7 @@ export default function AcademyEnrollmentDetailPage() {
             {enrollment.student_phone && (
               <a href={`https://wa.me/${enrollment.student_phone.replace(/\D/g, '')}?text=Hola ${encodeURIComponent(enrollment.student_name)}, `}
                 target="_blank" rel="noopener noreferrer">
-                <Button type="button" variant="outline" size="sm" className="bg-[#25D366]/10 border-[#25D366]/30">
+                <Button type="button" variant="outline" size="sm" style={{ backgroundColor: 'rgba(37,211,102,0.1)', borderColor: 'rgba(37,211,102,0.3)' }}>
                   <MessageCircle className="mr-2 size-4" />WhatsApp
                 </Button>
               </a>

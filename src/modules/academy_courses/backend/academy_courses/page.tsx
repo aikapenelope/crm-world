@@ -9,6 +9,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, BookOpen, Users, TrendingUp } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type CourseRow = {
   id: string
@@ -33,6 +34,7 @@ const MODALITY_LABELS: Record<string, string> = {
 }
 
 export default function AcademyCoursesPage() {
+  const t = useT()
   const router = useRouter()
   const [courses, setCourses] = React.useState<CourseRow[]>([])
   const [dashboard, setDashboard] = React.useState<DashboardData | null>(null)
@@ -115,15 +117,15 @@ export default function AcademyCoursesPage() {
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
               <BookOpen className="size-6" />
-              Cursos
+              {t('academy_courses.list.title', 'Cursos')}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Catálogo de cursos de la academia
+              {t('academy_courses.list.subtitle', 'Catálogo de cursos de la academia')}
             </p>
           </div>
           <Button type="button" onClick={() => router.push('/backend/academy_courses/create')}>
             <Plus className="mr-2 size-4" />
-            Nuevo curso
+            {t('academy_courses.list.new_button', 'Nuevo curso')}
           </Button>
         </div>
 
@@ -159,7 +161,7 @@ export default function AcademyCoursesPage() {
               size="sm"
               onClick={() => setFilterActive(f)}
             >
-              {f === 'all' ? 'Todos' : f === 'active' ? 'Activos' : 'Inactivos'}
+              {f === 'all' ? t('academy_courses.list.filter.all', 'Todos') : f === 'active' ? t('academy_courses.list.filter.active', 'Activos') : t('academy_courses.list.filter.inactive', 'Inactivos')}
             </Button>
           ))}
         </div>
@@ -168,7 +170,7 @@ export default function AcademyCoursesPage() {
           columns={columns}
           data={filteredCourses}
           isLoading={isLoading}
-          searchPlaceholder="Buscar curso..."
+          searchPlaceholder={t('academy_courses.list.search', 'Buscar curso...')}
           onRowClick={(row) => router.push(`/backend/academy_courses/${row.id}`)}
         />
       </PageBody>

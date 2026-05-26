@@ -10,6 +10,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { useAppEvent } from '@open-mercato/ui/backend/injection/useAppEvent'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, Calendar, LayoutGrid, List, Clock, Users, CheckCircle2 } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type GroupRow = {
   id: string
@@ -145,6 +146,7 @@ function GroupCard({
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function AcademyGroupsPage() {
+  const t = useT()
   const router = useRouter()
   const [groups, setGroups] = React.useState<GroupRow[]>([])
   const [courseNames, setCourseNames] = React.useState<CourseMap>({})
@@ -233,10 +235,10 @@ export default function AcademyGroupsPage() {
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
               <Calendar className="size-6" />
-              Grupos
+              {t('academy_groups.list.title', 'Grupos')}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {inProgress.length} en curso · {scheduled.length} próximos · {totalEnrolled} alumnos activos
+              {t('academy_groups.list.subtitle', '{in_progress} en curso · {scheduled} próximos · {enrolled} alumnos activos').replace('{in_progress}', String(inProgress.length)).replace('{scheduled}', String(scheduled.length)).replace('{enrolled}', String(totalEnrolled))}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -263,7 +265,7 @@ export default function AcademyGroupsPage() {
             </div>
             <Button type="button" onClick={() => router.push('/backend/academy_groups/create')}>
               <Plus className="mr-2 size-4" />
-              Nuevo grupo
+              {t('academy_groups.list.new_button', 'Nuevo grupo')}
             </Button>
           </div>
         </div>
@@ -292,7 +294,7 @@ export default function AcademyGroupsPage() {
                     )}
                     {!isLoading && colGroups.length === 0 && (
                       <div className="rounded-xl border border-dashed p-4 text-center text-xs text-muted-foreground">
-                        Sin grupos
+                        {t('academy_groups.list.board.empty', 'Sin grupos')}
                       </div>
                     )}
                     {colGroups.map(g => (
@@ -317,7 +319,7 @@ export default function AcademyGroupsPage() {
             columns={columns}
             data={groups}
             isLoading={isLoading}
-            searchPlaceholder="Buscar grupo o curso..."
+            searchPlaceholder={t('academy_groups.list.search', 'Buscar grupo o curso...')}
             onRowClick={(row) => router.push(`/backend/academy_groups/${row.id}`)}
           />
         )}

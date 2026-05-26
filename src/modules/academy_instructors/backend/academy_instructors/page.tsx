@@ -9,6 +9,7 @@ import { Badge } from '@open-mercato/ui/primitives/badge'
 import { Button } from '@open-mercato/ui/primitives/button'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Plus, Users } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type InstructorRow = {
   id: string
@@ -26,6 +27,7 @@ const MODALITY_LABELS: Record<string, string> = {
 }
 
 export default function AcademyInstructorsPage() {
+  const t = useT()
   const router = useRouter()
   const [instructors, setInstructors] = React.useState<InstructorRow[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
@@ -105,15 +107,15 @@ export default function AcademyInstructorsPage() {
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
               <Users className="size-6" />
-              Instructores
+              {t('academy_instructors.list.title', 'Instructores')}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {instructors.filter(i => i.is_active).length} instructores activos
+              {t('academy_instructors.list.subtitle', '{count} instructores activos').replace('{count}', String(instructors.filter(i => i.is_active).length))}
             </p>
           </div>
           <Button type="button" onClick={() => router.push('/backend/academy_instructors/create')}>
             <Plus className="mr-2 size-4" />
-            Nuevo instructor
+            {t('academy_instructors.list.new_button', 'Nuevo instructor')}
           </Button>
         </div>
 
@@ -121,7 +123,7 @@ export default function AcademyInstructorsPage() {
           columns={columns}
           data={instructors}
           isLoading={isLoading}
-          searchPlaceholder="Buscar instructor..."
+          searchPlaceholder={t('academy_instructors.list.search', 'Buscar instructor...')}
         />
       </PageBody>
     </Page>

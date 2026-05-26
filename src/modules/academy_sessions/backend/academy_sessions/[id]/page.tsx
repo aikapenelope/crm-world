@@ -10,6 +10,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, CheckCircle2, XCircle, Clock, AlertCircle, Users } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Session = {
   id: string; group_id: string; session_number: number; session_date: string
@@ -83,6 +84,7 @@ function getInitials(name: string): string {
 }
 
 export default function AcademySessionDetailPage() {
+  const t = useT()
   const params = useParams()
   const router = useRouter()
   const sessionId = params?.id as string
@@ -181,13 +183,13 @@ export default function AcademySessionDetailPage() {
     setSaving(false)
   }
 
-  if (isLoading) return <LoadingMessage label="Cargando sesión..." />
+  if (isLoading) return <LoadingMessage label={t('academy_sessions.detail.loading', 'Cargando sesión...')} />
   if (!session) return (
     <Page><PageBody>
       <Button variant="ghost" size="sm" onClick={() => router.back()}>
-        <ArrowLeft className="mr-2 h-4 w-4" />Volver
+        <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_sessions.detail.back', 'Grupos')}
       </Button>
-      <p className="mt-4 text-muted-foreground">Sesión no encontrada.</p>
+      <p className="mt-4 text-muted-foreground">{t('academy_sessions.detail.not_found', 'Sesión no encontrada.')}</p>
     </PageBody></Page>
   )
 

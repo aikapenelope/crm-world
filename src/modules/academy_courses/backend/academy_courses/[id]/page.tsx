@@ -10,6 +10,7 @@ import { Button } from '@open-mercato/ui/primitives/button'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { LoadingMessage } from '@open-mercato/ui/backend/detail'
 import { ArrowLeft, BookOpen, Users, Clock, DollarSign, Edit2, Archive } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 type Course = {
   id: string
@@ -48,6 +49,7 @@ const GROUP_STATUS_LABELS: Record<string, string> = {
 }
 
 export default function AcademyCourseDetailPage() {
+  const t = useT()
   const params = useParams()
   const router = useRouter()
   const courseId = params?.id as string
@@ -90,11 +92,11 @@ export default function AcademyCourseDetailPage() {
       id: course.id, name: editName, price_usd: editPrice,
     })
     if (res.ok) {
-      flash('Curso actualizado', 'success')
+      flash(t('academy_courses.detail.updated', 'Curso actualizado'), 'success')
       setEditing(false)
       await load()
     } else {
-      flash('Error al actualizar', 'error')
+      flash(t('academy_courses.detail.update_error', 'Error al actualizar'), 'error')
     }
     setSaving(false)
   }
@@ -104,17 +106,17 @@ export default function AcademyCourseDetailPage() {
     const res = await updateCrud('academy-courses/courses', {
       id: course.id, is_active: !course.is_active,
     })
-    if (res.ok) { flash(course.is_active ? 'Curso archivado' : 'Curso activado', 'success'); await load() }
+    if (res.ok) { flash(course.is_active ? t('academy_courses.detail.archive', 'Curso archivado') : t('academy_courses.detail.activate', 'Curso activado'), 'success'); await load() }
   }
 
-  if (isLoading) return <LoadingMessage label="Cargando curso..." />
+  if (isLoading) return <LoadingMessage label={t('academy_courses.detail.loading', 'Cargando curso...')} />
   if (!course) return (
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_courses')}>
           <ArrowLeft className="mr-2 h-4 w-4" />Volver
         </Button>
-        <p className="mt-4 text-muted-foreground">Curso no encontrado.</p>
+        <p className="mt-4 text-muted-foreground">{t('academy_courses.detail.not_found', 'Curso no encontrado.')}</p>
       </PageBody>
     </Page>
   )
@@ -127,7 +129,7 @@ export default function AcademyCourseDetailPage() {
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_courses')}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Cursos
+          {t('academy_courses.detail.back', 'Cursos')}
         </Button>
 
         {/* Header */}
@@ -157,7 +159,7 @@ export default function AcademyCourseDetailPage() {
               <>
                 <Button type="button" variant="outline" size="sm" onClick={() => setEditing(false)}>Cancelar</Button>
                 <Button type="button" size="sm" onClick={handleSave} disabled={saving}>
-                  {saving ? 'Guardando...' : 'Guardar'}
+                  {saving ? t('academy_courses.detail.saving', 'Guardando...') : t('academy_courses.detail.save', 'Guardar')}
                 </Button>
               </>
             ) : (

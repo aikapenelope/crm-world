@@ -23,8 +23,10 @@ import { createCrud } from '@open-mercato/ui/backend/utils/crud'
 import { flash } from '@open-mercato/ui/backend/FlashMessages'
 import { Button } from '@open-mercato/ui/primitives/button'
 import { ArrowLeft } from 'lucide-react'
+import { useT } from '@open-mercato/shared/lib/i18n/context'
 
 export default function AcademyEnrollmentCreatePage() {
+  const t = useT()
   const router = useRouter()
   const searchParams = useSearchParams()
   const presetGroupId = searchParams?.get('group_id') ?? ''
@@ -73,12 +75,12 @@ export default function AcademyEnrollmentCreatePage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!groupId || !studentName || !priceAgreed) {
-      flash('Completa grupo, nombre del alumno y precio', 'error')
+      flash(t('academy_enrollments.create.validation_error', 'Completa grupo, nombre del alumno y precio'), 'error')
       return
     }
     const selectedGroup = groups.find(g => g.id === groupId)
     if (selectedGroup && selectedGroup.enrolled_count >= selectedGroup.max_students) {
-      flash('El grupo está lleno', 'error')
+      flash(t('academy_enrollments.create.full_group_error', 'El grupo está lleno'), 'error')
       return
     }
     setSaving(true)
@@ -94,10 +96,10 @@ export default function AcademyEnrollmentCreatePage() {
     })
     const created = res.result as { id?: string } | undefined
     if (res.ok && created?.id) {
-      flash('Alumno inscrito', 'success')
+      flash(t('academy_enrollments.create.success', 'Alumno inscrito'), 'success')
       router.push(`/backend/academy_enrollments/${created.id}`)
     } else {
-      flash('Error al inscribir el alumno', 'error')
+      flash(t('academy_enrollments.create.error', 'Error al inscribir el alumno'), 'error')
     }
     setSaving(false)
   }
@@ -108,9 +110,9 @@ export default function AcademyEnrollmentCreatePage() {
     <Page>
       <PageBody>
         <Button variant="ghost" size="sm" onClick={() => router.push('/backend/academy_enrollments')}>
-          <ArrowLeft className="mr-2 h-4 w-4" />Inscripciones
+          <ArrowLeft className="mr-2 h-4 w-4" />{t('academy_enrollments.create.back', 'Inscripciones')}
         </Button>
-        <h1 className="mt-4 mb-6 text-2xl font-bold">Inscribir alumno</h1>
+        <h1 className="mt-4 mb-6 text-2xl font-bold">{t('academy_enrollments.create.title', 'Inscribir alumno')}</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6 max-w-xl">
           {/* Group selection */}
@@ -193,7 +195,7 @@ export default function AcademyEnrollmentCreatePage() {
               Cancelar
             </Button>
             <Button type="submit" disabled={saving}>
-              {saving ? 'Inscribiendo...' : 'Inscribir alumno'}
+              {saving ? t('academy_enrollments.create.submitting', 'Inscribiendo...') : t('academy_enrollments.create.submit', 'Inscribir alumno')}
             </Button>
           </div>
         </form>
