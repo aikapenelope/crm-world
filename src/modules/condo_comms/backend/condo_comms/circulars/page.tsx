@@ -43,7 +43,7 @@ export default function CircularesPage() {
         <DataTable
           columns={columns}
           data={rows}
-          loading={loading}
+          isLoading={loading}
           
           
         />

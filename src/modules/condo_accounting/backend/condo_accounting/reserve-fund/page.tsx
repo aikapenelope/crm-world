@@ -43,7 +43,7 @@ export default function FondodeReservaPage() {
         <DataTable
           columns={columns}
           data={rows}
-          loading={loading}
+          isLoading={loading}
           
           
         />
