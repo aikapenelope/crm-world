@@ -3,4 +3,7 @@ export const metadata = {
   requireFeatures: ['condo_comms.assemblies'],
   pageTitle: 'Asambleas',
   pageTitleKey: 'condo_comms.assemblies.title',
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
+  pageOrder: 200,
 }

@@ -3,4 +3,7 @@ export const metadata = {
   requireFeatures: ['condo_maintenance.manage'],
   pageTitle: 'Órdenes de Trabajo',
   pageTitleKey: 'condo_maintenance.work_orders.title',
+  pageGroup: 'Condominios',
+  pageGroupKey: 'condominios',
+  pageOrder: 200,
 }

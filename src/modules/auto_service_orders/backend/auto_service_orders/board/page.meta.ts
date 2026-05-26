@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Board de Órdenes',
   pageTitleKey: 'auto_service_orders.board.title',
   navHidden: true,
+  pageGroup: 'Taller',
+  pageGroupKey: 'automotive',
+  pageOrder: 210,
 }

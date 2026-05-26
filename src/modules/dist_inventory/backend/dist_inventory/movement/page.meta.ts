@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Registrar Movimiento',
   pageTitleKey: 'dist_inventory.movement.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
+  pageOrder: 210,
 }

@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Antigüedad de Saldos',
   pageTitleKey: 'dist_credit.aging.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
+  pageOrder: 210,
 }

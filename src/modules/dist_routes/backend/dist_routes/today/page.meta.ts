@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Mi Día',
   pageTitleKey: 'dist_routes.today.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
+  pageOrder: 200,
 }

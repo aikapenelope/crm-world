@@ -3,9 +3,12 @@ export const metadata = {
   requireFeatures: ['retail_loyalty.view'],
   pageTitle: 'Miembros',
   pageTitleKey: 'retail_loyalty.nav.members',
-  hideFromNav: true,
+  navHidden: true,
   breadcrumb: [
     { label: 'Fidelización', labelKey: 'retail_loyalty.nav.title', href: '/backend/retail_loyalty' },
     { label: 'Miembros', labelKey: 'retail_loyalty.nav.members' },
   ],
+  pageGroup: 'Retail',
+  pageGroupKey: 'retail.nav.group',
+  pageOrder: 200,
 }

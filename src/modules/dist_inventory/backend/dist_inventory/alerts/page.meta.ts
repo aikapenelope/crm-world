@@ -4,4 +4,7 @@ export const metadata = {
   pageTitle: 'Alertas de Stock',
   pageTitleKey: 'dist_inventory.alerts.title',
   navHidden: true,
+  pageGroup: 'Distribución',
+  pageGroupKey: 'distribution',
+  pageOrder: 200,
 }
