@@ -466,12 +466,25 @@ jobs:
           npx wait-on http://localhost:3000/login --timeout 90000 --interval 2000
           echo "App is ready"
 
-      - name: Run API Smoke Tests
+      - name: Run API Smoke Tests (TC-SMOKE-001)
         # BASE_URL apunta al servidor local levantado con yarn start.
         # yarn test:integration = npx playwright test --config .ai/qa/tests/playwright.config.ts
-        # --filter TC-SMOKE-001 limita a los specs de health check de módulos.
+        # TC-SMOKE-001: verifica que los 65 endpoints API responden sin 500.
         run: |
           BASE_URL=http://localhost:3000 yarn test:integration TC-SMOKE-001
+
+      - name: Run Frontend Page Tests (TC-FRONTEND-001)
+        # TC-FRONTEND-001: verifica que todas las rutas de backend registradas
+        # responden sin 404 (page.tsx faltante) ni >=500 (React SSR crash).
+        # Detecta páginas en el sidebar que rompen al navegar.
+        #
+        # Acepta: 200 (OK), 307/302 (redirect auth/tenant).
+        # Falla si: 404 (ruta no registrada) o >=500 (crash).
+        #
+        # Referencia: module-registry.ts:1403 — el generador registra SOLO
+        # page.tsx con default export. Sin page.tsx, la ruta no existe → 404.
+        run: |
+          BASE_URL=http://localhost:3000 yarn test:integration TC-FRONTEND-001
 
       - name: Stop app
         if: always()
